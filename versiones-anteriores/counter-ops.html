@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marvel Counters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#101116;
+    --panel:#191b22;
+    --panel-alt:#20232c;
+    --line:#2c2f3a;
+    --enemy:#ff3b4e;
+    --enemy-dim:#5c2530;
+    --ally:#3e8eff;
+    --ally-dim:#1f3a63;
+    --gold:#ffc145;
+    --text:#f2f3f6;
+    --muted:#9195a3;
+    --vg:#ff8a3d;
+    --du:#ff3b4e;
+    --st:#3ecf8e;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  .halftone{
+    background-image:radial-gradient(circle, rgba(255,255,255,0.14) 1px, transparent 1.4px);
+    background-size:7px 7px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:22px 16px 80px;}
+  header{position:relative;padding:26px 20px 22px;margin-bottom:22px;border-radius:14px;overflow:hidden;
+    background:linear-gradient(120deg,#1a0f12 0%,#12131a 55%,#0f1620 100%);border:1px solid var(--line);}
+  header .halftone-strip{position:absolute;inset:0;opacity:.5;background-image:
+    radial-gradient(circle, rgba(255,59,78,0.18) 1px, transparent 1.4px);
+    background-size:9px 9px;-webkit-mask-image:linear-gradient(90deg,transparent,black 40%,black 60%,transparent);}
+  h1{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:.5px;font-size:clamp(28px,5vw,44px);margin:0 0 4px;
+    text-transform:uppercase;position:relative;z-index:1;}
+  h1 span{color:var(--enemy);}
+  .sub{color:var(--muted);font-size:14.5px;position:relative;z-index:1;max-width:640px;line-height:1.5;}
+  .badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;
+    background:var(--panel-alt);border:1px solid var(--line);color:var(--gold);padding:3px 8px;border-radius:20px;margin-bottom:10px;position:relative;z-index:1;}
+
+  .teams{display:grid;grid-template-columns:1fr 1fr;gap:16px;position:relative;}
+  @media(max-width:760px){.teams{grid-template-columns:1fr;}}
+  .vs-divider{display:none;}
+  @media(min-width:761px){
+    .vs-divider{display:flex;align-items:center;justify-content:center;position:absolute;left:50%;top:0;bottom:0;
+      transform:translateX(-50%);width:56px;z-index:2;pointer-events:none;}
+    .vs-divider span{font-family:'Anton',sans-serif;font-size:26px;color:var(--gold);background:var(--bg);
+      border:2px solid var(--gold);width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      transform:rotate(-6deg);box-shadow:0 0 0 6px var(--bg);}
+  }
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;position:relative;}
+  .panel.enemy{border-top:3px solid var(--enemy);}
+  .panel.ally{border-top:3px solid var(--ally);}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .panel-title{font-family:'Anton',sans-serif;font-size:19px;letter-spacing:.4px;text-transform:uppercase;}
+  .panel.enemy .panel-title{color:var(--enemy);}
+  .panel.ally .panel-title{color:var(--ally);}
+
+  .upload-btn{font-family:'Inter',sans-serif;font-weight:600;font-size:12.5px;background:var(--enemy);color:#fff;
+    border:none;padding:8px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px;}
+  .upload-btn:hover{filter:brightness(1.1);}
+  .upload-btn:disabled{opacity:.5;cursor:wait;}
+  .status-line{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--gold);margin:-4px 0 10px;min-height:14px;}
+
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+  @media(max-width:420px){.slots{grid-template-columns:repeat(2,1fr);}}
+  .slot{background:var(--panel-alt);border:1.5px dashed var(--line);border-radius:10px;padding:10px 8px;text-align:center;
+    cursor:pointer;min-height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:.15s;}
+  .slot:hover{border-color:var(--gold);}
+  .slot.filled{border-style:solid;}
+  .panel.enemy .slot.filled{border-color:var(--enemy);background:#241318;}
+  .panel.ally .slot.filled{border-color:var(--ally);background:#131c29;}
+  .slot .name{font-weight:700;font-size:12.5px;line-height:1.2;}
+  .slot .role{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+  .slot .plus{font-size:20px;color:var(--muted);}
+  .slot.auto::after{content:'auto · toca para corregir';font-size:8.5px;color:var(--gold);font-family:'JetBrains Mono',monospace;}
+
+  .roletag{display:inline-block;font-size:9px;padding:1px 6px;border-radius:5px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;}
+  .roletag.Vanguard{background:rgba(255,138,61,.15);color:var(--vg);}
+  .roletag.Duelist{background:rgba(255,59,78,.15);color:var(--du);}
+  .roletag.Strategist{background:rgba(62,207,142,.15);color:var(--st);}
+
+  /* modal */
+  .modal-bg{position:fixed;inset:0;background:rgba(8,9,12,.75);backdrop-filter:blur(2px);display:none;align-items:flex-end;justify-content:center;z-index:50;}
+  .modal-bg.open{display:flex;}
+  @media(min-width:640px){.modal-bg{align-items:center;}}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px 16px 0 0;width:100%;max-width:480px;max-height:78vh;
+    display:flex;flex-direction:column;padding:16px;}
+  @media(min-width:640px){.modal{border-radius:16px;}}
+  .modal input{width:100%;background:var(--panel-alt);border:1px solid var(--line);color:var(--text);padding:10px 12px;
+    border-radius:9px;font-size:14px;margin-bottom:10px;font-family:'Inter',sans-serif;}
+  .modal input:focus{outline:none;border-color:var(--gold);}
+  .modal-list{overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:4px;}
+  .modal-item{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:8px;cursor:pointer;}
+  .modal-item:hover{background:var(--panel-alt);}
+  .modal-item .n{font-weight:600;font-size:13.5px;}
+  .modal-close{align-self:flex-end;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:6px;}
+
+  section.analysis{margin-top:26px;}
+  .sec-title{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:.5px;text-transform:uppercase;color:var(--gold);
+    margin:26px 0 12px;display:flex;align-items:center;gap:8px;}
+  .sec-title::before{content:'';width:16px;height:3px;background:var(--gold);display:inline-block;}
+
+  .comp-banner{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;
+    padding:14px 16px;font-size:14px;line-height:1.55;}
+  .comp-banner b{color:var(--gold);}
+  .empty-hint{color:var(--muted);font-size:13.5px;font-style:italic;}
+
+  .counter-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:10px;}
+  .counter-card .enemy-name{font-weight:800;color:var(--enemy);font-size:14.5px;}
+  .counter-card .role-mini{font-size:10px;color:var(--muted);margin-left:6px;}
+  .counter-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;}
+  .pill{background:var(--panel-alt);border:1px solid var(--line);border-radius:20px;padding:5px 11px;font-size:12px;display:flex;align-items:center;gap:6px;}
+  .pill.have{border-color:var(--ally);background:rgba(62,142,255,.12);}
+  .pill .why{color:var(--muted);font-size:10.5px;}
+  .pill .check{color:var(--ally);font-weight:800;}
+
+  .healer-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:600px){.healer-grid{grid-template-columns:1fr;}}
+  .healer-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;}
+  .healer-card .h-name{font-weight:800;color:var(--st);font-size:13.5px;}
+  .healer-card .h-reason{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.45;}
+
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:11.5px;font-family:'JetBrains Mono',monospace;}
+  .credit{color:var(--muted);font-size:10.5px;font-family:'JetBrains Mono',monospace;position:relative;z-index:1;margin:2px 0 8px;letter-spacing:.03em;}
+  .split-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;margin-top:16px;}
+  @media(max-width:900px){.split-row{grid-template-columns:1fr;}}
+  .split-row > section{margin-top:0;}
+  .split-row .sec-title:first-child{margin-top:0;}
+
+  /* risk-flagged ally slot */
+  .slot.risk{border:2px solid var(--enemy)!important;background:#2a1116!important;box-shadow:0 0 0 3px rgba(255,59,78,.15);}
+  .slot.risk .name::after{content:' ⚠';color:var(--enemy);}
+  .risk-card{background:var(--panel);border:1px solid var(--enemy);border-left:4px solid var(--enemy);border-radius:12px;padding:13px 15px;margin-bottom:10px;}
+  .risk-card .r-name{font-weight:800;color:var(--enemy);font-size:14.5px;}
+  .risk-card .r-body{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5;}
+  .risk-card .r-body b{color:var(--text);}
+
+  /* scouting */
+  section.scouting{margin-top:26px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+  .scout-group{margin-bottom:18px;}
+  .scout-group:last-child{margin-bottom:0;}
+  .scout-group-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:8px;}
+  .scout-rows{display:flex;flex-direction:column;gap:8px;}
+  .scout-row{background:var(--panel-alt);border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+    display:flex;flex-direction:column;gap:7px;}
+  .scout-row .top-line{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .scout-row .top-line input[type=text]{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);
+    color:var(--text);padding:7px 9px;border-radius:7px;font-size:12.5px;font-family:'Inter',sans-serif;}
+  .platform-select{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:7px 8px;
+    border-radius:7px;font-size:11.5px;font-family:'Inter',sans-serif;cursor:pointer;}
+  .scout-links a{color:var(--gold);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:10.5px;margin-right:12px;}
+  .scout-links a:hover{text-decoration:underline;}
+  .scout-check{display:flex;gap:8px;}
+  .scout-check input{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--text);
+    padding:6px 8px;border-radius:7px;font-size:11.5px;font-family:'Inter',sans-serif;}
+  .scout-result{font-size:12px;line-height:1.5;display:none;}
+  .scout-result.show{display:block;}
+  .scout-result.smurf{color:var(--enemy);font-weight:600;}
+  .smurf-box{margin-top:2px;padding:8px 10px;border:1px solid var(--enemy);border-radius:8px;background:rgba(255,59,78,.1);}
+  .smurf-box .title{color:var(--enemy);font-weight:800;font-size:12.5px;}
+  .smurf-box .detail{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.5;}
+  .smurf-box .report-steps{font-size:11px;color:var(--text);margin-top:6px;line-height:1.5;}
+
+  .tabbar{display:flex;gap:8px;margin-bottom:18px;}
+  .tab-btn{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:9px 16px;border-radius:9px;
+    font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;}
+  .tab-btn.active{color:var(--text);border-color:var(--gold);background:var(--panel-alt);}
+
+  .scan-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+  .scan-bar .status-line{margin:0;flex:1;min-width:180px;}
+
+  #editorHeroSearch{width:100%;background:var(--panel-alt);border:1px solid var(--line);color:var(--text);
+    padding:10px 12px;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;}
+  #editorHeroSearch:focus{outline:none;border-color:var(--gold);}
+  .mini-btn{background:none;border:1px solid var(--line);color:var(--muted);font-size:10px;padding:2px 7px;
+    border-radius:12px;margin-left:6px;cursor:pointer;font-family:'Inter',sans-serif;}
+  .mini-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .editor-add-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .editor-add-row input{flex:1;min-width:140px;background:var(--panel-alt);border:1px solid var(--line);color:var(--text);
+    padding:8px 10px;border-radius:8px;font-size:12.5px;font-family:'Inter',sans-serif;}
+  .editor-add-row button{background:var(--ally);color:#fff;border:none;padding:8px 14px;border-radius:8px;
+    font-weight:600;font-size:12.5px;cursor:pointer;white-space:nowrap;}
+  .autocomplete-wrap{position:relative;flex:1;min-width:140px;}
+  .autocomplete-wrap input{width:100%;}
+  .suggest-list{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:20;
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;max-height:180px;overflow-y:auto;
+    box-shadow:0 8px 20px rgba(0,0,0,.4);}
+  .suggest-list.show{display:block;}
+  .suggest-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:12.5px;
+    cursor:pointer;}
+  .suggest-item:hover{background:var(--panel-alt);}
+  .pill.hidden-pill{opacity:.4;text-decoration:line-through;}
+
+  .editor-image-row{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+  .editor-image-preview{width:64px;height:64px;border-radius:10px;background:var(--panel-alt);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
+  .editor-image-preview img{width:100%;height:100%;object-fit:cover;}
+  .editor-image-preview .no-img{font-size:9px;color:var(--muted);text-align:center;padding:4px;}
+  .editor-image-actions{display:flex;flex-direction:column;gap:6px;}
+  .upload-mini{display:inline-block;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="halftone-strip"></div>
+    <span class="badge">HERRAMIENTA NO OFICIAL · FAN-MADE</span>
+    <h1>MARVEL<span>COUNTERS</span></h1>
+    <p class="credit">creado por XavoDraw</p>
+    <p class="sub">Carga una captura del equipo rival o selecciona manualmente. Te digo qué counters usar y cómo ajustar tu alineación en tiempo real.</p>
+  </header>
+
+  <div class="tabbar">
+    <button class="tab-btn active" id="tabMain">Partida en vivo</button>
+    <button class="tab-btn" id="tabEditor">Editor de Counters</button>
+  </div>
+
+  <div id="mainView">
+
+  <div class="scan-bar">
+    <button class="upload-btn" id="uploadBtn">📷 Analizar captura (detecta ambos equipos)</button>
+    <input type="file" id="fileInput" accept="image/*" style="display:none">
+    <span class="status-line" id="statusLine"></span>
+  </div>
+
+  <div class="teams">
+    <div class="vs-divider"><span>VS</span></div>
+
+    <div class="panel ally">
+      <div class="panel-head">
+        <div class="panel-title">Tu Equipo</div>
+      </div>
+      <div class="slots" id="allySlots"></div>
+    </div>
+
+    <div class="panel enemy">
+      <div class="panel-head">
+        <div class="panel-title">Equipo Enemigo</div>
+      </div>
+      <div class="slots" id="enemySlots"></div>
+    </div>
+  </div>
+
+  <div class="split-row">
+    <section class="scouting">
+      <div class="sec-title">Explorador de jugadores (opcional)</div>
+      <p class="empty-hint" style="margin-bottom:12px;">Escribe (o deja que la foto llene) los nombres de jugadores de ambos equipos. Te doy el enlace directo a su perfil en Tracker.gg — ahí ves su nivel de cuenta y si sacan MVP seguido. Pon esos dos datos y te aviso si el patrón parece smurf.</p>
+
+      <div class="scout-group">
+        <div class="scout-group-title">Tu equipo</div>
+        <div id="scoutRowsAlly" class="scout-rows"></div>
+      </div>
+
+      <div class="scout-group">
+        <div class="scout-group-title">Equipo enemigo</div>
+        <div id="scoutRowsEnemy" class="scout-rows"></div>
+      </div>
+    </section>
+
+    <section class="analysis" id="analysis"></section>
+  </div>
+
+  </div>
+
+  <div id="editorView" style="display:none;">
+    <div class="sec-title">Editor de Counters</div>
+    <p class="empty-hint" style="margin-bottom:12px;">Elige un héroe enemigo y ajusta según tu experiencia qué lo contrarresta. Puedes ocultar sugerencias con las que no estés de acuerdo y añadir las tuyas. Se guardan en tu navegador y persisten la próxima vez que abras esta página.</p>
+    <input type="text" id="editorHeroSearch" placeholder="Buscar héroe a editar...">
+    <div id="editorHeroList" class="modal-list" style="max-height:180px;overflow-y:auto;margin:10px 0 16px;"></div>
+    <div id="editorDetail"></div>
+  </div>
+
+  <footer>Datos de meta orientativos — el balance cambia con cada parche, usa esto como punto de partida, no como verdad absoluta.</footer>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">cerrar ✕</button>
+    <input type="text" id="modalSearch" placeholder="Buscar héroe...">
+    <div class="modal-list" id="modalList"></div>
+  </div>
+</div>
+
+<script>
+/* ---------------- HERO DATA ---------------- */
+const HEROES = [
+  // Vanguards
+  {n:"Doctor Strange",r:"Vanguard",t:["shield","melee_caster","anti_dive"]},
+  {n:"Magneto",r:"Vanguard",t:["shield","zone","poke_resist"]},
+  {n:"Groot",r:"Vanguard",t:["shield","zone","wall"]},
+  {n:"Venom",r:"Vanguard",t:["dive","mobility","brawl"]},
+  {n:"Thor",r:"Vanguard",t:["brawl","melee","dive_lite"]},
+  {n:"Hulk",r:"Vanguard",t:["brawl","melee","cc"]},
+  {n:"Peni Parker",r:"Vanguard",t:["zone","turret","area_denial"]},
+  {n:"Captain America",r:"Vanguard",t:["brawl","anti_dive","peel"]},
+  {n:"The Thing",r:"Vanguard",t:["brawl","melee","anti_dive"]},
+  {n:"Emma Frost",r:"Vanguard",t:["shield","brawl","cc"]},
+  {n:"Angela",r:"Vanguard",t:["dive","aerial","mobility"]},
+  {n:"Rogue",r:"Vanguard",t:["dive","aerial","mobility"]},
+  {n:"Devil Dinosaur",r:"Vanguard",t:["brawl","melee","anti_dive"]},
+  // Duelists
+  {n:"Iron Man",r:"Duelist",t:["ranged","aerial","burst"]},
+  {n:"Spider-Man",r:"Duelist",t:["dive","mobility","melee"]},
+  {n:"Star-Lord",r:"Duelist",t:["aerial","mobility","dive"]},
+  {n:"Scarlet Witch",r:"Duelist",t:["burst","area_denial","cc"]},
+  {n:"Hela",r:"Duelist",t:["ranged","burst","anti_heal"]},
+  {n:"Hawkeye",r:"Duelist",t:["sniper","long_range","poke"]},
+  {n:"Black Panther",r:"Duelist",t:["dive","mobility","melee"]},
+  {n:"Black Widow",r:"Duelist",t:["sniper","long_range","poke"]},
+  {n:"Punisher",r:"Duelist",t:["ranged","sustained","shield_breaker"]},
+  {n:"Winter Soldier",r:"Duelist",t:["mobility","burst","hook"]},
+  {n:"Storm",r:"Duelist",t:["aerial","area_denial","poke"]},
+  {n:"Namor",r:"Duelist",t:["zone","shield_breaker","ranged"]},
+  {n:"Human Torch",r:"Duelist",t:["aerial","mobility","burst"]},
+  {n:"Squirrel Girl",r:"Duelist",t:["melee","annoy","mobility"]},
+  {n:"Iron Fist",r:"Duelist",t:["dive","melee","mobility"]},
+  {n:"Moon Knight",r:"Duelist",t:["burst","true_damage","cc"]},
+  {n:"Psylocke",r:"Duelist",t:["dive","mobility","stealth_counter"]},
+  {n:"Wolverine",r:"Duelist",t:["dive","melee","sustain"]},
+  {n:"Magik",r:"Duelist",t:["dive","melee","mobility"]},
+  {n:"Mister Fantastic",r:"Duelist",t:["poke","mobility","area_denial"]},
+  {n:"Blade",r:"Duelist",t:["dive","melee","anti_heal"]},
+  {n:"Deadpool",r:"Duelist",t:["brawl","melee","sustain"]},
+  {n:"Cyclops",r:"Duelist",t:["ranged","burst","poke"]},
+  {n:"Daredevil",r:"Duelist",t:["dive","melee","mobility"]},
+  {n:"Elsa Bloodstone",r:"Duelist",t:["ranged","sustained","poke"]},
+  {n:"Black Cat",r:"Duelist",t:["dive","melee","mobility"]},
+  {n:"Phoenix",r:"Duelist",t:["ranged","aerial","mobility"]},
+  // Strategists
+  {n:"Luna Snow",r:"Strategist",t:["burst_heal","static","aoe"]},
+  {n:"Mantis",r:"Strategist",t:["sustain_heal","cc","mobile"]},
+  {n:"Adam Warlock",r:"Strategist",t:["revive","static","burst_heal"]},
+  {n:"Cloak & Dagger",r:"Strategist",t:["mobile","dash","dual"]},
+  {n:"Rocket Raccoon",r:"Strategist",t:["static","turret","backline"]},
+  {n:"Jeff the Land Shark",r:"Strategist",t:["mobile","poke_heal","escape"]},
+  {n:"Loki",r:"Strategist",t:["deception","ult_steal","clone"]},
+  {n:"Invisible Woman",r:"Strategist",t:["shield","static","aoe"]},
+  {n:"Gambit",r:"Strategist",t:["burst_heal","utility","area_denial"]},
+  {n:"Jubilee",r:"Strategist",t:["burst_heal","mobile","aoe"]},
+  {n:"Ultron",r:"Strategist",t:["turret","aerial","backline"]},
+  {n:"White Fox",r:"Strategist",t:["brawl_heal","melee","mobile"]},
+];
+const byName = Object.fromEntries(HEROES.map(h=>[h.n,h]));
+
+/* ---------------- CURATED COUNTERS ---------------- */
+const COUNTERS = {
+  "Doctor Strange":[{c:"Thor",w:"Cierra distancia cuerpo a cuerpo y burstea antes de que pueda sostener el escudo."},{c:"Punisher",w:"DPS sostenido que desgasta el escudo sin exponerse."},{c:"Magik",w:"Portal que lo flanquea por un ángulo sin escudo y burstea desde ahí."},{c:"Black Panther",w:"Dash que cierra distancia y burst melee que lo castiga una vez flanqueado."},{c:"Hulk",w:"Salto que le disputa el espacio directamente y CC que lo saca de posición pese al escudo."},{c:"Venom",w:"Dive que lo obliga a reposicionarse o gastar el portal, dándole espacio a tu equipo."},{c:"Groot",w:"Muros que le cortan ángulos de escudo/portal y frontline propio para pelear el espacio."},{c:"The Thing",w:"Presión melee sostenida que desgasta el escudo y anti-dive que le quita opciones de reposicionarse."},{c:"Luna Snow",w:"Sostiene a tu frontline contra su daño para que aguanten más que su escudo y ultimate."},{c:"Loki",w:"Puede robar su ultimate o usar clones/decepción para gastar el Eye of Agamotto sin riesgo."}],
+  "Magneto":[{c:"Namor",w:"Rompe escudos y castiga el posicionamiento estático."},{c:"Wolverine",w:"Burst melee que ignora mitigación a distancia."},{c:"Punisher",w:"Presión constante que agota su escudo."}],
+  "Groot":[{c:"Storm",w:"Vuela sobre los muros y evita el bloqueo de línea de visión."},{c:"Iron Man",w:"Posición aérea elude las paredes de Groot."},{c:"Human Torch",w:"Movilidad aérea rodea las zonas negadas."}],
+  "Venom":[{c:"Captain America",w:"Vanguard anti-dive diseñado para interceptar buzos."},{c:"Cloak & Dagger",w:"Escape rápido para salvar al healer que Venom busca matar."},{c:"Iron Man",w:"Burst a distancia antes de que Venom cierre distancia."}],
+  "Thor":[{c:"Scarlet Witch",w:"CC y daño de área que castiga su acercamiento melee."},{c:"Hawkeye",w:"Poke a distancia antes de que pueda entrar en rango."},{c:"Namor",w:"Zonifica y desgasta antes del engage."}],
+  "Hulk":[{c:"Moon Knight",w:"Daño verdadero que ignora parte de su durabilidad."},{c:"Scarlet Witch",w:"Control de área que interrumpe sus saltos."},{c:"Black Widow",w:"Poke sostenido que lo desgasta sin exponerse al salto."}],
+  "Peni Parker":[{c:"Spider-Man",w:"Movilidad para esquivar minas y llegar directo a ella."},{c:"Iron Fist",w:"Dive rápido que evita el campo de minas."},{c:"Human Torch",w:"Ruta aérea que ignora el terreno minado."}],
+  "Captain America":[{c:"Hawkeye",w:"Kite a distancia, evita el enfrentamiento cuerpo a cuerpo."},{c:"Black Widow",w:"Poke sostenido que castiga su falta de alcance."},{c:"Punisher",w:"Daño a distancia constante fuera de su rango de peleo."}],
+  "The Thing":[{c:"Hawkeye",w:"Kite y poke, evita el intercambio melee."},{c:"Storm",w:"Presión aérea fuera de su alcance."},{c:"Punisher",w:"Sostenido a distancia sin exponerse."}],
+  "Emma Frost":[{c:"Moon Knight",w:"Daño verdadero que reduce el valor de su forma diamante."},{c:"Psylocke",w:"Burst melee rápido antes de que reaccione."},{c:"Namor",w:"Desgaste a distancia constante."}],
+  "Iron Man":[{c:"Storm",w:"Superioridad aérea, puede perseguirlo en el aire."},{c:"Hawkeye",w:"Precisión a distancia que castiga su poca vida."},{c:"Winter Soldier",w:"Gancho de movilidad para alcanzarlo pese al vuelo."}],
+  "Squirrel Girl":[{c:"Iron Man",w:"Burst aéreo que la elimina antes de que moleste."},{c:"Hela",w:"Daño a distancia que castiga su baja vida."},{c:"Black Widow",w:"Precisión que la elimina rápido."}],
+  "Hawkeye":[{c:"Spider-Man",w:"Dive rápido que cierra distancia antes de que pueda apuntar."},{c:"Black Panther",w:"Movilidad para llegar al francotirador."},{c:"Psylocke",w:"Cierra distancia y lo elimina en su propio rango."}],
+  "Black Widow":[{c:"Spider-Man",w:"Movilidad para presionarla de cerca."},{c:"Iron Fist",w:"Dive rápido antes de que consiga ángulo."},{c:"Magik",w:"Portal de movilidad para flanquearla."}],
+  "Luna Snow":[{c:"Spider-Man",w:"Dive directo al soporte antes de que reaccione."},{c:"Black Panther",w:"Movilidad para aislarla del equipo."},{c:"Iron Fist",w:"Presión melee rápida sobre el healer."}],
+  "Mantis":[{c:"Hela",w:"Burst que la elimina antes de que pueda dormir/curar."},{c:"Black Widow",w:"Headshot que la baja en pocos golpes."},{c:"Winter Soldier",w:"Gancho para aislarla del grupo."}],
+  "Adam Warlock":[{c:"Scarlet Witch",w:"CC que interrumpe el canal de su revivir."},{c:"Magik",w:"Burst melee rápido durante su ventana de reviving."},{c:"Moon Knight",w:"Daño explosivo antes de que complete el ult."}],
+  "Cloak & Dagger":[{c:"Punisher",w:"DPS sostenido que castiga sus dashes cortos."},{c:"Winter Soldier",w:"Gancho que anula su movilidad de escape."},{c:"Hela",w:"Burst que la elimina antes del segundo dash."}],
+  "Rocket Raccoon":[{c:"Spider-Man",w:"Dive directo a la retaguardia donde se posiciona."},{c:"Iron Fist",w:"Alcance rápido sobre el healer estático."},{c:"Wolverine",w:"Presión melee sostenida en backline."}],
+  "Jeff the Land Shark":[{c:"Hela",w:"Burst antes de que pueda escapar nadando."},{c:"Black Widow",w:"Precisión que lo elimina rápido pese a su movilidad."}],
+  "Loki":[{c:"Moon Knight",w:"Daño explosivo que ignora sus clones débiles."},{c:"Psylocke",w:"Detecta y corta rápido antes del engaño."}],
+  "Invisible Woman":[{c:"Punisher",w:"Desgaste sostenido contra su escudo."},{c:"Hela",w:"Burst a distancia que ignora su barrera."},{c:"Namor",w:"Rompe escudos de forma efectiva."}],
+  // --- entradas inversas: qué héroes castigan a estos picks tuyos si el rival los tiene ---
+  "Iron Man":[{c:"Hela",w:"Burst hitscan a distancia que lo baja pese al vuelo."},{c:"Hulk",w:"Puede saltar y alcanzarlo en el aire, cortando su espacio."},{c:"Luna Snow",w:"Burst + control que interrumpe su movilidad aérea."},{c:"Angela",w:"Vanguard aéreo que le disputa el aire en igualdad o ventaja."},{c:"Storm",w:"Contesta directamente el espacio aéreo que Iron Man necesita."}],
+  "Wolverine":[{c:"Scarlet Witch",w:"CC de área que corta su acercamiento antes de que conecte."},{c:"Emma Frost",w:"Forma diamante absorbe su burst melee inicial."},{c:"Luna Snow",w:"Slow/CC que evita que cierre distancia con su dash."}],
+  "Spider-Man":[{c:"Captain America",w:"Vanguard anti-dive que lo intercepta antes de llegar al backline."},{c:"Emma Frost",w:"CC que lo detiene a mitad de su combo de swing."},{c:"Cloak & Dagger",w:"Puede evadir o proteger al aliado que Spider-Man busca aislar."}],
+  "Black Panther":[{c:"Captain America",w:"Anti-dive directo que lo intercepta en su ruta al backline."},{c:"Emma Frost",w:"CC que interrumpe su combo de asalto."},{c:"Groot",w:"Muros que bloquean sus rutas de dash directas."}],
+  "Hela":[{c:"Spider-Man",w:"Dive rápido que la presiona antes de que pueda hacer poke seguro."},{c:"Black Panther",w:"Cierra distancia y la elimina en su propio rango débil de cerca."},{c:"Magik",w:"Portal de movilidad para flanquearla desde un ángulo inesperado."}],
+  "Hawkeye":[{c:"Spider-Man",w:"Dive directo antes de que pueda mantener distancia y apuntar."},{c:"Psylocke",w:"Cierra el rango rápido con movilidad y stealth."},{c:"Black Panther",w:"Presión melee que anula su ventaja de alcance."}],
+  "Punisher":[{c:"Spider-Man",w:"Movilidad para cerrar distancia contra su DPS sostenido."},{c:"Black Panther",w:"Dive directo que anula su poke a rango medio."},{c:"Magik",w:"Flanqueo por portal que evita su línea de fuego."}],
+  // --- héroes añadidos en temporadas recientes ---
+  "Devil Dinosaur":[{c:"Phoenix",w:"Daño a distancia sostenido que aprovecha su hitbox gigante sin exponerse a su alcance melee."},{c:"Punisher",w:"DPS sostenido a distancia que lo desgasta antes de que pueda cerrar distancia."},{c:"Squirrel Girl",w:"Chip damage constante que castiga su hitbox grande sin necesidad de burst."}],
+  "Rogue":[{c:"Mister Fantastic",w:"Burst y movilidad que la esquivan mientras la desgastan a distancia."},{c:"Iron Man",w:"Vuelo que evita por completo su rango de combate preferido."},{c:"Groot",w:"Muros y control de espacio que le niegan el engage directo."}],
+  "Black Cat":[{c:"Peni Parker",w:"Zona de minas que castiga sus rutas de flanqueo."},{c:"Captain America",w:"Vanguard anti-dive que la intercepta antes de llegar al objetivo."},{c:"Magik",w:"Burst melee rápido que la elimina antes de que escale su suerte/Fortune."}],
+  "Phoenix":[{c:"Invisible Woman",w:"Escudo que bloquea línea de visión y anula su daño a distancia."},{c:"Groot",w:"Muros que cortan sus ángulos de daño y fuerzan mal posicionamiento."},{c:"Black Widow",w:"Precisión a distancia que la elimina antes de que pueda mantener su rango preferido."}],
+  "Gambit":[{c:"Black Panther",w:"Movilidad errática y presión constante que interrumpe su línea de soporte."},{c:"Magik",w:"Portal que le niega el espacio y tiempo que necesita para posicionar sus cartas."},{c:"Hela",w:"Burst a distancia que lo baja en pocos golpes antes de que pueda reaccionar."}],
+  "Jubilee":[{c:"Black Panther",w:"Movilidad errática que dificulta el seguimiento de sus proyectiles y baja su supervivencia."},{c:"Spider-Man",w:"Dive rápido desde ángulos verticales antes de que establezca su ritmo de curación."},{c:"Psylocke",w:"Acercamiento con movilidad que la golpea antes de que cargue su ultimate."}],
+  "Ultron":[{c:"Black Widow",w:"Precisión a distancia que lo elimina antes de que pueda sostener su posición."},{c:"Adam Warlock",w:"Burst de daño fuerte para un Strategist que lo baja rápido."},{c:"Spider-Man",w:"Dive directo que lo atrapa fuera de posición con sus escudos en cooldown."}],
+  "White Fox":[{c:"Moon Knight",w:"Daño verdadero y burst que supera su curación de cercanía."},{c:"Human Torch",w:"Presión aérea sostenida que la desgasta fuera de su rango de curación cuerpo a cuerpo."},{c:"Blade",w:"Burst con reducción de curación que corta directamente su capacidad de sanar."}],
+};
+
+/* fallback tag-based reasoning if no curated entry */
+const TAG_RULES = [
+  {enemyTag:"shield", counterTag:"shield_breaker", why:"Ignora o rompe escudos de forma efectiva."},
+  {enemyTag:"shield", counterTag:"burst", why:"Daño explosivo que fuerza a gastar el escudo o morir."},
+  {enemyTag:"dive", counterTag:"anti_dive", why:"Rol diseñado para interceptar buzos antes de que lleguen al backline."},
+  {enemyTag:"dive", counterTag:"peel", why:"Protege al backline contra la incursión."},
+  {enemyTag:"sniper", counterTag:"dive", why:"Cierra distancia rápido antes de que pueda apuntar a rango."},
+  {enemyTag:"sniper", counterTag:"mobility", why:"Movilidad para negar su rango preferido."},
+  {enemyTag:"static", counterTag:"dive", why:"Backline estático es vulnerable a incursiones directas."},
+  {enemyTag:"turret", counterTag:"mobility", why:"Movilidad para esquivar el área de control fijo."},
+  {enemyTag:"brawl", counterTag:"poke", why:"Kite a distancia evita el intercambio cuerpo a cuerpo favorable a él."},
+  {enemyTag:"melee", counterTag:"poke", why:"Mantiene distancia fuera de su rango efectivo."},
+  {enemyTag:"aerial", counterTag:"aerial", why:"Igual movilidad aérea para disputar el espacio arriba."},
+];
+
+/* ---------------- OVERRIDES PERSISTENTES (tu propio editor de counters) ---------------- */
+// overrides.hidden[hero]   = [nombres de counters curados que ocultaste]
+// overrides.additions[hero] = [{c, w}] counters que agregaste tú
+let overrides = {hidden:{}, additions:{}};
+async function loadOverrides(){
+  try{
+    const res = await window.storage.get('counterOverrides', false);
+    if(res && res.value) overrides = JSON.parse(res.value);
+  }catch(e){ /* aún no hay datos guardados, se usa el default vacío */ }
+  if(!overrides.hidden) overrides.hidden = {};
+  if(!overrides.additions) overrides.additions = {};
+}
+async function saveOverrides(){
+  try{ await window.storage.set('counterOverrides', JSON.stringify(overrides), false); }
+  catch(e){ console.error("No se pudo guardar el editor de counters:", e); }
+}
+
+// combina lo curado (menos lo que ocultaste) + lo que agregaste tú para un héroe dado
+function effectiveCounters(name){
+  const curated = COUNTERS[name] ? COUNTERS[name].map(x=>({...x, custom:false})) : null;
+  const hiddenSet = new Set(overrides.hidden[name] || []);
+  const additions = (overrides.additions[name] || []).map(x=>({...x, custom:true}));
+  if(curated){
+    return curated.filter(x=>!hiddenSet.has(x.c)).concat(additions);
+  }
+  return additions.length>0 ? additions : null;
+}
+
+function getCounters(enemyName, allyRoster){
+  const eff = effectiveCounters(enemyName);
+  if(eff) return eff.map(x=>({...x, have:allyRoster.includes(x.c)}));
+  // fallback via tags (solo si no hay nada curado ni agregado por ti)
+  const hero = byName[enemyName];
+  if(!hero) return [];
+  const seen = new Set();
+  const out = [];
+  for(const h of HEROES){
+    if(h.n===enemyName) continue;
+    for(const rule of TAG_RULES){
+      if(hero.t.includes(rule.enemyTag) && h.t.includes(rule.counterTag) && !seen.has(h.n)){
+        seen.add(h.n);
+        out.push({c:h.n, w:rule.why, have:allyRoster.includes(h.n)});
+        break;
+      }
+    }
+    if(out.length>=3) break;
+  }
+  return out;
+}
+
+/* ---------------- STATE ---------------- */
+let enemyTeam = Array(6).fill(null);
+let allyTeam = Array(6).fill(null);
+let modalTarget = null; // {side, idx}
+
+/* ---------------- RENDER SLOTS ---------------- */
+function renderSlots(){
+  renderSideSlots("enemySlots", enemyTeam, "enemy");
+  renderSideSlots("allySlots", allyTeam, "ally");
+  renderAnalysis();
+}
+function riskCountersFor(allyHeroName, enemyNames){
+  const list = effectiveCounters(allyHeroName) || [];
+  return list.filter(x=>enemyNames.includes(x.c));
+}
+
+function renderSideSlots(containerId, arr, side){
+  const el = document.getElementById(containerId);
+  el.innerHTML = "";
+  const enemyNames = enemyTeam.filter(Boolean).map(h=>h.n);
+  arr.forEach((h,i)=>{
+    const d = document.createElement("div");
+    let isRisk = false;
+    if(h && side==="ally"){
+      const risks = riskCountersFor(h.n, enemyNames);
+      isRisk = risks.length>=2;
+    }
+    d.className = "slot"+(h?" filled":"")+(h && h._auto?" auto":"")+(isRisk?" risk":"");
+    if(h){
+      d.innerHTML = `<div class="name">${h.n}</div><div class="role">${h.r}</div>`;
+    } else {
+      d.innerHTML = `<div class="plus">+</div><div class="role">añadir</div>`;
+    }
+    d.onclick = ()=>openModal(side,i);
+    el.appendChild(d);
+  });
+}
+
+/* ---------------- MODAL ---------------- */
+function openModal(side, idx){
+  modalTarget = {side, idx};
+  document.getElementById("modalBg").classList.add("open");
+  document.getElementById("modalSearch").value = "";
+  renderModalList("");
+  document.getElementById("modalSearch").focus();
+}
+function closeModal(){
+  document.getElementById("modalBg").classList.remove("open");
+  modalTarget = null;
+}
+function renderModalList(query){
+  const list = document.getElementById("modalList");
+  list.innerHTML = "";
+  const q = query.trim().toLowerCase();
+  const filtered = HEROES.filter(h=>h.n.toLowerCase().includes(q));
+  filtered.forEach(h=>{
+    const row = document.createElement("div");
+    row.className = "modal-item";
+    row.innerHTML = `<span class="n">${h.n}</span><span class="roletag ${h.r}">${h.r}</span>`;
+    row.onclick = ()=>selectHero(h.n);
+    list.appendChild(row);
+  });
+  if(q && !filtered.some(h=>h.n.toLowerCase()===q)){
+    const custom = document.createElement("div");
+    custom.className = "modal-item";
+    custom.innerHTML = `<span class="n">Usar "${query}" (personalizado)</span>`;
+    custom.onclick = ()=>selectHero(query, true);
+    list.appendChild(custom);
+  }
+}
+function selectHero(name, isCustom){
+  if(!modalTarget) return;
+  const hero = isCustom ? {n:name, r:"?", t:[]} : {...byName[name]};
+  const arr = modalTarget.side==="enemy" ? enemyTeam : allyTeam;
+  arr[modalTarget.idx] = hero;
+  closeModal();
+  renderSlots();
+}
+document.getElementById("modalClose").onclick = closeModal;
+document.getElementById("modalBg").onclick = (e)=>{ if(e.target.id==="modalBg") closeModal(); };
+document.getElementById("modalSearch").oninput = (e)=>renderModalList(e.target.value);
+
+/* ---------------- ANALYSIS ---------------- */
+function roleCounts(team){
+  const c = {Vanguard:0, Duelist:0, Strategist:0};
+  team.forEach(h=>{ if(h && c[h.r]!==undefined) c[h.r]++; });
+  return c;
+}
+function compArchetype(counts, filled){
+  if(filled<6) return null;
+  const {Vanguard:v, Duelist:d, Strategist:s} = counts;
+  if(v>=3) return {label:"Triple tanque / línea reforzada", advice:"El rival prioriza escudos y peleo cuerpo a cuerpo. Cambia un duelista por uno con <b>rotura de escudo o burst</b> (Namor, Hela, Punisher) y valora un <b>3er strategist</b> para sostener la presión extra en el frente."};
+  if(s>=3) return {label:"Triple soporte", advice:"El rival cura demasiado para trabajar de a poco. Necesitas <b>burst y dive</b> para matar antes de que las curas lleguen: prioriza Spider-Man, Black Panther o Hela sobre picks de poke lento."};
+  if(d>=4) return {label:"Comp muy ofensiva, poco sostén", advice:"El rival es frágil detrás del daño. Un <b>vanguard anti-dive</b> (Captain America, Venom) más presión agresiva puede colapsar su formación antes de que estabilicen."};
+  if(v===1) return {label:"Solo un tanque", advice:"Backline expuesto. Presiona con dive directo al soporte: la falta de un segundo frontline los deja vulnerables a flanqueos."};
+  if(s===1) return {label:"Un solo soporte", advice:"Poca sanación total. Cualquier pick de burst sostenido puede forzar picks rápidos antes de que el healer solitario reaccione."};
+  return {label:"Composición equilibrada 2-2-2", advice:"Formación estándar. Ajusta counters individuales según los héroes específicos abajo, sin necesidad de romper tu propia estructura 2-2-2."};
+}
+
+const HEALER_MAP = {
+  "shield":{h:["Luna Snow","Adam Warlock","Invisible Woman"], why:"Sanadores estáticos de área que sostienen bien detrás de un escudo fijo."},
+  "dive":{h:["Cloak & Dagger","Mantis"], why:"Sanadores móviles que pueden seguir el ritmo de un tanque que se adelanta al frente enemigo."},
+  "brawl":{h:["Mantis","Rocket Raccoon"], why:"Curación sostenida + utilidad para peleas prolongadas cuerpo a cuerpo."},
+  "zone":{h:["Luna Snow","Adam Warlock"], why:"Sanación de área constante para un tanque que controla espacio."},
+  "turret":{h:["Rocket Raccoon","Jeff the Land Shark"], why:"Buena sinergia con un tanque que también juega estático/posicional."},
+};
+function suggestHealers(allyTeam){
+  const vanguards = allyTeam.filter(h=>h && h.r==="Vanguard");
+  if(vanguards.length===0) return null;
+  const recs = {};
+  vanguards.forEach(v=>{
+    const hero = byName[v.n];
+    if(!hero) return;
+    for(const tag of hero.t){
+      if(HEALER_MAP[tag]){
+        HEALER_MAP[tag].h.forEach(hn=>{
+          if(!recs[hn]) recs[hn] = {reasons:new Set()};
+          recs[hn].reasons.add(`Con ${v.n}: ${HEALER_MAP[tag].why}`);
+        });
+        break;
+      }
+    }
+  });
+  return recs;
+}
+
+function renderAnalysis(){
+  const el = document.getElementById("analysis");
+  const enemyFilled = enemyTeam.filter(Boolean).length;
+  const allyFilled = allyTeam.filter(Boolean).length;
+  let html = "";
+
+  // comp analysis
+  html += `<div class="sec-title">Análisis de composición rival</div>`;
+  if(enemyFilled===0){
+    html += `<p class="empty-hint">Añade los 6 héroes enemigos (foto o manual) para ver el análisis de composición.</p>`;
+  } else {
+    const counts = roleCounts(enemyTeam);
+    const arche = compArchetype(counts, enemyFilled);
+    html += `<div class="comp-banner">Detectado: <b>${counts.Vanguard} Vanguard · ${counts.Duelist} Duelist · ${counts.Strategist} Strategist</b> (${enemyFilled}/6 añadidos).`;
+    if(arche){
+      html += `<br><b>${arche.label}.</b> ${arche.advice}`;
+    } else {
+      html += `<br>Añade los héroes restantes para un diagnóstico completo del arquetipo de equipo.`;
+    }
+    html += `</div>`;
+  }
+
+  // risky ally picks
+  html += `<div class="sec-title">Alineación en riesgo</div>`;
+  const allyNamesForRisk = allyTeam.filter(Boolean).map(h=>h.n);
+  const enemyNamesForRisk = enemyTeam.filter(Boolean).map(h=>h.n);
+  if(allyTeam.filter(Boolean).length===0){
+    html += `<p class="empty-hint">Añade tu equipo para detectar picks que el rival contrarresta con 2 o más héroes.</p>`;
+  } else {
+    let anyRisk = false;
+    allyTeam.forEach(h=>{
+      if(!h) return;
+      const risks = riskCountersFor(h.n, enemyNamesForRisk);
+      if(risks.length>=2){
+        anyRisk = true;
+        // buscar alternativas del mismo rol con menor riesgo
+        const sameRole = HEROES.filter(x=>x.r===h.r && x.n!==h.n);
+        const scored = sameRole.map(x=>({n:x.n, score:riskCountersFor(x.n, enemyNamesForRisk).length}))
+          .sort((a,b)=>a.score-b.score).slice(0,2);
+        html += `<div class="risk-card">
+          <span class="r-name">⚠ ${h.n}</span>
+          <div class="r-body">El rival tiene <b>${risks.length} héroes</b> que lo contrarrestan bien: <b>${risks.map(r=>r.c).join(", ")}</b>.<br>
+          Considera cambiar a: <b>${scored.map(s=>s.n+" ("+s.score+" counters en su contra)").join(" · ")}</b></div>
+        </div>`;
+      }
+    });
+    if(!anyRisk) html += `<p class="empty-hint">Ningún héroe de tu equipo tiene 2+ counters fuertes en la alineación rival actual. Vas bien.</p>`;
+  }
+
+  // per-hero counters
+  html += `<div class="sec-title">Counters sugeridos por héroe</div>`;
+  const enemyNames = enemyTeam.filter(Boolean).map(h=>h.n);
+  const allyNames = allyTeam.filter(Boolean).map(h=>h.n);
+  if(enemyFilled===0){
+    html += `<p class="empty-hint">Aún no hay héroes enemigos añadidos.</p>`;
+  } else {
+    enemyTeam.forEach(h=>{
+      if(!h) return;
+      const counters = getCounters(h.n, allyNames);
+      html += `<div class="counter-card">
+        <span class="enemy-name">${h.n}</span><span class="role-mini">${h.r}</span>
+        <div class="counter-list">`;
+      if(counters.length===0){
+        html += `<span class="pill">Sin datos curados — evalúa burst/anti-dive genérico según su rol.</span>`;
+      } else {
+        counters.forEach(c=>{
+          html += `<span class="pill ${c.have?'have':''}">${c.have?'<span class="check">✓ ya en tu equipo</span> · ':''}<b>${c.c}</b> <span class="why">— ${c.w}</span></span>`;
+        });
+      }
+      html += `</div></div>`;
+    });
+  }
+
+  // healer suggestions
+  html += `<div class="sec-title">Soporte recomendado para tu línea</div>`;
+  const recs = suggestHealers(allyTeam);
+  if(!recs){
+    html += `<p class="empty-hint">Selecciona al menos un Vanguard en tu equipo para recibir sugerencias de soporte compatible.</p>`;
+  } else {
+    const keys = Object.keys(recs);
+    if(keys.length===0){
+      html += `<p class="empty-hint">Sin recomendaciones específicas para esta combinación — cualquier soporte flexible (Mantis, Luna Snow) funciona bien.</p>`;
+    } else {
+      html += `<div class="healer-grid">`;
+      keys.forEach(hn=>{
+        const already = allyNames.includes(hn);
+        html += `<div class="healer-card"><div class="h-name">${hn}${already?' · ✓ ya en tu equipo':''}</div>
+          <div class="h-reason">${[...recs[hn].reasons].join("<br>")}</div></div>`;
+      });
+      html += `</div>`;
+    }
+  }
+
+  el.innerHTML = html;
+}
+
+/* ---------------- PHOTO AUTO-DETECT (ambos equipos) ---------------- */
+const uploadBtn = document.getElementById("uploadBtn");
+const fileInput = document.getElementById("fileInput");
+const statusLine = document.getElementById("statusLine");
+
+uploadBtn.onclick = ()=>fileInput.click();
+fileInput.onchange = async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  uploadBtn.disabled = true;
+  statusLine.textContent = "Analizando captura...";
+  try{
+    const base64 = await fileToBase64Resized(file, 1024);
+    const rosterNames = HEROES.map(h=>h.n).join(", ");
+    const prompt = `Esta es una captura de Marvel Rivals (marcador de partida o pantalla de resultados) que puede mostrar hasta 6 jugadores de "YOUR TEAM"/tu equipo (columna izquierda) y hasta 6 de "ENEMY TEAM"/equipo enemigo (columna derecha), cada uno con su héroe y su nombre/nick. Roster de héroes válido: ${rosterNames}. Identifica, en el orden en que aparecen en cada columna, el héroe, el nombre/nick de cada jugador, y SI hay un pequeño ícono de plataforma visible junto al nombre (PlayStation, Xbox, o teclado/PC), indica cuál; si no ves ningún ícono de plataforma, no lo inventes, pon "" (vacío). Responde ÚNICAMENTE con este JSON (sin texto adicional, sin markdown):
+{"allyHeroes":["...hasta 6, usando EXACTAMENTE un nombre del roster cuando coincida, o \\"unknown\\" si no es identificable..."],"enemyHeroes":["...igual para el equipo enemigo..."],"allyNames":["...nick de cada jugador aliado tal cual aparece en la imagen, o \\"\\" si no es legible..."],"enemyNames":["...igual para el equipo enemigo..."],"allyPlatforms":["...\\"PS5\\", \\"Xbox\\", \\"PC\\" o \\"\\" si no hay ícono visible, uno por jugador aliado..."],"enemyPlatforms":["...igual para el equipo enemigo..."]}
+Si la imagen solo muestra un equipo o no hay nombres visibles, deja esos arrays vacíos.`;
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        model:"claude-sonnet-4-6",
+        max_tokens:1200,
+        messages:[{
+          role:"user",
+          content:[
+            {type:"image", source:{type:"base64", media_type:"image/jpeg", data:base64}},
+            {type:"text", text:prompt}
+          ]
+        }]
+      })
+    });
+    const data = await resp.json();
+    const textBlock = (data.content||[]).map(b=>b.text||"").join("");
+    const clean = textBlock.replace(/```json|```/g,"").trim();
+    const parsed = JSON.parse(clean);
+    let heroMatches = 0, nameMatches = 0, platformMatches = 0;
+    const validPlatforms = ["PS5","Xbox","PC"];
+    [["ally", allyTeam, parsed.allyHeroes, parsed.allyNames, parsed.allyPlatforms],
+     ["enemy", enemyTeam, parsed.enemyHeroes, parsed.enemyNames, parsed.enemyPlatforms]]
+      .forEach(([side, team, heroGuesses, nameGuesses, platformGuesses])=>{
+        for(let i=0;i<6;i++){
+          const heroGuess = heroGuesses && heroGuesses[i];
+          if(heroGuess && byName[heroGuess]){
+            team[i] = {...byName[heroGuess], _auto:true};
+            heroMatches++;
+          }
+          const nameGuess = nameGuesses && nameGuesses[i] && nameGuesses[i].trim();
+          if(nameGuess){
+            const input = document.getElementById(`scoutName_${side}_${i}`);
+            if(input){
+              input.value = nameGuess;
+              nameMatches++;
+              renderScoutLinksAndVerdict(side, i);
+            }
+          }
+          const platformGuess = platformGuesses && platformGuesses[i];
+          if(platformGuess && validPlatforms.includes(platformGuess)){
+            const sel = document.getElementById(`scoutPlatform_${side}_${i}`);
+            if(sel){ sel.value = platformGuess; platformMatches++; }
+          }
+        }
+      });
+    statusLine.textContent = (heroMatches>0 || nameMatches>0)
+      ? `${heroMatches}/12 héroes, ${nameMatches}/12 nombres${platformMatches>0 ? ` y ${platformMatches} plataformas` : ''} detectados — revisa y corrige lo que falte.`
+      : "No se pudieron identificar héroes ni nombres con confianza. Completa manualmente.";
+    renderSlots();
+  }catch(err){
+    console.error(err);
+    statusLine.textContent = "No se pudo analizar la imagen (esto solo funciona viendo la página dentro de Claude). Selecciona los héroes manualmente.";
+  }finally{
+    uploadBtn.disabled = false;
+    fileInput.value = "";
+  }
+};
+
+function fileToBase64Resized(file, maxDim){
+  return new Promise((resolve,reject)=>{
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = ()=>{ img.src = reader.result; };
+    reader.onerror = reject;
+    img.onload = ()=>{
+      let {width,height} = img;
+      if(width>height && width>maxDim){ height*=maxDim/width; width=maxDim; }
+      else if(height>maxDim){ width*=maxDim/height; height=maxDim; }
+      const canvas = document.createElement("canvas");
+      canvas.width = width; canvas.height = height;
+      canvas.getContext("2d").drawImage(img,0,0,width,height);
+      resolve(canvas.toDataURL("image/jpeg",0.85).split(",")[1]);
+    };
+    img.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// igual que arriba, pero devuelve el data URL completo (con prefijo) para usar directo en un <img src="">
+function fileToBase64ImageResized(file, maxDim){
+  return new Promise((resolve,reject)=>{
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = ()=>{ img.src = reader.result; };
+    reader.onerror = reject;
+    img.onload = ()=>{
+      let {width,height} = img;
+      if(width>height && width>maxDim){ height*=maxDim/width; width=maxDim; }
+      else if(height>maxDim){ width*=maxDim/height; height=maxDim; }
+      const canvas = document.createElement("canvas");
+      canvas.width = width; canvas.height = height;
+      canvas.getContext("2d").drawImage(img,0,0,width,height);
+      resolve(canvas.toDataURL("image/jpeg",0.85));
+    };
+    img.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ---------------- SCOUTING (historial de jugadores, ambos equipos) ---------------- */
+// Tracker.gg no tiene API pública abierta (confirmado: incluso con API key da error 403 según su propio foro),
+// así que no se puede traer esto de forma 100% automática. En su lugar: te doy el link directo a su perfil,
+// tú lees ahí el nivel de cuenta y si saca MVP seguido, lo escribes aquí y la app te da el veredicto al instante.
+const SMURF_MAX_LEVEL = 25;   // nivel de cuenta igual o por debajo de esto = "cuenta nueva"
+const SMURF_MIN_STREAK = 3;   // MVPs seguidos o casi seguidos que ya llaman la atención
+
+function buildScoutSide(side){
+  const containerId = side==="ally" ? "scoutRowsAlly" : "scoutRowsEnemy";
+  const el = document.getElementById(containerId);
+  el.innerHTML = "";
+  for(let i=0;i<6;i++){
+    const row = document.createElement("div");
+    row.className = "scout-row";
+    row.innerHTML = `
+      <div class="top-line">
+        <input type="text" placeholder="Nombre jugador #${i+1} (opcional)" id="scoutName_${side}_${i}">
+        <select id="scoutPlatform_${side}_${i}" class="platform-select">
+          <option value="">Plataforma ¿?</option>
+          <option value="PS5">🎮 PS5</option>
+          <option value="Xbox">🎮 Xbox</option>
+          <option value="PC">🖥️ PC</option>
+        </select>
+      </div>
+      <div class="scout-links" id="scoutLinks_${side}_${i}"></div>
+      <div class="scout-check">
+        <input type="number" min="1" placeholder="Nivel de cuenta" id="scoutLevel_${side}_${i}">
+        <input type="number" min="0" placeholder="Racha de MVP seguidos" id="scoutStreak_${side}_${i}">
+      </div>
+      <div class="scout-result" id="scoutResult_${side}_${i}"></div>
+    `;
+    el.appendChild(row);
+    const nameInput = document.getElementById(`scoutName_${side}_${i}`);
+    const levelInput = document.getElementById(`scoutLevel_${side}_${i}`);
+    const streakInput = document.getElementById(`scoutStreak_${side}_${i}`);
+    const platformSelect = document.getElementById(`scoutPlatform_${side}_${i}`);
+    nameInput.addEventListener("input", ()=>renderScoutLinksAndVerdict(side,i));
+    levelInput.addEventListener("input", ()=>renderScoutLinksAndVerdict(side,i));
+    streakInput.addEventListener("input", ()=>renderScoutLinksAndVerdict(side,i));
+    platformSelect.addEventListener("change", ()=>renderScoutLinksAndVerdict(side,i));
+  }
+}
+buildScoutSide("ally");
+buildScoutSide("enemy");
+
+function renderScoutLinksAndVerdict(side, i){
+  const name = document.getElementById(`scoutName_${side}_${i}`).value.trim();
+  const linksEl = document.getElementById(`scoutLinks_${side}_${i}`);
+  const resultEl = document.getElementById(`scoutResult_${side}_${i}`);
+
+  if(!name){
+    linksEl.innerHTML = "";
+    resultEl.classList.remove("show","smurf");
+    resultEl.innerHTML = "";
+    return;
+  }
+
+  linksEl.innerHTML = `<a href="https://tracker.gg/marvel-rivals/profile/ign/${encodeURIComponent(name)}/overview" target="_blank" rel="noopener">Ver en Tracker.gg ↗</a>
+    <a href="https://rivalsmeta.com/search?q=${encodeURIComponent(name)}" target="_blank" rel="noopener">Ver en RivalsMeta ↗</a>`;
+
+  const levelVal = document.getElementById(`scoutLevel_${side}_${i}`).value;
+  const streakVal = document.getElementById(`scoutStreak_${side}_${i}`).value;
+  const level = levelVal ? parseInt(levelVal,10) : null;
+  const streak = streakVal ? parseInt(streakVal,10) : null;
+  const platform = document.getElementById(`scoutPlatform_${side}_${i}`).value;
+  const platformTag = platform ? ` · plataforma: <b>${platform}</b>` : "";
+
+  resultEl.classList.add("show");
+  if(level===null || streak===null){
+    resultEl.classList.remove("smurf");
+    resultEl.innerHTML = `Abre el perfil de <b>${name}</b> arriba, mira su nivel de cuenta y cuántas partidas seguidas fue MVP, y ponlo en los dos campos para ver el veredicto.${platformTag}`;
+    return;
+  }
+
+  const flagged = level<=SMURF_MAX_LEVEL && streak>=SMURF_MIN_STREAK;
+  if(flagged){
+    resultEl.classList.add("smurf");
+    resultEl.innerHTML = `<div class="smurf-box">
+      <div class="title">⚠ Posible smurf${platformTag}</div>
+      <div class="detail">Nivel <b>${level}</b> (bajo, ≤ ${SMURF_MAX_LEVEL}) + <b>${streak} MVPs seguidos</b> es un patrón típico de cuenta nueva con desempeño muy por encima de lo esperado.</div>
+      <div class="report-steps">Si quieres denunciarlo: en el marcador de la partida (Tab), clic sobre su nombre → <b>Bloquear y denunciar</b> → motivo "Smurfing / manipulación de rango". Esta app no envía la denuncia por ti, solo te ayuda a decidir.</div>
+    </div>`;
+  } else {
+    resultEl.classList.remove("smurf");
+    resultEl.innerHTML = `Nivel <b>${level}</b> / racha <b>${streak}</b> — no cumple el patrón típico de smurf con los umbrales actuales.`;
+  }
+}
+
+/* ---------------- TABS ---------------- */
+document.getElementById("tabMain").onclick = ()=>switchTab("main");
+document.getElementById("tabEditor").onclick = ()=>switchTab("editor");
+function switchTab(t){
+  document.getElementById("mainView").style.display = t==="main" ? "" : "none";
+  document.getElementById("editorView").style.display = t==="editor" ? "" : "none";
+  document.getElementById("tabMain").classList.toggle("active", t==="main");
+  document.getElementById("tabEditor").classList.toggle("active", t==="editor");
+  if(t==="editor") renderEditorHeroList("");
+}
+
+/* ---------------- EDITOR DE COUNTERS ---------------- */
+document.getElementById("editorHeroSearch").oninput = (e)=>renderEditorHeroList(e.target.value);
+
+function renderEditorHeroList(query){
+  const list = document.getElementById("editorHeroList");
+  const q = query.trim().toLowerCase();
+  list.innerHTML = "";
+  HEROES.filter(h=>h.n.toLowerCase().includes(q)).forEach(h=>{
+    const row = document.createElement("div");
+    row.className = "modal-item";
+    row.innerHTML = `<span class="n">${h.n}</span><span class="roletag ${h.r}">${h.r}</span>`;
+    row.onclick = ()=>renderEditorDetail(h.n);
+    list.appendChild(row);
+  });
+}
+
+async function renderEditorDetail(name){
+  const hero = byName[name];
+  const curated = COUNTERS[name] || [];
+  const hiddenSet = new Set(overrides.hidden[name] || []);
+  const additions = overrides.additions[name] || [];
+
+  let storedImage = null;
+  try{
+    const res = await window.storage.get(`heroImage:${name}`, false);
+    if(res && res.value) storedImage = res.value;
+  }catch(e){ /* no hay imagen guardada todavía para este héroe */ }
+
+  let html = `<div class="counter-card">
+    <div class="editor-image-row">
+      <div class="editor-image-preview">${storedImage ? `<img src="${storedImage}" alt="${name}">` : `<span class="no-img">sin imagen</span>`}</div>
+      <div class="editor-image-actions">
+        <span class="enemy-name">${name}</span><span class="role-mini">${hero ? hero.r : ''}</span><br>
+        <label class="mini-btn upload-mini">📷 ${storedImage?'Cambiar imagen':'Subir imagen'}<input type="file" accept="image/*" id="heroImageInput" style="display:none;"></label>
+        ${storedImage ? `<button class="mini-btn" id="removeHeroImageBtn">quitar imagen</button>` : ''}
+      </div>
+    </div>
+    <div class="counter-list">`;
+
+  if(curated.length===0 && additions.length===0){
+    html += `<span class="pill">Sin counters curados todavía para este héroe — añade el primero abajo.</span>`;
+  }
+  curated.forEach(x=>{
+    const isHidden = hiddenSet.has(x.c);
+    html += `<span class="pill${isHidden?' hidden-pill':''}"><b>${x.c}</b> <span class="why">— ${x.w}</span>
+      <button class="mini-btn" data-hide="${x.c.replace(/"/g,'&quot;')}">${isHidden?'restaurar':'ocultar'}</button></span>`;
+  });
+  additions.forEach((x,idx)=>{
+    html += `<span class="pill have"><b>${x.c}</b> <span class="why">— ${x.w} (tuyo)</span>
+      <button class="mini-btn" data-del="${idx}">eliminar</button></span>`;
+  });
+
+  html += `</div>
+    <div class="editor-add-row">
+      <div class="autocomplete-wrap">
+        <input type="text" id="newCounterName" placeholder="Héroe que lo contrarresta (ej: Hela)" autocomplete="off">
+        <div class="suggest-list" id="newCounterSuggestions"></div>
+      </div>
+      <input type="text" id="newCounterWhy" placeholder="Razón breve (opcional)">
+      <button id="addCounterBtn">+ Añadir</button>
+    </div>
+  </div>`;
+
+  const el = document.getElementById("editorDetail");
+  el.innerHTML = html;
+  el.querySelectorAll("[data-hide]").forEach(b=>{
+    b.onclick = ()=>toggleHidden(name, b.dataset.hide);
+  });
+  el.querySelectorAll("[data-del]").forEach(b=>{
+    b.onclick = ()=>deleteAddition(name, parseInt(b.dataset.del,10));
+  });
+  document.getElementById("addCounterBtn").onclick = ()=>addCounter(name);
+
+  const newCounterInput = document.getElementById("newCounterName");
+  const suggestBox = document.getElementById("newCounterSuggestions");
+  newCounterInput.addEventListener("input", ()=>{
+    const q = newCounterInput.value.trim().toLowerCase();
+    suggestBox.innerHTML = "";
+    if(!q){ suggestBox.classList.remove("show"); return; }
+    const matches = HEROES.filter(h=>h.n.toLowerCase().includes(q)).slice(0,8);
+    if(matches.length===0){ suggestBox.classList.remove("show"); return; }
+    matches.forEach(h=>{
+      const item = document.createElement("div");
+      item.className = "suggest-item";
+      item.innerHTML = `<span>${h.n}</span><span class="roletag ${h.r}">${h.r}</span>`;
+      item.onclick = ()=>{
+        newCounterInput.value = h.n;
+        suggestBox.innerHTML = "";
+        suggestBox.classList.remove("show");
+        document.getElementById("newCounterWhy").focus();
+      };
+      suggestBox.appendChild(item);
+    });
+    suggestBox.classList.add("show");
+  });
+  newCounterInput.addEventListener("blur", ()=>{
+    // pequeño delay para permitir que el click en una sugerencia registre antes de ocultarla
+    setTimeout(()=>suggestBox.classList.remove("show"), 150);
+  });
+  newCounterInput.addEventListener("focus", ()=>{
+    if(newCounterInput.value.trim()) suggestBox.classList.add("show");
+  });
+
+  const imgInput = document.getElementById("heroImageInput");
+  if(imgInput){
+    imgInput.onchange = async (e)=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      const dataUrl = await fileToBase64ImageResized(file, 300);
+      try{ await window.storage.set(`heroImage:${name}`, dataUrl, false); }
+      catch(err){ console.error("No se pudo guardar la imagen:", err); }
+      renderEditorDetail(name);
+    };
+  }
+  const removeBtn = document.getElementById("removeHeroImageBtn");
+  if(removeBtn){
+    removeBtn.onclick = async ()=>{
+      try{ await window.storage.delete(`heroImage:${name}`, false); }
+      catch(err){ /* nada que borrar */ }
+      renderEditorDetail(name);
+    };
+  }
+}
+
+async function toggleHidden(name, counterName){
+  if(!overrides.hidden[name]) overrides.hidden[name] = [];
+  const set = new Set(overrides.hidden[name]);
+  if(set.has(counterName)) set.delete(counterName); else set.add(counterName);
+  overrides.hidden[name] = [...set];
+  await saveOverrides();
+  renderEditorDetail(name);
+  renderAnalysis();
+}
+async function deleteAddition(name, idx){
+  if(!overrides.additions[name]) return;
+  overrides.additions[name].splice(idx,1);
+  await saveOverrides();
+  renderEditorDetail(name);
+  renderAnalysis();
+}
+async function addCounter(name){
+  const nameInput = document.getElementById("newCounterName");
+  const whyInput = document.getElementById("newCounterWhy");
+  const c = nameInput.value.trim();
+  if(!c) return;
+  if(!byName[c]){
+    const proceed = confirm(`"${c}" no coincide exactamente con ningún héroe del roster (¿typo? elige una opción de la lista que aparece al escribir). ¿Guardarlo igual tal cual lo escribiste?`);
+    if(!proceed) return;
+  }
+  const w = whyInput.value.trim() || "Añadido por ti como counter efectivo.";
+  if(!overrides.additions[name]) overrides.additions[name] = [];
+  overrides.additions[name].push({c, w});
+  await saveOverrides();
+  renderEditorDetail(name);
+  renderAnalysis();
+}
+
+/* ---------------- ARRANQUE ---------------- */
+(async ()=>{
+  await loadOverrides();
+  renderSlots();
+})();
+</script>
+</body>
+</html>

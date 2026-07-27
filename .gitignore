@@ -1,0 +1,17 @@
+# Claude Code local tool config (not part of the project)
+.claude/
+
+# Screenshots and test images used while building/testing, not needed to run the html
+capturas-pruebas/
+*.png
+*.jpg
+*.jpeg
+*.jfif
+*.webp
+
+# Raw data / build artifacts for the old versions, already baked into MarvelCountersPrime.html
+versiones-anteriores/marvel-images-data.js
+versiones-anteriores/*.json
+versiones-anteriores/ocr-build/
+versiones-anteriores/organizado/
+versiones-anteriores/_originales-wiki/
