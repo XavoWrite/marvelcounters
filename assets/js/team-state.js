@@ -78,6 +78,16 @@ function getHeroVariants(name){
   }
   return Array.from(set);
 }
+// algunos heroes no tienen ninguna variante llamada literalmente "default" (ej. Hulk: sus claves son
+// "hero-hulk"/"monster-hulk"/"bruce-banner", nunca "default") -- sin esto, el fallback de mas abajo
+// caia en la PRIMERA clave del objeto (orden de inserción). Para Hulk se elige a proposito
+// "bruce-banner" (su forma humana) como reposo: asi el hover se siente como una transformacion real
+// (Bruce Banner -> Hulk), no solo una foto mas grande de lo mismo -- ver CUSTOM_DYNAMIC_OVERRIDE.
+const CANONICAL_DEFAULT_VARIANT = { "Hulk": "bruce-banner" };
+// casos donde el hover NO debe seguir la convencion normal "X" -> "X-dynamic" de la misma variante,
+// sino saltar a otra variante distinta a proposito (el "efecto transformacion" de Hulk).
+const CUSTOM_DYNAMIC_OVERRIDE = { "Hulk": "hero-hulk-dynamic" };
+
 function getHeroImage(name, variant){
   try{
     if(variant){
@@ -95,11 +105,38 @@ function getHeroImage(name, variant){
   if(pre){
     if(variant && pre[variant]) return pre[variant].img;
     if(pre.default) return pre.default.img;
+    const canon = CANONICAL_DEFAULT_VARIANT[name];
+    if(canon && pre[canon]) return pre[canon].img;
     const firstKey = Object.keys(pre)[0];
     if(firstKey) return pre[firstKey].img;
   }
   return null;
 }
+// nombre de la variante "splash art" que corresponde a una variante base -- sigue la convencion
+// "X" -> "X-dynamic" en todos los heroes, salvo el caso especial de "default" cuyo dynamic es
+// literalmente "dynamic" (no "default-dynamic").
+function dynamicVariantFor(baseVariant){
+  return baseVariant==="default" ? "dynamic" : `${baseVariant}-dynamic`;
+}
+// a que variante REAL termina cayendo un pedido "default" para este heroe -- para Hulk eso es
+// "hero-hulk", no la clave literal "default" (que no existe). Hace falta saberlo de antemano (no solo
+// dentro de getHeroImage) para que el hover calcule el "-dynamic" que corresponde a esa variante real,
+// no al pedido original.
+function resolveBaseVariantName(name, requestedVariant){
+  const pre = window.PRELOADED_IMAGES && window.PRELOADED_IMAGES[name];
+  if(pre){
+    if(requestedVariant && pre[requestedVariant]) return requestedVariant;
+    if(pre.default) return "default";
+    const canon = CANONICAL_DEFAULT_VARIANT[name];
+    if(canon && pre[canon]) return canon;
+  }
+  return requestedVariant || "default";
+}
+// heroes con mas de una apariencia base "de fabrica" (no skins, sino formas distintas del mismo
+// heroe) -- Loki cambia entre su forma masculina y femenina. Se elige al azar cual mostrar cada vez
+// que se renderiza el icono, y el hover usa el dynamic que corresponda a la que se elegio (no siempre
+// el mismo), para que combinen entre si.
+const ALT_APPEARANCE_HEROES = { "Loki": ["default", "lady-loki"] };
 // nombre para mostrar: sin el "(Vanguard)/(Duelist)/(Strategist)" en ingles del multi-rol de
 // Deadpool -- el icono de clase que ya se muestra al lado (roleIconHtml/roleTagsHtml) alcanza para
 // distinguir cual es cual, no hace falta repetirlo en ingles dentro del nombre.
@@ -109,20 +146,25 @@ function heroLabel(name){
 // la gente lee mejor una cara que un nombre: chip con el icono del heroe para mostrar en vez de solo texto.
 // al pasar el mouse se cambia por la variante "dynamic" (el splash art) y se agranda -- ver heroIconPreview.
 function heroIconHtml(name, size){
-  const img = getHeroImage(name, "default");
+  const alts = ALT_APPEARANCE_HEROES[name];
+  const requested = alts ? alts[Math.floor(Math.random()*alts.length)] : "default";
+  const baseVariant = resolveBaseVariantName(name, requested);
+  const img = getHeroImage(name, baseVariant);
   if(!img) return "";
-  return `<img src="${img}" class="hero-icon" data-hero="${name}" style="width:${size}px;height:${size}px;" alt="${name}" loading="lazy" onmouseenter="heroIconPreview(this,true)" onmouseleave="heroIconPreview(this,false)">`;
+  return `<img src="${img}" class="hero-icon" data-hero="${name}" data-base-variant="${baseVariant}" style="width:${size}px;height:${size}px;" alt="${name}" loading="lazy" onmouseenter="heroIconPreview(this,true)" onmouseleave="heroIconPreview(this,false)">`;
 }
 function heroIconPreview(el, hovering){
   const name = el.dataset.hero;
   if(!name) return;
+  const baseVariant = el.dataset.baseVariant || "default";
   if(hovering){
-    const dynamicImg = getHeroImage(name, "dynamic");
+    const dynamicVariant = CUSTOM_DYNAMIC_OVERRIDE[name] || dynamicVariantFor(baseVariant);
+    const dynamicImg = getHeroImage(name, dynamicVariant);
     if(!dynamicImg) return;
     el.src = dynamicImg;
     el.classList.add("hero-icon-zoom");
   } else {
-    el.src = getHeroImage(name, "default") || el.src;
+    el.src = getHeroImage(name, baseVariant) || el.src;
     el.classList.remove("hero-icon-zoom");
   }
 }

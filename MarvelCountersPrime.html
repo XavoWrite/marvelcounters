@@ -29,15 +29,26 @@
 
   <div id="mainView">
 
-  <div class="local-detect-section">
+  <div class="quick-jump-row">
+    <a class="quick-jump-btn" href="#teamCaptureSection">📸 Subir captura de la partida<span>para completar los héroes</span></a>
+    <a class="quick-jump-btn" href="#playerNamesCaptureZone">🪧 Subir captura con nombres<span>para completar el explorador de jugadores</span></a>
+  </div>
+
+  <div class="local-detect-section" id="teamCaptureSection">
     <div class="sec-title" style="margin-top:0;">Identificación de equipo</div>
     <span class="badge" style="margin-bottom:10px;">🚧 en proceso — la identificación automática del héroe es experimental, revisá siempre lo que reconoce solo</span>
     <p class="empty-hint">Dos capturas separadas — una de tu equipo y otra del rival — así se ven más grandes los íconos y los nombres. Capturá con <b>Win+Shift+S</b>, hacé clic en el recuadro de abajo y pegá con <b>Ctrl+V</b> (o subí un archivo). No depende de internet.</p>
     <label class="weak-toggle" style="margin:6px 0 12px;"><input type="checkbox" id="ocrReadNamesCheck" checked> Leer nombres de jugador con OCR offline (más lento, ~1-2s por jugador la primera vez que se usa)</label>
     <div class="scenario-toggle" style="margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
       <span class="empty-hint" style="margin:0;">Pantalla de la captura:</span>
-      <button class="mini-btn scenario-btn active" data-scenario="scoreboard">🏁 Fin de partida (Tab)</button>
+      <button class="mini-btn scenario-btn active" data-scenario="scoreboard">📊 Partida en curso (Tab)</button>
       <button class="mini-btn scenario-btn" data-scenario="select">🎯 Selección de héroes</button>
+    </div>
+    <div id="combinedZoneWrap">
+      <div class="paste-zone" id="pasteZoneCombined" tabindex="0">📷 ¿Tenés UNA sola captura con los dos equipos (marcador con Tab)? Pegala acá y la separamos sola<br><span class="paste-zone-sub">Ctrl+V, arrastrá la imagen, o <u id="combinedFilePick">elegí un archivo</u></span></div>
+      <input type="file" id="combinedFileInput" accept="image/*" style="display:none">
+      <span class="status-line" id="combinedDetectStatus"></span>
+      <p class="empty-hint" style="margin:6px 0 12px;">o si preferís más precisión, subí cada equipo por separado abajo ↓</p>
     </div>
     <div class="capture-cols">
       <div class="capture-col">
@@ -45,50 +56,12 @@
         <div class="paste-zone" id="pasteZoneAlly" tabindex="0">📋 Hacé clic acá y pegá con Ctrl+V<br><span class="paste-zone-sub">o arrastrá la imagen acá, o <u id="allyFilePick">elegí un archivo</u></span></div>
         <input type="file" id="allyFileInput" accept="image/*" style="display:none">
         <span class="status-line" id="allyDetectStatus"></span>
-        <details class="calib-box">
-          <summary>⚙️ Calibrar posiciones (tu equipo)</summary>
-          <div class="calib-grid">
-            <label>X ícono (%)<input type="number" id="cal_ally_x" step="0.1"></label>
-            <label>Y inicio (%)<input type="number" id="cal_ally_y" step="0.1"></label>
-            <label>Ancho ícono (%)<input type="number" id="cal_ally_w" step="0.1"></label>
-            <label>Alto ícono (%)<input type="number" id="cal_ally_h" step="0.1"></label>
-            <label>Separación entre filas (%)<input type="number" id="cal_ally_rowGap" step="0.1"></label>
-            <label>Logo de rol: offset X (%)<input type="number" id="cal_ally_roleOffsetX" step="0.1"></label>
-            <label>Logo de rol: ancho (%)<input type="number" id="cal_ally_roleW" step="0.1"></label>
-            <label>Logo de rol: alto (%)<input type="number" id="cal_ally_roleH" step="0.1"></label>
-            <label>Nombre: offset X (%)<input type="number" id="cal_ally_nameOffsetX" step="0.1"></label>
-            <label>Nombre: ancho (%)<input type="number" id="cal_ally_nameW" step="0.1"></label>
-            <label>Nombre: alto (%)<input type="number" id="cal_ally_nameH" step="0.1"></label>
-          </div>
-          <button class="mini-btn" id="cal_ally_previewBtn">Actualizar vista previa</button>
-          <button class="mini-btn" id="cal_ally_redetectBtn">🔄 Detectar de nuevo</button>
-          <canvas id="cal_ally_canvas" style="max-width:100%;border-radius:8px;margin-top:8px;display:none;"></canvas>
-        </details>
       </div>
       <div class="capture-col">
         <div class="capture-col-title" style="color:var(--enemy);">Equipo rival</div>
         <div class="paste-zone" id="pasteZoneEnemy" tabindex="0">📋 Hacé clic acá y pegá con Ctrl+V<br><span class="paste-zone-sub">o arrastrá la imagen acá, o <u id="enemyFilePick">elegí un archivo</u></span></div>
         <input type="file" id="enemyFileInput" accept="image/*" style="display:none">
         <span class="status-line" id="enemyDetectStatus"></span>
-        <details class="calib-box">
-          <summary>⚙️ Calibrar posiciones (rival)</summary>
-          <div class="calib-grid">
-            <label>X ícono (%)<input type="number" id="cal_enemy_x" step="0.1"></label>
-            <label>Y inicio (%)<input type="number" id="cal_enemy_y" step="0.1"></label>
-            <label>Ancho ícono (%)<input type="number" id="cal_enemy_w" step="0.1"></label>
-            <label>Alto ícono (%)<input type="number" id="cal_enemy_h" step="0.1"></label>
-            <label>Separación entre filas (%)<input type="number" id="cal_enemy_rowGap" step="0.1"></label>
-            <label>Logo de rol: offset X (%)<input type="number" id="cal_enemy_roleOffsetX" step="0.1"></label>
-            <label>Logo de rol: ancho (%)<input type="number" id="cal_enemy_roleW" step="0.1"></label>
-            <label>Logo de rol: alto (%)<input type="number" id="cal_enemy_roleH" step="0.1"></label>
-            <label>Nombre: offset X (%)<input type="number" id="cal_enemy_nameOffsetX" step="0.1"></label>
-            <label>Nombre: ancho (%)<input type="number" id="cal_enemy_nameW" step="0.1"></label>
-            <label>Nombre: alto (%)<input type="number" id="cal_enemy_nameH" step="0.1"></label>
-          </div>
-          <button class="mini-btn" id="cal_enemy_previewBtn">Actualizar vista previa</button>
-          <button class="mini-btn" id="cal_enemy_redetectBtn">🔄 Detectar de nuevo</button>
-          <canvas id="cal_enemy_canvas" style="max-width:100%;border-radius:8px;margin-top:8px;display:none;"></canvas>
-        </details>
       </div>
     </div>
     <p class="empty-hint" style="margin-top:8px;">La identificación del héroe intenta ser automática (comparando contra capturas reales) pero es experimental — los casilleros marcados "auto" siempre hay que revisarlos, y si corregís uno la app aprende de esa corrección para la próxima vez. La posición calibrada además sirve de guía visual si preferís elegir a mano. La zona de "nombre" se lee sola con OCR offline y rellena el Explorador de Jugadores.</p>
@@ -178,7 +151,15 @@
 
   <section class="scouting" style="margin-top:16px;">
     <div class="sec-title">Explorador de jugadores (opcional)</div>
-    <p class="empty-hint" style="margin-bottom:12px;">Escribe (o deja que la foto llene) los nombres de jugadores de ambos equipos y elige plataforma. Usa el desplegable "revisar manualmente" de cada jugador: te deja el enlace directo a Tracker.gg y RivalsMeta para que tú mismo mires el perfil, y eliges el veredicto (smurf / no smurf / privado) a mano.</p>
+    <p class="empty-hint" style="margin-bottom:12px;">Escribe (o deja que la foto llene) los nombres de jugadores de ambos equipos y elige plataforma. Cada jugador tiene enlaces directos a Tracker.gg y RivalsMeta para que revises el perfil vos mismo.</p>
+
+    <div id="playerNamesCaptureZone">
+      <p class="empty-hint" style="margin:0 0 6px;">🪧 ¿Tenés la captura de carga (antes de elegir héroe)? Subila acá y completamos los nombres que hayan quedado vacíos abajo — no hace falta si ya los tenés.</p>
+      <div class="paste-zone" id="pasteZoneLoading" tabindex="0">📋 Pegá (Ctrl+V) o arrastrá la captura de carga acá<br><span class="paste-zone-sub">o <u id="loadingFilePick">elegí un archivo</u></span></div>
+      <input type="file" id="loadingFileInput" accept="image/*" style="display:none">
+      <span class="status-line" id="loadingDetectStatus" style="display:block;margin:4px 0 12px;"></span>
+    </div>
+
     <div style="margin-bottom:14px;">
       <button class="mini-btn" id="clearAllScoutBtn">🗑 Limpiar todo el explorador (ambos equipos)</button>
     </div>
@@ -220,6 +201,12 @@
     <div class="support-links">
       <a class="support-btn kofi" href="https://ko-fi.com/xavodraw" target="_blank" rel="noopener">☕ Invitame un café en Ko-fi</a>
       <a class="support-btn paypal" href="https://www.paypal.com/paypalme/xavodraw" target="_blank" rel="noopener">💙 PayPal</a>
+    </div>
+    <p class="credits-text credits-support" style="margin-top:14px;">Seguime en redes:</p>
+    <div class="support-links">
+      <a class="support-btn tiktok" href="https://www.tiktok.com/@xavovideo" target="_blank" rel="noopener">🎵 TikTok</a>
+      <a class="support-btn instagram" href="https://www.instagram.com/xavodraw/" target="_blank" rel="noopener">📸 Instagram</a>
+      <a class="support-btn twitch" href="https://www.twitch.tv/xavodraw" target="_blank" rel="noopener">🎮 Twitch</a>
     </div>
   </div>
 

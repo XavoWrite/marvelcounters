@@ -183,6 +183,9 @@
   .support-btn:hover{border-color:var(--gold);color:var(--gold);}
   .support-btn.kofi{border-color:#29abe0;}
   .support-btn.paypal{border-color:#00457c;}
+  .support-btn.tiktok{border-color:#25f4ee;}
+  .support-btn.instagram{border-color:#e1306c;}
+  .support-btn.twitch{border-color:#9146ff;}
   .credit{color:var(--muted);font-size:10.5px;font-family:'JetBrains Mono',monospace;position:relative;z-index:1;margin:2px 0 8px;letter-spacing:.03em;}
 
   /* risk-flagged ally slot */
@@ -271,22 +274,10 @@
     color:var(--text);padding:7px 9px;border-radius:7px;font-size:12.5px;font-family:'Inter',sans-serif;}
   .platform-select{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:7px 8px;
     border-radius:7px;font-size:11.5px;font-family:'Inter',sans-serif;cursor:pointer;}
-  .scout-links a{color:var(--gold);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:10.5px;margin-right:12px;}
-  .scout-links a:hover{text-decoration:underline;}
-  .scout-links summary{cursor:pointer;color:var(--muted);font-size:10.5px;font-family:'JetBrains Mono',monospace;list-style:none;}
-  .scout-links summary::-webkit-details-marker{display:none;}
-  .scout-links summary:hover{color:var(--gold);}
-  .scout-links details[open] summary{margin-bottom:4px;}
-  .verdict-select{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--text);
-    padding:8px 10px;border-radius:8px;font-size:12.5px;font-family:'Inter',sans-serif;font-weight:600;cursor:pointer;}
-  .verdict-select:focus{outline:none;border-color:var(--gold);}
-  .scout-result{font-size:12px;line-height:1.5;display:none;}
-  .scout-result.show{display:block;}
-  .scout-result.smurf{color:var(--enemy);font-weight:600;}
-  .smurf-box{margin-top:2px;padding:8px 10px;border:1px solid var(--enemy);border-radius:8px;background:rgba(255,59,78,.1);}
-  .smurf-box .title{color:var(--enemy);font-weight:800;font-size:12.5px;}
-  .smurf-box .detail{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.5;}
-  .smurf-box .report-steps{font-size:11px;color:var(--text);margin-top:6px;line-height:1.5;}
+  .scout-links{display:flex;gap:8px;flex-wrap:wrap;}
+  .scout-links a{color:var(--muted);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    border:1px solid var(--line);border-radius:6px;padding:4px 9px;transition:.15s;}
+  .scout-links a:hover{color:var(--gold);border-color:var(--gold);}
 
   .tabbar{display:flex;gap:8px;margin-bottom:18px;}
   .tab-btn{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:9px 16px;border-radius:9px;
@@ -341,6 +332,13 @@
     background:var(--panel-alt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;}
   .weak-toggle input{accent-color:var(--enemy);width:15px;height:15px;}
   .weak-toggle b{color:var(--text);}
+
+  .quick-jump-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+  .quick-jump-btn{flex:1;min-width:220px;display:flex;flex-direction:column;gap:2px;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:12px 16px;color:var(--text);text-decoration:none;
+    font-weight:700;font-size:14px;transition:.15s;}
+  .quick-jump-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .quick-jump-btn span{font-weight:400;font-size:11.5px;color:var(--muted);}
 
   .ban-panel{padding-bottom:14px;}
   .local-detect-section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:16px;}

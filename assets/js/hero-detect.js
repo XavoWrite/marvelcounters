@@ -71,12 +71,16 @@ function allHeroIconRefs(){
   return merged;
 }
 // compara el recorte contra toda la libreria -- si no hay ninguna referencia razonablemente parecida
-// no adivina (mejor dejarlo para elegir a mano que autocompletar mal y que pase desapercibido)
-function matchHeroIcon(canvas){
+// no adivina (mejor dejarlo para elegir a mano que autocompletar mal y que pase desapercibido).
+// excludeNames evita que dos casilleros del MISMO equipo terminen con el mismo heroe asignado --
+// el rival de turno con menos referencias en la libreria (ej. un heroe que todavia no aprendimos)
+// puede "caerle" por cercania al vecino mas parecido y duplicar a alguien que ya estaba asignado.
+function matchHeroIcon(canvas, excludeNames){
   const refs = allHeroIconRefs();
   const sig = heroIconSignature(canvas);
   let best = null, bestDist = Infinity;
   Object.keys(refs).forEach(name=>{
+    if(excludeNames && excludeNames.has(name)) return;
     refs[name].forEach(refSig=>{
       const d = sigDistanceIcon(sig, refSig);
       if(d < bestDist){ bestDist = d; best = name; }
