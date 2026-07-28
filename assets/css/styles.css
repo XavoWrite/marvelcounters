@@ -192,6 +192,7 @@
   .support-btn.tiktok{border-color:#25f4ee;}
   .support-btn.instagram{border-color:#e1306c;}
   .support-btn.twitch{border-color:#9146ff;}
+  .support-btn.feedback{border-color:var(--gold);}
   .xavoapps-footer{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;
     padding-top:14px;border-top:1px solid var(--line);text-decoration:none;}
   .xavoapps-footer span{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace;}
