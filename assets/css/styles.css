@@ -34,6 +34,12 @@
   .sub{color:var(--muted);font-size:14.5px;position:relative;z-index:1;max-width:640px;line-height:1.5;}
   .badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;
     background:var(--panel-alt);border:1px solid var(--line);color:var(--gold);padding:3px 8px;border-radius:20px;margin-bottom:10px;position:relative;z-index:1;}
+  .badge-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;z-index:1;}
+  .xavoapps-badge{display:inline-flex;align-items:center;background:var(--panel-alt);border:1px solid var(--line);
+    border-radius:20px;padding:3px 10px;margin-bottom:10px;text-decoration:none;transition:.15s;}
+  .xavoapps-badge:hover{border-color:#3ef2f2;}
+  .xavoapps-badge img{height:11px;display:block;}
+  .xavodraw-logo{height:16px;vertical-align:middle;margin-left:2px;}
   .game-logo{position:absolute;top:16px;right:20px;height:34px;opacity:.85;z-index:1;pointer-events:none;}
   @media(max-width:560px){.game-logo{height:22px;top:14px;right:14px;}}
 
@@ -186,6 +192,10 @@
   .support-btn.tiktok{border-color:#25f4ee;}
   .support-btn.instagram{border-color:#e1306c;}
   .support-btn.twitch{border-color:#9146ff;}
+  .xavoapps-footer{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;
+    padding-top:14px;border-top:1px solid var(--line);text-decoration:none;}
+  .xavoapps-footer span{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace;}
+  .xavoapps-footer img{height:14px;display:block;}
   .credit{color:var(--muted);font-size:10.5px;font-family:'JetBrains Mono',monospace;position:relative;z-index:1;margin:2px 0 8px;letter-spacing:.03em;}
 
   /* risk-flagged ally slot */

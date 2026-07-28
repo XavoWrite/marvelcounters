@@ -12,6 +12,7 @@ capturas-pruebas/
 *.jfif
 *.webp
 !assets/img/*.webp
+!assets/img/*.png
 
 # Raw data / build artifacts for the old versions, already baked into MarvelCountersPrime.html
 versiones-anteriores/marvel-images-data.js

@@ -572,7 +572,11 @@ function renderAnalysis(){
   } else {
     const pillHtml = c=>{
       const cls = `pill ${c.have?'have':''} ${c.banned?'hidden-pill':''}`;
-      return `<span class="${cls}">${heroIconHtml(c.c,20)}${c.banned?'🚫 baneado · ':''}${c.have?'<span class="check">✓ ya en tu equipo</span> · ':''}<b>${heroLabel(c.c)}</b></span>`;
+      // el logo de clase (Vanguard/Duelist/Strategist) es lo unico que distingue, a simple vista,
+      // entre los 3 Deadpool (mismo retrato, mismo nombre en pantalla) -- sin esto dos sugerencias
+      // de "Deadpool" se ven identicas aunque sean roles totalmente distintos.
+      const role = byName[c.c] && byName[c.c].r;
+      return `<span class="${cls}">${heroIconHtml(c.c,20)}${role?roleIconHtml(role,13):''}${c.banned?'🚫 baneado · ':''}${c.have?'<span class="check">✓ ya en tu equipo</span> · ':''}<b>${heroLabel(c.c)}</b></span>`;
     };
     const MAX_PRIMARY_COUNTERS = 6;
     enemyTeam.forEach(h=>{
