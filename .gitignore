@@ -1,6 +1,9 @@
 # Claude Code local tool config (not part of the project)
 .claude/
 
+# Datos crudos de la matriz de matchups (ya se cargan al html principal a mano, no se suben)
+/matchup-matrix.json
+
 # Screenshots and test images used while building/testing, not needed to run the html
 capturas-pruebas/
 *.png
@@ -8,6 +11,7 @@ capturas-pruebas/
 *.jpeg
 *.jfif
 *.webp
+!assets/img/*.webp
 
 # Raw data / build artifacts for the old versions, already baked into MarvelCountersPrime.html
 versiones-anteriores/marvel-images-data.js
