@@ -257,7 +257,7 @@ function resolveRoleFromCrop(roleCanvas){
 async function runLocalDetectionForSide(side){
   const statusEl = document.getElementById(`${side}DetectStatus`);
   const img = detectImages[side];
-  if(!img){ statusEl.textContent = "Primero pegá (Ctrl+V) o subí una captura."; return; }
+  if(!img){ statusEl.textContent = t("status.pasteFirst"); return; }
   const cal = readCalibrationInputs(side);
   saveCalibration(side, cal);
   const fullCanvas = document.createElement("canvas");
@@ -294,18 +294,18 @@ async function runLocalDetectionForSide(side){
   renderSlots();
 
   statusEl.textContent = autoCount>0
-    ? `${autoCount}/6 héroes reconocidos automáticamente (marcados "auto" — revisalos y corregí lo que haga falta). El resto, clickeá el casillero para elegirlo a mano.`
-    : `No se reconoció ningún héroe con suficiente confianza — clickeá cada casillero de arriba para elegirlo a mano (mirá el recuadro celeste como guía).`;
+    ? t("status.autoDetected", {n: autoCount})
+    : t("status.noneDetected");
 
   // lectura de nombres de jugador con OCR offline (Tesseract.js, sin IA ni internet)
   const ocrCheckbox = document.getElementById("ocrReadNamesCheck");
   if(!ocrCheckbox || !ocrCheckbox.checked) return;
   try{
-    statusEl.textContent += " · iniciando lector de nombres (offline, puede tardar la primera vez)...";
+    statusEl.textContent += t("status.startingOcrSuffix");
     const worker = await getTesseractWorker();
     let namesRead = 0;
     for(let i=0;i<6;i++){
-      statusEl.textContent = `Leyendo nombres (${i+1}/6)...`;
+      statusEl.textContent = t("status.readingNames", {i: i+1});
       const name = await ocrReadName(worker, cropRect(rects.name[i]));
       if(name){
         const input = document.getElementById(`scoutName_${side}_${i}`);
@@ -316,10 +316,10 @@ async function runLocalDetectionForSide(side){
         }
       }
     }
-    statusEl.textContent = `${namesRead}/6 nombres leídos con OCR offline — clickeá cada casillero de arriba para elegir el héroe correspondiente.`;
+    statusEl.textContent = t("status.namesReadDone", {n: namesRead});
   }catch(e){
     console.error("No se pudo leer nombres con OCR:", e);
-    statusEl.textContent += " (no se pudo iniciar el lector de nombres offline)";
+    statusEl.textContent += t("status.ocrStartFailedSuffix");
   }
 }
 
@@ -374,9 +374,13 @@ function loadImageForSide(side, dataUrl){
 function setupCaptureZone(side){
   const zone = document.getElementById(side==="ally" ? "pasteZoneAlly" : "pasteZoneEnemy");
   const fileInput = document.getElementById(side==="ally" ? "allyFileInput" : "enemyFileInput");
-  const filePick = document.getElementById(side==="ally" ? "allyFilePick" : "enemyFilePick");
-  zone.addEventListener("click", ()=> zone.focus());
-  filePick.onclick = (e)=>{ e.stopPropagation(); fileInput.click(); };
+  // el link "elegi un archivo" (<u>) se reconstruye cada vez que cambia el idioma (data-i18n-html
+  // pisa el innerHTML de la zona) -- por eso el click se delega en "zone" (que nunca se destruye)
+  // en vez de engancharse directo al <u>, que perderia el listener en cada cambio de idioma.
+  zone.addEventListener("click", (e)=>{
+    if(e.target.closest("u")){ e.stopPropagation(); fileInput.click(); return; }
+    zone.focus();
+  });
   zone.addEventListener("paste", (e)=>{
     const items = e.clipboardData && e.clipboardData.items;
     if(!items) return;
@@ -476,23 +480,24 @@ function loadCombinedImage(dataUrl){
     fullCanvas.width = trimmed.width; fullCanvas.height = trimmed.height;
     fullCanvas.getContext("2d").drawImage(trimmed, 0, 0);
     document.getElementById("pasteZoneCombined").classList.add("has-image");
-    statusEl.textContent = "Separando en dos equipos...";
+    statusEl.textContent = t("status.splitting");
     detectImages.ally = cropPercentToCanvas(fullCanvas, COMBINED_SPLIT.ally);
     detectImages.enemy = cropPercentToCanvas(fullCanvas, COMBINED_SPLIT.enemy);
     document.getElementById("pasteZoneAlly").classList.add("has-image");
     document.getElementById("pasteZoneEnemy").classList.add("has-image");
     await runLocalDetectionForSide("ally");
     await runLocalDetectionForSide("enemy");
-    statusEl.textContent = "Listo — revisá los dos equipos de abajo (los casilleros \"auto\" siempre conviene chequearlos).";
+    statusEl.textContent = t("status.combinedDone");
   };
   img.src = dataUrl;
 }
 function setupCombinedZone(){
   const zone = document.getElementById("pasteZoneCombined");
   const fileInput = document.getElementById("combinedFileInput");
-  const filePick = document.getElementById("combinedFilePick");
-  zone.addEventListener("click", ()=> zone.focus());
-  filePick.onclick = (e)=>{ e.stopPropagation(); fileInput.click(); };
+  zone.addEventListener("click", (e)=>{
+    if(e.target.closest("u")){ e.stopPropagation(); fileInput.click(); return; }
+    zone.focus();
+  });
   zone.addEventListener("paste", (e)=>{
     const items = e.clipboardData && e.clipboardData.items;
     if(!items) return;
@@ -546,7 +551,7 @@ async function runLoadingNameFill(img){
     c.getContext("2d").drawImage(fullCanvas, r.x, r.y, r.w, r.h, 0, 0, r.w, r.h);
     return c;
   }
-  statusEl.textContent = "Iniciando lector de nombres (offline, puede tardar la primera vez)...";
+  statusEl.textContent = t("status.startingOcr");
   try{
     const worker = await getTesseractWorker();
     let namesRead = 0;
@@ -555,7 +560,7 @@ async function runLoadingNameFill(img){
       for(let i=0;i<6;i++){
         const input = document.getElementById(`scoutName_${side}_${i}`);
         if(!input || input.value.trim()) continue; // no pisa nombres que ya estaban completos
-        statusEl.textContent = `Leyendo nombres (${side==="ally"?"tu equipo":"rival"} ${i+1}/6)...`;
+        statusEl.textContent = t("status.readingNamesSide", {side: side==="ally"?t("team.yourTeam"):t("team.enemyTeam"), i: i+1});
         const name = await ocrReadName(worker, cropRect(rects.name[i]));
         if(name){
           input.value = name;
@@ -565,17 +570,16 @@ async function runLoadingNameFill(img){
       }
     }
     statusEl.textContent = namesRead>0
-      ? `${namesRead} nombre(s) completados en el Explorador de Jugadores.`
-      : "No se leyó ningún nombre nuevo (o ya estaban todos completos).";
+      ? tp("status.namesCompletedInScouting", namesRead, {n: namesRead})
+      : t("status.noNewNames");
   }catch(e){
     console.error("No se pudo leer nombres con OCR:", e);
-    statusEl.textContent = "No se pudo iniciar el lector de nombres offline.";
+    statusEl.textContent = t("status.ocrStartFailed");
   }
 }
 function setupLoadingDropZone(){
   const zone = document.getElementById("pasteZoneLoading");
   const fileInput = document.getElementById("loadingFileInput");
-  const filePick = document.getElementById("loadingFilePick");
   function handleFile(dataUrl){
     const img = new Image();
     img.onload = ()=>{
@@ -584,8 +588,10 @@ function setupLoadingDropZone(){
     };
     img.src = dataUrl;
   }
-  zone.addEventListener("click", ()=> zone.focus());
-  filePick.onclick = (e)=>{ e.stopPropagation(); fileInput.click(); };
+  zone.addEventListener("click", (e)=>{
+    if(e.target.closest("u")){ e.stopPropagation(); fileInput.click(); return; }
+    zone.focus();
+  });
   zone.addEventListener("paste", (e)=>{
     const items = e.clipboardData && e.clipboardData.items;
     if(!items) return;

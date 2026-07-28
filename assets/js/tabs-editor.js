@@ -34,7 +34,7 @@ function renderEditorHeroList(query){
     list.appendChild(item);
   });
   if(list.children.length===0){
-    list.innerHTML = `<p class="empty-hint" style="grid-column:1/-1;">Sin resultados para ese filtro/búsqueda.</p>`;
+    list.innerHTML = `<p class="empty-hint" style="grid-column:1/-1;">${t("editor.noResults")}</p>`;
   }
 }
 
@@ -56,7 +56,7 @@ async function renderEditorDetail(name){
   const hero = byName[name];
   const breakdown = matchupBreakdown(name);
 
-  const STANDARD_LABELS = {default:"Default", deluxe:"Deluxe (Lord)", dynamic:"Dynamic Deluxe"};
+  const STANDARD_LABELS = {default:t("editor.variantDefault"), deluxe:t("editor.variantDeluxe"), dynamic:t("editor.variantDynamic")};
   // insignias reales del juego: Lord para Deluxe, Champion para Dynamic Deluxe -- en vez de solo el texto
   const VARIANT_BADGE = {deluxe:"assets/img/badge-lord.webp", dynamic:"assets/img/badge-champion.webp"};
   // el orden mostrado respeta el orden real de los datos (precargados o subidos), no uno fijo:
@@ -70,11 +70,11 @@ async function renderEditorDetail(name){
 
   let html = `<div class="counter-card">
     <div class="editor-image-row">
-      <div class="editor-image-preview" id="editorImagePreview">${Object.values(variantImages).some(Boolean) ? "" : `<span class="no-img">sin imagen</span>`}</div>
+      <div class="editor-image-preview" id="editorImagePreview">${Object.values(variantImages).some(Boolean) ? "" : `<span class="no-img">${t("editor.noImage")}</span>`}</div>
       <div class="editor-image-actions">
         <span class="enemy-name">${heroLabel(name)}</span>${hero ? roleIconHtml(hero.r,16) : ''}
         <div class="variant-view-row">
-          ${presentVariants.length===0 ? `<span class="variant-label">Sin imagenes precargadas para este héroe.</span>` : presentVariants.map(v=>`
+          ${presentVariants.length===0 ? `<span class="variant-label">${t("editor.noPreloadedImages")}</span>` : presentVariants.map(v=>`
             <div class="variant-thumb">
               <img class="variant-img" src="${variantImages[v.k]}" alt="${v.label}">
               ${VARIANT_BADGE[v.k] ? `<img class="variant-badge" src="${VARIANT_BADGE[v.k]}" alt="">` : ""}
@@ -83,19 +83,19 @@ async function renderEditorDetail(name){
         </div>
       </div>
     </div>
-    ${breakdown.mirror ? `<div class="mirror-note">🟢 Mirror viable — en ciertas partidas jugar a ${heroLabel(name)} contra ${heroLabel(name)} también funciona.</div>` : ""}
+    ${breakdown.mirror ? `<div class="mirror-note">${t("editor.mirrorViable", {hero: heroLabel(name)})}</div>` : ""}
     <div class="matchup-section">
       <div class="matchup-col tier-red">
-        <div class="matchup-col-title">🔴 Le ganan a ${heroLabel(name)}</div>
-        ${breakdown.countersAgainst.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">Sin counters fuertes catalogados.</span>` : breakdown.countersAgainst.map(n=>`<span class="matchup-pill">${heroIconHtml(n,18)}${heroLabel(n)}</span>`).join("")}
+        <div class="matchup-col-title">🔴 ${t("editor.beatThem", {hero: heroLabel(name)})}</div>
+        ${breakdown.countersAgainst.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noStrongCounters")}</span>` : breakdown.countersAgainst.map(n=>`<span class="matchup-pill">${heroIconHtml(n,18)}${heroLabel(n)}</span>`).join("")}
       </div>
       <div class="matchup-col tier-gold">
-        <div class="matchup-col-title">🟡 Peleas parejas</div>
-        ${breakdown.competitive.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">Sin datos catalogados.</span>` : breakdown.competitive.map(n=>`<span class="matchup-pill">${heroIconHtml(n,18)}${heroLabel(n)}</span>`).join("")}
+        <div class="matchup-col-title">🟡 ${t("editor.evenFights")}</div>
+        ${breakdown.competitive.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noDataCataloged")}</span>` : breakdown.competitive.map(n=>`<span class="matchup-pill">${heroIconHtml(n,18)}${heroLabel(n)}</span>`).join("")}
       </div>
       <div class="matchup-col tier-blue">
-        <div class="matchup-col-title">🔵 ${heroLabel(name)} les gana fácil</div>
-        ${breakdown.beatsEasily.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">Sin datos catalogados.</span>` : breakdown.beatsEasily.map(n=>`<span class="matchup-pill">${heroIconHtml(n,18)}${heroLabel(n)}</span>`).join("")}
+        <div class="matchup-col-title">🔵 ${t("editor.beatsThemEasily", {hero: heroLabel(name)})}</div>
+        ${breakdown.beatsEasily.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noDataCataloged")}</span>` : breakdown.beatsEasily.map(n=>`<span class="matchup-pill">${heroIconHtml(n,18)}${heroLabel(n)}</span>`).join("")}
       </div>
     </div>
   </div>`;

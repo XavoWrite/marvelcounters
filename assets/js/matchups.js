@@ -33,7 +33,7 @@ function countersFromMatrixFor(name){
   HEROES.forEach(h=>{
     if(h.n===name) return;
     if(getMatchupCode(name, h.n)===1){
-      out.push({c:h.n, w:`Counter fuerte contra ${name}, segun tu matriz de matchups.`, relevance:counterRelevance(h.n)});
+      out.push({c:h.n, w:t("analysis.strongCounterWhy",{name}), relevance:counterRelevance(h.n)});
     }
   });
   out.sort((a,b)=>b.relevance-a.relevance);

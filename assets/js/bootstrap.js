@@ -34,7 +34,7 @@ document.getElementById("swapTeamsBtn").onclick = ()=>{
   renderSlots();
 };
 document.getElementById("clearAllTeamsBtn").onclick = ()=>{
-  if(!confirm("¿Vaciar los dos equipos por completo?")) return;
+  if(!confirm(t("confirm.clearBothTeams"))) return;
   allyTeam = Array(6).fill(null);
   enemyTeam = Array(6).fill(null);
   myAllyIndex = null;
@@ -50,7 +50,7 @@ document.getElementById("clearEnemyBtn").onclick = ()=>{
   renderSlots();
 };
 document.getElementById("clearAllScoutBtn").onclick = ()=>{
-  if(confirm("¿Borrar los nombres, plataformas y veredictos de los 12 jugadores?")) clearAllScoutRows();
+  if(confirm(t("confirm.clearScouting"))) clearAllScoutRows();
 };
 const backToTopBtn = document.getElementById("backToTopBtn");
 window.addEventListener("scroll", ()=>{
@@ -59,18 +59,14 @@ window.addEventListener("scroll", ()=>{
 backToTopBtn.onclick = ()=> window.scrollTo({top:0, behavior:"smooth"});
 
 // mensajitos ocasionales abajo a la derecha (recordatorios cortos, no bloquean nada)
-const TIPS = [
-  "🚧 Página en proceso — la seguimos mejorando y puede cambiar de un día a otro.",
-  "Datos de meta orientativos — el balance cambia con cada parche, usa esto como punto de partida, no como verdad absoluta.",
-  "La identificación por captura es 100% offline — no depende de internet.",
-];
+const TIP_KEYS = ["tip.wip", "tip.metaData", "tip.offline"];
 let tipIndex = 0;
 let tipDismissed = false;
 const tipToast = document.getElementById("tipToast");
 const tipToastText = document.getElementById("tipToastText");
 function showNextTip(){
   if(tipDismissed) return;
-  tipToastText.textContent = TIPS[tipIndex % TIPS.length];
+  tipToastText.textContent = t(TIP_KEYS[tipIndex % TIP_KEYS.length]);
   tipIndex++;
   tipToast.classList.add("show");
   setTimeout(()=> tipToast.classList.remove("show"), 8000);
@@ -92,17 +88,17 @@ function showQuickToast(msg, ms){
 
 document.getElementById("autoPickMeBtn").onclick = ()=>{
   if(myAllyIndex===null){
-    showQuickToast("Primero marca tu casillero: clic derecho en tu héroe (o en un casillero vacío) dentro de 'Tu equipo'.");
+    showQuickToast(t("toast.markYourSlot"));
     return;
   }
   if(enemyTeam.filter(Boolean).length===0){
-    showQuickToast("Añade al menos un héroe rival para calcular tu mejor pick.");
+    showQuickToast(t("toast.addEnemyForBestPick"));
     return;
   }
   const rec = recommendMyPick();
   const best = rec.inRolePicks[0] || rec.topOverallPicks[0];
   if(!best){
-    showQuickToast("No hay candidatos disponibles (¿todo baneado o ya elegido por tus compañeros?).");
+    showQuickToast(t("toast.noCandidates"));
     return;
   }
   allyTeam[myAllyIndex] = best.h;
@@ -110,11 +106,15 @@ document.getElementById("autoPickMeBtn").onclick = ()=>{
 };
 
 const ghostToggleBtn = document.getElementById("ghostToggleBtn");
+function updateGhostToggleLabel(){
+  ghostToggleBtn.textContent = ghostFillEnabled ? t("ghost.on") : t("ghost.off");
+}
 ghostToggleBtn.onclick = ()=>{
   ghostFillEnabled = !ghostFillEnabled;
-  ghostToggleBtn.textContent = ghostFillEnabled ? "👻 fantasma: on" : "👻 fantasma: off";
+  updateGhostToggleLabel();
   renderSlots();
 };
+onLangChange(updateGhostToggleLabel);
 
 // -------- easter egg oculto: 7 clics en tu propia etiqueta "TÚ", o 7 minutos en la pagina --------
 // chiste ecuatoriano para XavoDraw. No es un logro ni se anuncia en ningun lado -- si lo encontras,
@@ -145,3 +145,15 @@ setTimeout(triggerMijinEasterEgg, 7*60*1000);
 
 renderBanSlots();
 renderSlots();
+
+/* ---------------- IDIOMA: wiring final ---------------- */
+// va al final porque para este punto ya se registraron todos los onLangChange (analysis, slots,
+// scouting) -- el primer cambio de idioma que haga el usuario ya encuentra todo enganchado.
+document.querySelectorAll(".lang-btn").forEach(b=>{
+  b.onclick = ()=> setLang(b.dataset.lang);
+});
+document.documentElement.lang = currentLang;
+document.querySelectorAll(".lang-btn").forEach(b=> b.classList.toggle("active", b.dataset.lang===currentLang));
+applyStaticTranslations();
+onLangChange(renderSlots);
+onLangChange(renderBanSlots);

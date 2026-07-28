@@ -7,12 +7,12 @@ function roleCounts(team){
 function compArchetype(counts, filled){
   if(filled<6) return null;
   const {Vanguard:v, Duelist:d, Strategist:s} = counts;
-  if(v>=3) return {label:"Triple tanque / línea reforzada", advice:"El rival prioriza escudos y peleo cuerpo a cuerpo. Cambia un duelista por uno con <b>rotura de escudo o burst</b> (Namor, Hela, Punisher) y valora un <b>3er estratega</b> para sostener la presión extra en el frente."};
-  if(s>=3) return {label:"Triple soporte", advice:"El rival cura demasiado para trabajar de a poco. Necesitas <b>burst y dive</b> para matar antes de que las curas lleguen: prioriza Spider-Man, Black Panther o Hela sobre picks de poke lento."};
-  if(d>=4) return {label:"Comp muy ofensiva, poco sostén", advice:"El rival es frágil detrás del daño. Un <b>vanguardia anti-dive</b> (Captain America, Venom) más presión agresiva puede colapsar su formación antes de que estabilicen."};
-  if(v===1) return {label:"Solo un tanque", advice:"Backline expuesto. Presiona con dive directo al soporte: la falta de un segundo frontline los deja vulnerables a flanqueos."};
-  if(s===1) return {label:"Un solo soporte", advice:"Poca sanación total. Cualquier pick de burst sostenido puede forzar picks rápidos antes de que el healer solitario reaccione."};
-  return {label:"Composición equilibrada 2-2-2", advice:"Formación estándar. Ajusta counters individuales según los héroes específicos abajo, sin necesidad de romper tu propia estructura 2-2-2."};
+  if(v>=3) return {label:t("analysis.archetype.tripleVanguard.label"), advice:t("analysis.archetype.tripleVanguard.advice")};
+  if(s>=3) return {label:t("analysis.archetype.tripleStrategist.label"), advice:t("analysis.archetype.tripleStrategist.advice")};
+  if(d>=4) return {label:t("analysis.archetype.quadDuelist.label"), advice:t("analysis.archetype.quadDuelist.advice")};
+  if(v===1) return {label:t("analysis.archetype.soloVanguard.label"), advice:t("analysis.archetype.soloVanguard.advice")};
+  if(s===1) return {label:t("analysis.archetype.soloStrategist.label"), advice:t("analysis.archetype.soloStrategist.advice")};
+  return {label:t("analysis.archetype.balanced.label"), advice:t("analysis.archetype.balanced.advice")};
 }
 
 // Heroes con herramientas dedicadas a frenar el dive -- bloquean movilidad (The Thing), dan
@@ -42,12 +42,14 @@ function shieldBreakBonus(hero, shieldHeavy){
   return 1;
 }
 
+// el "por que" de cada sanador recomendado esta en el diccionario (analysis.healerWhy.<tag>) para
+// que salga en el idioma correcto -- HEALER_MAP solo guarda que heroes y que clave de texto usar
 const HEALER_MAP = {
-  "shield":{h:["Luna Snow","Adam Warlock","Invisible Woman"], why:"Sanadores estáticos de área que sostienen bien detrás de un escudo fijo."},
-  "dive":{h:["Cloak & Dagger","Mantis"], why:"Sanadores móviles que pueden seguir el ritmo de un tanque que se adelanta al frente enemigo."},
-  "brawl":{h:["Mantis","Rocket Raccoon"], why:"Curación sostenida + utilidad para peleas prolongadas cuerpo a cuerpo."},
-  "zone":{h:["Luna Snow","Adam Warlock"], why:"Sanación de área constante para un tanque que controla espacio."},
-  "turret":{h:["Rocket Raccoon","Jeff the Land Shark"], why:"Buena sinergia con un tanque que también juega estático/posicional."},
+  "shield":{h:["Luna Snow","Adam Warlock","Invisible Woman"], whyKey:"shield"},
+  "dive":{h:["Cloak & Dagger","Mantis"], whyKey:"dive"},
+  "brawl":{h:["Mantis","Rocket Raccoon"], whyKey:"brawl"},
+  "zone":{h:["Luna Snow","Adam Warlock"], whyKey:"zone"},
+  "turret":{h:["Rocket Raccoon","Jeff the Land Shark"], whyKey:"turret"},
 };
 function suggestHealers(allyTeam){
   const vanguards = allyTeam.filter(h=>h && heroHasRole(h,"Vanguard"));
@@ -60,7 +62,7 @@ function suggestHealers(allyTeam){
       if(HEALER_MAP[tag]){
         HEALER_MAP[tag].h.forEach(hn=>{
           if(!recs[hn]) recs[hn] = {reasons:new Set()};
-          recs[hn].reasons.add(`Con ${heroLabel(v.n)}: ${HEALER_MAP[tag].why}`);
+          recs[hn].reasons.add(t("analysis.healerReasonWith", {hero: heroLabel(v.n), why: t(`analysis.healerWhy.${HEALER_MAP[tag].whyKey}`)}));
         });
         break;
       }
@@ -72,7 +74,7 @@ function suggestHealers(allyTeam){
 // tabla coloreada: cada uno de tus heroes (filas) contra cada rival (columnas), segun la matriz
 const TIER_CLASS = {1:"tier-red", 2:"tier-gold", 3:"tier-green", 4:"tier-blue"};
 const TIER_SYMBOL = {1:"⚔️", 2:"🤝", 3:"🔁", 4:"🛡️"};
-const TIER_LABEL = {1:"te contrarresta", 2:"pelea pareja", 3:"mirror", 4:"le ganas fácil"};
+function tierLabel(code){ return t(`analysis.tier.${code}`); }
 function renderMatchupGrid(allyList, enemyList){
   let html = `<div class="matchup-grid-wrap"><table class="matchup-grid"><thead><tr><th></th>`;
   enemyList.forEach(e=>{ html += `<th>${heroLabel(e.n)}</th>`; });
@@ -89,7 +91,9 @@ function renderMatchupGrid(allyList, enemyList){
       const code = getMatchupCode(a.n, e.n);
       const cls = code ? TIER_CLASS[code] : "tier-none";
       const sym = code ? TIER_SYMBOL[code] : "–";
-      const label = code ? `${heroLabel(a.n)} vs ${heroLabel(e.n)}: ${TIER_LABEL[code]}` : `${heroLabel(a.n)} vs ${heroLabel(e.n)}: sin datos`;
+      const label = code
+        ? t("analysis.matchupTitle", {a: heroLabel(a.n), b: heroLabel(e.n), label: tierLabel(code)})
+        : t("analysis.matchupTitleNoData", {a: heroLabel(a.n), b: heroLabel(e.n)});
       html += `<td class="${cls}" title="${label}">${sym}</td>`;
       if(code===4) good++;
       else if(code===1) bad++;
@@ -103,19 +107,19 @@ function renderMatchupGrid(allyList, enemyList){
 
   let side = `<div class="matchup-side">
     <div class="matchup-legend">
-      <span class="legend-item">⚔️ te contrarrestan</span>
-      <span class="legend-item">🤝 pelea pareja</span>
-      <span class="legend-item">🔁 mirror</span>
-      <span class="legend-item">🛡️ le ganas fácil</span>
+      <span class="legend-item">⚔️ ${t("analysis.legend.counter")}</span>
+      <span class="legend-item">🤝 ${t("analysis.legend.even")}</span>
+      <span class="legend-item">🔁 ${t("analysis.legend.mirror")}</span>
+      <span class="legend-item">🛡️ ${t("analysis.legend.easy")}</span>
     </div>
     <div class="matchup-stats">
-      <div class="matchup-stat"><b>${goodTotal}</b> matchups a tu favor 🛡️</div>
-      <div class="matchup-stat"><b>${badTotal}</b> matchups en tu contra ⚔️</div>`;
+      <div class="matchup-stat"><b>${goodTotal}</b> ${t("analysis.matchupsFavor")} 🛡️</div>
+      <div class="matchup-stat"><b>${badTotal}</b> ${t("analysis.matchupsAgainst")} ⚔️</div>`;
   if(bestAlly && bestAllyGood>0){
-    side += `<div class="matchup-stat">Tu carta más fuerte: <b>${heroLabel(bestAlly.n)}</b> (le gana fácil a ${bestAllyGood} rival${bestAllyGood===1?'':'es'})</div>`;
+    side += `<div class="matchup-stat">${tp("analysis.strongestCard", bestAllyGood, {hero: heroLabel(bestAlly.n), n: bestAllyGood})}</div>`;
   }
   if(worstAlly && worstAllyBad>0){
-    side += `<div class="matchup-stat">Tu punto más débil: <b>${heroLabel(worstAlly.n)}</b> (${worstAllyBad} rival${worstAllyBad===1?'':'es'} lo contrarrestan)</div>`;
+    side += `<div class="matchup-stat">${tp("analysis.weakestPoint", worstAllyBad, {hero: heroLabel(worstAlly.n), n: worstAllyBad})}</div>`;
   }
   side += `</div></div>`;
 
@@ -233,7 +237,7 @@ function computeWinProbability(allyTeam, enemyTeam){
       const severe = riskWeight>=1.7;
       const penalty = severe ? Math.round(10+riskWeight*6) : Math.round(riskWeight*8);
       score -= penalty;
-      reasons.push(`-${penalty}: ${heroLabel(h.n)} tiene ${risks.length} counter(s) ${severe?'muy fuertes':'relevantes'} en su contra`);
+      reasons.push(tp("analysis.winProb.reasonRisk", risks.length, {n:-penalty, hero: heroLabel(h.n), count: risks.length, severity: severe ? t("analysis.winProb.severityHigh") : t("analysis.winProb.severityNormal")}));
     }
   });
   enemyList.forEach(e=>{
@@ -242,7 +246,7 @@ function computeWinProbability(allyTeam, enemyTeam){
     if(haveWeight>0){
       const bonus = Math.round(haveWeight*6);
       score += bonus;
-      reasons.push(`+${bonus}: tienes ${haveCounters.length} counter(s) contra ${heroLabel(e.n)}`);
+      reasons.push(tp("analysis.winProb.reasonBonus", haveCounters.length, {n:bonus, count: haveCounters.length, hero: heroLabel(e.n)}));
     }
   });
 
@@ -252,7 +256,7 @@ function computeWinProbability(allyTeam, enemyTeam){
   if(allyMissing>0){
     const penalty = allyMissing*15;
     score -= penalty;
-    reasons.push(`-${penalty}: te faltan ${allyMissing} jugador(es) en tu equipo — estás en desventaja numérica`);
+    reasons.push(tp("analysis.winProb.reasonMissing", allyMissing, {n:-penalty, missing: allyMissing}));
   }
 
   // el balance de roles pesa en el resultado real de la partida aunque gane la mayoria de los
@@ -263,24 +267,24 @@ function computeWinProbability(allyTeam, enemyTeam){
     const rc = roleCounts(allyList);
     if(rc.Vanguard===0){
       score -= 25;
-      reasons.push(`-25: sin vanguardia — tu backline queda totalmente expuesto a dive`);
+      reasons.push(t("analysis.winProb.noVanguard"));
     } else if(rc.Vanguard===1){
       score -= 15;
-      reasons.push(`-15: un solo vanguardia — backline expuesto, alto riesgo de dive`);
+      reasons.push(t("analysis.winProb.oneVanguard"));
     }
     if(rc.Strategist===0){
       score -= 22;
-      reasons.push(`-22: sin estratega — no tienes sanación sostenida`);
+      reasons.push(t("analysis.winProb.noStrategist"));
     } else if(rc.Strategist===1){
       score -= 12;
-      reasons.push(`-12: un solo estratega — sanación insuficiente para sostener peleas`);
+      reasons.push(t("analysis.winProb.oneStrategist"));
     }
     if(rc.Duelist===0){
       score -= 12;
-      reasons.push(`-12: sin duelista — te falta daño para cerrar peleas`);
+      reasons.push(t("analysis.winProb.noDuelist"));
     } else if(rc.Duelist>=5){
       score -= 8;
-      reasons.push(`-8: casi todo el equipo es duelista — poco frente y poco sostén`);
+      reasons.push(t("analysis.winProb.tooManyDuelist"));
     }
   }
 
@@ -296,38 +300,38 @@ function renderAnalysis(){
 
   // probabilidad de victoria (heurística orientativa, no un cálculo real de winrate) -- el detalle
   // de que te esta jugando en contra ya se explica en "Alineación en riesgo", no se repite aca
-  left += `<div class="analysis-section"><div class="sec-title">Probabilidad de victoria con esta composición</div>`;
+  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.winProb.title")}</div>`;
   if(allyFilled===0 || enemyFilled===0){
-    left += `<p class="empty-hint">Añade héroes en ambos equipos para ver una estimación.</p>`;
+    left += `<p class="empty-hint">${t("analysis.winProb.needBoth")}</p>`;
   } else {
     const {prob} = computeWinProbability(allyTeam, enemyTeam);
     const barColor = prob>=60 ? "var(--ally)" : prob>=40 ? "var(--gold)" : "var(--enemy)";
     left += `<div class="comp-banner">
-      <div class="winprob-bar-outer"><div class="winprob-bar-inner" style="width:${prob}%;background:${barColor};"></div><div class="winprob-label">${prob}% estimado</div></div>
-      <div style="font-size:11.5px;color:var(--muted);margin-top:8px;">Esto NO es un cálculo real de winrate — es una estimación relativa basada en la matriz de matchups y el balance de roles. <b>No mide habilidad, coordinación ni diferencia de rango entre los jugadores</b> — un equipo con la composición perfecta igual puede perder contra rivales de rango más alto o más coordinados. Úsalo como guía de composición, no como predicción del resultado. El detalle de qué te juega en contra está en "Alineación en riesgo", a la derecha.</div>
+      <div class="winprob-bar-outer"><div class="winprob-bar-inner" style="width:${prob}%;background:${barColor};"></div><div class="winprob-label">${t("analysis.winProb.estimated", {prob})}</div></div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:8px;">${t("analysis.winProb.disclaimer")}</div>
     </div>`;
   }
   left += `</div>`;
 
   // Tu composición + Qué deberías jugar tú, lado a lado para ahorrar espacio vertical
   left += `<div class="comp-pick-row">`;
-  left += `<div class="analysis-section"><div class="sec-title">Tu composición</div>`;
+  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.yourComp.title")}</div>`;
   if(allyFilled===0){
-    left += `<p class="empty-hint">Añade tu equipo para revisar el balance de roles.</p>`;
+    left += `<p class="empty-hint">${t("analysis.yourComp.addYours")}</p>`;
   } else {
     const myCounts = roleCounts(allyTeam);
-    left += `<div class="comp-banner">Tu equipo: <b>${roleCountsHtml(myCounts)}</b> (${allyFilled}/6 añadidos).`;
+    left += `<div class="comp-banner">${t("analysis.yourComp.summary", {counts: roleCountsHtml(myCounts), n: allyFilled})}`;
     if(myCounts.Vanguard<=1 && allyFilled>=4){
-      left += `<br>🚫 <b>Jugar con ${myCounts.Vanguard===0?'cero':'un solo'} vanguardia deja tu backline muy expuesto.</b> Sin un segundo frontline, cualquier dive al soporte cuesta muchísimo de frenar y sueles perder la pelea aunque gane la mayoría de tus matchups 1v1 — esto pesa fuerte en la probabilidad de victoria de abajo. Si puedes, suma un segundo vanguardia.`;
+      left += `<br>${myCounts.Vanguard===0 ? t("analysis.yourComp.vanguardWarnZero") : t("analysis.yourComp.vanguardWarnOne")}`;
     } else if(myCounts.Vanguard>=4){
-      left += `<br>⚠ 4+ vanguardias es poco daño para cerrar peleas — sostenés bien pero puede que no logres matar antes de que te curen. En la mayoría de los rangos, 2 vanguardias rinde mejor.`;
+      left += `<br>${t("analysis.yourComp.tooManyVanguard")}`;
     }
     if(myCounts.Strategist<=1 && allyFilled>=4){
-      left += `<br>🚫 <b>Jugar con ${myCounts.Strategist===0?'cero':'un solo'} estratega es de alto riesgo.</b> Según datos de la comunidad, el 2-2-2 ronda ~52-54% de winrate, mientras que las comps de 1 solo estratega caen a ~42-46% — se pierde la mayoría de las veces salvo compos muy puntuales y coordinadas. Si puedes, suma un segundo estratega.`;
+      left += `<br>${myCounts.Strategist===0 ? t("analysis.yourComp.strategistWarnZero") : t("analysis.yourComp.strategistWarnOne")}`;
     } else if(myCounts.Strategist>=3){
-      left += `<br>⚠ Triple estratega ronda ~45% de winrate en la comunidad — viable, pero exige muy buena rotación de ultimates y coordinación. En la mayoría de los rangos, 2 estrategas rinde mejor.`;
+      left += `<br>${t("analysis.yourComp.tooManyStrategist")}`;
     } else if(myCounts.Strategist===2 && myCounts.Vanguard===2){
-      left += `<br>✅ 2-2-2 es el punto más confiable según la meta actual.`;
+      left += `<br>${t("analysis.yourComp.perfectBalance")}`;
     }
     if(allyFilled<6){
       const missing = 6-allyFilled;
@@ -336,8 +340,9 @@ function renderAnalysis(){
         .map(r=>({r, gap: target[r]-myCounts[r]}))
         .filter(x=>x.gap>0)
         .sort((a,b)=>b.gap-a.gap)
-        .map(x=> `${roleIconHtml(x.r,16)}${x.gap>1 ? `${x.gap} ${x.r}` : x.r}`);
-      left += `<br>⚠ Te falta${missing===1?'':'n'} <b>${missing}</b> jugador${missing===1?'':'es'} — mientras no completes, jugás en desventaja numérica real.${needed.length ? ` Para acercarte a un 2-2-2, te conviene sumar: <b>${needed.join(", ")}</b>.` : ""}`;
+        .map(x=> `${roleIconHtml(x.r,16)}${x.gap>1 ? `${x.gap} ${t('role.'+x.r)}` : t('role.'+x.r)}`);
+      const neededSuffix = needed.length ? t("analysis.yourComp.neededRoles", {roles: needed.join(", ")}) : "";
+      left += `<br>${tp("analysis.yourComp.missingPlayers", missing, {missing})}${neededSuffix}`;
     }
     left += `</div>`;
   }
@@ -346,15 +351,15 @@ function renderAnalysis(){
   // recomendacion para TU especificamente: asume que tus 5 companeros no van a cambiar de heroe.
   // Aca adentro (fila angosta) solo va el resumen -- las listas de picks van en su propia fila
   // mas abajo, a lo ancho completo del bloque, para que entren comodas en 2 columnas reales.
-  left += `<div class="analysis-section"><div class="sec-title">Qué deberías jugar tú</div>`;
+  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.whatToPlay.title")}</div>`;
   let rec = null;
   if(myAllyIndex===null){
-    left += `<p class="empty-hint">Clic derecho en tu casillero (en "Tu equipo") para marcarte — así te recomiendo qué jugar específicamente a ti, asumiendo que tus compañeros no van a cambiar.</p>`;
+    left += `<p class="empty-hint">${t("analysis.whatToPlay.markYourself")}</p>`;
   } else if(enemyFilled===0){
-    left += `<p class="empty-hint">Añade el equipo rival para recibir una recomendación para tu pick.</p>`;
+    left += `<p class="empty-hint">${t("analysis.whatToPlay.addEnemy")}</p>`;
   } else {
     rec = recommendMyPick();
-    left += `<div class="comp-banner">Tus compañeros fijos (sin contarte a ti): <b>${roleCountsHtml(rec.fixedCounts)}</b>. Rol que más te conviene cubrir: <b>${roleIconHtml(rec.roleNeed,16)}${rec.roleNeed}</b>.</div>`;
+    left += `<div class="comp-banner">${t("analysis.whatToPlay.summary", {counts: roleCountsHtml(rec.fixedCounts), role: roleIconHtml(rec.roleNeed,16)+t('role.'+rec.roleNeed)})}</div>`;
   }
   left += `</div>`;
   left += `</div>`;
@@ -363,19 +368,20 @@ function renderAnalysis(){
   // -- siempre 2 columnas, nunca 1 sola, para que la fila no se vea rota/asimetrica ni de la impresion
   // de que "desaparecio" una columna
   if(rec){
-    const renderPickCard = p=>`<div class="healer-card role-${p.h.r}"><div class="h-name">${heroIconHtml(p.h.n,28)}${heroLabel(p.h.n)} ${roleIconHtml(p.h.r,15)}</div>
-      <div class="h-reason">Le gana fácil a ${p.goodAgainst} de ${enemyFilled} rivales${p.badAgainst>0 ? `, pero ${p.badAgainst} lo contrarrestan a él` : ''}.</div></div>`;
-    const col2Title = rec.sameRoleAsNeed
-      ? `Alternativa fuera de tu rol`
-      : `Si prefieres no cambiar tu rol`;
+    const renderPickCard = p=>{
+      const badSuffix = p.badAgainst>0 ? t("analysis.pickCard.badSuffix", {bad:p.badAgainst}) : "";
+      return `<div class="healer-card role-${p.h.r}"><div class="h-name">${heroIconHtml(p.h.n,28)}${heroLabel(p.h.n)} ${roleIconHtml(p.h.r,15)}</div>
+      <div class="h-reason">${t("analysis.pickCard.reason", {good:p.goodAgainst, total:enemyFilled, badSuffix})}</div></div>`;
+    };
+    const col2Title = rec.sameRoleAsNeed ? t("analysis.pickCard.col2TitleAlt") : t("analysis.pickCard.col2TitlePreferSame");
     const col2Sub = rec.sameRoleAsNeed
-      ? `por si un matchup puntual vale más que mantener el 2-2-2`
-      : `jugando ${rec.currentRole || "tu rol actual"}`;
+      ? t("analysis.pickCard.col2SubAlt")
+      : t("analysis.pickCard.col2SubPreferSame", {role: rec.currentRole ? t('role.'+rec.currentRole) : t("analysis.pickCard.yourCurrentRole")});
     left += `<div class="two-col-fit">`;
-    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.roleNeed,16)}Mejores opciones de ${rec.roleNeed}</div>
-      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${rec.sameRoleAsNeed ? `ya juegas ${rec.roleNeed}, justo el rol que le falta a tu equipo` : 'el rol que le falta a tu equipo'}</p>`;
+    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.roleNeed,16)}${t("analysis.pickCard.bestOptionsOf", {role: t('role.'+rec.roleNeed)})}</div>
+      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${rec.sameRoleAsNeed ? t("analysis.pickCard.alreadyPlayingRole", {role: t('role.'+rec.roleNeed)}) : t("analysis.pickCard.roleThatsMissing")}</p>`;
     if(rec.inRolePicks.length===0){
-      left += `<p class="empty-hint" style="font-size:12px;">No hay candidatos disponibles (¿todo baneado o ya elegido por tus compañeros?).</p>`;
+      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noCandidates")}</p>`;
     } else {
       left += rec.inRolePicks.map(renderPickCard).join("");
     }
@@ -383,7 +389,7 @@ function renderAnalysis(){
     left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.currentRole||rec.roleNeed,16)}${col2Title}</div>
       <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${col2Sub}</p>`;
     if(rec.topOverallPicks.length===0){
-      left += `<p class="empty-hint" style="font-size:12px;">Sin datos suficientes todavía.</p>`;
+      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noData")}</p>`;
     } else {
       left += rec.topOverallPicks.map(renderPickCard).join("");
     }
@@ -393,49 +399,48 @@ function renderAnalysis(){
 
   // matriz de matchups de la partida actual: tus 6 vs los 6 rivales -- va abajo de todo, a lo ancho,
   // porque es la parte mas dificil de leer de un vistazo y no conviene que compita por espacio arriba
-  bottom += `<div class="analysis-section"><div class="sec-title">Matriz de la partida (tu equipo vs el rival)</div>`;
+  bottom += `<div class="analysis-section"><div class="sec-title">${t("analysis.matrix.title")}</div>`;
   if(allyFilled===0 || enemyFilled===0){
-    bottom += `<p class="empty-hint">Añade héroes en ambos equipos para ver la matriz completa.</p>`;
+    bottom += `<p class="empty-hint">${t("analysis.matrix.needBoth")}</p>`;
   } else {
     bottom += renderMatchupGrid(allyTeam.filter(Boolean), enemyTeam.filter(Boolean));
   }
   bottom += `</div>`;
 
   // comp analysis (lado del rival)
-  right += `<div class="analysis-section"><div class="sec-title">Análisis de composición rival</div>`;
+  right += `<div class="analysis-section"><div class="sec-title">${t("analysis.rivalComp.title")}</div>`;
   if(enemyFilled===0){
-    right += `<p class="empty-hint">Añade los 6 héroes enemigos (foto o manual) para ver el análisis de composición.</p>`;
+    right += `<p class="empty-hint">${t("analysis.rivalComp.addSix")}</p>`;
   } else {
     const counts = roleCounts(enemyTeam);
     const arche = compArchetype(counts, enemyFilled);
-    right += `<div class="comp-banner">Detectado: <b>${roleCountsHtml(counts)}</b> (${enemyFilled}/6 añadidos).`;
+    right += `<div class="comp-banner">${t("analysis.rivalComp.detected", {counts: roleCountsHtml(counts), n: enemyFilled})}`;
     if(arche){
       right += `<br><b>${arche.label}.</b> ${arche.advice}`;
     } else {
-      right += `<br>Añade los héroes restantes para un diagnóstico completo del arquetipo de equipo.`;
+      right += `<br>${t("analysis.rivalComp.addRestForFull")}`;
     }
     right += `</div>`;
     const antiDive = antiDiveCount(enemyTeam.filter(Boolean));
     if(antiDive>=2){
-      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">🛡️ Este rival tiene ${antiDive} herramientas anti-dive (bloquea movilidad, escuda al backline o te niega la visión) — un duelista de <b>buceo puro</b> (Spider-Man, Daredevil, Iron Fist, Psylocke, Black Panther) no va a poder rematar su combo. Priorizá poke/ranged (Hela, Punisher, Namor, Hawkeye) o presión sostenida en vez de dive.</div>`;
+      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.antiDiveWarn", {n: antiDive})}</div>`;
     }
     const shieldHeavy = shieldHeavyCount(enemyTeam.filter(Boolean));
     if(shieldHeavy>=2){
-      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">🔰 Este rival tiene ${shieldHeavy} escudos (Doctor Strange, Groot, Magneto, Emma Frost, Deadpool Vanguard o Invisible Woman) — sin romperlos, el resto del equipo ni te va a sentir. Priorizá <b>shield-breakers</b> (Namor, Punisher, Hela, Winter Soldier) por encima de daño que el escudo simplemente absorbe.</div>`;
+      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.shieldWarn", {n: shieldHeavy})}</div>`;
     }
   }
 
   right += `</div>`;
 
   // recomendaciones por rol para vencer la composición completa del rival
-  left += `<div class="analysis-section"><div class="sec-title">Mejores picks contra esta composición</div>`;
+  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.bestPicks.title")}</div>`;
   if(enemyFilled===0){
-    left += `<p class="empty-hint">Añade héroes enemigos para ver qué ${roleIconHtml("Vanguard",14)}vanguardia, ${roleIconHtml("Duelist",14)}duelista y ${roleIconHtml("Strategist",14)}estratega les gana mejor en conjunto.</p>`;
+    left += `<p class="empty-hint">${t("analysis.bestPicks.addEnemies", {v: roleIconHtml("Vanguard",14)+t("role.Vanguard"), d: roleIconHtml("Duelist",14)+t("role.Duelist"), s: roleIconHtml("Strategist",14)+t("role.Strategist")})}</p>`;
   } else {
     const enemyListForRoles = enemyTeam.filter(Boolean);
     const banned = bannedPool();
     const allyNamesNow = allyTeam.filter(Boolean).map(h=>h.n);
-    const roleLabels = {Vanguard:"Vanguardia", Duelist:"Duelista", Strategist:"Estratega"};
     const antiDiveNow = antiDiveCount(enemyListForRoles);
     const shieldHeavyNow = shieldHeavyCount(enemyListForRoles);
     left += `<div class="role-rec-grid">`;
@@ -458,9 +463,9 @@ function renderAnalysis(){
       const ranked = Object.entries(scores)
         .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield))
         .slice(0,4);
-      left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(role,16)}${roleLabels[role]}</div>`;
+      left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(role,16)}${t('role.'+role)}</div>`;
       if(ranked.length===0){
-        left += `<p class="empty-hint" style="font-size:12px;">Sin datos suficientes todavía para este rol.</p>`;
+        left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.bestPicks.noDataForRole")}</p>`;
       } else {
         // retrato tipo casillero (mismo lenguaje visual que "Tu equipo") en vez de tarjeta de texto --
         // se lee de un vistazo; el detalle completo queda en el tooltip (title)
@@ -468,12 +473,12 @@ function renderAnalysis(){
         ranked.forEach(([n, s])=>{
           const already = allyNamesNow.includes(n);
           const diveWarn = s.dive<1;
-          const reason = `Contrarresta bien a ${s.hits} de los ${enemyListForRoles.length} héroes rivales.${diveWarn ? ' Es un dive puro y este rival tiene con qué frenarlo — no cuentes con que remate el combo.' : ''}`;
+          const reason = t("analysis.bestPicks.counters", {hits: s.hits, total: enemyListForRoles.length}) + (diveWarn ? t("analysis.bestPicks.diveWarnSuffix") : "");
           const thumb = heroIconHtml(n,40);
           left += `<div class="pick-slot role-${role}${already?' already':''}" title="${reason.replace(/"/g,'&quot;')}">
             ${thumb}<div class="name">${heroLabel(n)}</div><div class="role">${roleIconHtml(role,12)}${s.hits}/${enemyListForRoles.length}</div>
-            ${already?'<div class="already-tag">✓ ya en tu equipo</div>':''}
-            ${diveWarn?'<div class="dive-warn">⚠ dive frenado</div>':''}
+            ${already?`<div class="already-tag">${t("analysis.bestPicks.alreadyInTeam")}</div>`:''}
+            ${diveWarn?`<div class="dive-warn">${t("analysis.bestPicks.diveFrozen")}</div>`:''}
           </div>`;
         });
         left += `</div>`;
@@ -481,17 +486,17 @@ function renderAnalysis(){
       left += `</div>`;
     });
     left += `</div>
-    <p class="empty-hint" style="margin-top:8px;">No te digo "usa a X sí o sí" — mira estas opciones contra la alineación en riesgo de abajo antes de decidir el cambio.</p>`;
+    <p class="empty-hint" style="margin-top:8px;">${t("analysis.bestPicks.noAdviceFooter")}</p>`;
   }
 
   left += `</div>`;
   // healer suggestions -- va abajo de "Mejores picks", del mismo lado (izquierda: son acciones tuyas)
-  left += `<div class="analysis-section"><div class="sec-title">Soporte recomendado para tu línea</div>`;
+  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.healerSupport.title")}</div>`;
   const allyNames = allyTeam.filter(Boolean).map(h=>h.n);
   const enemyNamesNow = enemyTeam.filter(Boolean).map(h=>h.n);
   const recs = suggestHealers(allyTeam);
   if(!recs){
-    left += `<p class="empty-hint">Selecciona al menos un Vanguard en tu equipo para recibir sugerencias de soporte compatible.</p>`;
+    left += `<p class="empty-hint">${t("analysis.healerSupport.needVanguard")}</p>`;
   } else {
     // siempre se muestran al menos MIN_HEALER_RECS -- si el rival ya tiene bien contrarrestados a
     // los sanadores con sinergia real, se completa con el resto de estrategas ordenados por menor
@@ -511,15 +516,15 @@ function renderAnalysis(){
     const nonRiskyCount = pool.filter(p=>p.risk<0.4).length;
     const keys = pool.slice(0, Math.max(MIN_HEALER_RECS, nonRiskyCount));
     if(keys.length===0){
-      left += `<p class="empty-hint">Sin recomendaciones específicas para esta combinación — cualquier soporte flexible (Mantis, Luna Snow) funciona bien.</p>`;
+      left += `<p class="empty-hint">${t("analysis.healerSupport.noSpecific")}</p>`;
     } else {
       left += `<div class="healer-grid">`;
       keys.forEach(({hn, risk, reasons})=>{
         const already = allyNames.includes(hn);
         const risky = risk>=0.4;
-        const reasonText = reasons.length ? reasons.join("<br>") : "Sin sinergia específica catalogada con tu vanguard, pero sigue siendo una opción sólida en general.";
-        const riskWarn = risky ? `<br>⚠ El rival ya lo tiene bien contrarrestado — no es ideal, pero es de las mejores opciones disponibles.` : "";
-        left += `<div class="healer-card role-Strategist${risky?' risky':''}"><div class="h-name">${heroIconHtml(hn,28)}${heroLabel(hn)}${already?' <span class="already-tag">· ✓ ya en tu equipo</span>':''}</div>
+        const reasonText = reasons.length ? reasons.join("<br>") : t("analysis.healerSupport.noSynergyReason");
+        const riskWarn = risky ? `<br>${t("analysis.healerSupport.riskWarn")}` : "";
+        left += `<div class="healer-card role-Strategist${risky?' risky':''}"><div class="h-name">${heroIconHtml(hn,28)}${heroLabel(hn)}${already?` <span class="already-tag">${t("analysis.healerSupport.alreadyInTeam")}</span>`:''}</div>
           <div class="h-reason">${reasonText}${riskWarn}</div></div>`;
       });
       left += `</div>`;
@@ -528,11 +533,11 @@ function renderAnalysis(){
   left += `</div>`;
 
   // risky ally picks -- lado del rival: es sobre que tanto te castiga la alineacion rival actual
-  right += `<div class="analysis-section"><div class="sec-title">Alineación en riesgo</div>`;
+  right += `<div class="analysis-section"><div class="sec-title">${t("analysis.riskAlignment.title")}</div>`;
   const enemyNamesForRisk = enemyTeam.filter(Boolean).map(h=>h.n);
   const allyNamesForRisk = allyTeam.filter(Boolean).map(h=>h.n);
   if(allyTeam.filter(Boolean).length===0){
-    right += `<p class="empty-hint">Añade tu equipo para detectar picks en riesgo.</p>`;
+    right += `<p class="empty-hint">${t("analysis.riskAlignment.addYours")}</p>`;
   } else {
     let anyRisk = false;
     allyTeam.forEach(h=>{
@@ -551,24 +556,26 @@ function renderAnalysis(){
         const scored = sameRole.map(x=>({n:x.n, score:riskCountersFor(x.n, enemyNamesForRisk).reduce((s,r)=>s+r.relevance,0)}))
           .sort((a,b)=>a.score-b.score).slice(0,2);
         const verdict = severe
-          ? `🚫 <b>Cambio muy recomendado</b> — ${risks.length} héroes distintos lo contrarrestan bien, se acumula demasiada desventaja.`
-          : `⚠ <b>Vigílalo</b> — counter(s) normal(es) en su contra, tus healers deberían poder compensarlo, pero si el rival lo prioriza en la pelea, considera cambiar.`;
+          ? t("analysis.riskAlignment.severeVerdict", {n: risks.length})
+          : t("analysis.riskAlignment.watchVerdict");
+        const counteredList = risks.map(r=>heroIconHtml(r.c,18)+'<b>'+heroLabel(r.c)+'</b>').join(" ");
+        const altList = scored.map(s=>heroIconHtml(s.n,18)+'<b>'+heroLabel(s.n)+'</b>'+t("analysis.riskAlignment.counterScoreSuffix",{score:s.score.toFixed(2)})).join(" ");
         right += `<div class="risk-card${severe?' severe':''}">
           <span class="r-name">${severe?'🚫':'⚠'} ${heroIconHtml(h.n,24)}${heroLabel(h.n)}</span>
-          <div class="r-body">${verdict}<br>Lo contrarrestan: ${risks.map(r=>heroIconHtml(r.c,18)+'<b>'+heroLabel(r.c)+'</b>').join(" ")}.<br>
-          Alternativas de su mismo rol: ${scored.map(s=>heroIconHtml(s.n,18)+'<b>'+heroLabel(s.n)+'</b>'+" ("+s.score.toFixed(2)+" counters en su contra)").join(" ")}</div>
+          <div class="r-body">${verdict}<br>${t("analysis.riskAlignment.countered", {list: counteredList})}.<br>
+          ${t("analysis.riskAlignment.alternatives", {list: altList})}</div>
         </div>`;
       }
     });
-    if(!anyRisk) right += `<p class="empty-hint">Ningún héroe de tu equipo tiene counters fuertes en la alineación rival actual. Vas bien.</p>`;
+    if(!anyRisk) right += `<p class="empty-hint">${t("analysis.riskAlignment.allGood")}</p>`;
   }
   right += `</div>`;
 
   // per-hero counters -- lado del rival: es la lista de counters para cada heroe rival
-  right += `<div class="analysis-section"><div class="sec-title">Counters sugeridos por héroe</div>`;
+  right += `<div class="analysis-section"><div class="sec-title">${t("analysis.countersPerHero.title")}</div>`;
   const enemyNames = enemyTeam.filter(Boolean).map(h=>h.n);
   if(enemyFilled===0){
-    right += `<p class="empty-hint">Aún no hay héroes enemigos añadidos.</p>`;
+    right += `<p class="empty-hint">${t("analysis.countersPerHero.noneAdded")}</p>`;
   } else {
     const pillHtml = c=>{
       const cls = `pill ${c.have?'have':''} ${c.banned?'hidden-pill':''}`;
@@ -576,7 +583,7 @@ function renderAnalysis(){
       // entre los 3 Deadpool (mismo retrato, mismo nombre en pantalla) -- sin esto dos sugerencias
       // de "Deadpool" se ven identicas aunque sean roles totalmente distintos.
       const role = byName[c.c] && byName[c.c].r;
-      return `<span class="${cls}">${heroIconHtml(c.c,20)}${role?roleIconHtml(role,13):''}${c.banned?'🚫 baneado · ':''}${c.have?'<span class="check">✓ ya en tu equipo</span> · ':''}<b>${heroLabel(c.c)}</b></span>`;
+      return `<span class="${cls}">${heroIconHtml(c.c,20)}${role?roleIconHtml(role,13):''}${c.banned?t("analysis.countersPerHero.banned"):''}${c.have?`<span class="check">${t("analysis.countersPerHero.alreadyInTeam")}</span> · `:''}<b>${heroLabel(c.c)}</b></span>`;
     };
     const MAX_PRIMARY_COUNTERS = 6;
     enemyTeam.forEach(h=>{
@@ -590,13 +597,13 @@ function renderAnalysis(){
         <span class="enemy-name">${heroIconHtml(h.n,26)}${heroLabel(h.n)}</span>${roleIconHtml(h.r,15)}
         <div class="counter-list">`;
       if(counters.length===0){
-        right += `<span class="pill">Sin counters fuertes catalogados en la matriz para este héroe.</span>`;
+        right += `<span class="pill">${t("analysis.countersPerHero.noneCataloged")}</span>`;
       } else {
         shown.forEach(c=>{ right += pillHtml(c); });
       }
       right += `</div>`;
       if(rest.length>0){
-        right += `<details class="counters-more"><summary>+${rest.length} más (soporte y counters secundarios)</summary>
+        right += `<details class="counters-more"><summary>${tp("analysis.countersPerHero.more", rest.length, {n: rest.length})}</summary>
           <div class="counter-list" style="margin-top:8px;">${rest.map(pillHtml).join("")}</div></details>`;
       }
       right += `</div>`;
@@ -627,4 +634,3 @@ function fileToBase64ImageResized(file, maxDim){
     reader.readAsDataURL(file);
   });
 }
-

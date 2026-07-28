@@ -16,7 +16,7 @@ function renderBanSlots(){
       const d = document.createElement("div");
       d.className = "slot"+(h?" filled":"");
       const thumb = h ? (getHeroImage(h.n, h._matchedVariant) ? `<img src="${getHeroImage(h.n, h._matchedVariant)}" class="slot-thumb" alt="${h.n}">` : "") : "";
-      d.innerHTML = h ? `${thumb}<div class="name">🚫 ${heroLabel(h.n)}</div><div class="role">${roleIconHtml(h.r,15)}</div>` : `<div class="plus">+</div><div class="role">banear</div>`;
+      d.innerHTML = h ? `${thumb}<div class="name">🚫 ${heroLabel(h.n)}</div><div class="role">${roleIconHtml(h.r,15)}</div>` : `<div class="plus">+</div><div class="role">${t("slot.ban")}</div>`;
       d.onclick = ()=>openModal(containerId==="banAllySlots" ? "banAlly" : "banEnemy", i);
       el.appendChild(d);
     });
@@ -175,7 +175,7 @@ function roleIconHtml(role, size){
 }
 // "N Vanguard · N Duelist · N Strategist" con el logo de cada clase junto al numero, no solo la palabra
 function roleCountsHtml(counts, size){
-  return ["Vanguard","Duelist","Strategist"].map(r=>`${roleIconHtml(r,size||16)}${counts[r]} ${r}`).join(" · ");
+  return ["Vanguard","Duelist","Strategist"].map(r=>`${roleIconHtml(r,size||16)}${counts[r]} ${t('role.'+r)}`).join(" · ");
 }
 function renderSideSlots(containerId, arr, side){
   const el = document.getElementById(containerId);
@@ -200,18 +200,18 @@ function renderSideSlots(containerId, arr, side){
         : severity==="warn" ? '<span class="risk-badge warn">⚠️</span>' : "";
       const img = getHeroImage(h.n, h._matchedVariant);
       const thumb = img ? `<img src="${img}" class="slot-thumb" alt="${h.n}">` : "";
-      const meTag = isMe ? `<span class="me-badge">👤 ${jokeModeActive ? "TÚ, MIJÍN" : "TÚ"}</span>` : "";
+      const meTag = isMe ? `<span class="me-badge">👤 ${jokeModeActive ? t("slot.youJoke") : t("slot.you")}</span>` : "";
       d.innerHTML = `${badge}${meTag}${thumb}<div class="name">${heroLabel(h.n)}</div><div class="role">${roleIconHtml(h.r,15)}</div>`;
     } else if(ghost){
       const img = getHeroImage(ghost.n, "default");
       const thumb = img ? `<img src="${img}" class="slot-thumb" alt="${ghost.n}">` : "";
-      const meTag = isMe ? `<span class="me-badge">👤 ${jokeModeActive ? "TÚ, MIJÍN" : "TÚ"}</span>` : "";
+      const meTag = isMe ? `<span class="me-badge">👤 ${jokeModeActive ? t("slot.youJoke") : t("slot.you")}</span>` : "";
       d.innerHTML = `${meTag}${thumb}<div class="name">${heroLabel(ghost.n)}</div><div class="role">${roleIconHtml(ghost.r,15)}</div>
-        <div class="ghost-tag">👻 sugerido</div>
-        <div class="ghost-actions"><span class="ghost-pick">usar</span><span class="ghost-other">elegir otro</span></div>`;
+        <div class="ghost-tag">👻 ${t("slot.suggested")}</div>
+        <div class="ghost-actions"><span class="ghost-pick">${t("slot.use")}</span><span class="ghost-other">${t("slot.chooseOther")}</span></div>`;
     } else {
-      const meTag = isMe ? `<span class="me-badge">👤 ${jokeModeActive ? "TÚ, MIJÍN" : "TÚ"}</span>` : "";
-      d.innerHTML = `${meTag}<div class="plus">+</div><div class="role">añadir</div>`;
+      const meTag = isMe ? `<span class="me-badge">👤 ${jokeModeActive ? t("slot.youJoke") : t("slot.you")}</span>` : "";
+      d.innerHTML = `${meTag}<div class="plus">+</div><div class="role">${t("slot.add")}</div>`;
     }
     d.onclick = (e)=>{
       if(ghost && e.target.classList.contains("ghost-other")){ openModal(side,i); return; }
@@ -224,7 +224,7 @@ function renderSideSlots(containerId, arr, side){
         myAllyIndex = (myAllyIndex===i) ? null : i;
         renderSlots();
       };
-      d.title = ghost ? "Sugerencia basada en el rival actual — clic para usarla, o 'elegir otro' para buscar manualmente." : "Clic derecho para marcar/desmarcar este casillero como tú";
+      d.title = ghost ? t("slot.ghostTitle") : t("slot.rightClickTitle");
     }
     el.appendChild(d);
   });
@@ -272,7 +272,7 @@ function renderModalList(query){
   const teamFull = isTeamSide && teamArr.filter(Boolean).length>=6;
   const dpGroupPick = isTeamSide ? teamArr.find(h=>h && h.dpGroup) : null;
   const countEl = document.getElementById("modalCount");
-  countEl.textContent = isTeamSide ? `${selectedSet.size}/6 seleccionados — tocá un héroe para sumarlo o sacarlo` : "";
+  countEl.textContent = isTeamSide ? t("modal.selectedCount", {n: selectedSet.size}) : "";
 
   filtered.forEach(h=>{
     const row = document.createElement("div");
@@ -285,11 +285,11 @@ function renderModalList(query){
     row.className = "modal-item" + (blocked ? " modal-item-disabled" : "") + (isSelected ? " modal-item-selected" : "");
     const img = getHeroImage(h.n);
     const thumb = img ? `<img src="${img}" class="modal-thumb" alt="${h.n}">` : `<span class="modal-thumb-empty"></span>`;
-    const statusLabel = isSelected ? '<span class="role-mini modal-selected-badge">✓ en el equipo</span>'
-      : blockedAsBanned ? '<span class="role-mini">🚫 baneado</span>'
-      : blockedAsFull ? '<span class="role-mini">equipo completo</span>'
-      : blockedAsDpGroup ? '<span class="role-mini">Deadpool ya elegido</span>'
-      : blockedAsBanDupe ? '<span class="role-mini">ya baneado</span>' : '';
+    const statusLabel = isSelected ? `<span class="role-mini modal-selected-badge">${t("modal.inTeam")}</span>`
+      : blockedAsBanned ? `<span class="role-mini">${t("modal.banned")}</span>`
+      : blockedAsFull ? `<span class="role-mini">${t("modal.teamFull")}</span>`
+      : blockedAsDpGroup ? `<span class="role-mini">${t("modal.deadpoolTaken")}</span>`
+      : blockedAsBanDupe ? `<span class="role-mini">${t("modal.alreadyBanned")}</span>` : '';
     row.innerHTML = `${thumb}<span class="n">${heroLabel(h.n)}</span>${roleTagsHtml(h)}${statusLabel}`;
     if(isTeamSide){
       if(!blocked || isSelected) row.onclick = ()=>toggleTeamHero(h.n);
@@ -301,7 +301,7 @@ function renderModalList(query){
   if(q && !filtered.some(h=>h.n.toLowerCase()===q) && !isBanSide){
     const custom = document.createElement("div");
     custom.className = "modal-item custom-item";
-    custom.innerHTML = `<span class="n">Usar "${query}" (personalizado)</span>`;
+    custom.innerHTML = `<span class="n">${t("modal.useCustom", {query})}</span>`;
     custom.onclick = isTeamSide ? (()=>toggleTeamHero(query, true)) : (()=>selectHero(query, true));
     list.appendChild(custom);
   }
@@ -323,20 +323,20 @@ function toggleTeamHero(name, isCustom){
   }
 
   if(bannedPool().has(name)){
-    alert(`${heroLabel(name)} está baneado esta partida y no se puede seleccionar.`);
+    alert(t("alert.heroBanned", {hero: heroLabel(name)}));
     return;
   }
   const hero = isCustom ? {n:name, r:"?", t:[]} : {...byName[name]};
   if(hero.dpGroup){
     const already = arr.find(h=>h && h.dpGroup && h.n!==name);
     if(already){
-      alert(`Ya tienes a ${heroLabel(already.n)} en este equipo. Solo puede haber un Deadpool a la vez (es el mismo héroe cambiando de rol) — sácalo primero si quieres cambiar de rol.`);
+      alert(t("alert.deadpoolDupe", {hero: heroLabel(already.n)}));
       return;
     }
   }
   const emptyIdx = arr.indexOf(null);
   if(emptyIdx===-1){
-    alert("Ya elegiste 6/6 héroes en este equipo. Sacá alguno antes de sumar otro.");
+    alert(t("alert.teamFull"));
     return;
   }
   arr[emptyIdx] = hero;
@@ -356,7 +356,7 @@ function selectHero(name, isCustom){
 
   const dupeIdx = arr.findIndex((h,i)=>i!==modalTarget.idx && h && h.n===name);
   if(dupeIdx!==-1){
-    alert(`${heroLabel(name)} ya está baneado en este mismo lado.`);
+    alert(t("alert.alreadyBannedSide", {hero: heroLabel(name)}));
     return;
   }
   arr[modalTarget.idx] = hero;

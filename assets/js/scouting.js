@@ -8,14 +8,14 @@ function buildScoutSide(side){
     row.className = "scout-row";
     row.innerHTML = `
       <div class="top-line">
-        <input type="text" placeholder="Nombre jugador #${i+1} (opcional)" id="scoutName_${side}_${i}">
+        <input type="text" placeholder="${t('scouting.namePlaceholder',{n:i+1})}" id="scoutName_${side}_${i}">
         <select id="scoutPlatform_${side}_${i}" class="platform-select">
-          <option value="">Plataforma ¿?</option>
+          <option value="">${t('scouting.platformUnknown')}</option>
           <option value="PS5">🎮 PS5</option>
           <option value="Xbox">🎮 Xbox</option>
           <option value="PC">🖥️ PC</option>
         </select>
-        <button class="scout-clear-btn" id="scoutClearBtn_${side}_${i}" title="Borrar este jugador">🗑</button>
+        <button class="scout-clear-btn" id="scoutClearBtn_${side}_${i}" title="${t('scouting.clearOneTitle')}">🗑</button>
       </div>
       <div class="scout-links" id="scoutLinks_${side}_${i}"></div>
     `;
@@ -51,7 +51,26 @@ function renderScoutLinks(side, i){
     return;
   }
   linksEl.innerHTML = `
-    <a href="https://tracker.gg/marvel-rivals/profile/ign/${encodeURIComponent(name)}/overview" target="_blank" rel="noopener">Ver en Tracker.gg ↗</a>
-    <a href="https://rivalsmeta.com/search?q=${encodeURIComponent(name)}" target="_blank" rel="noopener">Buscar en RivalsMeta ↗</a>
+    <a href="https://tracker.gg/marvel-rivals/profile/ign/${encodeURIComponent(name)}/overview" target="_blank" rel="noopener">${t('scouting.viewTracker')}</a>
+    <a href="https://rivalsmeta.com/search?q=${encodeURIComponent(name)}" target="_blank" rel="noopener">${t('scouting.searchRivalsMeta')}</a>
   `;
 }
+
+// al cambiar de idioma NO se puede simplemente volver a llamar buildScoutSide (borraria los
+// nombres ya escritos) -- esta version solo retraduce placeholder/labels/tooltips de las 12 filas
+// que ya existen, sin tocar los <input> con valores.
+function retranslateScoutRows(){
+  ["ally","enemy"].forEach(side=>{
+    for(let i=0;i<6;i++){
+      const nameInput = document.getElementById(`scoutName_${side}_${i}`);
+      if(!nameInput) continue;
+      nameInput.placeholder = t('scouting.namePlaceholder',{n:i+1});
+      const platformSelect = document.getElementById(`scoutPlatform_${side}_${i}`);
+      if(platformSelect && platformSelect.options.length) platformSelect.options[0].textContent = t('scouting.platformUnknown');
+      const clearBtn = document.getElementById(`scoutClearBtn_${side}_${i}`);
+      if(clearBtn) clearBtn.title = t('scouting.clearOneTitle');
+      renderScoutLinks(side, i);
+    }
+  });
+}
+onLangChange(retranslateScoutRows);
