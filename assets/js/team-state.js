@@ -298,6 +298,11 @@ function toggleTeamHero(name, isCustom){
     return;
   }
   arr[emptyIdx] = hero;
+  // si este casillero viene de una captura todavia cargada, aprende ese recorte con el nombre que
+  // recien confirmaste a mano -- asi la deteccion automatica mejora con el uso real
+  if((modalTarget.side==="ally" || modalTarget.side==="enemy") && !isCustom){
+    learnHeroIconFromCurrentCapture(modalTarget.side, emptyIdx, name);
+  }
   renderSlots();
   renderModalList(query);
 }

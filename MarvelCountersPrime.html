@@ -31,7 +31,7 @@
 
   <div class="local-detect-section">
     <div class="sec-title" style="margin-top:0;">Identificación de equipo</div>
-    <span class="badge" style="margin-bottom:10px;">🚧 en proceso — la identificación automática del héroe todavía no es confiable, por ahora elegilo a mano</span>
+    <span class="badge" style="margin-bottom:10px;">🚧 en proceso — la identificación automática del héroe es experimental, revisá siempre lo que reconoce solo</span>
     <p class="empty-hint">Dos capturas separadas — una de tu equipo y otra del rival — así se ven más grandes los íconos y los nombres. Capturá con <b>Win+Shift+S</b>, hacé clic en el recuadro de abajo y pegá con <b>Ctrl+V</b> (o subí un archivo). No depende de internet.</p>
     <label class="weak-toggle" style="margin:6px 0 12px;"><input type="checkbox" id="ocrReadNamesCheck" checked> Leer nombres de jugador con OCR offline (más lento, ~1-2s por jugador la primera vez que se usa)</label>
     <div class="scenario-toggle" style="margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
@@ -91,7 +91,7 @@
         </details>
       </div>
     </div>
-    <p class="empty-hint" style="margin-top:8px;">La identificación del héroe de cada casillero es manual (clic arriba en "Añadir" y elegilo) — la posición calibrada acá es solo para que el recuadro celeste te sirva de guía visual. La zona de "nombre" sí se lee sola con OCR offline y rellena el Explorador de Jugadores.</p>
+    <p class="empty-hint" style="margin-top:8px;">La identificación del héroe intenta ser automática (comparando contra capturas reales) pero es experimental — los casilleros marcados "auto" siempre hay que revisarlos, y si corregís uno la app aprende de esa corrección para la próxima vez. La posición calibrada además sirve de guía visual si preferís elegir a mano. La zona de "nombre" se lee sola con OCR offline y rellena el Explorador de Jugadores.</p>
   </div>
 
   <details class="calib-box" style="margin-bottom:16px;">
@@ -247,8 +247,10 @@
 <script src="assets/data/tesseract-worker-src.js"></script>
 <script src="assets/data/tesseract-core-src.js"></script>
 <script src="assets/data/tesseract-traineddata-b64.js"></script>
+<script src="assets/data/hero-icon-seed.js"></script>
 <script src="assets/js/hero-roster.js"></script>
 <script src="assets/js/matchups.js"></script>
+<script src="assets/js/hero-detect.js"></script>
 <script src="assets/js/team-state.js"></script>
 <script src="assets/js/analysis.js"></script>
 <script src="assets/js/detection.js"></script>

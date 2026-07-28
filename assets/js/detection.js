@@ -211,14 +211,10 @@ function resolveRoleFromCrop(roleCanvas){
   return bestRole;
 }
 
-// analiza UNA captura (un solo equipo, 6 casilleros) y llena allyTeam o enemyTeam segun "side"
-// nota: la identificacion automatica del HEROE por color se probo y se descarto (2026-07-25) --
-// el recorte del scoreboard (chico, con tinte de color, y en un encuadre muy distinto al arte de
-// wiki usado como referencia) nunca matcheaba de forma confiable, ni ajustando threshold ni recorte.
-// queda pendiente para el futuro si aparece un metodo mas robusto (comparar formas en vez de color,
-// o conseguir iconos de referencia con el mismo estilo que el juego). por ahora esta funcion solo
-// calibra la posicion (para que sea facil clickear el casillero correcto a mano) y lee los nombres
-// de jugador con OCR offline, que si funciona bien.
+// analiza UNA captura (un solo equipo, 6 casilleros) y llena allyTeam o enemyTeam segun "side".
+// el heroe de cada casillero se intenta autocompletar comparando el recorte contra la libreria de
+// referencias reales (ver hero-detect.js) -- lo que no matchea con suficiente confianza se deja vacío
+// para elegir a mano, en vez de adivinar y arriesgar un pick equivocado sin que se note.
 async function runLocalDetectionForSide(side){
   const statusEl = document.getElementById(`${side}DetectStatus`);
   const img = detectImages[side];
@@ -241,9 +237,20 @@ async function runLocalDetectionForSide(side){
   // resultados viejos con los nuevos (evita que queden picks o nombres pegados de una captura anterior).
   for(let i=0;i<6;i++){ team[i] = null; }
   for(let i=0;i<6;i++){ clearScoutRow(side, i); }
+
+  let autoCount = 0;
+  for(let i=0;i<6;i++){
+    const match = matchHeroIcon(cropRect(rects.main[i]));
+    if(match && byName[match.name]){
+      team[i] = {...byName[match.name], _auto: true};
+      autoCount++;
+    }
+  }
   renderSlots();
 
-  statusEl.textContent = `Posiciones calibradas — clickeá cada casillero de arriba para elegir el héroe (mirá el recuadro celeste como guía).`;
+  statusEl.textContent = autoCount>0
+    ? `${autoCount}/6 héroes reconocidos automáticamente (marcados "auto" — revisalos y corregí lo que haga falta). El resto, clickeá el casillero para elegirlo a mano.`
+    : `No se reconoció ningún héroe con suficiente confianza — clickeá cada casillero de arriba para elegirlo a mano (mirá el recuadro celeste como guía).`;
 
   // lectura de nombres de jugador con OCR offline (Tesseract.js, sin IA ni internet)
   const ocrCheckbox = document.getElementById("ocrReadNamesCheck");
