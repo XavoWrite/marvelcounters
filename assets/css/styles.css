@@ -127,13 +127,13 @@
   .modal input{width:100%;background:var(--panel-alt);border:1px solid var(--line);color:var(--text);padding:10px 12px;
     border-radius:9px;font-size:14px;margin-bottom:10px;font-family:'Inter',sans-serif;}
   .modal input:focus{outline:none;border-color:var(--gold);}
-  .modal-list{overflow-y:auto;flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;padding:2px;}
-  .modal-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;padding:10px 8px;
+  .modal-list{overflow-y:auto;flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:2px;}
+  .modal-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:12px 8px;
     border-radius:9px;cursor:pointer;background:var(--panel-alt);border:1px solid var(--line);}
   .modal-item-disabled{opacity:.35;cursor:not-allowed;}
   .modal-item-disabled:hover{border-color:var(--line);}
   .modal-item:hover{border-color:var(--gold);}
-  .modal-item .n{font-weight:600;font-size:12.5px;line-height:1.25;}
+  .modal-item .n{font-weight:600;font-size:13.5px;line-height:1.25;}
   .modal-item.custom-item{grid-column:1/-1;flex-direction:row;justify-content:center;}
   .modal-item-selected{border-color:var(--gold);background:rgba(255,193,69,.16);}
   .modal-item-selected:hover{border-color:var(--gold);}
@@ -322,8 +322,8 @@
   .grid-thumb{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid var(--line);}
   .slot-thumb{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid var(--line);margin-bottom:3px;}
   .n-wrap{display:flex;align-items:center;gap:8px;}
-  .modal-thumb{width:40px;height:40px;border-radius:50%;object-fit:cover;border:1px solid var(--line);}
-  .modal-thumb-empty{width:40px;height:40px;}
+  .modal-thumb{width:76px;height:76px;border-radius:50%;object-fit:cover;border:1px solid var(--line);}
+  .modal-thumb-empty{width:76px;height:76px;}
   .mini-btn{background:none;border:1px solid var(--line);color:var(--muted);font-size:10px;padding:2px 7px;
     border-radius:12px;margin-left:6px;cursor:pointer;font-family:'Inter',sans-serif;}
   .mini-btn:hover{border-color:var(--gold);color:var(--gold);}
