@@ -15,7 +15,7 @@ es: {
   "header.sub": "Carga una captura del equipo rival o selecciona manualmente. Te digo qué counters usar y cómo ajustar tu alineación en tiempo real.",
 
   "tab.main": "Partida en vivo",
-  "tab.editor": "Counters",
+  "tab.editor": "Personajes",
 
   "quickjump.team": "📸 Subir captura de la partida",
   "quickjump.teamSub": "para completar los héroes",
@@ -80,7 +80,7 @@ es: {
   "scouting.yourTeam": "Tu equipo",
   "scouting.enemyTeam": "Equipo enemigo",
 
-  "editor.title": "Counters",
+  "editor.title": "Personajes",
   "editor.hint": "Elige un héroe para ver su matriz de matchups completa: quién le gana, con quién empareja parejo, y a quién le gana fácil.",
   "editor.searchPlaceholder": "Buscar héroe a editar...",
 
@@ -278,11 +278,11 @@ es: {
   "editor.noImage": "sin imagen",
   "editor.noPreloadedImages": "Sin imagenes precargadas para este héroe.",
   "editor.mirrorViable": "🟢 Mirror viable — en ciertas partidas jugar a {hero} contra {hero} también funciona.",
-  "editor.beatThem": "Le ganan a {hero}",
+  "editor.beatThem": "Le ganan fácil el 1 vs 1 a {hero}",
   "editor.noStrongCounters": "Sin counters fuertes catalogados.",
   "editor.evenFights": "Peleas parejas",
   "editor.noDataCataloged": "Sin datos catalogados.",
-  "editor.beatsThemEasily": "{hero} les gana fácil",
+  "editor.beatsThemEasily": "{hero} gana fácil el 1 vs 1",
 
   "scouting.namePlaceholder": "Nombre jugador #{n} (opcional)",
   "scouting.platformUnknown": "Plataforma ¿?",
@@ -311,7 +311,7 @@ en: {
   "header.sub": "Upload a screenshot of the enemy team or pick heroes manually. I'll tell you which counters to use and how to adjust your lineup in real time.",
 
   "tab.main": "Live match",
-  "tab.editor": "Counters",
+  "tab.editor": "Characters",
 
   "quickjump.team": "📸 Upload a match screenshot",
   "quickjump.teamSub": "to fill in the heroes",
@@ -376,7 +376,7 @@ en: {
   "scouting.yourTeam": "Your team",
   "scouting.enemyTeam": "Enemy team",
 
-  "editor.title": "Counters",
+  "editor.title": "Characters",
   "editor.hint": "Pick a hero to see their full matchup matrix: who beats them, who's an even fight, and who they beat easily.",
   "editor.searchPlaceholder": "Search a hero to edit...",
 
@@ -574,11 +574,11 @@ en: {
   "editor.noImage": "no image",
   "editor.noPreloadedImages": "No preloaded images for this hero.",
   "editor.mirrorViable": "🟢 Mirror viable — in some matches playing {hero} against {hero} also works.",
-  "editor.beatThem": "Beat {hero}",
+  "editor.beatThem": "Win the 1v1 easily against {hero}",
   "editor.noStrongCounters": "No strong counters catalogued.",
   "editor.evenFights": "Even fights",
   "editor.noDataCataloged": "No data catalogued.",
-  "editor.beatsThemEasily": "{hero} beats them easily",
+  "editor.beatsThemEasily": "{hero} wins the 1v1 easily",
 
   "scouting.namePlaceholder": "Player #{n} name (optional)",
   "scouting.platformUnknown": "Platform ¿?",
