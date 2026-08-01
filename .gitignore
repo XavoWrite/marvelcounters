@@ -3,6 +3,9 @@
 
 # Datos crudos de la matriz de matchups (ya se cargan al html principal a mano, no se suben)
 /matchup-matrix.json
+/ref-matchup-scores.json
+/matchup-scores-export.json
+/matchup-review-priority.txt
 
 # Screenshots and test images used while building/testing, not needed to run the html
 capturas-pruebas/

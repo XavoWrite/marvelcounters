@@ -143,6 +143,25 @@ const ALT_APPEARANCE_HEROES = { "Loki": ["default", "lady-loki"] };
 function heroLabel(name){
   return name.replace(/ \((Vanguard|Duelist|Strategist)\)$/, "");
 }
+// puntaje de referencia externa (metodologia completa en data-sources-INTERNAL.txt, no se carga
+// en la pagina) para heroA=el heroe "sujeto" y heroB=el otro heroe -- misma convencion de indexado
+// que MATCHUP_MATRIX[H][X] (que tan bien le va a X CONTRA H). Ya se usa para calcular la propia
+// matriz (ver matchups.js) y para afinar el orden/agrupado dentro de cada categoria -- si el par
+// no tiene dato (ej. Jubilee) devuelve null, nunca se inventa un numero.
+function externalMatchupScore(heroA, heroB){
+  // ojo: REF_MATCHUP_SCORES es "const" de nivel superior en su propio <script> -- eso NO cuelga la
+  // variable de "window" (a diferencia de "var"), pero sigue siendo un global real accesible por
+  // nombre desde cualquier otro <script> cargado despues en la misma pagina.
+  if(typeof REF_MATCHUP_SCORES==="undefined" || !REF_MATCHUP_SCORES[heroA]) return null;
+  return REF_MATCHUP_SCORES[heroA][heroB] || null;
+}
+// fuerza general de "name" en el meta actual (no es sobre una pareja de heroes, es el heroe solo).
+// Se muestra en texto plano en la ficha de Personajes -- metodologia completa en
+// data-sources-INTERNAL.txt.
+function heroMetaStats(name){
+  if(typeof REF_HERO_META_STATS==="undefined") return null;
+  return REF_HERO_META_STATS[name] || null;
+}
 // la gente lee mejor una cara que un nombre: chip con el icono del heroe para mostrar en vez de solo texto.
 // al pasar el mouse se cambia por la variante "dynamic" (el splash art) y se agranda -- ver heroIconPreview.
 function heroIconHtml(name, size){
@@ -274,7 +293,7 @@ function renderModalList(query){
   const countEl = document.getElementById("modalCount");
   countEl.textContent = isTeamSide ? t("modal.selectedCount", {n: selectedSet.size}) : "";
 
-  filtered.forEach(h=>{
+  const buildItem = h=>{
     const row = document.createElement("div");
     const isSelected = isTeamSide && selectedSet.has(h.n);
     const blockedAsBanned = isTeamSide && !isSelected && banned.has(h.n);
@@ -296,8 +315,34 @@ function renderModalList(query){
     } else if(!blocked){
       row.onclick = ()=>selectHero(h.n);
     }
-    list.appendChild(row);
+    return row;
+  };
+
+  // agrupado por rol en columnas lado a lado (Vanguardia/Duelista/Estratega) en vez de una sola
+  // lista larga -- asi se ve todo el roster de un vistazo, sin tener que scrollear una lista plana.
+  // Cuando el filtro de rol (o una busqueda) deja solo 1 o 2 roles con resultados, la cantidad de
+  // columnas de la grilla se ajusta a esa cantidad -- si no, la(s) columna(s) que sí tienen heroes
+  // quedan encajonadas en 1 de 3 espacios fijos y el resto de la fila queda vacio (se veía como
+  // una sola columna larga y angosta con espacio en blanco al lado).
+  const rolesWithHeroes = ["Vanguard","Duelist","Strategist"].filter(role=>filtered.some(h=>heroHasRole(h,role)));
+  // en mobile (media query de styles.css ya fuerza 1 columna) no tocamos el estilo inline -- un
+  // inline style le gana a la media query igual, asi que ahi lo dejamos vacio para que mande la
+  // regla CSS de siempre.
+  list.style.gridTemplateColumns = window.matchMedia("(min-width:761px)").matches
+    ? `repeat(${Math.max(1, rolesWithHeroes.length)}, 1fr)` : "";
+  rolesWithHeroes.forEach(role=>{
+    const heroesInRole = filtered.filter(h=>heroHasRole(h,role));
+    const col = document.createElement("div");
+    col.className = "hero-role-col";
+    col.innerHTML = `<div class="hero-role-col-title">${roleIconHtml(role,15)}${t('role.'+role)} <span class="hero-role-count">${heroesInRole.length}</span></div><div class="hero-role-col-grid"></div>`;
+    const grid = col.querySelector(".hero-role-col-grid");
+    heroesInRole.forEach(h=>grid.appendChild(buildItem(h)));
+    list.appendChild(col);
   });
+
+  if(list.children.length===0){
+    list.innerHTML = `<p class="empty-hint" style="grid-column:1/-1;">${t("editor.noResults")}</p>`;
+  }
   if(q && !filtered.some(h=>h.n.toLowerCase()===q) && !isBanSide){
     const custom = document.createElement("div");
     custom.className = "modal-item custom-item";

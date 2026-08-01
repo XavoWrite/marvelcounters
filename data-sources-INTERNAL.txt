@@ -1,0 +1,246 @@
+REFERENCIAS INTERNAS DE DATOS — NO SE CARGA EN LA PÁGINA
+=========================================================
+Este archivo es solo para vos (y para mí en futuras sesiones). No está referenciado por
+ningún <script> ni se sirve al navegador — es la única "memoria" de dónde salen ciertos
+números que aparecen en la app, para que si algún día hay que auditar/corregir un dato
+puntual, se sepa de dónde vino. Los comentarios dentro del código NO nombran estos sitios
+a propósito (pedido explícito de Xavier, 2026-08-01) — toda esa historia vive acá. La única
+excepción visible es el texto de créditos de la página, que sí nombra el repo que corresponde
+(pedido explícito de Xavier, más abajo).
+
+NOTA: ref-matchup-scores.json (raíz del repo) es un espejo legible de assets/data/ref-matchup-scores.js,
+igual que matchup-matrix.json lo es de la matriz 1-4 en matchups.js. Tampoco se carga en la página —
+si Xavier lo edita a mano, hay que sincronizar los cambios al .js real para que se vean en la app.
+
+- 2026-08-03, más tarde: rediseñada la vista principal de matchup-editor-stream.html de una
+  sola grilla plana a las 5 tablas lado a lado (mismo orden/nombres/colores que la pestaña
+  Personajes: Counters / Casi counters / Parejo / Con ventaja / Presas fáciles), con
+  drag-and-drop nativo (HTML5 draggable) para reclasificar un rival arrastrándolo a la tabla
+  correcta. Al soltar, el puntaje se ajusta al mínimo que califica para esa tabla (ej. arrastrar
+  a "Counters" pone el puntaje en +4 si no calificaba ya, no un valor extremo inventado) y el
+  espejo se actualiza solo via setScore(). Si ya estaba en esa tabla, soltar no hace nada
+  (no-op). El click izq/der para afinar el puntaje exacto se mantiene sobre cada tarjeta.
+  Verificado: drag-and-drop simulado con eventos DragEvent reales (el simulador de mouse de la
+  herramienta de testing no dispara drag-and-drop nativo de HTML5, solo mouse down/up), sin
+  errores de consola, espejo correcto, no-op correcto.
+
+- 2026-08-03, más tarde aún: agregados íconos reales de héroe/rol a matchup-editor-stream.html
+  (antes solo texto plano), para que se parezca más a la pestaña Personajes de la app real (foto
+  que subió Xavier de Iron Fist). Se referencia (NO se duplica) assets/data/hero-images.js
+  (~19.5MB, PRELOADED_IMAGES) y assets/data/role-icons.js via <script src> normal — el archivo
+  .html en sí sigue pesando ~64KB, solo carga los datos compartidos del repo. Helpers nuevos
+  heroIconSrc()/roleIconSrc() (versión simplificada de heroIconHtml/roleIconHtml de
+  team-state.js, sin el hover-preview ni variantes alternativas que no hacen falta acá). Se
+  ajustó también el CSS de las tarjetas para que el nombre haga wrap en 2 líneas en vez de
+  truncarse con "...", ya que con el ícono ocupando espacio los nombres largos (Captain America,
+  Winter Soldier) no entraban en una sola línea.
+
+- 2026-08-03, más tarde todavía: Xavier pidió que el tablero se vea como las columnas reales de
+  la app (captura de Iron Fist) — pill redondeada + ícono + nombre, SIN scrollbar interno por
+  columna. Se rediseñó todo el sistema de tamaños: el board pasó de vmin (escalado para forzar
+  todo dentro de un cuadrado fijo 100vmin x 100vmin con scroll interno por columna) a px fijos,
+  copiando los valores reales de assets/css/styles.css (.matchup-col/.matchup-pill: padding
+  4px 10px, border-radius 20px, font-size 11.5px, etc.). Las columnas ahora crecen libremente
+  con su contenido (display:flex;flex-wrap:wrap, sin overflow-y) y es la PAGINA COMPLETA la que
+  scrollea (una sola barra), no cada tabla por separado. Esto significa que .square (el marco
+  cuadrado pensado para encuadrar la captura de OBS/TikTok) ya NO es estrictamente 1:1 -- el
+  ancho se mantiene en 100vmin pero el alto crece segun haga falta (min-height en vez de height
+  fijo). Si esto en la practica complica el encuadre en vivo, avisar para revisar de nuevo.
+
+- 2026-08-03, más tarde aún: BUG encontrado por Xavier y corregido — no se podía soltar un rival
+  arrastrado dentro de una tabla que estaba VACÍA. Causa: los eventos dragover/drop estaban
+  enganchados solo en el listado interno (.board-col-body), y ese div, al no tener tarjetas
+  adentro, mide 0px de alto (display:flex sin contenido no ocupa espacio) -- el mouse terminaba
+  soltando sobre el contenedor de afuera (.board-col), que no tenía el evento. Arreglado
+  enganchando dragover/dragleave/drop en TODA la columna (.board-col) en vez de solo en el
+  listado, y agregado un min-height + texto "Arrastrá acá" cuando la tabla queda vacía para que
+  se note que ahí también se puede soltar.
+
+- 2026-08-04: Xavier exportó otra tanda grande desde el editor con drag-and-drop (153 pares
+  únicos modificados). De esos, 55 pares (110 celdas contando ambas direcciones) cruzaron de
+  categoría (Counters/Parejo/Gana fácil) — el resto (98) fueron ajustes finos dentro de la misma
+  categoría. Patrón notable: 20 de los 153 pares involucran a Magneto, y en TODOS los casos el
+  puntaje que otros héroes tenían contra él bajó (Peni Parker 7->0, Punisher 8->1, Hulk 7->-1,
+  Daredevil 5->1, Winter Soldier 5->1, Emma Frost 5->-1, Angela 5->0, etc.) -- consistente con
+  que Xavier entró a la página de Magneto y reclasificó en bloque casi todos sus rivales hacia
+  categorías más moderadas (antes tenía una cantidad irrealista de "hard counters" en su contra).
+  Aplicado con una recomputación completa de la matriz 1-4 desde los puntajes (no solo los pares
+  tocados), verificado 0 inconsistencias de espejo y de categoría en toda la base.
+
+NOTA: matchup-editor-stream.html (raíz del repo) es la herramienta de edición para streams/TikTok —
+NO es parte de la app, no está enlazada desde MarvelCountersPrime.html. Precargada con los mismos
+datos de ref-matchup-scores.js (solo el score -8..+8, ya no lleva la matriz 1-4 de categorías —
+Xavier pidió el 2026-08-02 que se elimine "counter fuerte/buena pelea/mirror viable/le gana fácil"
+porque todo se basa en el puntaje fino). Interacción: click izquierdo +1, click derecho -1 sobre la
+tarjeta del rival. Exporta/importa un JSON con {scores} — si Xavier exporta cambios desde ahí, hay
+que reinyectarlos a mano en assets/data/ref-matchup-scores.js (y idealmente también a
+ref-matchup-scores.json) para que se vean en la app real.
+- 2026-08-03: Xavier exportó matchup-scores-export.json (raíz del repo) desde el editor con 3
+  pares corregidos a mano: Devil Dinosaur->Moon Knight (0->+3), Devil Dinosaur->Winter Soldier
+  (+3->+4, esto cruzó el umbral ±4 y Winter Soldier pasó a la columna de counters reales de
+  Devil Dinosaur en la categoria 1-4), Winter Soldier->Magneto (+6->+5). Se aplicaron a
+  ref-matchup-scores.js/.json y matchups.js/matchup-matrix.json (con su espejo antisimétrico
+  correspondiente) y se reinyectaron en matchup-editor-stream.html. El archivo
+  matchup-scores-export.json se dejó en el repo porque Xavier quiere conservarlo, pero su
+  contenido ya está aplicado — no hace falta volver a importarlo.
+- 2026-08-03, mismo día, segunda tanda: Xavier volvió a exportar (mismo archivo, sobreescrito)
+  con 19 pares más corregidos: Devil Dinosaur->Iron Man (0->+2), Devil Dinosaur->Squirrel Girl
+  (0->+3), y una revisión completa de la fila de Doctor Strange contra 17 rivales (Rogue, The
+  Thing, Thor, Emma Frost, Venom, Iron Fist, Jeff the Land Shark, Squirrel Girl, Blade, Hulk,
+  Groot, Mister Fantastic, Deadpool (Duelist), Magik, Black Panther, Black Cat, Namor). Esto
+  cambió la categoría 1-4 de 9 pares (8 heroes pasaron a categoria 4 "Doctor Strange les gana
+  fácil": Rogue, The Thing, Thor, Emma Frost, Venom, Iron Fist, Groot, Mister Fantastic; Black
+  Panther salió de esa categoría y pasó a "parejo"). Aplicado y verificado en el navegador
+  (Doctor Strange ahora arma un perfil de matchups mucho mas rico que antes, donde casi toda su
+  fila estaba en 0/parejo). Mismo archivo export sigue en el repo sin volver a importarse.
+- 2026-08-03: la propagación al lado contrario (H->X también edita X->H) AHORA es incondicional
+  (siempre sobreescribe con el inverso exacto). Antes solo se completaba si ese lado estaba
+  "undefined" o marcado como auto — pero como los datos precargados YA traen ambos lados llenos
+  desde el inicio, esa condición casi nunca se cumplía y el espejo parecía no funcionar nunca
+  (bug real reportado por Xavier: editar Magneto->Winter Soldier no cambiaba Winter
+  Soldier->Magneto). Se quitó por completo el concepto de scoreAutoFlags/auto-edit.
+- 2026-08-03: los colores de las tarjetas pasaron de un solo tono con opacidad continua (difícil
+  de distinguir entre valores cercanos, ej. -5 vs -6) a 8 colores discretos y bien diferenciados
+  por magnitud (1 a 8) para cada dirección — POS_SCALE (ámbar->rojo oscuro) para cuando el rival
+  le va bien al héroe de arriba, NEG_SCALE (celeste->azul marino) para lo contrario.
+
+- 2026-08-03: Xavier notó que Winter Soldier mostraba a Deadpool (Duelist) en "Casi counters"
+  pero Deadpool (Duelist) NO mostraba a Winter Soldier en "Con ventaja" -- no era un bug de
+  sincronización, era que rivalscounter.com scrapeó cada página de héroe por separado y nunca
+  garantizó que los dos lados de un par coincidieran (Winter Soldier->Deadpool DPS: +3,
+  Deadpool DPS->Winter Soldier: 0, en vez de +3/-3). Medido en TODA la matriz: 765 de 1431
+  pares únicos posibles (más de la mitad) tenían algún desfasaje; 514 pares directos incluso
+  con categoría 1-4 distinta según el lado. Xavier pidió arreglarlo automáticamente: se aplicó
+  un PROMEDIO a los dos lados de cada uno de los 765 pares (ej. +3 y 0 -> promedio 1.5 ->
+  redondeo a +2/-2), recalculando después la categoría 1-4 y el label (favorable/weak/etc.)
+  desde el promedio ya simétrico. Jubilee no tenía ningún par afectado (sus datos ya eran
+  perfectamente simétricos desde el redondeo previo). Se detectaron y corregimos aparte 2 pares
+  con inconsistencia de categoría que venían de ediciones manuales anteriores donde solo se
+  había actualizado la categoría de un lado (Devil Dinosaur/Squirrel Girl, Doctor
+  Strange/Magik) -- se solucionó con una pasada final que recalcula TODA la matriz 1-4
+  directamente desde los puntajes (ya limpios) en vez de parchear categoría por edición.
+  Resultado verificado: 0 pares inconsistentes en toda la matriz (score y categoría). El
+  promedio es una aproximación estadística, no verificada contra el conocimiento real del
+  juego -- matchup-review-priority.txt (raíz del repo) quedó como registro de los 765 pares
+  tocados, ordenados por qué tan grande era la diferencia original, para que Xavier pueda
+  revisar con calma los más extremos (13 con diff>=8, ej. Iron Fist/Luna Snow, Iron
+  Fist/Mantis) que son los más propensos a haber quedado mal pese al promedio.
+- 2026-08-03: BUG REAL encontrado y corregido en assets/js/tabs-editor.js (matchupBreakdown).
+  Las columnas "🟢 A tu favor" / "🟠 Le cuesta" de la pestaña Personajes (que sub-dividen la
+  categoría "parejo" usando el puntaje fino) tenían la comparación invertida: usaban
+  score>=1 -> favorable, score<=-1 -> le cuesta. Pero externalMatchupScore(name, h.n) devuelve
+  "que tan bien le va a h.n CONTRA name" (ver comentario en team-state.js linea 148) -- positivo
+  es MALO para "name" (el rival le da pelea/casi lo countera), negativo es BUENO para "name".
+  Se corrigió a score<=-1 -> favorable, score>=1 -> le cuesta. Verificado con Devil Dinosaur:
+  antes de corregir, heroes con score positivo (que en realidad le dan pelea a Devil Dinosaur,
+  ej. Namor +3, Magneto +3) aparecian en "A tu favor" -- exactamente al revés. Confirmado el
+  sentido correcto contra el ancla ya verificada Black Panther/Namor (+7 hardCounter en la fila
+  de Black Panther, y Namor SI lo countera en el juego real).
+
+ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
+---------------------------------------------------------------------------
+- assets/data/ref-matchup-scores.js (REF_MATCHUP_SCORES) y la matriz 1-4
+  (matchup-matrix.json / MATCHUP_MATRIX en matchups.js) usan:
+    - rivalscounter.com (punto 1) para los 53 héroes que NO son Jubilee.
+    - rivals_counter_peaks / Sankyuubigan (punto 3), reescalado x0.4, SOLO para los pares
+      donde interviene Jubilee (ese sitio no la tiene catalogada).
+  Umbral único para todo el roster: score>=4 -> código 1, score<=-4 -> código 4, resto -> 2,
+  H===X -> 3 siempre. Sub-banda favorable/parejo/desfavorable con umbral ±1. Afinador de
+  desempate x0.03 en analysis.js.
+- assets/data/ref-hero-meta-stats.js (REF_HERO_META_STATS) usa rivals-hq (punto 2) para
+  winrate/pickrate/banrate general — esto no cambió.
+- assets/data/hero-images.js NO tiene banners de terceros (se probó y se sacó, ver punto 4).
+- Créditos visibles en la página (credits.body en i18n.js) mencionan a la comunidad de TikTok
+  y linkean el repo rivals_counter_peaks — pedido explícito de Xavier del 2026-08-02. Ojo:
+  ese repo ya NO es la fuente principal (ver arriba), solo se usa para Jubilee — si esto
+  cambia de nuevo, revisar si el crédito sigue siendo preciso.
+
+1) assets/data/ref-matchup-scores.js — fuente rivalscounter.com (53 héroes, sin Jubilee)
+   - Sitio de terceros, no oficial. Su propio pie de página dice "AI-Powered Results" — sus
+     puntajes son estimados por su IA, no necesariamente partidas reales verificadas.
+   - Se extrajo navegando su pestaña "Hero Counters" para cada uno de los 53 héroes que
+     tiene catalogados (Jubilee no está).
+   - Escala original: -8 a +7 aprox, con 6 etiquetas (hardCounter/strong/favorable/even/
+     weak/hardCountered). Total capturado: 2756 pares (53 x 52). Extraído 2026-07-31.
+   - Xavier comparó los resultados contra su propio conocimiento del juego (2026-08-02) y
+     los prefiere sobre los de rivals_counter_peaks para el roster general (ver punto 3).
+
+2) assets/data/ref-hero-meta-stats.js — fuente GustavoDeschamps/rivals-hq (winrate general)
+   - Repo de GitHub (proyecto fan-made, código abierto), archivo data/hero-stats.json,
+     armado por un scraper automático (GitHub Action) que lee rivalstracker.com cada 6hs.
+     Dato real de comunidad, no estimado por IA.
+   - Cubre 51 héroes (falta Jubilee). Campos: winRate, pickRate, banRate. Extraído 2026-07-31.
+   - Se investigó también su lógica de "counters"/"counteredBy" (lib/hero-data.ts) y se
+     descartó: son solo 3 entradas hardcodeadas por héroe sin fuente citada, y el ranking
+     final lo domina el winrate general del candidato — más pobre que la matriz propia.
+
+3) rivals_counter_peaks (Sankyuubigan) — usado SOLO para Jubilee, descartado para el resto
+   - Repo de GitHub: app de escritorio para Overwolf (en ruso). Archivo
+     overwolf_app/database/stats/marvel_rivals_stats_20260720-010231.json.
+   - Es data REAL de partidas jugadas de TODA la comunidad (no de un jugador — los conteos
+     de partidas van de 13.711 a 931.286 por par, imposible para un jugador individual),
+     con winrate real + cantidad de partidas por par. Cubre 54 héroes x 53 rivales completo
+     en ambas direcciones, incluida Jubilee.
+   - El 2026-08-02 se probó como fuente para el roster COMPLETO y Xavier detectó que daba
+     resultados incorrectos según su conocimiento real del juego: marcaba a Peni Parker como
+     counter de la mayoría de los personajes, incluidos varios "voladores" (Iron Man, etc.)
+     contra los que en la práctica Peni tiene problemas (le cuesta seguirlos con sus
+     torretas/minas estacionarias). Capturas de referencia que Xavier subió: "Captura de
+     pantalla 2026-07-31 192155.png" y "...192254.png" en la raíz del repo.
+   - Por eso se revirtió a rivalscounter.com (punto 1) para todo el roster excepto Jubilee.
+     Jubilee sigue usando esta fuente (es la única con datos reales para ella), pero
+     RE-ESCALADA: factor 0.4 sobre el score crudo, para que su umbral efectivo (antes ±10)
+     pase a ±4 y se comporte igual que el resto del roster con el mismo umbral y el mismo
+     multiplicador de desempate (x0.03). Sin este reescalado, Jubilee pesaría de más en
+     cualquier desempate por venir de una escala mucho más ancha (±49 vs ±8).
+   - 2026-08-03: el reescalado x0.4 dejaba decimales feos (ej. 3.13, -5.55). Xavier pidió
+     enteros. Se redondeó cada score de Jubilee (Math.round) manteniendo la antisimetría
+     exacta (par->Jubilee = -Jubilee->par siempre). 5 pares cruzaron el umbral ±4 al
+     redondear (The Thing, Loki, Hulk, Groot, Psylocke, antes en 2 "parejo", ahora en
+     categoría 1/4 "counter"/"le gana fácil") — se recalculó la categoría 1-4 de esos pares
+     con la misma regla de siempre para no quedar inconsistente con el score ya redondeado.
+     Nota: Peni Parker sigue en +12 (fuera del rango ±8 típico) — es un artefacto real del
+     reescalado, no un bug nuevo; no se tocó porque no fue lo que Xavier pidió corregir.
+   - Datos crudos sin usar: el JSON original de esta fuente para el resto del roster ya no
+     se usa, pero sigue disponible en raw.githubusercontent.com/Sankyuubigan/
+     rivals_counter_peaks/master/overwolf_app/database/stats/
+     marvel_rivals_stats_20260720-010231.json por si hace falta revisar de nuevo.
+
+4) assets/data/hero-images.js — variante "banner" — PROBADA Y REVERTIDA (2026-08-02)
+   - Fuente que se había probado: repositorio "BlurryShady/rivals-API" (backend Django de una
+     app de armar equipos), carpeta assets/heroes/banners/ — casi con certeza arte oficial
+     del juego (splash arts extraídos), no arte original de ese usuario.
+   - Se habían cargado 3 héroes de prueba (The Thing, Angela, Black Panther) como variante
+     "banner" en PRELOADED_IMAGES. Xavier probó y no le gustó el resultado visualmente — se
+     sacó por completo (la clave "banner" y el label "editor.variantBanner"). No queda nada
+     de esto en el código actual. Si se vuelve a intentar en el futuro, el proceso era:
+     descargar de assets/heroes/banners/, redimensionar a ~900px de ancho, comprimir a JPEG
+     calidad ~78, convertir a base64, agregar como nueva key en PRELOADED_IMAGES[hero].
+
+5) Repos de GitHub investigados y descartados (no aportaban nada útil, no se usó ningún
+   dato de estos):
+   - Bronxproject/marvel-rivals-stats-db: tracker de stats de UN jugador/streamer
+     específico (BronxProjecTTV), no data general de la comunidad. Se pensó para
+     "Explorador de jugadores" pero no sirve: no busca jugadores arbitrarios, solo importa
+     exports manuales de tu propio historial de Tracker.gg.
+   - donutman07/MarvelRivalsCharacterIDs: solo una lista de IDs de personajes, sin counters.
+   - jjr-dev/marvel-rivals-api: scraper de la web oficial de marvelrivals.com (bios,
+     imágenes, skills) — nada de counters ni stats de winrate.
+   - MarvelRivalsAPI-Wrapper: cliente de una API de terceros que requiere API key propia;
+     expone stats de jugador/partida/héroe pero no matchups específicos.
+   - trippintreeko/Marvel-Rivals-Counters: dataset ability-vs-ability (no hero-vs-hero),
+     68% lleno en general pero Jubilee solo tiene 1 de 8 habilidades con algún dato — muy
+     poco para armar su fila completa.
+   - adparlier/Marvel-Rivals-Counters: página estática que combina counterwatch.gg +
+     RivalsMeta + RivalsTracker + Mobalytics + tier lists editoriales — el propio texto dice
+     "Jubilee's counters are early-season and will firm up as data matures", o sea que ni
+     ellos confían todavía en su propio dato de Jubilee.
+   - nazkirill43-glitch/marvel-rivals-meta-intelligence: compara hype de creadores de
+     YouTube vs rendimiento real — más débil que datos de partidas reales, no matchups.
+   - 98bruno89-eng/steam-player-tracker: cuenta jugadores concurrentes de Steam (número
+     total), no jugadores individuales ni matchups.
+   - MarayahPiccinini/qa-challenge-marvel-rivals: tests automatizados de otra web, cero
+     datos del juego.
+   - BlurryShady/rivals-API: backend de una app de armar equipos/votar — no trae counters,
+     pero sí tenía las imágenes de banner (ver punto 4).
+   - nagylevo/Marvel-Rivals-Wiki: wiki fan-made con bios/cosméticos, sin matchups.

@@ -24,14 +24,29 @@ function renderEditorHeroList(query){
   const list = document.getElementById("editorHeroList");
   const q = query.trim().toLowerCase();
   list.innerHTML = "";
-  HEROES.filter(h=>h.n.toLowerCase().includes(q) && (!editorRoleFilter || heroHasRole(h,editorRoleFilter))).forEach(h=>{
-    const item = document.createElement("div");
-    item.className = "hero-grid-item";
-    const img = getHeroImage(h.n);
-    const thumb = img ? `<img src="${img}" class="grid-thumb" alt="${h.n}">` : "";
-    item.innerHTML = `${thumb}<span class="n">${heroLabel(h.n)}</span>${roleTagsHtml(h)}`;
-    item.onclick = ()=>renderEditorDetail(h.n);
-    list.appendChild(item);
+  const filtered = HEROES.filter(h=>h.n.toLowerCase().includes(q) && (!editorRoleFilter || heroHasRole(h,editorRoleFilter)));
+  // agrupado por rol en columnas lado a lado, mismo criterio que el picker de equipos (renderModalList)
+  // -- si el filtro/busqueda deja solo 1 o 2 roles con resultados, la grilla usa esa cantidad de
+  // columnas en vez de quedar encajonada en 1 de 3 espacios fijos con el resto en blanco.
+  const rolesWithHeroes = ["Vanguard","Duelist","Strategist"].filter(role=>filtered.some(h=>heroHasRole(h,role)));
+  list.style.gridTemplateColumns = window.matchMedia("(min-width:761px)").matches
+    ? `repeat(${Math.max(1, rolesWithHeroes.length)}, 1fr)` : "";
+  rolesWithHeroes.forEach(role=>{
+    const heroesInRole = filtered.filter(h=>heroHasRole(h,role));
+    const col = document.createElement("div");
+    col.className = "hero-role-col";
+    col.innerHTML = `<div class="hero-role-col-title">${roleIconHtml(role,15)}${t('role.'+role)} <span class="hero-role-count">${heroesInRole.length}</span></div><div class="hero-role-col-grid"></div>`;
+    const grid = col.querySelector(".hero-role-col-grid");
+    heroesInRole.forEach(h=>{
+      const item = document.createElement("div");
+      item.className = "hero-grid-item";
+      const img = getHeroImage(h.n);
+      const thumb = img ? `<img src="${img}" class="grid-thumb" alt="${h.n}">` : "";
+      item.innerHTML = `${thumb}<span class="n">${heroLabel(h.n)}</span>${roleTagsHtml(h)}`;
+      item.onclick = ()=>renderEditorDetail(h.n);
+      grid.appendChild(item);
+    });
+    list.appendChild(col);
   });
   if(list.children.length===0){
     list.innerHTML = `<p class="empty-hint" style="grid-column:1/-1;">${t("editor.noResults")}</p>`;
@@ -39,17 +54,39 @@ function renderEditorHeroList(query){
 }
 
 let editorPreviewTimer = null;
-// separa a todos los demas heroes segun como le va a "name" contra cada uno, segun la matriz
+// separa a todos los demas heroes segun como le va a "name" contra cada uno, segun la matriz.
+// La banda "pelea competitiva" (code 2) se sub-divide en 3 usando el puntaje de referencia externa
+// (ver externalMatchupScore en team-state.js) cuando hay dato: favorable/parejo/desfavorable --
+// asi la pagina distingue un +3 de un 0 de un -3 en vez de meter todo en una sola columna pareja.
+// Si no hay dato de referencia para un par puntual (unicamente pasa con Jubilee), cae por defecto
+// en "parejo" -- no se inventa un numero que no existe.
 function matchupBreakdown(name){
-  const countersAgainst = [], competitive = [], beatsEasily = [];
+  const favorable = [], even = [], unfavorable = [], beatsEasily = [];
   HEROES.forEach(h=>{
     if(h.n===name) return;
     const code = getMatchupCode(name, h.n);
-    if(code===1) countersAgainst.push(h.n);
-    else if(code===2) competitive.push(h.n);
-    else if(code===4) beatsEasily.push(h.n);
+    if(code===4){ beatsEasily.push(h.n); return; }
+    if(code!==2) return; // code 1 lo maneja countersFromMatrixFor abajo, code 3 es mirror (aparte)
+    const ref = (typeof externalMatchupScore==="function") ? externalMatchupScore(name, h.n) : null;
+    const score = ref ? ref.score : 0;
+    // externalMatchupScore(name, h.n) = que tan bien le va a h.n CONTRA name -- positivo es MALO
+    // para "name" (h.n le da pelea/casi lo countera), negativo es BUENO para "name". Por eso
+    // "a favor" usa score<=-1 y no score>=1 (bug real: estaba invertido hasta 2026-08-03).
+    if(score<=-1) favorable.push(h.n);
+    else if(score>=1) unfavorable.push(h.n);
+    else even.push(h.n);
   });
-  return {countersAgainst, competitive, beatsEasily, mirror: getMatchupCode(name,name)===3};
+  // countersFromMatrixFor ya separa por relevancia real de pelea (ver counterRelevance en
+  // matchups.js): un sanador que "cuenta" como counter en la matriz casi nunca busca la pelea
+  // directa, asi que va aparte como "counter de utilidad" en vez de mezclado con los que de
+  // verdad ganan el 1v1. Dentro de los que SI ganan el 1v1 (misma relevancia, empatados), ahora
+  // countersFromMatrixFor los ordena ademas por el puntaje de referencia externa si hay dato -- eso
+  // es lo que permite marcar un "counter definitivo" real aca (antes no había señal para desempatar
+  // sin un equipo rival completo cargado, ahora si).
+  const counters = countersFromMatrixFor(name);
+  const directCounters = counters.filter(c=>c.relevance>=1).map(c=>c.c);
+  const utilityCounters = counters.filter(c=>c.relevance<1).map(c=>c.c);
+  return {directCounters, utilityCounters, favorable, even, unfavorable, beatsEasily, definitiveCounter: directCounters[0] || null, mirror: getMatchupCode(name,name)===3};
 }
 
 async function renderEditorDetail(name){
@@ -68,11 +105,25 @@ async function renderEditorDetail(name){
   allVariantSlots.forEach(v=>{ variantImages[v.k] = getHeroImage(name, v.k); });
   const presentVariants = allVariantSlots.filter(v=>variantImages[v.k]);
 
+  // pill clickeable: te lleva directo a la ficha de matchups de ESE heroe (sin volver a buscarlo
+  // arriba) -- el nombre va en data-hero-nav en vez de en un onclick inline para no tener que
+  // escapar comillas/ampersands de nombres como "Cloak & Dagger" dentro de un atributo de JS.
+  const pillHtml = (n, isDefinitive)=>{
+    const cls = `matchup-pill${isDefinitive?' top-pill':''}`;
+    const definitiveTag = isDefinitive ? `<span class="definitive-tag">🏆 ${t("analysis.countersPerHero.definitiveLabel")}</span> · ` : "";
+    return `<span class="${cls}" data-hero-nav="${n.replace(/"/g,'&quot;')}">${heroIconHtml(n,18)}${definitiveTag}${heroLabel(n)}</span>`;
+  };
+
   let html = `<div class="counter-card">
     <div class="editor-image-row">
       <div class="editor-image-preview" id="editorImagePreview">${Object.values(variantImages).some(Boolean) ? "" : `<span class="no-img">${t("editor.noImage")}</span>`}</div>
       <div class="editor-image-actions">
         <span class="enemy-name">${heroLabel(name)}</span>${hero ? roleIconHtml(hero.r,16) : ''}
+        ${(()=>{ const s = heroMetaStats(name); if(!s) return ""; return `<div class="hq-stat-row" title="${t("editor.metaStatsTooltip",{hero:heroLabel(name)}).replace(/"/g,'&quot;')}">
+          <span class="hq-stat"><b>${s.winRate.toFixed(1)}%</b> ${t("editor.metaWinRate")}</span>
+          <span class="hq-stat"><b>${s.pickRate.toFixed(1)}%</b> ${t("editor.metaPickRate")}</span>
+          <span class="hq-stat"><b>${s.banRate.toFixed(1)}%</b> ${t("editor.metaBanRate")}</span>
+        </div>`; })()}
         <div class="variant-view-row">
           ${presentVariants.length===0 ? `<span class="variant-label">${t("editor.noPreloadedImages")}</span>` : presentVariants.map(v=>`
             <div class="variant-thumb">
@@ -86,22 +137,39 @@ async function renderEditorDetail(name){
     ${breakdown.mirror ? `<div class="mirror-note">${t("editor.mirrorViable", {hero: heroLabel(name)})}</div>` : ""}
     <div class="matchup-section">
       <div class="matchup-col tier-red">
-        <div class="matchup-col-title">🔴 ${t("editor.beatThem", {hero: heroLabel(name)})}</div>
-        ${breakdown.countersAgainst.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noStrongCounters")}</span>` : breakdown.countersAgainst.map(n=>`<span class="matchup-pill">${heroIconHtml(n,18)}${heroLabel(n)}</span>`).join("")}
+        <div class="matchup-col-title">⚔️ ${t("editor.beatThem", {hero: heroLabel(name)})}</div>
+        ${breakdown.directCounters.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noStrongCounters")}</span>` : breakdown.directCounters.map(n=>pillHtml(n, n===breakdown.definitiveCounter)).join("")}
+        ${breakdown.utilityCounters.length>0 ? `<div class="matchup-col-subtitle">${t("editor.utilityCounters")}</div><div class="utility-counters-block">${breakdown.utilityCounters.map(n=>pillHtml(n, false)).join("")}</div>` : ""}
       </div>
-      <div class="matchup-col tier-gold">
-        <div class="matchup-col-title">🟡 ${t("editor.evenFights")}</div>
-        ${breakdown.competitive.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noDataCataloged")}</span>` : breakdown.competitive.map(n=>`<span class="matchup-pill">${heroIconHtml(n,18)}${heroLabel(n)}</span>`).join("")}
+      <div class="matchup-col tier-orange">
+        <div class="matchup-col-title">🟠 ${t("editor.unfavorable")}</div>
+        ${breakdown.unfavorable.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noDataCataloged")}</span>` : breakdown.unfavorable.map(n=>pillHtml(n, false)).join("")}
+      </div>
+      <div class="matchup-col tier-neutral">
+        <div class="matchup-col-title">⚪ ${t("editor.even")}</div>
+        ${breakdown.even.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noDataCataloged")}</span>` : breakdown.even.map(n=>pillHtml(n, false)).join("")}
+      </div>
+      <div class="matchup-col tier-favor">
+        <div class="matchup-col-title">🟢 ${t("editor.favorable")}</div>
+        ${breakdown.favorable.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noDataCataloged")}</span>` : breakdown.favorable.map(n=>pillHtml(n, false)).join("")}
       </div>
       <div class="matchup-col tier-blue">
-        <div class="matchup-col-title">🔵 ${t("editor.beatsThemEasily", {hero: heroLabel(name)})}</div>
-        ${breakdown.beatsEasily.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noDataCataloged")}</span>` : breakdown.beatsEasily.map(n=>`<span class="matchup-pill">${heroIconHtml(n,18)}${heroLabel(n)}</span>`).join("")}
+        <div class="matchup-col-title">🛡️ ${t("editor.beatsThemEasily", {hero: heroLabel(name)})}</div>
+        ${breakdown.beatsEasily.length===0 ? `<span class="empty-hint" style="font-size:11.5px;">${t("editor.noDataCataloged")}</span>` : breakdown.beatsEasily.map(n=>pillHtml(n, false)).join("")}
       </div>
     </div>
   </div>`;
 
   const el = document.getElementById("editorDetail");
   el.innerHTML = html;
+  // click en cualquier pill de las 5 columnas -- va directo a la ficha de ESE heroe, sin tener
+  // que volver a buscarlo arriba en la grilla
+  el.querySelectorAll(".matchup-pill[data-hero-nav]").forEach(pill=>{
+    pill.onclick = ()=>{
+      renderEditorDetail(pill.dataset.heroNav);
+      el.scrollIntoView({behavior:"smooth", block:"start"});
+    };
+  });
 
   // vista previa: si hay más de una variante subida, las va rotando cada 1.5 segundos
   const previewEl = document.getElementById("editorImagePreview");

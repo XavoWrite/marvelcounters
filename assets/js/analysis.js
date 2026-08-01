@@ -42,6 +42,25 @@ function shieldBreakBonus(hero, shieldHeavy){
   return 1;
 }
 
+// puntaje de un candidato "h" contra una lista de rivales: cuenta cuantos le gana/pierde en tu
+// matriz (goodAgainst/badAgainst), pesa por relevancia real de pelea + los ajustes de dive/shield
+// segun el equipo rival completo, y SUMA el puntaje de referencia externa de cada rival puntual
+// (externalMatchupScore, ver team-state.js) como afinador chico -- no reemplaza nada de lo anterior,
+// solo desempata mejor entre candidatos que la matriz categoriza igual. Comparte formula con
+// recommendMyPick y suggestGhostFills para que este afinado se aplique parejo en toda la app.
+function candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow){
+  let goodAgainst = 0, badAgainst = 0, refSum = 0;
+  enemyList.forEach(e=>{
+    const code = getMatchupCode(h.n, e.n);
+    if(code===4) goodAgainst++;
+    else if(code===1) badAgainst++;
+    const ref = (typeof externalMatchupScore==="function") ? externalMatchupScore(e.n, h.n) : null;
+    if(ref) refSum += ref.score;
+  });
+  const base = goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow) - badAgainst*2;
+  return {score: base + refSum*0.03, goodAgainst, badAgainst};
+}
+
 // el "por que" de cada sanador recomendado esta en el diccionario (analysis.healerWhy.<tag>) para
 // que salga en el idioma correcto -- HEALER_MAP solo guarda que heroes y que clave de texto usar
 const HEALER_MAP = {
@@ -85,8 +104,8 @@ function renderMatchupGrid(allyList, enemyList){
   let bestAlly=null, bestAllyGood=-1;
   let worstAlly=null, worstAllyBad=-1;
   allyList.forEach(a=>{
-    html += `<tr><th>${heroLabel(a.n)}</th>`;
     let good=0, bad=0;
+    let cellsHtml = "";
     enemyList.forEach(e=>{
       const code = getMatchupCode(a.n, e.n);
       const cls = code ? TIER_CLASS[code] : "tier-none";
@@ -94,14 +113,17 @@ function renderMatchupGrid(allyList, enemyList){
       const label = code
         ? t("analysis.matchupTitle", {a: heroLabel(a.n), b: heroLabel(e.n), label: tierLabel(code)})
         : t("analysis.matchupTitleNoData", {a: heroLabel(a.n), b: heroLabel(e.n)});
-      html += `<td class="${cls}" title="${label}">${sym}</td>`;
+      cellsHtml += `<td class="${cls}" title="${label}">${sym}</td>`;
       if(code===4) good++;
       else if(code===1) bad++;
     });
     goodTotal += good; badTotal += bad;
     if(good>bestAllyGood){ bestAllyGood=good; bestAlly=a; }
     if(bad>worstAllyBad){ worstAllyBad=bad; worstAlly=a; }
-    html += `</tr>`;
+    // resumen rapido por fila (cuantos rivales le gana facil / cuantos lo contrarrestan a este
+    // aliado) -- mismo lenguaje visual (🛡️/⚔️) que la leyenda de arriba, para no aprender iconos nuevos
+    const tallyTitle = t("analysis.matchupRowTally", {good, bad, hero: heroLabel(a.n)});
+    html += `<tr><th>${heroLabel(a.n)}<span class="matchup-row-tally" title="${tallyTitle.replace(/"/g,'&quot;')}">🛡️${good} · ⚔️${bad}</span></th>${cellsHtml}</tr>`;
   });
   html += `</tbody></table></div>`;
 
@@ -139,18 +161,12 @@ function recommendMyPick(){
   const candidates = HEROES.filter(h=> !banned.has(h.n) && !fixedNames.has(h.n));
   const antiDiveNow = antiDiveCount(enemyList);
   const shieldHeavyNow = shieldHeavyCount(enemyList);
+  // goodAgainst/score via candidateScoreAgainst: pesa por counterRelevance (un sanador que "le gana
+  // facil" a alguien en la matriz casi siempre es por utilidad/anti-heal, no por pelea directa),
+  // por diveViability, por shieldBreakBonus, y afina con el puntaje de referencia externa si hay dato
   const scored = candidates.map(h=>{
-    let goodAgainst = 0, badAgainst = 0;
-    enemyList.forEach(e=>{
-      const code = getMatchupCode(h.n, e.n);
-      if(code===4) goodAgainst++;
-      else if(code===1) badAgainst++;
-    });
-    // goodAgainst pesa por counterRelevance (un sanador que "le gana facil" a alguien en la matriz
-    // casi siempre es por utilidad/anti-heal, no por pelea directa), por diveViability (si el rival
-    // tiene varias herramientas anti-dive, un dive puro no rinde tanto como dice la matriz) y por
-    // shieldBreakBonus (si el rival tiene varios escudos, un shield-breaker rinde mas de lo que dice)
-    return {h, goodAgainst, badAgainst, score: goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow) - badAgainst*2};
+    const {score, goodAgainst, badAgainst} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
+    return {h, goodAgainst, badAgainst, score};
   }).sort((a,b)=>b.score-a.score);
   // primero los mejores DENTRO del rol que hace falta (para que la recomendacion de rol no
   // quede tapada por un pick de otro rol con mejor matchup pero que no soluciona el desbalance)
@@ -201,14 +217,8 @@ function suggestGhostFills(){
   emptyIdx.forEach((slotI, k)=>{
     const role = roleQueue[k];
     const candidates = HEROES.filter(h=> !banned.has(h.n) && !used.has(h.n) && heroHasRole(h, role));
-    const scored = candidates.map(h=>{
-      let goodAgainst=0, badAgainst=0;
-      enemyList.forEach(e=>{
-        const code = getMatchupCode(h.n, e.n);
-        if(code===4) goodAgainst++; else if(code===1) badAgainst++;
-      });
-      return {h, score: goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow) - badAgainst*2};
-    }).sort((a,b)=>b.score-a.score);
+    const scored = candidates.map(h=>({h, score: candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow).score}))
+      .sort((a,b)=>b.score-a.score);
     if(scored.length){
       empty[slotI] = scored[0].h;
       used.add(scored[0].h.n);
@@ -451,17 +461,20 @@ function renderAnalysis(){
           const ch = byName[c.c];
           if(!ch || !heroHasRole(ch, role)) return;
           if(banned.has(c.c)) return; // no tiene sentido recomendar algo baneado
-          if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow)};
+          if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow), refSum:0};
           scores[c.c].hits++;
+          if(c.refScore) scores[c.c].refSum += c.refScore.score;
         });
       });
       // se ordena por hits*relevancia*viabilidad de dive*bonus de shield-break (no solo hits) para
       // que un sanador que "contrarresta" por utilidad indirecta, o un dive que el rival tiene bien
-      // frenado, no le gane el lugar a algo que de verdad rinde contra esta composición puntual
+      // frenado, no le gane el lugar a algo que de verdad rinde contra esta composición puntual --
+      // el puntaje de referencia externa (refSum) se suma como afinador chico, igual que en
+      // candidateScoreAgainst, para desempatar entre candidatos que quedan parejos en lo anterior.
       // 4 en vez de 3 -- con retrato en vez de tarjeta de texto, 3 quedaba como una "L" (2 arriba +
       // 1 abajo suelto); 4 completa un cuadrado 2x2 parejo dentro de la columna angosta
       const ranked = Object.entries(scores)
-        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield))
+        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield + b[1].refSum*0.03) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield + a[1].refSum*0.03))
         .slice(0,4);
       left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(role,16)}${t('role.'+role)}</div>`;
       if(ranked.length===0){
@@ -577,13 +590,17 @@ function renderAnalysis(){
   if(enemyFilled===0){
     right += `<p class="empty-hint">${t("analysis.countersPerHero.noneAdded")}</p>`;
   } else {
-    const pillHtml = c=>{
-      const cls = `pill ${c.have?'have':''} ${c.banned?'hidden-pill':''}`;
+    const enemyListForDefinitive = enemyTeam.filter(Boolean);
+    const antiDiveNow = antiDiveCount(enemyListForDefinitive);
+    const shieldHeavyNow = shieldHeavyCount(enemyListForDefinitive);
+    const pillHtml = (c, isDefinitive)=>{
+      const cls = `pill ${c.have?'have':''} ${c.banned?'hidden-pill':''} ${isDefinitive?'top-pill':''}`;
       // el logo de clase (Vanguard/Duelist/Strategist) es lo unico que distingue, a simple vista,
       // entre los 3 Deadpool (mismo retrato, mismo nombre en pantalla) -- sin esto dos sugerencias
       // de "Deadpool" se ven identicas aunque sean roles totalmente distintos.
       const role = byName[c.c] && byName[c.c].r;
-      return `<span class="${cls}">${heroIconHtml(c.c,20)}${role?roleIconHtml(role,13):''}${c.banned?t("analysis.countersPerHero.banned"):''}${c.have?`<span class="check">${t("analysis.countersPerHero.alreadyInTeam")}</span> · `:''}<b>${heroLabel(c.c)}</b></span>`;
+      const definitiveTag = isDefinitive ? `<span class="definitive-tag">🏆 ${t("analysis.countersPerHero.definitiveLabel")}</span> · ` : "";
+      return `<span class="${cls}">${heroIconHtml(c.c,20)}${role?roleIconHtml(role,13):''}${definitiveTag}${c.banned?t("analysis.countersPerHero.banned"):''}${c.have?`<span class="check">${t("analysis.countersPerHero.alreadyInTeam")}</span> · `:''}<b>${heroLabel(c.c)}</b></span>`;
     };
     const MAX_PRIMARY_COUNTERS = 6;
     enemyTeam.forEach(h=>{
@@ -591,20 +608,42 @@ function renderAnalysis(){
       // ya viene ordenado por counterRelevance: pelea directa primero, soporte que rara vez
       // duelea al final -- se muestran los mas utiles y el resto queda plegado para no saturar
       const counters = getCounters(h.n, allyNames);
-      const shown = counters.slice(0, MAX_PRIMARY_COUNTERS);
-      const rest = counters.slice(MAX_PRIMARY_COUNTERS);
+      // "counter definitivo": dentro de los counters de ESTE rival puntual, el que mejor puntua
+      // con la MISMA formula contextual que "Mejores picks por rol" (relevancia * viabilidad de
+      // dive * bonus de shield-break contra el equipo rival completo) -- no solo la matriz 1v1
+      // pelada. Se ignoran los baneados: recomendar algo que no se puede elegir no sirve.
+      let definitiveName = null, bestScore = -Infinity;
+      counters.forEach(c=>{
+        if(c.banned) return;
+        const ch = byName[c.c];
+        if(!ch) return;
+        // el puntaje de referencia externa (c.refScore, ya viene calculado desde
+        // countersFromMatrixFor en matchups.js) se suma como afinador chico -- pesa poco a
+        // proposito para no tapar la matriz propia ni el ajuste de dive/shield, solo desempata
+        // entre candidatos parejos.
+        const refBonus = c.refScore ? c.refScore.score*0.03 : 0;
+        const score = c.relevance * diveViability(ch, antiDiveNow) * shieldBreakBonus(ch, shieldHeavyNow) + refBonus;
+        if(score>bestScore){ bestScore = score; definitiveName = c.c; }
+      });
+      let ordered = counters;
+      if(definitiveName){
+        const idx = counters.findIndex(c=>c.c===definitiveName);
+        if(idx>0) ordered = [counters[idx], ...counters.slice(0,idx), ...counters.slice(idx+1)];
+      }
+      const shown = ordered.slice(0, MAX_PRIMARY_COUNTERS);
+      const rest = ordered.slice(MAX_PRIMARY_COUNTERS);
       right += `<div class="counter-card">
         <span class="enemy-name">${heroIconHtml(h.n,26)}${heroLabel(h.n)}</span>${roleIconHtml(h.r,15)}
         <div class="counter-list">`;
       if(counters.length===0){
         right += `<span class="pill">${t("analysis.countersPerHero.noneCataloged")}</span>`;
       } else {
-        shown.forEach(c=>{ right += pillHtml(c); });
+        shown.forEach(c=>{ right += pillHtml(c, c.c===definitiveName); });
       }
       right += `</div>`;
       if(rest.length>0){
         right += `<details class="counters-more"><summary>${tp("analysis.countersPerHero.more", rest.length, {n: rest.length})}</summary>
-          <div class="counter-list" style="margin-top:8px;">${rest.map(pillHtml).join("")}</div></details>`;
+          <div class="counter-list" style="margin-top:8px;">${rest.map(c=>pillHtml(c, c.c===definitiveName)).join("")}</div></details>`;
       }
       right += `</div>`;
     });
