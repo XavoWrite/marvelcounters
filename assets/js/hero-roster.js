@@ -6,8 +6,8 @@
 // como etiqueta chica en "Mejores picks por rol" para comparar arquetipos entre candidatos.
 // Investigado 2026-08-01 (exitlag.com, marvelrivalshub.gg), completado 2026-08-02 con
 // clasificaciones manuales de Xavier para heroes que esas fuentes no cubrian (Black Cat, Cyclops,
-// Daredevil, Deadpool, Elsa Bloodstone, Hawkeye, Punisher, Spider-Man, Squirrel Girl) --
-// deliberadamente incompleto: los heroes que siguen sin "arch" (Jubilee, Gambit, White Fox, etc.)
+// Daredevil, Deadpool, Elsa Bloodstone, Gambit, Hawkeye, Jubilee, Punisher, Spider-Man,
+// Squirrel Girl, White Fox) -- deliberadamente incompleto: los heroes que siguen sin "arch"
 // quedaron sin clasificar en vez de inventar una.
 const HEROES = [
   // Vanguards
@@ -57,16 +57,16 @@ const HEROES = [
   {n:"Adam Warlock",r:"Strategist",t:["revive","static","burst_heal"],arch:["guardian"]},
   {n:"Cloak & Dagger",r:"Strategist",t:["mobile","dash","dual","peel"],arch:["lifeline","playmaker"]},
   {n:"Deadpool (Strategist)",r:"Strategist",dpGroup:true,t:["sustain_heal","mobile","brawl"]},
-  {n:"Gambit",r:"Strategist",t:["burst_heal","utility","area_denial"]},
+  {n:"Gambit",r:"Strategist",t:["burst_heal","utility","area_denial"],arch:["playmaker","lifeline"]},
   {n:"Invisible Woman",r:"Strategist",t:["shield","static","aoe"],arch:["lifeline","guardian"]},
   {n:"Jeff the Land Shark",r:"Strategist",t:["mobile","poke_heal","escape"],arch:["playmaker","lifeline"]},
-  {n:"Jubilee",r:"Strategist",t:["burst_heal","mobile","aoe"]},
+  {n:"Jubilee",r:"Strategist",t:["burst_heal","mobile","aoe"],arch:["guardian"]},
   {n:"Loki",r:"Strategist",t:["deception","ult_steal","clone"],arch:["playmaker","guardian"]},
   {n:"Luna Snow",r:"Strategist",t:["burst_heal","static","aoe"],arch:["lifeline"]},
   {n:"Mantis",r:"Strategist",t:["sustain_heal","cc","mobile"],arch:["guardian","lifeline"]},
   {n:"Rocket Raccoon",r:"Strategist",t:["static","turret","backline"],arch:["playmaker"]},
   {n:"Ultron",r:"Strategist",t:["turret","aerial","backline"],arch:["playmaker","guardian"]},
-  {n:"White Fox",r:"Strategist",t:["brawl_heal","melee","mobile"]},
+  {n:"White Fox",r:"Strategist",t:["brawl_heal","melee","mobile"],arch:["lifeline"]},
 ];
 const byName = Object.fromEntries(HEROES.map(h=>[h.n,h]));
 
