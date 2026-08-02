@@ -5,25 +5,25 @@
 // flanker/sustainer/lifeline/playmaker/guardian) -- no afecta ningun calculo, solo se muestra
 // como etiqueta chica en "Mejores picks por rol" para comparar arquetipos entre candidatos.
 // Investigado 2026-08-01 (exitlag.com, marvelrivalshub.gg), completado 2026-08-02 con
-// clasificaciones manuales de Xavier para heroes que esas fuentes no cubrian (Black Cat, Cyclops,
-// Daredevil, Deadpool, Elsa Bloodstone, Gambit, Hawkeye, Jubilee, Punisher, Spider-Man,
-// Squirrel Girl, White Fox) -- deliberadamente incompleto: los heroes que siguen sin "arch"
-// quedaron sin clasificar en vez de inventar una.
+// clasificaciones manuales de Xavier para heroes que esas fuentes no cubrian (Angela, Black Cat,
+// Cyclops, Daredevil, Deadpool, Devil Dinosaur, Elsa Bloodstone, Emma Frost, Gambit, Hawkeye,
+// Jubilee, Punisher, Rogue, Spider-Man, Squirrel Girl, Thor, White Fox) -- deliberadamente
+// incompleto: los heroes que siguen sin "arch" quedaron sin clasificar en vez de inventar una.
 const HEROES = [
   // Vanguards
-  {n:"Angela",r:"Vanguard",t:["dive","aerial","mobility"]},
+  {n:"Angela",r:"Vanguard",t:["dive","aerial","mobility"],arch:["dive_tank"]},
   {n:"Captain America",r:"Vanguard",t:["brawl","anti_dive","peel"],arch:["dive_tank"]},
-  {n:"Deadpool (Vanguard)",r:"Vanguard",dpGroup:true,t:["shield","brawl","melee"]},
-  {n:"Devil Dinosaur",r:"Vanguard",t:["brawl","melee","anti_dive"]},
+  {n:"Deadpool (Vanguard)",r:"Vanguard",dpGroup:true,t:["shield","brawl","melee"],arch:["shield_tank"]},
+  {n:"Devil Dinosaur",r:"Vanguard",t:["brawl","melee","anti_dive"],arch:["shield_tank","brawl_tank"]},
   {n:"Doctor Strange",r:"Vanguard",t:["shield","melee_caster","anti_dive"],arch:["shield_tank"]},
-  {n:"Emma Frost",r:"Vanguard",t:["shield","brawl","cc"]},
+  {n:"Emma Frost",r:"Vanguard",t:["shield","brawl","cc"],arch:["shield_tank","brawl_tank"]},
   {n:"Groot",r:"Vanguard",t:["shield","zone","wall"],arch:["shield_tank"]},
   {n:"Hulk",r:"Vanguard",t:["brawl","melee","cc"],arch:["brawl_tank"]},
   {n:"Magneto",r:"Vanguard",t:["shield","zone","poke_resist"],arch:["shield_tank"]},
   {n:"Peni Parker",r:"Vanguard",t:["zone","turret","area_denial"],arch:["brawl_tank","bunker_tank"]},
-  {n:"Rogue",r:"Vanguard",t:["dive","aerial","mobility"]},
+  {n:"Rogue",r:"Vanguard",t:["dive","aerial","mobility"],arch:["brawl_tank"]},
   {n:"The Thing",r:"Vanguard",t:["brawl","melee","anti_dive"],arch:["brawl_tank"]},
-  {n:"Thor",r:"Vanguard",t:["brawl","melee","dive_lite"]},
+  {n:"Thor",r:"Vanguard",t:["brawl","melee","dive_lite"],arch:["brawl_tank"]},
   {n:"Venom",r:"Vanguard",t:["dive","mobility","brawl"],arch:["dive_tank"]},
   // Duelists
   {n:"Black Cat",r:"Duelist",t:["dive","melee","mobility"],arch:["flank_dps","brawl_dps"]},

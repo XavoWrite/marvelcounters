@@ -47,7 +47,10 @@ function renderEditorHeroList(query){
       const thumb = img ? `<img src="${img}" class="grid-thumb" alt="${h.n}">` : "";
       const archTags = archTagsHtml(h);
       item.innerHTML = `${thumb}<span class="n">${heroLabel(h.n)}</span>${roleTagsHtml(h)}${archTags ? `<div class="arch-tags">${archTags}</div>` : ""}`;
-      item.onclick = ()=>renderEditorDetail(h.n);
+      item.onclick = ()=>{
+        renderEditorDetail(h.n);
+        document.getElementById("editorDetail").scrollIntoView({behavior:"smooth", block:"start"});
+      };
       grid.appendChild(item);
     });
     list.appendChild(col);
