@@ -5240,8 +5240,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Daredevil": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Magneto": {
       "score": 1,
@@ -5666,7 +5666,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Daredevil": {
-      "score": -5,
+      "score": -1,
       "label": "weak"
     },
     "Magneto": {
@@ -8648,8 +8648,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Daredevil": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Magneto": {
       "score": 2,
@@ -9287,8 +9287,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Daredevil": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Magneto": {
       "score": -1,
@@ -9842,16 +9842,16 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Phoenix": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Squirrel Girl": {
       "score": -1,
       "label": "weak"
     },
     "Punisher": {
-      "score": 5,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Cyclops": {
       "score": -3,
@@ -9906,8 +9906,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Deadpool (Duelist)": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Ultron": {
       "score": 1,
@@ -9918,8 +9918,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Magik": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Black Panther": {
       "score": 0,
@@ -9946,8 +9946,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Psylocke": {
-      "score": 1,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Gambit": {
       "score": 2,
@@ -10995,8 +10995,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Daredevil": {
-      "score": -1,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Magneto": {
       "score": 0,
