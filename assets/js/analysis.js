@@ -44,22 +44,33 @@ function shieldBreakBonus(hero, shieldHeavy){
 
 // ciclo de counters entre arquetipos de Duelista (mismo patron piedra-papel-tijera que usan varias
 // guias de la comunidad, ver hero-roster.js): Todoterreno > Cuerpo a cuerpo > Flanker > Poke >
-// Todoterreno. Es solo un afinador chico sobre candidateScoreAgainst, igual que refScore -- no
-// reemplaza la matriz 1v1, solo suma un poco cuando el arquetipo del candidato le gana en el papel
-// al arquetipo del rival. Heroes sin "arch" cargado (ver nota en hero-roster.js) no afectan ni se
-// ven afectados por este bonus.
+// Todoterreno. Antes esto sumaba nada mas cuando el candidato le ganaba en el papel al arquetipo
+// rival (nunca restaba cuando era al reves), y se pesaba a *0.5 -- un afinador chico de verdad, casi
+// invisible al lado del +-2 por cada matchup 1v1 confirmado en la matriz. Xavier señalo que esto no
+// reflejaba bien el peso real: un equipo rival con varios "poke" puede comerse a un "todoterreno"
+// aunque la matriz 1v1 los de por parejos, como paso con el equipo Black Cat/Hela/Ciclope/Magik/
+// Spider-Man/CnD que lo vencio con un solo healer. Ahora pesa igual en ambos sentidos (bonus si el
+// candidato le gana al arquetipo rival, penalidad si el rival le gana al candidato) y a *1 -- cada
+// pareja de arquetipos que se cruza vale tanto como un matchup 1v1 confirmado, no una fraccion chica
+// de eso. Sigue sin reemplazar la matriz 1v1 real (esa manda cuando hay dato concreto), pero ahora
+// es un factor de peso comparable dentro de la enorme bolsa de matchups "parejos" (categoria 2) que
+// antes no diferenciaba nada mas alla del puntaje de referencia externa. Heroes sin "arch" cargado
+// (ver nota en hero-roster.js) no afectan ni se ven afectados por este bonus.
 const ARCH_BEATS = {sustain_dps:"brawl_dps", brawl_dps:"flank_dps", flank_dps:"poke_dps", poke_dps:"sustain_dps"};
+const ARCH_BEATEN_BY = {brawl_dps:"sustain_dps", flank_dps:"brawl_dps", poke_dps:"flank_dps", sustain_dps:"poke_dps"};
 function archCycleBonus(hero, enemyList){
   if(!hero.arch || !hero.arch.length) return 0;
   const enemyArchCounts = {};
   enemyList.forEach(e=>{
     if(!e || !e.arch) return;
-    e.arch.forEach(a=>{ if(ARCH_BEATS[a]!==undefined) enemyArchCounts[a] = (enemyArchCounts[a]||0)+1; });
+    e.arch.forEach(a=>{ enemyArchCounts[a] = (enemyArchCounts[a]||0)+1; });
   });
   let bonus = 0;
   hero.arch.forEach(a=>{
     const beats = ARCH_BEATS[a];
     if(beats && enemyArchCounts[beats]) bonus += enemyArchCounts[beats];
+    const beatenBy = ARCH_BEATEN_BY[a];
+    if(beatenBy && enemyArchCounts[beatenBy]) bonus -= enemyArchCounts[beatenBy];
   });
   return bonus;
 }
@@ -78,10 +89,13 @@ function teamArchCounts(team){
 
 // puntaje de un candidato "h" contra una lista de rivales: cuenta cuantos le gana/pierde en tu
 // matriz (goodAgainst/badAgainst), pesa por relevancia real de pelea + los ajustes de dive/shield
-// segun el equipo rival completo, y SUMA el puntaje de referencia externa de cada rival puntual
-// (externalMatchupScore, ver team-state.js) como afinador chico -- no reemplaza nada de lo anterior,
-// solo desempata mejor entre candidatos que la matriz categoriza igual. Comparte formula con
-// recommendMyPick y suggestGhostFills para que este afinado se aplique parejo en toda la app.
+// segun el equipo rival completo, SUMA el puntaje de referencia externa de cada rival puntual
+// (externalMatchupScore, ver team-state.js) como afinador chico, y SUMA/RESTA el ciclo de
+// arquetipos (archCycleBonus) a peso completo -- este ultimo ya no es un afinador chico, pesa igual
+// que un matchup 1v1 real (ver comentario de archCycleBonus) porque es la unica señal que diferencia
+// candidatos dentro de la enorme bolsa de matchups "parejos". La matriz 1v1 real sigue mandando
+// cuando hay dato concreto (goodAgainst/badAgainst). Comparte formula con recommendMyPick y
+// suggestGhostFills para que este afinado se aplique parejo en toda la app.
 function candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow){
   let goodAgainst = 0, badAgainst = 0, refSum = 0;
   enemyList.forEach(e=>{
@@ -92,7 +106,7 @@ function candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow){
     if(ref) refSum += ref.score;
   });
   const base = goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow) - badAgainst*2;
-  return {score: base + refSum*0.03 + archCycleBonus(h,enemyList)*0.5, goodAgainst, badAgainst};
+  return {score: base + refSum*0.03 + archCycleBonus(h,enemyList), goodAgainst, badAgainst};
 }
 
 // el "por que" de cada sanador recomendado esta en el diccionario (analysis.healerWhy.<tag>) para
@@ -521,13 +535,14 @@ function renderAnalysis(){
       // se ordena por hits*relevancia*viabilidad de dive*bonus de shield-break (no solo hits) para
       // que un sanador que "contrarresta" por utilidad indirecta, o un dive que el rival tiene bien
       // frenado, no le gane el lugar a algo que de verdad rinde contra esta composición puntual --
-      // el puntaje de referencia externa (refSum) y el ciclo de arquetipos (archBonus, ver
-      // archCycleBonus) se suman como afinadores chicos, igual que en candidateScoreAgainst, para
-      // desempatar entre candidatos que quedan parejos en lo anterior.
+      // el puntaje de referencia externa (refSum) se suma como afinador chico; el ciclo de
+      // arquetipos (archBonus, ver archCycleBonus) se suma a peso completo, igual que en
+      // candidateScoreAgainst, para que desempate con el mismo peso que un matchup 1v1 real entre
+      // candidatos que quedan parejos en lo anterior.
       // 4 en vez de 3 -- con retrato en vez de tarjeta de texto, 3 quedaba como una "L" (2 arriba +
       // 1 abajo suelto); 4 completa un cuadrado 2x2 parejo dentro de la columna angosta
       const ranked = Object.entries(scores)
-        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield + b[1].refSum*0.03 + b[1].archBonus*0.5) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield + a[1].refSum*0.03 + a[1].archBonus*0.5))
+        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield + b[1].refSum*0.03 + b[1].archBonus) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield + a[1].refSum*0.03 + a[1].archBonus))
         .slice(0,4);
       left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(role,16)}${t('role.'+role)}</div>`;
       if(ranked.length===0){
