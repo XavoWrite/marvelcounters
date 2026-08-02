@@ -152,7 +152,9 @@
   .modal-item-selected .n{color:var(--gold);}
   .modal-selected-badge{color:var(--gold)!important;font-weight:700;}
   .modal-count{font-size:12.5px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin:-4px 0 10px;}
-  .modal-close{align-self:flex-end;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:6px;}
+  .modal-close{align-self:flex-end;background:var(--panel-alt);border:1px solid var(--line);color:var(--text);
+    font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;padding:6px 14px;border-radius:20px;transition:.12s;}
+  .modal-close:hover{background:var(--du);border-color:var(--du);color:#fff;}
 
   section.analysis{margin-top:26px;}
   .sec-title{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:.5px;text-transform:uppercase;color:var(--gold);

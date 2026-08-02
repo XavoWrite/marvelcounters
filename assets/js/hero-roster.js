@@ -4,9 +4,11 @@
 // "arch" es solo VISUAL (arquetipo de juego tipo Overwatch: dive tank/shield tank/brawler/poke/
 // flanker/sustainer/lifeline/playmaker/guardian) -- no afecta ningun calculo, solo se muestra
 // como etiqueta chica en "Mejores picks por rol" para comparar arquetipos entre candidatos.
-// Investigado 2026-08-01 (exitlag.com, marvelrivalshub.gg) -- deliberadamente incompleto: los
-// heroes mas nuevos (Jubilee, Gambit, White Fox, Cyclops, Daredevil, Hawkeye, etc.) no estaban
-// cubiertos por esas fuentes y quedaron sin "arch" en vez de inventar una clasificacion.
+// Investigado 2026-08-01 (exitlag.com, marvelrivalshub.gg), completado 2026-08-02 con
+// clasificaciones manuales de Xavier para heroes que esas fuentes no cubrian (Black Cat, Cyclops,
+// Daredevil, Deadpool, Elsa Bloodstone, Hawkeye, Punisher, Spider-Man, Squirrel Girl) --
+// deliberadamente incompleto: los heroes que siguen sin "arch" (Jubilee, Gambit, White Fox, etc.)
+// quedaron sin clasificar en vez de inventar una.
 const HEROES = [
   // Vanguards
   {n:"Angela",r:"Vanguard",t:["dive","aerial","mobility"]},
@@ -24,15 +26,15 @@ const HEROES = [
   {n:"Thor",r:"Vanguard",t:["brawl","melee","dive_lite"]},
   {n:"Venom",r:"Vanguard",t:["dive","mobility","brawl"],arch:["dive_tank"]},
   // Duelists
-  {n:"Black Cat",r:"Duelist",t:["dive","melee","mobility"]},
+  {n:"Black Cat",r:"Duelist",t:["dive","melee","mobility"],arch:["flank_dps","brawl_dps"]},
   {n:"Black Panther",r:"Duelist",t:["dive","mobility","melee"],arch:["flank_dps","brawl_dps"]},
   {n:"Black Widow",r:"Duelist",t:["sniper","long_range","poke"],arch:["poke_dps"]},
   {n:"Blade",r:"Duelist",t:["dive","melee","anti_heal"],arch:["brawl_dps","sustain_dps"]},
-  {n:"Cyclops",r:"Duelist",t:["ranged","burst","poke"]},
-  {n:"Daredevil",r:"Duelist",t:["dive","melee","mobility"]},
-  {n:"Deadpool (Duelist)",r:"Duelist",dpGroup:true,t:["melee","mobility","sustain"]},
-  {n:"Elsa Bloodstone",r:"Duelist",t:["ranged","sustained","poke"]},
-  {n:"Hawkeye",r:"Duelist",t:["sniper","long_range","poke"]},
+  {n:"Cyclops",r:"Duelist",t:["ranged","burst","poke"],arch:["poke_dps","sustain_dps"]},
+  {n:"Daredevil",r:"Duelist",t:["dive","melee","mobility"],arch:["brawl_dps","flank_dps"]},
+  {n:"Deadpool (Duelist)",r:"Duelist",dpGroup:true,t:["melee","mobility","sustain"],arch:["sustain_dps"]},
+  {n:"Elsa Bloodstone",r:"Duelist",t:["ranged","sustained","poke"],arch:["sustain_dps","brawl_dps"]},
+  {n:"Hawkeye",r:"Duelist",t:["sniper","long_range","poke"],arch:["poke_dps"]},
   {n:"Hela",r:"Duelist",t:["ranged","burst","anti_heal","shield_breaker"],arch:["poke_dps","sustain_dps"]},
   {n:"Human Torch",r:"Duelist",t:["aerial","mobility","burst"],arch:["sustain_dps","flank_dps"]},
   {n:"Iron Fist",r:"Duelist",t:["dive","melee","mobility"],arch:["brawl_dps","flank_dps"]},
@@ -43,10 +45,10 @@ const HEROES = [
   {n:"Namor",r:"Duelist",t:["zone","shield_breaker","ranged","anti_dive"],arch:["poke_dps","brawl_dps"]},
   {n:"Phoenix",r:"Duelist",t:["ranged","aerial","mobility"],arch:["sustain_dps","poke_dps"]},
   {n:"Psylocke",r:"Duelist",t:["dive","mobility","stealth_counter"],arch:["flank_dps","sustain_dps"]},
-  {n:"Punisher",r:"Duelist",t:["ranged","sustained","shield_breaker"],arch:["sustain_dps"]},
+  {n:"Punisher",r:"Duelist",t:["ranged","sustained","shield_breaker"],arch:["sustain_dps","poke_dps"]},
   {n:"Scarlet Witch",r:"Duelist",t:["burst","area_denial","cc"],arch:["brawl_dps","flank_dps"]},
-  {n:"Spider-Man",r:"Duelist",t:["dive","mobility","melee"],arch:["flank_dps"]},
-  {n:"Squirrel Girl",r:"Duelist",t:["melee","annoy","mobility"],arch:["poke_dps","brawl_dps"]},
+  {n:"Spider-Man",r:"Duelist",t:["dive","mobility","melee"],arch:["flank_dps","brawl_dps"]},
+  {n:"Squirrel Girl",r:"Duelist",t:["melee","annoy","mobility"],arch:["poke_dps"]},
   {n:"Star-Lord",r:"Duelist",t:["aerial","mobility","dive"],arch:["sustain_dps","flank_dps"]},
   {n:"Storm",r:"Duelist",t:["aerial","area_denial","poke"],arch:["brawl_dps","sustain_dps"]},
   {n:"Winter Soldier",r:"Duelist",t:["mobility","burst","hook","shield_breaker"],arch:["sustain_dps","brawl_dps"]},
