@@ -112,6 +112,11 @@
   .pick-slot.already{opacity:.6;}
   .pick-slot .already-tag{font-size:8px;color:var(--ally);font-family:'JetBrains Mono',monospace;}
   .pick-slot .dive-warn{font-size:8px;color:var(--gold);font-family:'JetBrains Mono',monospace;}
+  .arch-tags{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:3px;}
+  .arch-tag{font-size:8px;color:var(--muted);background:var(--panel);border:1px solid var(--line);
+    border-radius:6px;padding:1px 4px;white-space:nowrap;}
+  .hero-grid-item .arch-tags{justify-content:center;}
+  .detail-arch-tags{justify-content:flex-start;margin:2px 0 0;}
 
   .roletag{display:inline-block;font-size:9px;padding:1px 6px;border-radius:5px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;}
   .roletag.Vanguard{background:rgba(255,138,61,.15);color:var(--vg);}
@@ -195,6 +200,9 @@
   .healer-card .h-reason{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.45;}
 
   footer{margin-top:16px;text-align:center;color:var(--muted);font-size:11.5px;font-family:'JetBrains Mono',monospace;}
+  .ultimates-notice{margin-top:20px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6;max-width:640px;
+    margin-left:auto;margin-right:auto;padding:10px 16px;border:1px dashed var(--line);border-radius:10px;}
+  .ultimates-notice a{color:var(--gold);}
   .credits-box{margin-top:36px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-align:center;}
   .credits-title{font-family:'Anton',sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
   .credits-text{color:var(--muted);font-size:12px;line-height:1.6;max-width:640px;margin:0 auto 6px;}
@@ -452,6 +460,8 @@
   .matchup-stats{display:flex;flex-direction:column;gap:6px;}
   .matchup-stat{background:var(--panel-alt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12.5px;}
 
+  .glossary-role-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.05em;
+    text-transform:uppercase;margin-top:14px;margin-bottom:2px;}
   .comp-guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:10px;}
   .comp-guide-card{background:var(--panel-alt);border:1px solid var(--line);border-left:4px solid var(--muted);border-radius:10px;padding:10px 12px;}
   .comp-guide-card.good{border-left-color:var(--ally);}

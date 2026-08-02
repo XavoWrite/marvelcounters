@@ -1,0 +1,659 @@
+{
+  "Jubilee": {
+    "ultimateName": "Firework Finale",
+    "key": "Q",
+    "description": "Charge up and unleash a massive ring of outward-flying firework clusters, knocking back nearby enemies.",
+    "stats": [
+      {"title": "Energy Cost", "value": "4300"},
+      {"title": "Duration", "value": "10s"},
+      {"title": "Spell Field Range", "value": "6m-10m"},
+      {"title": "Healing", "value": "150/s"},
+      {"title": "Damage", "value": "20/s"}
+    ]
+  },
+  "Cyclops": {
+    "ultimateName": "Ruby Rage",
+    "key": "Q",
+    "description": "Remove visor and fire a powerful sweeping beam forward. The blast leaves behind volatile excess energy that erupts, dealing massive secondary explosive damage.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3700"},
+      {"title": "First Field Damage", "value": "75+20% Max Health"},
+      {"title": "Second Field Damage", "value": "75+40% Max Health"},
+      {"title": "Maximum Range", "value": "60m"}
+    ]
+  },
+  "Devil Dinosaur": {
+    "ultimateName": "Devil-Beast Rampage",
+    "key": "Q",
+    "description": "Erupt in primal fury! Gain a massive Movement Speed Boost while unleashing earth-shattering stomps that Launch enemies and applies a Bleed. Thunderous roars also emit sonic waves that Slow enemies hit.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Speed Boost", "value": "70%"},
+      {"title": "Stomp Field Range", "value": "8m radius"},
+      {"title": "Cooldown Reductions", "value": "Frenzied Feast 1s; Savage Predation 4s"}
+    ]
+  },
+  "Black Cat": {
+    "ultimateName": "Calling Card",
+    "key": "Q",
+    "description": "Issue a Calling Card to all enemies. Instantly dash to any enemy in sight and range, tearing into them.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Maximum Dash Distance", "value": "40m (60m in alt form)"},
+      {"title": "1st Claw Strike Damage", "value": "30"},
+      {"title": "2nd Claw Strike Damage", "value": "70 (or 30+20% Target's Max Health in alt)"},
+      {"title": "Ability Duration", "value": "10s"},
+      {"title": "Fore-swing Damage Reduction", "value": "50%"}
+    ]
+  },
+  "White Fox": {
+    "ultimateName": "Kumiho Unleashed",
+    "key": "Q",
+    "description": "Manifest the full Nine-Tailed Fox form and continuously heal nearby allies. Cannot receive healing effects from others while in this form.",
+    "stats": [
+      {"title": "Energy Cost", "value": "4800"},
+      {"title": "Maximum Health", "value": "1200"},
+      {"title": "Healing Radius", "value": "10m"},
+      {"title": "Healing", "value": "85/s"}
+    ]
+  },
+  "Elsa Bloodstone": {
+    "ultimateName": "Apex Predator",
+    "key": "Q",
+    "description": "Summon the Glartrox to charge forward. The Glartrox can be recalled to charge back toward Elsa.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Glartrox Health", "value": "400"},
+      {"title": "Glartrox Seize Damage", "value": "75"},
+      {"title": "Glartrox Bite Damage", "value": "125"},
+      {"title": "Movement Speed", "value": "15m/s"},
+      {"title": "Max Dash Duration", "value": "3.5s each way"}
+    ]
+  },
+  "Deadpool": {
+    "_note": "Official site lists Deadpool as one hero with 3 build-specific ultimates. Apply the matching variant to our Vanguard/Duelist/Strategist Deadpool entries.",
+    "Vanguard": {
+      "ultimateName": "The Ban Hammer",
+      "key": "Q",
+      "description": "Taunts target; grants bonus HP and healing when enemy abilities miss.",
+      "stats": [
+        {"title": "Bonus Health", "value": "200"},
+        {"title": "Healing", "value": "25/s"},
+        {"title": "Duration", "value": "8s"},
+        {"title": "Cooldown", "value": "60s"}
+      ]
+    },
+    "Duelist": {
+      "ultimateName": "Skill Issue",
+      "key": "Q",
+      "description": "Judges target; deals damage when enemy abilities miss.",
+      "stats": [
+        {"title": "Damage per Miss", "value": "60"},
+        {"title": "Duration", "value": "8s"},
+        {"title": "Cooldown", "value": "45s"}
+      ]
+    },
+    "Strategist": {
+      "ultimateName": "Pwnage Pound",
+      "key": "Q",
+      "description": "Taunts; grants self/team bonus HP and healing; punishes missed enemy abilities.",
+      "stats": [
+        {"title": "Healing", "value": "80/s"},
+        {"title": "Bonus Health", "value": "varies"},
+        {"title": "Duration", "value": "8s"},
+        {"title": "Cooldown", "value": "60s"}
+      ]
+    }
+  },
+  "Rogue": {
+    "ultimateName": "Heartbreaker",
+    "key": "Q",
+    "description": "Continuously absorb Ultimate Ability Energy from nearby enemies and steal stats based on their role.",
+    "stats": [
+      {"title": "Duration", "value": "8s"},
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Ultimate Ability Energy Absorption Speed", "value": "4% per second"},
+      {"title": "Spell Field Range", "value": "8m radius"},
+      {"title": "Spell Field Damage", "value": "15/s"}
+    ]
+  },
+  "Gambit": {
+    "ultimateName": "Ragin' Royal Flush",
+    "key": "Q",
+    "description": "Lock onto an ally within sight and unleash multiple Aces that heal and Purify.",
+    "stats": [
+      {"title": "Energy Cost", "value": "4500"},
+      {"title": "Range", "value": "40m cone"},
+      {"title": "One-Time Healing", "value": "100"},
+      {"title": "Movement Speed Boost", "value": "30%"},
+      {"title": "Duration", "value": "8s"},
+      {"title": "Enhanced Damage", "value": "20%"}
+    ]
+  },
+  "Daredevil": {
+    "ultimateName": "Let the Devil Out",
+    "key": "Q",
+    "description": "Embrace the Beast within. Enemies in Daredevil's line of sight take damage and suffer a ramping Blind effect. Continually gain Fury while active.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Spell Field Duration", "value": "8s"},
+      {"title": "Maximum Distance", "value": "15m"},
+      {"title": "Damage", "value": "50/s (escalates to 85/s)"},
+      {"title": "Fury Recovery", "value": "30/s"}
+    ]
+  },
+  "Angela": {
+    "ultimateName": "Heven's Retribution",
+    "key": "Q",
+    "description": "Wrap your spear in ribbons and hurl it with force. Upon impact, the ribbons bind nearby enemies. Angela can leap to the spear's location, damaging surrounding enemies and creating a Divine Judgement Zone.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Projectile Damage", "value": "30"},
+      {"title": "Hit Ground Damage", "value": "100"},
+      {"title": "Spell Field Range", "value": "8m spherical radius"},
+      {"title": "Special Effect", "value": "Disables enemy mobility abilities; 80% slow"}
+    ]
+  },
+  "Blade": {
+    "ultimateName": "Thousand-Fold Slash",
+    "key": "Q",
+    "description": "Charge power and swiftly draw the Sword of Dracula, executing a powerful Iaido strike while dashing forward, leaving behind a slashing zone where the sword automatically strikes enemies. Enemies hit suffer Reduced Healing.",
+    "stats": [
+      {"title": "Energy Cost", "value": "2800"},
+      {"title": "Self Slow", "value": "25%"},
+      {"title": "Maximum Charge Time", "value": "3s"},
+      {"title": "Dash Distance", "value": "10m (maximum 24m when fully charged)"},
+      {"title": "Direct Hit Damage", "value": "100"},
+      {"title": "Spell Field Damage Over Time", "value": "225/s"},
+      {"title": "Spell Field Range", "value": "Length (max dash distance); Width 6m; Height 4.5m"},
+      {"title": "Spell Field Duration", "value": "2s"},
+      {"title": "Healing Reduction", "value": "20% for 4s"}
+    ]
+  },
+  "Phoenix": {
+    "ultimateName": "Endsong Inferno",
+    "key": "Q",
+    "description": "Soar into the sky with the Phoenix and crash down onto a selected area, dealing devastating damage.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Explosion Damage", "value": "140 (10m radius)"},
+      {"title": "Shockwave Damage", "value": "50"},
+      {"title": "Self Healing", "value": "250"},
+      {"title": "Effect", "value": "Destroys enemy summons, shields, and bonus health"}
+    ]
+  },
+  "Ultron": {
+    "ultimateName": "Rage of Ultron",
+    "key": "Q",
+    "description": "Summon Ultron Drones to fire Encephalo-Rays, damaging enemies or healing allies.",
+    "stats": [
+      {"title": "Energy Cost", "value": "4300"},
+      {"title": "Duration", "value": "9s"},
+      {"title": "Beam Damage", "value": "18 (Ultron), 12 (drones)"},
+      {"title": "Beam Healing", "value": "40"},
+      {"title": "Spell Field Range", "value": "3m spherical radius"},
+      {"title": "Ultimate Self-Healing", "value": "50/s"},
+      {"title": "Special Effect", "value": "Grants Unstoppable effect; deals 125% damage to bonus health"}
+    ]
+  },
+  "Emma Frost": {
+    "ultimateName": "Psionic Seduction",
+    "key": "Q",
+    "description": "Project a forward psychic assault that stuns foes and prevents them from unleashing their Ultimate Abilities; if the effect lingers, it gradually commandeers their mind.",
+    "stats": [
+      {"title": "Duration", "value": "6s"},
+      {"title": "Range", "value": "30m cone (80° angle)"},
+      {"title": "Damage", "value": "80/s basic (scaling to 70% at 30m)"},
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Damage Reduction", "value": "25% during ability"}
+    ]
+  },
+  "The Thing": {
+    "ultimateName": "Clobberin' Time",
+    "key": "Q",
+    "description": "Use immense power to launch up all enemies in front of the Thing into the air.",
+    "stats": [
+      {"title": "Energy Cost", "value": "2800"},
+      {"title": "Damage", "value": "100"},
+      {"title": "Stun Duration", "value": "2.5s"},
+      {"title": "Advance Distance", "value": "up to 18m"}
+    ]
+  },
+  "Human Torch": {
+    "ultimateName": "Supernova",
+    "key": "Q",
+    "description": "Explode with cosmic fire to deal damage to enemies within range. Upon skill activation, all Flame Fields will transform into Flame Tornadoes, dealing extra damage.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Duration", "value": "8s"},
+      {"title": "Activation Shock Wave Range", "value": "20m spherical radius"},
+      {"title": "Activation Wave Damage", "value": "75"},
+      {"title": "Flame Tornado Continuous Damage", "value": "110/s"},
+      {"title": "Damage Reduction", "value": "-30%"}
+    ]
+  },
+  "Invisible Woman": {
+    "ultimateName": "Invisible Boundary",
+    "key": "Q",
+    "description": "Manifest an unseen force field within a chosen area, rendering allies inside undetectable by enemies and provide Healing Over Time. Enemies that pass through the field are slowed.",
+    "stats": [
+      {"title": "Field Range", "value": "10m radius, 40m height"},
+      {"title": "Slow", "value": "55% (pass-through, 1s), 20% (within range)"},
+      {"title": "Healing", "value": "200/sec"},
+      {"title": "Duration", "value": "8s"},
+      {"title": "Energy Cost", "value": "4300"}
+    ]
+  },
+  "Mister Fantastic": {
+    "ultimateName": "Brainiac Bounce",
+    "key": "Q",
+    "description": "Leap upward and smash the ground, slowing enemies within range.",
+    "stats": [
+      {"title": "Range", "value": "10m spherical"},
+      {"title": "Damage", "value": "70-140 (scales with leaps)"},
+      {"title": "Leaps", "value": "3-6 maximum"},
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Special", "value": "Can leap again upon landing a hit"}
+    ]
+  },
+  "Squirrel Girl": {
+    "ultimateName": "Unbeatable Squirrel Tsunami",
+    "key": "Q",
+    "description": "Summon a horde of squirrels to charge forward, dealing damage while bouncing against structures.",
+    "stats": [
+      {"title": "Duration", "value": "10s"},
+      {"title": "Damage", "value": "150"},
+      {"title": "Range", "value": "3m length, 5m width"},
+      {"title": "Energy Cost", "value": "2800"}
+    ]
+  },
+  "Black Widow": {
+    "ultimateName": "Assassin's Focus",
+    "key": "Q",
+    "description": "Switch the Red Room Rifle to sniper mode. Shots fired in this state pierce through targets and deal increased damage.",
+    "stats": [
+      {"title": "Energy Cost", "value": "2800"},
+      {"title": "Bullet Damage", "value": "160"},
+      {"title": "Rounds", "value": "6"},
+      {"title": "Critical Hit", "value": "Yes (1.5x multiplier)"},
+      {"title": "Fire Rate", "value": "0.8s per round"},
+      {"title": "Maximum Duration", "value": "12s"}
+    ]
+  },
+  "Wolverine": {
+    "ultimateName": "Last Stand",
+    "key": "Q",
+    "description": "Knock enemies ahead airborne and spiral through the air, sweeping up enemies along the path and delivering a devastating impact.",
+    "stats": [
+      {"title": "Energy Cost", "value": "2800"},
+      {"title": "Knockback Range", "value": "8m spherical radius"},
+      {"title": "Knockback Damage", "value": "50"},
+      {"title": "Impact Base Damage", "value": "50"},
+      {"title": "Impact Percentage Damage", "value": "10% Max Health + 0.3% per Rage point"},
+      {"title": "Knockdown Time", "value": "0.75s"}
+    ]
+  },
+  "Cloak & Dagger": {
+    "ultimateName": "Eternal Bond",
+    "key": "Q",
+    "description": "Perform four rapid dashes, healing allies and damaging enemies along the path.",
+    "stats": [
+      {"title": "Damage", "value": "30/s"},
+      {"title": "Healing", "value": "250/s"},
+      {"title": "Duration", "value": "11s (as Cloak) / 13s (as Dagger)"},
+      {"title": "Energy Cost", "value": "4500"}
+    ]
+  },
+  "Iron Fist": {
+    "ultimateName": "Living Chi",
+    "key": "Q",
+    "description": "Become living Chi to boost his speed, damage, and attack range, delivering stronger punches while reducing cooldown of Dragon's Defense.",
+    "stats": [
+      {"title": "Duration", "value": "12s"},
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Damage Boost", "value": "30%"},
+      {"title": "Movement Boost", "value": "20%"},
+      {"title": "Yat Jee Chung Kuen Cooldown Reduction", "value": "-80%"}
+    ]
+  },
+  "Psylocke": {
+    "ultimateName": "Dance of the Butterfly",
+    "key": "Q",
+    "description": "Slash nearby enemies with a psionic katana, dealing massive damage.",
+    "stats": [
+      {"title": "Range", "value": "10m spherical radius"},
+      {"title": "Damage", "value": "160 per hit"},
+      {"title": "Attack Interval", "value": "2 hits per second"},
+      {"title": "Duration", "value": "4s"},
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Slow Rate", "value": "-15%"}
+    ]
+  },
+  "Hawkeye": {
+    "ultimateName": "Hunter's Sight",
+    "key": "Q",
+    "description": "Capture Afterimages of enemies in his view. Damage dealt to an Afterimage is transferred to the corresponding enemy.",
+    "stats": [
+      {"title": "Duration", "value": "10s"},
+      {"title": "Afterimage Frequency", "value": "every 0.5s (3s duration each)"},
+      {"title": "Bow Draw Speed", "value": "1.5x multiplier"},
+      {"title": "Energy Cost", "value": "3100"}
+    ]
+  },
+  "Iron Man": {
+    "ultimateName": "Invincible Pulse Cannon",
+    "key": "Q",
+    "description": "Fire a devastating pulse cannon in the targeted direction, delivering catastrophic damage to the targeted area upon impact.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Projectile Speed", "value": "25 m/s"},
+      {"title": "Explosion Damage", "value": "1000"},
+      {"title": "Explosion Range", "value": "10m spherical radius"}
+    ]
+  },
+  "Namor": {
+    "ultimateName": "Horn of Proteus",
+    "key": "Q",
+    "description": "Summon Giganto to leap atop enemies within range, disabling their mobility abilities.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Maximum Distance", "value": "30m"},
+      {"title": "Range", "value": "Cylindrical spell field: inner circle radius 3.5m, outer circle radius 9m, height 3m"},
+      {"title": "Hit Delay", "value": "1.5s"},
+      {"title": "Inner Circle Damage", "value": "500"},
+      {"title": "Outer Circle Damage", "value": "180"},
+      {"title": "Immobilize Duration", "value": "1.5s"}
+    ]
+  },
+  "Moon Knight": {
+    "ultimateName": "Hand of Khonshu",
+    "key": "Q",
+    "description": "Open a portal that allows Khonshu to bombard enemies with his talons.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Duration", "value": "4.5s"},
+      {"title": "Range", "value": "5m spherical radius"},
+      {"title": "Descending Range", "value": "8m radius"},
+      {"title": "Frequency", "value": "4 hits/second"},
+      {"title": "Total Hits", "value": "18"},
+      {"title": "Damage", "value": "150 per hit"},
+      {"title": "Damage Falloff", "value": "Starts at 1.5m, 70% at 5m"}
+    ]
+  },
+  "Star-Lord": {
+    "ultimateName": "Galactic Legend",
+    "key": "Q",
+    "description": "Engage in free-flight and lock onto enemies in sight for enhanced aerial combat.",
+    "stats": [
+      {"title": "Damage", "value": "6.5 per round (40 rounds/second)"},
+      {"title": "Duration", "value": "8s"},
+      {"title": "Movement Boost", "value": "20%"},
+      {"title": "Reload Speed Increase", "value": "70%"},
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Locking Distance", "value": "40m"},
+      {"title": "Ammo Capacity", "value": "40"}
+    ]
+  },
+  "Scarlet Witch": {
+    "ultimateName": "Reality Erasure",
+    "key": "Q",
+    "description": "Engage in free-flight while charging energy, then unleash it to deal massive damage.",
+    "stats": [
+      {"title": "Range", "value": "15m spherical radius"},
+      {"title": "Damage", "value": "9999"},
+      {"title": "Charge Time", "value": "4s"},
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Bonus Health", "value": "+100"},
+      {"title": "Slow Effect", "value": "Reaches -25% by 3.5s"}
+    ]
+  },
+  "Winter Soldier": {
+    "ultimateName": "Kraken Impact",
+    "key": "Q",
+    "description": "Leap high, then dash forward and slam down with the bionic arm, dealing damage to enemies in range, marking them for Culling. Marked enemies will perish instantly if their health falls below a certain threshold.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Spell Field Damage", "value": "70"},
+      {"title": "Range", "value": "5m spherical radius"},
+      {"title": "Culling Threshold", "value": "20% Health"},
+      {"title": "Culling Duration", "value": "5s"},
+      {"title": "Cooldown (after KO)", "value": "8s"}
+    ]
+  },
+  "Magik": {
+    "ultimateName": "Darkchild",
+    "key": "Q",
+    "description": "Transform into Darkchild, gaining enhancements to all her abilities.",
+    "stats": [
+      {"title": "Duration", "value": "12s"},
+      {"title": "Energy Cost", "value": "3400"}
+    ]
+  },
+  "Spider-Man": {
+    "ultimateName": "Spectacular Spin",
+    "key": "Q",
+    "description": "Launch Web-Clusters all around to damage and Stun enemies.",
+    "stats": [
+      {"title": "Range", "value": "8m spherical radius"},
+      {"title": "Energy Cost", "value": "2800"},
+      {"title": "Damage", "value": "15 per hit"},
+      {"title": "Attack Interval", "value": "0.08s"},
+      {"title": "Stun", "value": "20 hits required, 1.5s stun duration"},
+      {"title": "Bonus Health (Self)", "value": "250"}
+    ]
+  },
+  "Black Panther": {
+    "ultimateName": "Bast's Descent",
+    "key": "Q",
+    "description": "Summon Bast, pouncing forward, dealing damage, and attaching a Vibranium Mark to enemies hit while refreshing Spirit Rend.",
+    "stats": [
+      {"title": "Range", "value": "Length 22m, Width 20m, Height 7m"},
+      {"title": "Damage", "value": "150"},
+      {"title": "Energy Cost", "value": "3300"},
+      {"title": "Special Effect", "value": "50% Damage Reduction during startup"}
+    ]
+  },
+  "Hela": {
+    "ultimateName": "Goddess of Death",
+    "key": "Q",
+    "description": "Soar into the sky and unleash Nastrond Crows from each hand at will.",
+    "stats": [
+      {"title": "Energy Cost", "value": "4000"},
+      {"title": "Projectile Speed", "value": "80 m/s"},
+      {"title": "Spell Field Duration", "value": "10s"},
+      {"title": "Detonation Range", "value": "6m radius"},
+      {"title": "Damage", "value": "125 (32% falloff at 4m)"}
+    ]
+  },
+  "Storm": {
+    "ultimateName": "Omega Hurricane",
+    "key": "Q",
+    "description": "Transform into a hurricane to draw in nearby enemies and deal damage.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Range", "value": "8m radius spherical spell field"},
+      {"title": "Tornado Duration", "value": "5s"},
+      {"title": "Attack Interval", "value": "2 hits per second"},
+      {"title": "Damage", "value": "80"},
+      {"title": "Bonus Health (Self)", "value": "450"}
+    ]
+  },
+  "Hulk": {
+    "ultimateName": "Hulk Smash!",
+    "key": "Q",
+    "description": "Unleash stored gamma energy, transforming from Hero Hulk into Monster Hulk for a limited time period.",
+    "stats": [
+      {"title": "Duration", "value": "12s"},
+      {"title": "Energy Cost", "value": "3700"},
+      {"title": "Special", "value": "Immobilized during transformation, gains Invincibility"}
+    ]
+  },
+  "Jeff the Land Shark": {
+    "ultimateName": "It's Jeff!",
+    "key": "Q",
+    "description": "Deep dive into the scene and resurface to swallow both enemies and allies within range.",
+    "stats": [
+      {"title": "Energy Cost", "value": "4500"},
+      {"title": "Duration", "value": "6s"},
+      {"title": "Range", "value": "10m radius, 5m high cylindrical field"},
+      {"title": "Damage", "value": "25/s"},
+      {"title": "Healing Amount", "value": "225/s"},
+      {"title": "Special Effect", "value": "Creates 8m healing pool (100/s for 8s)"}
+    ]
+  },
+  "Punisher": {
+    "ultimateName": "Final Judgement",
+    "key": "Q",
+    "description": "Unleash two Gatling guns and missiles to attack enemies.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Duration", "value": "10s"},
+      {"title": "Gatling Gun Damage", "value": "8 per round at 33.33 rounds/second"},
+      {"title": "Missile Damage", "value": "50 each"},
+      {"title": "Missiles", "value": "Max 8 per volley, 3 locked per target"}
+    ]
+  },
+  "Luna Snow": {
+    "ultimateName": "Fate of Both Worlds",
+    "key": "Q",
+    "description": "Take center stage and start dancing! Toggle between healing allies or granting damage boost.",
+    "stats": [
+      {"title": "Healing", "value": "250/s"},
+      {"title": "Damage Boost", "value": "40%"},
+      {"title": "Single Cast Heal", "value": "200 + 250 shield value"},
+      {"title": "Duration", "value": "10s"},
+      {"title": "Energy Cost", "value": "4800"}
+    ]
+  },
+  "Adam Warlock": {
+    "ultimateName": "Karmic Revival",
+    "key": "Q",
+    "description": "Awaken the karma of allies to revive them. Allies revived have lower health but enjoy a brief period of Invincibility.",
+    "stats": [
+      {"title": "Revive Range", "value": "35m"},
+      {"title": "Revived Health", "value": "30% max health + 70% bonus health over 5s"},
+      {"title": "Energy Cost", "value": "4500"},
+      {"title": "Duration", "value": "10s"}
+    ]
+  },
+  "Rocket Raccoon": {
+    "ultimateName": "C.Y.A.",
+    "key": "Q",
+    "description": "Deploy a Cosmic Yarn Amplifier that grants allies a Damage Boost.",
+    "stats": [
+      {"title": "Energy Cost", "value": "4300"},
+      {"title": "Damage Boost", "value": "40%"},
+      {"title": "Bonus Health", "value": "100/s (caps at 150)"},
+      {"title": "Duration", "value": "12s"},
+      {"title": "Range", "value": "20m radius"}
+    ]
+  },
+  "Loki": {
+    "ultimateName": "God of Mischief",
+    "key": "Q",
+    "description": "Shapeshift into a targeted ally or enemy hero and use all their abilities except any of their Team-Up Abilities.",
+    "stats": [
+      {"title": "Duration", "value": "12s"},
+      {"title": "Energy Cost", "value": "4500"}
+    ]
+  },
+  "Mantis": {
+    "ultimateName": "Soul Resurgence",
+    "key": "Q",
+    "description": "Release energy around her while moving, providing Healing Over Time and Movement Boosts for surrounding allies. Excess healing converts to Bonus Health.",
+    "stats": [
+      {"title": "Healing Amount", "value": "150"},
+      {"title": "One-time Healing", "value": "200"},
+      {"title": "Movement Boost", "value": "3m/s"},
+      {"title": "Range", "value": "15m spherical radius"},
+      {"title": "Duration", "value": "8s"},
+      {"title": "Energy Cost", "value": "4300"}
+    ]
+  },
+  "Peni Parker": {
+    "ultimateName": "Spider-Sweeper",
+    "key": "Q",
+    "description": "Enhance the SP//dr suit, launching up enemies in its path and deploying Arachno-Mines, Spider-Drones, and Cyber-Webs repeatedly.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Duration", "value": "12s"},
+      {"title": "Sweep Range", "value": "5m"},
+      {"title": "Sweep Damage", "value": "60"},
+      {"title": "Special Effect", "value": "Grants 450 bonus health and 70% movement boost"}
+    ]
+  },
+  "Thor": {
+    "ultimateName": "God of Thunder",
+    "key": "Q",
+    "description": "Soar upwards and smite the ground after charging for a duration, inflicting damage on enemies within range.",
+    "stats": [
+      {"title": "Range", "value": "8m radius (sustained), 8m spherical radius (one-time spell field)"},
+      {"title": "Height", "value": "9m"},
+      {"title": "Duration", "value": "1.5s"},
+      {"title": "Damage", "value": "40 (sustained), 220 (one-time)"},
+      {"title": "Special Effect", "value": "Stuns surrounding enemies for 1s after landing"},
+      {"title": "Energy Cost", "value": "3100"}
+    ]
+  },
+  "Magneto": {
+    "ultimateName": "Meteor M",
+    "key": "Q",
+    "description": "Draw in all materials around to forge an iron meteor that deals massive damage upon impact. Absorbing enemy projectiles can enhance the meteor's power, yet overloading will cause it to self-destruct.",
+    "stats": [
+      {"title": "Energy Cost", "value": "3400"},
+      {"title": "Projectile Speed", "value": "45m/s"},
+      {"title": "Maximum Duration", "value": "5s"},
+      {"title": "Damage", "value": "100-350 base (scales with charge); 3 extra damage per Energy point"},
+      {"title": "Projectile Absorption Range", "value": "15m"}
+    ]
+  },
+  "Venom": {
+    "ultimateName": "Feast of the Abyss",
+    "key": "Q",
+    "description": "Burrow underground for movement, then devour enemies above to deal damage based on the enemy's current health and generate equivalent Bonus Health.",
+    "stats": [
+      {"title": "Damage", "value": "50% target health + 50"},
+      {"title": "Shield Conversion", "value": "130%"},
+      {"title": "Healing Reduction", "value": "30% for 4s"},
+      {"title": "Range", "value": "7m"},
+      {"title": "Max Duration", "value": "4s"},
+      {"title": "Energy Cost", "value": "2500"}
+    ]
+  },
+  "Groot": {
+    "ultimateName": "Strangling Prison",
+    "key": "Q",
+    "description": "Fire a massive vine cluster that pulls nearby enemies to its center and Imprisons them.",
+    "stats": [
+      {"title": "Projectile Speed", "value": "60m/s"},
+      {"title": "Range", "value": "8m spherical radius"},
+      {"title": "Damage", "value": "10 (projectile) + 70 (spell field) + 20 per 0.5s (while imprisoning)"},
+      {"title": "Energy Cost", "value": "2800"},
+      {"title": "Imprison Duration", "value": "3.5s"}
+    ]
+  },
+  "Captain America": {
+    "ultimateName": "Freedom Charge",
+    "key": "Q",
+    "description": "Shield held high, carve a path forward, granting both himself and allies along the path continuous Bonus Health and Movement Boosts. Allies also gain Ultimate Ability Charge Acceleration.",
+    "stats": [
+      {"title": "Range", "value": "4m radius sphere + 4m width path"},
+      {"title": "Spell Field Duration", "value": "10s"},
+      {"title": "Health Recovery", "value": "150 (cast) + 100/sec bonus; allies gain 100 (cast) + 60/sec"},
+      {"title": "Movement Boost", "value": "30%"},
+      {"title": "Energy Cost", "value": "3100"},
+      {"title": "Special Effect", "value": "Allies gain 20% Ultimate charge efficiency boost"}
+    ]
+  },
+  "Doctor Strange": {
+    "ultimateName": "Eye of Agamotto",
+    "key": "Q",
+    "description": "Separate nearby enemies' Souls from their bodies. Damage dealt to these Souls is transferred to physical bodies.",
+    "stats": [
+      {"title": "Range", "value": "10m radius"},
+      {"title": "Damage", "value": "60"},
+      {"title": "Soul Separation Duration", "value": "3s"},
+      {"title": "Energy Cost", "value": "3100"}
+    ]
+  }
+}

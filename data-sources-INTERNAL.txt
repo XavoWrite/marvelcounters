@@ -67,6 +67,23 @@ si Xavier lo edita a mano, hay que sincronizar los cambios al .js real para que 
   Aplicado con una recomputación completa de la matriz 1-4 desde los puntajes (no solo los pares
   tocados), verificado 0 inconsistencias de espejo y de categoría en toda la base.
 
+- 2026-08-01: PROBADO Y REVERTIDO — metabot.gg (https://metabot.gg/en/marvelrivals) como fuente
+  completa de la matriz. Es dato real (API comunitaria + app de escritorio opcional, no
+  estimado por IA), cubre los 54 héroes incluida Jubilee. Se convirtió su "% de winrate" y
+  diferencia respecto a la base (wrDiff) a nuestra escala -8..+8 dividiendo por 5 (score =
+  -wrDiff/5, redondeado y limitado a ±8). Solo publican los ~10 peores y ~10 mejores matchups
+  por héroe (no la matriz completa) — los pares sin señal fuerte se dejaron en 0/parejo en vez
+  de inventar un valor. 715 de 1431 pares se actualizaron con dato real de metabot.
+  Verificaciones iniciales salieron bien (Peni Parker/Iron Man en 0 en vez del error de la
+  fuente anterior, Magneto con solo 2 counters reales en vez de una docena). PERO Xavier
+  encontró un error real revisando: metabot decía que Human Torch le gana a Spider-Man, cuando
+  segun su conocimiento del juego es al revés (Spider-Man gana), y sospechó que el patrón
+  general "voladores vs voladores" está mal calculado en esa fuente. Se revirtió por completo
+  a los datos previos (rivalscounter.com + Sankyuubigan para Jubilee, que es lo que ya estaba
+  commiteado) restaurando desde el respaldo hecho antes del experimento. Metabot.gg queda
+  descartado como fuente completa por ahora -- si se lo vuelve a intentar en el futuro, revisar
+  puntualmente las categorías "aerial"/"mobility" (voladores) antes de confiar en el resto.
+
 NOTA: matchup-editor-stream.html (raíz del repo) es la herramienta de edición para streams/TikTok —
 NO es parte de la app, no está enlazada desde MarvelCountersPrime.html. Precargada con los mismos
 datos de ref-matchup-scores.js (solo el score -8..+8, ya no lleva la matriz 1-4 de categorías —

@@ -88,8 +88,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Scarlet Witch": {
-      "score": 1,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Phoenix": {
       "score": 2,
@@ -266,8 +266,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Wolverine": {
-      "score": -7,
-      "label": "hardCountered"
+      "score": -1,
+      "label": "weak"
     },
     "Cloak & Dagger": {
       "score": 0,
@@ -514,16 +514,16 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 1,
       "label": "favorable"
     },
     "Squirrel Girl": {
-      "score": 3,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Punisher": {
       "score": 5,
@@ -799,8 +799,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Hawkeye": {
       "score": 5,
@@ -905,7 +905,7 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Wolverine": {
-      "score": -1,
+      "score": -4,
       "label": "weak"
     },
     "Cloak & Dagger": {
@@ -948,8 +948,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Squirrel Girl": {
-      "score": -3,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Punisher": {
       "score": 5,
@@ -984,8 +984,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Mister Fantastic": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Star-Lord": {
       "score": 5,
@@ -1012,8 +1012,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Hawkeye": {
       "score": 5,
@@ -1044,7 +1044,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Black Cat": {
-      "score": -3,
+      "score": -4,
       "label": "weak"
     },
     "Namor": {
@@ -1161,8 +1161,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Squirrel Girl": {
-      "score": -3,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Punisher": {
       "score": 1,
@@ -1257,8 +1257,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Cat": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Namor": {
       "score": 5,
@@ -1366,8 +1366,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Phoenix": {
       "score": -1,
@@ -1579,8 +1579,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Scarlet Witch": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Phoenix": {
       "score": -1,
@@ -1623,7 +1623,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Mister Fantastic": {
-      "score": -1,
+      "score": -4,
       "label": "weak"
     },
     "Star-Lord": {
@@ -1635,8 +1635,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Winter Soldier": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Adam Warlock": {
       "score": -1,
@@ -2005,8 +2005,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Scarlet Witch": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 3,
@@ -2029,8 +2029,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Blade": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Hulk": {
       "score": -1,
@@ -2175,8 +2175,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Storm": {
       "score": 2,
@@ -2218,8 +2218,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 0,
@@ -2234,12 +2234,12 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
-    },
-    "Moon Knight": {
       "score": 1,
       "label": "favorable"
+    },
+    "Moon Knight": {
+      "score": -1,
+      "label": "weak"
     },
     "Blade": {
       "score": -3,
@@ -2270,12 +2270,12 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Spider-Man": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Winter Soldier": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Adam Warlock": {
       "score": -1,
@@ -2290,8 +2290,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Hawkeye": {
       "score": 3,
@@ -2388,8 +2388,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Iron Man": {
-      "score": 1,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 2,
@@ -2431,8 +2431,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -6,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Phoenix": {
       "score": -2,
@@ -2447,8 +2447,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCountered"
     },
     "Cyclops": {
-      "score": -4,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Moon Knight": {
       "score": -1,
@@ -2483,8 +2483,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Spider-Man": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Winter Soldier": {
       "score": -8,
@@ -2597,20 +2597,20 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Human Torch": {
-      "score": 0,
-      "label": "even"
-    },
-    "Iron Fist": {
       "score": -1,
       "label": "weak"
+    },
+    "Iron Fist": {
+      "score": 1,
+      "label": "favorable"
     },
     "Storm": {
       "score": 2,
       "label": "favorable"
     },
     "Wolverine": {
-      "score": -1,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Cloak & Dagger": {
       "score": -2,
@@ -2632,12 +2632,12 @@ const REF_MATCHUP_SCORES = {
       "score": -5
     },
     "Jeff the Land Shark": {
-      "score": 0,
-      "label": "even"
+      "score": -4,
+      "label": "weak"
     },
     "White Fox": {
-      "score": 0,
-      "label": "even"
+      "score": -4,
+      "label": "weak"
     },
     "Luna Snow": {
       "score": 1,
@@ -2648,8 +2648,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Phoenix": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Squirrel Girl": {
       "score": -6,
@@ -2660,40 +2660,40 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
-    },
-    "Moon Knight": {
       "score": 1,
       "label": "favorable"
+    },
+    "Moon Knight": {
+      "score": -4,
+      "label": "weak"
     },
     "Blade": {
       "score": -2,
       "label": "weak"
     },
     "Hulk": {
-      "score": -3,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Groot": {
       "score": -2,
       "label": "weak"
     },
     "Rocket Raccoon": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Hela": {
       "score": 1,
       "label": "favorable"
     },
     "Mister Fantastic": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Star-Lord": {
-      "score": 0,
-      "label": "even"
+      "score": 4,
+      "label": "strong"
     },
     "Spider-Man": {
       "score": 1,
@@ -2704,36 +2704,36 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Adam Warlock": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Deadpool (Strategist)": {
       "score": 0,
       "label": "even"
     },
     "Deadpool (Duelist)": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Ultron": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Hawkeye": {
       "score": 3,
       "label": "favorable"
     },
     "Magik": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Black Panther": {
       "score": -1,
       "label": "weak"
     },
     "Black Widow": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Daredevil": {
       "score": -4,
@@ -2748,12 +2748,12 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Black Cat": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Namor": {
-      "score": -1,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Psylocke": {
       "score": 2,
@@ -2764,8 +2764,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Elsa Bloodstone": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     }
   },
   "Storm": {
@@ -2822,7 +2822,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Wolverine": {
-      "score": -5,
+      "score": -1,
       "label": "weak"
     },
     "Cloak & Dagger": {
@@ -2857,7 +2857,7 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Scarlet Witch": {
-      "score": -4,
+      "score": -1,
       "label": "weak"
     },
     "Phoenix": {
@@ -2913,8 +2913,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Winter Soldier": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Adam Warlock": {
       "score": -2,
@@ -2987,8 +2987,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Captain America": {
-      "score": 7,
-      "label": "hardCounter"
+      "score": 1,
+      "label": "favorable"
     },
     "Devil Dinosaur": {
       "score": -5,
@@ -2999,8 +2999,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "The Thing": {
-      "score": 1,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Thor": {
       "score": -5,
@@ -3031,12 +3031,12 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Iron Man": {
-      "score": 1,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
-      "score": 5,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Cloak & Dagger": {
       "score": -1,
@@ -3070,24 +3070,24 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -4,
+      "score": -1,
       "label": "weak"
     },
     "Phoenix": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Squirrel Girl": {
       "score": 0,
       "label": "even"
     },
     "Punisher": {
-      "score": -1,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Cyclops": {
-      "score": -4,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Moon Knight": {
       "score": 0,
@@ -3114,8 +3114,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Mister Fantastic": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Star-Lord": {
       "score": 1,
@@ -3283,8 +3283,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 2,
@@ -3335,8 +3335,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Spider-Man": {
-      "score": 3,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Winter Soldier": {
       "score": 1,
@@ -3512,8 +3512,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Moon Knight": {
       "score": 5,
@@ -3709,7 +3709,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Scarlet Witch": {
-      "score": -5,
+      "score": -1,
       "label": "weak"
     },
     "Phoenix": {
@@ -3725,8 +3725,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cyclops": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Moon Knight": {
       "score": 3,
@@ -3761,12 +3761,12 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Spider-Man": {
-      "score": -5,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Winter Soldier": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Adam Warlock": {
       "score": 1,
@@ -3813,8 +3813,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Black Cat": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Namor": {
       "score": 0,
@@ -4120,13 +4120,13 @@ const REF_MATCHUP_SCORES = {
       "score": -3
     },
     "Squirrel Girl": {
-      "score": -5
+      "score": 1
     },
     "Punisher": {
       "score": 0
     },
     "Cyclops": {
-      "score": -3
+      "score": 0
     },
     "Moon Knight": {
       "score": -6
@@ -4153,7 +4153,7 @@ const REF_MATCHUP_SCORES = {
       "score": 2
     },
     "Spider-Man": {
-      "score": 2
+      "score": 0
     },
     "Winter Soldier": {
       "score": 1
@@ -4257,8 +4257,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": 4,
+      "label": "strong"
     },
     "Storm": {
       "score": 2,
@@ -4296,32 +4296,32 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 1,
       "label": "favorable"
     },
     "Squirrel Girl": {
-      "score": 3,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Punisher": {
       "score": 1,
       "label": "favorable"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
+      "score": 4,
+      "label": "strong"
     },
     "Moon Knight": {
       "score": 1,
       "label": "favorable"
     },
     "Blade": {
-      "score": 3,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Hulk": {
       "score": 0,
@@ -4400,8 +4400,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Cat": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Namor": {
       "score": 2,
@@ -4470,8 +4470,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": 4,
+      "label": "strong"
     },
     "Storm": {
       "score": 3,
@@ -4509,8 +4509,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Phoenix": {
       "score": 0,
@@ -4613,8 +4613,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Cat": {
-      "score": 5,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Namor": {
       "score": 3,
@@ -4738,8 +4738,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cyclops": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Moon Knight": {
       "score": 3,
@@ -4774,12 +4774,12 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Spider-Man": {
-      "score": -4,
+      "score": -1,
       "label": "weak"
     },
     "Winter Soldier": {
-      "score": -3,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Adam Warlock": {
       "score": 1,
@@ -4826,8 +4826,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Black Cat": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Namor": {
       "score": 1,
@@ -4848,7 +4848,7 @@ const REF_MATCHUP_SCORES = {
   },
   "Scarlet Witch": {
     "Angela": {
-      "score": -1,
+      "score": -4,
       "label": "weak"
     },
     "Captain America": {
@@ -4856,8 +4856,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Devil Dinosaur": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Rogue": {
       "score": -1,
@@ -4872,52 +4872,52 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Doctor Strange": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Emma Frost": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Peni Parker": {
       "score": -1,
       "label": "weak"
     },
     "Venom": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Human Torch": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Iron Fist": {
-      "score": 6,
-      "label": "strong"
+      "score": -4,
+      "label": "weak"
     },
     "Iron Man": {
       "score": 1,
       "label": "favorable"
     },
     "Storm": {
-      "score": 4,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Wolverine": {
-      "score": 4,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Cloak & Dagger": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Loki": {
       "score": 0,
       "label": "even"
     },
     "Mantis": {
-      "score": 5,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Deadpool (Vanguard)": {
       "score": -1,
@@ -4927,12 +4927,12 @@ const REF_MATCHUP_SCORES = {
       "score": 3
     },
     "Jeff the Land Shark": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "White Fox": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Luna Snow": {
       "score": 2,
@@ -4943,8 +4943,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Squirrel Girl": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Punisher": {
       "score": 2,
@@ -4955,12 +4955,12 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Moon Knight": {
-      "score": 5,
-      "label": "strong"
+      "score": -1,
+      "label": "weak"
     },
     "Blade": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Hulk": {
       "score": -1,
@@ -4971,8 +4971,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Rocket Raccoon": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Hela": {
       "score": 5,
@@ -4983,32 +4983,32 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Star-Lord": {
-      "score": 2,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Spider-Man": {
-      "score": 1,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Winter Soldier": {
       "score": 3,
       "label": "favorable"
     },
     "Adam Warlock": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Deadpool (Strategist)": {
-      "score": 2,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Deadpool (Duelist)": {
-      "score": 2,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Ultron": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Hawkeye": {
       "score": 5,
@@ -5019,24 +5019,24 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Black Panther": {
-      "score": 5,
-      "label": "strong"
+      "score": -1,
+      "label": "weak"
     },
     "Black Widow": {
       "score": 2,
       "label": "favorable"
     },
     "Daredevil": {
-      "score": 2,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Magneto": {
-      "score": 3,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Invisible Woman": {
-      "score": 2,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Black Cat": {
       "score": 2,
@@ -5051,8 +5051,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Gambit": {
-      "score": 3,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Elsa Bloodstone": {
       "score": 2,
@@ -5109,16 +5109,16 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 0,
       "label": "even"
     },
     "Wolverine": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Cloak & Dagger": {
       "score": -2,
@@ -5164,8 +5164,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
+      "score": -4,
+      "label": "weak"
     },
     "Moon Knight": {
       "score": 0,
@@ -5282,7 +5282,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Devil Dinosaur": {
-      "score": -3,
+      "score": -4,
       "label": "weak"
     },
     "Rogue": {
@@ -5290,12 +5290,12 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "The Thing": {
-      "score": 3,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Thor": {
-      "score": 3,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Doctor Strange": {
       "score": -1,
@@ -5350,10 +5350,10 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Jubilee": {
-      "score": 5
+      "score": -1
     },
     "Jeff the Land Shark": {
-      "score": -3,
+      "score": -4,
       "label": "weak"
     },
     "White Fox": {
@@ -5365,8 +5365,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Phoenix": {
       "score": 0,
@@ -5377,24 +5377,24 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Cyclops": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Moon Knight": {
       "score": 0,
       "label": "even"
     },
     "Blade": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Hulk": {
       "score": 0,
       "label": "even"
     },
     "Groot": {
-      "score": 5,
-      "label": "strong"
+      "score": -4,
+      "label": "weak"
     },
     "Rocket Raccoon": {
       "score": -4,
@@ -5409,12 +5409,12 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Star-Lord": {
-      "score": 7,
-      "label": "hardCounter"
+      "score": 1,
+      "label": "favorable"
     },
     "Spider-Man": {
-      "score": -1,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Winter Soldier": {
       "score": 0,
@@ -5425,64 +5425,64 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Strategist)": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Deadpool (Duelist)": {
       "score": 0,
       "label": "even"
     },
     "Ultron": {
-      "score": -2,
-      "label": "weak"
-    },
-    "Hawkeye": {
       "score": 1,
       "label": "favorable"
     },
-    "Magik": {
-      "score": -1,
+    "Hawkeye": {
+      "score": -4,
       "label": "weak"
     },
+    "Magik": {
+      "score": 1,
+      "label": "favorable"
+    },
     "Black Panther": {
-      "score": -1,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Black Widow": {
       "score": -2,
       "label": "weak"
     },
     "Daredevil": {
-      "score": -1,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Magneto": {
       "score": 1,
       "label": "favorable"
     },
     "Invisible Woman": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "Black Cat": {
-      "score": 0,
-      "label": "even"
+      "score": 4,
+      "label": "strong"
     },
     "Namor": {
       "score": 3,
       "label": "favorable"
     },
     "Psylocke": {
-      "score": -1,
-      "label": "weak"
-    },
-    "Gambit": {
       "score": 0,
       "label": "even"
     },
+    "Gambit": {
+      "score": -1,
+      "label": "weak"
+    },
     "Elsa Bloodstone": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     }
   },
   "Punisher": {
@@ -5543,8 +5543,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Wolverine": {
-      "score": 1,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Cloak & Dagger": {
       "score": -1,
@@ -5594,8 +5594,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Moon Knight": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Blade": {
       "score": -7,
@@ -5626,8 +5626,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Spider-Man": {
-      "score": 5,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Winter Soldier": {
       "score": 0,
@@ -5740,67 +5740,67 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Human Torch": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Iron Fist": {
-      "score": 4,
-      "label": "strong"
-    },
-    "Iron Man": {
       "score": 0,
       "label": "even"
+    },
+    "Iron Man": {
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 3,
       "label": "favorable"
     },
     "Wolverine": {
-      "score": 4,
-      "label": "strong"
+      "score": -1,
+      "label": "weak"
     },
     "Cloak & Dagger": {
       "score": 0,
       "label": "even"
     },
     "Loki": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Mantis": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Deadpool (Vanguard)": {
       "score": 0,
       "label": "even"
     },
     "Jubilee": {
-      "score": 3
+      "score": 0
     },
     "Jeff the Land Shark": {
-      "score": 0,
-      "label": "even"
+      "score": -4,
+      "label": "weak"
     },
     "White Fox": {
       "score": -2,
       "label": "weak"
     },
     "Luna Snow": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Scarlet Witch": {
       "score": -2,
       "label": "weak"
     },
     "Phoenix": {
-      "score": 0,
-      "label": "even"
+      "score": 4,
+      "label": "strong"
     },
     "Squirrel Girl": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Punisher": {
       "score": 0,
@@ -5839,8 +5839,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Spider-Man": {
-      "score": 4,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Winter Soldier": {
       "score": 0,
@@ -5859,12 +5859,12 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Hawkeye": {
-      "score": 0,
-      "label": "even"
+      "score": 4,
+      "label": "strong"
     },
     "Magik": {
       "score": 5,
@@ -5875,8 +5875,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Black Widow": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Daredevil": {
       "score": 3,
@@ -5887,8 +5887,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Invisible Woman": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Black Cat": {
       "score": 4,
@@ -5953,16 +5953,16 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Human Torch": {
-      "score": -1,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Iron Fist": {
       "score": 1,
       "label": "favorable"
     },
     "Iron Man": {
-      "score": -1,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Storm": {
       "score": 0,
@@ -6004,8 +6004,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -5,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 0,
@@ -6016,16 +6016,16 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Punisher": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Cyclops": {
       "score": 0,
       "label": "even"
     },
     "Blade": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Hulk": {
       "score": -1,
@@ -6048,8 +6048,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Star-Lord": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Spider-Man": {
       "score": 3,
@@ -6072,7 +6072,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": -4,
+      "score": -1,
       "label": "weak"
     },
     "Hawkeye": {
@@ -6084,16 +6084,16 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Black Panther": {
+      "score": 1,
+      "label": "favorable"
+    },
+    "Black Widow": {
       "score": 0,
       "label": "even"
     },
-    "Black Widow": {
-      "score": -2,
-      "label": "weak"
-    },
     "Daredevil": {
-      "score": -1,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Magneto": {
       "score": 1,
@@ -6104,8 +6104,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Cat": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Namor": {
       "score": 0,
@@ -6162,8 +6162,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Venom": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Human Torch": {
       "score": 3,
@@ -6205,7 +6205,7 @@ const REF_MATCHUP_SCORES = {
       "score": -1
     },
     "Jeff the Land Shark": {
-      "score": -3,
+      "score": -4,
       "label": "weak"
     },
     "White Fox": {
@@ -6217,16 +6217,16 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 2,
       "label": "favorable"
     },
     "Squirrel Girl": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Punisher": {
       "score": 7,
@@ -6237,16 +6237,16 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Moon Knight": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Hulk": {
       "score": 2,
       "label": "favorable"
     },
     "Groot": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Rocket Raccoon": {
       "score": -4,
@@ -6269,8 +6269,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Adam Warlock": {
       "score": -4,
@@ -6285,12 +6285,12 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Ultron": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Hawkeye": {
-      "score": 6,
-      "label": "strong"
+      "score": 0,
+      "label": "even"
     },
     "Magik": {
       "score": 0,
@@ -6305,8 +6305,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Daredevil": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Magneto": {
       "score": 1,
@@ -6387,8 +6387,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Iron Man": {
-      "score": 3,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Storm": {
       "score": 5,
@@ -6498,7 +6498,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Ultron": {
-      "score": -5,
+      "score": -1,
       "label": "weak"
     },
     "Hawkeye": {
@@ -6651,8 +6651,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Squirrel Girl": {
-      "score": -5,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Punisher": {
       "score": 7,
@@ -6667,8 +6667,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Blade": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Hulk": {
       "score": 0,
@@ -6711,8 +6711,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Ultron": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Hawkeye": {
       "score": 5,
@@ -6813,8 +6813,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCounter"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Storm": {
       "score": 2,
@@ -6856,8 +6856,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 2,
@@ -6956,8 +6956,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Cat": {
-      "score": 3,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Namor": {
       "score": 3,
@@ -7207,8 +7207,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "The Thing": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Thor": {
       "score": -2,
@@ -7219,8 +7219,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Emma Frost": {
-      "score": 1,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": 0,
@@ -7239,16 +7239,16 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCountered"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 2,
       "label": "favorable"
     },
     "Wolverine": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Cloak & Dagger": {
       "score": 0,
@@ -7350,8 +7350,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Ultron": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Hawkeye": {
       "score": -4,
@@ -7452,8 +7452,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": -4,
+      "label": "weak"
     },
     "Storm": {
       "score": 2,
@@ -7495,16 +7495,16 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Phoenix": {
       "score": 1,
       "label": "favorable"
     },
     "Squirrel Girl": {
-      "score": -7,
-      "label": "hardCountered"
+      "score": -1,
+      "label": "weak"
     },
     "Punisher": {
       "score": 4,
@@ -7515,8 +7515,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Moon Knight": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Blade": {
       "score": -5,
@@ -7563,8 +7563,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Ultron": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Hawkeye": {
       "score": 3,
@@ -7595,8 +7595,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Black Cat": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Namor": {
       "score": -1,
@@ -7657,12 +7657,12 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Human Torch": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Iron Fist": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Iron Man": {
       "score": -1,
@@ -7677,23 +7677,23 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cloak & Dagger": {
-      "score": -3,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Loki": {
       "score": -1,
       "label": "weak"
     },
     "Mantis": {
-      "score": 5,
-      "label": "strong"
+      "score": -1,
+      "label": "weak"
     },
     "Deadpool (Vanguard)": {
       "score": 2,
       "label": "favorable"
     },
     "Jubilee": {
-      "score": -2
+      "score": 0
     },
     "Jeff the Land Shark": {
       "score": -3,
@@ -7704,27 +7704,27 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Luna Snow": {
-      "score": 4,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Scarlet Witch": {
-      "score": -1,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": -2,
       "label": "weak"
     },
     "Squirrel Girl": {
-      "score": 1,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Punisher": {
-      "score": -5,
+      "score": -1,
       "label": "weak"
     },
     "Cyclops": {
-      "score": -4,
+      "score": -1,
       "label": "weak"
     },
     "Moon Knight": {
@@ -7760,8 +7760,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Winter Soldier": {
-      "score": -5,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Adam Warlock": {
       "score": -5,
@@ -7776,7 +7776,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": -4,
+      "score": -1,
       "label": "weak"
     },
     "Hawkeye": {
@@ -7792,7 +7792,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Black Widow": {
-      "score": -5,
+      "score": -1,
       "label": "weak"
     },
     "Daredevil": {
@@ -7858,8 +7858,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Emma Frost": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Peni Parker": {
       "score": -4,
@@ -7870,7 +7870,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Human Torch": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "Iron Fist": {
@@ -7882,8 +7882,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Storm": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Wolverine": {
       "score": 2,
@@ -7898,8 +7898,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Mantis": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Deadpool (Vanguard)": {
       "score": -4,
@@ -7917,8 +7917,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Luna Snow": {
-      "score": 3,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Scarlet Witch": {
       "score": -3,
@@ -7945,8 +7945,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Blade": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Hulk": {
       "score": -5,
@@ -7973,8 +7973,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Spider-Man": {
-      "score": 5,
-      "label": "strong"
+      "score": -1,
+      "label": "weak"
     },
     "Adam Warlock": {
       "score": -1,
@@ -7985,8 +7985,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Deadpool (Duelist)": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Ultron": {
       "score": -2,
@@ -8017,8 +8017,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Invisible Woman": {
-      "score": 1,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Black Cat": {
       "score": 2,
@@ -8091,8 +8091,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCounter"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 2,
@@ -8134,8 +8134,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 2,
@@ -8347,16 +8347,16 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Phoenix": {
       "score": 0,
       "label": "even"
     },
     "Squirrel Girl": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Punisher": {
       "score": 0,
@@ -8517,8 +8517,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 0,
@@ -8560,8 +8560,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Phoenix": {
       "score": 0,
@@ -8616,8 +8616,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Adam Warlock": {
       "score": -2,
@@ -8694,12 +8694,12 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Rogue": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "The Thing": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Thor": {
       "score": 3,
@@ -8722,16 +8722,16 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Human Torch": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Iron Fist": {
       "score": 5,
       "label": "strong"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Storm": {
       "score": 2,
@@ -8773,40 +8773,40 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 2,
       "label": "favorable"
     },
     "Squirrel Girl": {
-      "score": 2,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Punisher": {
       "score": 6,
       "label": "strong"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
-    },
-    "Moon Knight": {
-      "score": 4,
-      "label": "strong"
-    },
-    "Blade": {
       "score": 1,
       "label": "favorable"
     },
+    "Moon Knight": {
+      "score": 1,
+      "label": "favorable"
+    },
+    "Blade": {
+      "score": 0,
+      "label": "even"
+    },
     "Hulk": {
-      "score": 5,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Groot": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Rocket Raccoon": {
       "score": 0,
@@ -8817,16 +8817,16 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Mister Fantastic": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Star-Lord": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Spider-Man": {
-      "score": 4,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Winter Soldier": {
       "score": 2,
@@ -8849,19 +8849,19 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Magik": {
-      "score": 5,
-      "label": "strong"
+      "score": -1,
+      "label": "weak"
     },
     "Black Panther": {
-      "score": 4,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Black Widow": {
       "score": 1,
       "label": "favorable"
     },
     "Daredevil": {
-      "score": -5,
+      "score": -1,
       "label": "weak"
     },
     "Magneto": {
@@ -8869,8 +8869,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Invisible Woman": {
-      "score": -1,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Black Cat": {
       "score": 2,
@@ -8889,8 +8889,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Elsa Bloodstone": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     }
   },
   "Hawkeye": {
@@ -8994,24 +8994,24 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Squirrel Girl": {
-      "score": -1,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Punisher": {
       "score": 0,
       "label": "even"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
+      "score": -4,
+      "label": "weak"
     },
     "Moon Knight": {
       "score": 0,
       "label": "even"
     },
     "Blade": {
-      "score": -6,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Hulk": {
       "score": -5,
@@ -9156,8 +9156,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Storm": {
       "score": 2,
@@ -9207,8 +9207,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Squirrel Girl": {
-      "score": 1,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Punisher": {
       "score": -5,
@@ -9271,8 +9271,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": -5,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Hawkeye": {
       "score": -8,
@@ -9412,16 +9412,16 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -5,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": -2,
       "label": "weak"
     },
     "Squirrel Girl": {
-      "score": 1,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Punisher": {
       "score": -5,
@@ -9432,8 +9432,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Moon Knight": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Blade": {
       "score": 0,
@@ -9484,7 +9484,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": -4,
+      "score": -1,
       "label": "weak"
     },
     "Hawkeye": {
@@ -9504,8 +9504,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Magneto": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Invisible Woman": {
       "score": -4,
@@ -9582,8 +9582,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 0,
@@ -9641,12 +9641,12 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Moon Knight": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Blade": {
       "score": 0,
@@ -9677,8 +9677,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Spider-Man": {
-      "score": 5,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Winter Soldier": {
       "score": 0,
@@ -9838,16 +9838,16 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Phoenix": {
       "score": 2,
       "label": "favorable"
     },
     "Squirrel Girl": {
-      "score": 1,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Punisher": {
       "score": 5,
@@ -9858,12 +9858,12 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Moon Knight": {
-      "score": 1,
-      "label": "favorable"
-    },
-    "Blade": {
       "score": -1,
       "label": "weak"
+    },
+    "Blade": {
+      "score": 0,
+      "label": "even"
     },
     "Hulk": {
       "score": 2,
@@ -9910,8 +9910,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Ultron": {
-      "score": 5,
-      "label": "strong"
+      "score": 1,
+      "label": "favorable"
     },
     "Hawkeye": {
       "score": 5,
@@ -10051,8 +10051,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -3,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Phoenix": {
       "score": -1,
@@ -10135,8 +10135,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Black Panther": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Black Widow": {
       "score": -4,
@@ -10264,24 +10264,24 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Phoenix": {
       "score": 2,
       "label": "favorable"
     },
     "Squirrel Girl": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Punisher": {
       "score": 1,
       "label": "favorable"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Moon Knight": {
       "score": 2,
@@ -10320,8 +10320,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Winter Soldier": {
-      "score": -1,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Adam Warlock": {
       "score": 1,
@@ -10336,8 +10336,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Ultron": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Hawkeye": {
       "score": 4,
@@ -10364,8 +10364,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Black Cat": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Namor": {
       "score": -1,
@@ -10402,12 +10402,12 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "The Thing": {
-      "score": 3,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Thor": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Doctor Strange": {
       "score": -3,
@@ -10434,8 +10434,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 2,
@@ -10454,7 +10454,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Mantis": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
@@ -10465,15 +10465,15 @@ const REF_MATCHUP_SCORES = {
       "score": -5
     },
     "Jeff the Land Shark": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "White Fox": {
-      "score": -5,
+      "score": -1,
       "label": "weak"
     },
     "Luna Snow": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "Scarlet Witch": {
@@ -10485,8 +10485,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Squirrel Girl": {
-      "score": 0,
-      "label": "even"
+      "score": -4,
+      "label": "weak"
     },
     "Punisher": {
       "score": -2,
@@ -10497,8 +10497,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Moon Knight": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Blade": {
       "score": 0,
@@ -10513,7 +10513,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Rocket Raccoon": {
-      "score": -3,
+      "score": -4,
       "label": "weak"
     },
     "Hela": {
@@ -10525,8 +10525,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Star-Lord": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Spider-Man": {
       "score": 0,
@@ -10577,7 +10577,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Invisible Woman": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "Namor": {
@@ -10589,8 +10589,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gambit": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Elsa Bloodstone": {
       "score": -1,
@@ -10647,8 +10647,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Iron Man": {
-      "score": 1,
-      "label": "favorable"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 3,
@@ -10911,8 +10911,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Squirrel Girl": {
-      "score": 1,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     },
     "Punisher": {
       "score": -5,
@@ -11116,16 +11116,16 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -3,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Phoenix": {
       "score": 0,
       "label": "even"
     },
     "Squirrel Girl": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Punisher": {
       "score": 1,
@@ -11220,8 +11220,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Cat": {
-      "score": 0,
-      "label": "even"
+      "score": 1,
+      "label": "favorable"
     },
     "Namor": {
       "score": 0,
@@ -11286,8 +11286,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Storm": {
       "score": 4,
@@ -11337,8 +11337,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Squirrel Girl": {
-      "score": -2,
-      "label": "weak"
+      "score": 1,
+      "label": "favorable"
     },
     "Punisher": {
       "score": 4,
@@ -11401,8 +11401,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": 0,
-      "label": "even"
+      "score": -1,
+      "label": "weak"
     },
     "Hawkeye": {
       "score": 4,

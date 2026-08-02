@@ -1,11 +1,14 @@
 /* ---------------- TABS ---------------- */
 document.getElementById("tabMain").onclick = ()=>switchTab("main");
 document.getElementById("tabEditor").onclick = ()=>switchTab("editor");
+document.getElementById("tabGlossary").onclick = ()=>switchTab("glossary");
 function switchTab(t){
   document.getElementById("mainView").style.display = t==="main" ? "" : "none";
   document.getElementById("editorView").style.display = t==="editor" ? "" : "none";
+  document.getElementById("glossaryView").style.display = t==="glossary" ? "" : "none";
   document.getElementById("tabMain").classList.toggle("active", t==="main");
   document.getElementById("tabEditor").classList.toggle("active", t==="editor");
+  document.getElementById("tabGlossary").classList.toggle("active", t==="glossary");
   if(t==="editor") renderEditorHeroList("");
 }
 
@@ -42,7 +45,8 @@ function renderEditorHeroList(query){
       item.className = "hero-grid-item";
       const img = getHeroImage(h.n);
       const thumb = img ? `<img src="${img}" class="grid-thumb" alt="${h.n}">` : "";
-      item.innerHTML = `${thumb}<span class="n">${heroLabel(h.n)}</span>${roleTagsHtml(h)}`;
+      const archTags = archTagsHtml(h);
+      item.innerHTML = `${thumb}<span class="n">${heroLabel(h.n)}</span>${roleTagsHtml(h)}${archTags ? `<div class="arch-tags">${archTags}</div>` : ""}`;
       item.onclick = ()=>renderEditorDetail(h.n);
       grid.appendChild(item);
     });
@@ -119,6 +123,7 @@ async function renderEditorDetail(name){
       <div class="editor-image-preview" id="editorImagePreview">${Object.values(variantImages).some(Boolean) ? "" : `<span class="no-img">${t("editor.noImage")}</span>`}</div>
       <div class="editor-image-actions">
         <span class="enemy-name">${heroLabel(name)}</span>${hero ? roleIconHtml(hero.r,16) : ''}
+        ${hero && archTagsHtml(hero) ? `<div class="arch-tags detail-arch-tags">${archTagsHtml(hero)}</div>` : ""}
         ${(()=>{ const s = heroMetaStats(name); if(!s) return ""; return `<div class="hq-stat-row" title="${t("editor.metaStatsTooltip",{hero:heroLabel(name)}).replace(/"/g,'&quot;')}">
           <span class="hq-stat"><b>${s.winRate.toFixed(1)}%</b> ${t("editor.metaWinRate")}</span>
           <span class="hq-stat"><b>${s.pickRate.toFixed(1)}%</b> ${t("editor.metaPickRate")}</span>

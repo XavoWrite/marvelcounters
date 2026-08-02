@@ -1,0 +1,94 @@
+IDEA PENDIENTE — ADVERTENCIAS DE ULTIMATES (aún NO implementada en la página)
+=============================================================================
+Este archivo es un borrador de trabajo, no se carga en la página. Guarda el
+conocimiento que Xavier fue aportando (2026-08-01) para cuando construyamos
+esta función. La idea final (palabras de Xavier): "sería como añadir una
+advertencia respecto a las ultis, si se ve al enemigo con tal personaje decir
+'este enemigo tiene tal cosa, cuidado'" — un aviso que aparece en Partida en
+vivo cuando agregás un héroe al equipo enemigo, explicando su ultimate y cómo
+cuidarse/counterearla. Mientras no esté hecho, la página muestra un aviso
+corto en el pie invitando a la comunidad a ayudar a completarla (footer, key
+i18n "footer.ultimatesComingSoon", link al mismo Google Form de sugerencias).
+
+DATOS OFICIALES DE CADA ULTIMATE
+---------------------------------
+ref-ultimates-official.json (raíz del repo, tampoco se carga en la página) es
+el texto OFICIAL de las 52 ultimates, sacado directo de marvelrivals.com
+(nombre, descripción exacta, stats como daño/duración/cooldown/energía).
+Deadpool tiene sus 3 variantes (Vanguard=The Ban Hammer, Duelist=Skill Issue,
+Strategist=Pwnage Pound) porque el sitio oficial las trata distinto. Esto es
+la base mecánica confiable — mucho mejor que cualquier guía de opinión.
+
+MECANICAS GENERALES CONFIRMADAS POR EL TEXTO OFICIAL
+-------------------------------------------------------
+- Magneto (Meteor M): absorbe proyectiles enemigos cercanos y los convierte
+  en más daño para su propio meteoro. Counter real contra ultis que SON un
+  proyectil grande.
+- Emma Frost (Psionic Seduction): "previene que usen sus Ultimates" — el
+  counter más universal y explícito del juego, no depende de qué ulti sea.
+- Rogue (Heartbreaker): absorbe ENERGÍA de ultimate de los rivales cercanos
+  (no cancela una ya activada, retrasa que lleguen a tenerla).
+- Hulk: gana Invencibilidad total, pero SOLO durante la transformación en sí
+  (según Xavier, ~1 segundo real en partida, no todo el tiempo que dura el
+  "Monster Hulk").
+- Ultron: el texto oficial dice "Unstoppable", pero Xavier confirma en la
+  práctica que SÍ se le puede disparar mientras usa su ulti — no es una
+  inmunidad real a efectos de counterjuego, es más sobre no ser desplazado.
+
+CONOCIMIENTO DE XAVIER — MECANICA REAL POR HEROE (2026-08-01, de su propia
+experiencia jugando, más preciso que cualquier guía externa)
+-------------------------------------------------------------------------------
+- PUNISHER: dispara sostenido. Magneto puede absorber, pero debe LANZAR el
+  meteoro apenas cargue lo suficiente — si se pasa y sobrecarga, el meteoro
+  explota antes de tiempo y Punisher sigue vivo disparando. Es un counter que
+  requiere timing preciso, no automático.
+- STAR-LORD: vuela, es el MÁS vulnerable en el aire de todos. Si le disparás
+  mientras vuela y no está cubierto, muere. Pero mientras dispara puede
+  matarte a vos si no estás cubierto o también en el aire. Magneto puede
+  absorber su daño y devolvérselo (a él mismo o a otro enemigo en el piso).
+  Se sobrevive/counterea también con: Cloak & Dagger, Invisible Woman, Luna
+  Snow (si estás cerca de ella), posiblemente Mantis.
+- HELA: sube al cielo, tiene una vida límite en ese estado. Los aliados
+  pueden dispararle para bajarla del estado aéreo antes de tiempo. Mientras
+  está arriba puede eliminar con 1-2 golpes de su ultimate (tiene un límite
+  de golpes). Si la matás mientras está arriba, NO muere del todo — vuelve
+  al piso con la vida que tenía al subir y sigue jugando. Por esto, el
+  ulti de Magneto se usa MÁS para proteger al equipo del daño de Hela que
+  para intentar eliminarla a ella directamente.
+- PHOENIX (Jean): similar a Hela — sube y cae. A diferencia de Hela, hay que
+  dispararle ANTES de que toque el piso: si impacta contra algo o el suelo,
+  explota con mucho daño. Es una ventana de intercepción aérea.
+- SCARLET WITCH (Wanda): se eleva y carga (mecánica similar a Star-Lord). Si
+  no la matás antes de que "explote" (termine la carga), morís si no tenés
+  escudo o cobertura del escenario.
+- THOR: se eleva poco (menos que los anteriores). Si logra conectar el
+  golpe, mata salvo que tengas mucha vida o seas tanque.
+- BLACK PANTHER: complicado de jugar en contra en general. The Thing existe
+  específicamente para frenarlo (counter general, no solo de la ulti).
+- EMMA FROST: al cargar el diamante en la cabeza del rival lo atonta — esto
+  CANCELA ultimates ya lanzadas, o si el rival la lanza justo cuando lo
+  atontan, la reduce al 50% de efecto. Mecánica general relacionada: CUALQUIER
+  aturdidor/noqueador que golpee justo en el momento de lanzar una ulti
+  también la reduce al 50% (no es exclusivo de Emma).
+- HULK: invulnerable solo ~1 segundo durante la transformación. Después,
+  atacando, se le puede disparar y "destransformarlo" (volverlo a Hero Hulk),
+  pero hay que tener cuidado con el timing.
+- GROOT: su ulti atrapa (Strangling Prison, confirmado por texto oficial).
+- IRON MAN: su ulti es un "super proyectil" grande pero fácil de esquivar, o
+  se le puede disparar a él mismo mientras está en el aire — esto EVITA que
+  la lance (no cancela una ya lanzada), o la reduce al 50%, salvo que lo
+  noqueen justo a tiempo (ahí sí se cancela del todo).
+
+PARES "ULTI VENCE ULTI" EXPLICITOS QUE MENCIONO XAVIER
+---------------------------------------------------------
+- Contra la ulti de Cloak & Dagger: la de Iron Man, la de Scarlet Witch, y la
+  de Magneto la contrarrestan (las 3 mencionadas como el set completo).
+- La ulti de Star-Lord se sobrevive con: Cloak & Dagger, Invisible Woman,
+  Luna Snow (si estás cerca de ella), posiblemente Mantis.
+
+PROXIMO PASO (no iniciado)
+----------------------------
+Seguir cargando héroe por héroe con Xavier (le falta cubrir Duelistas y
+Estrategas que no mencionó todavía), después definir junto con él cómo se ve
+la advertencia en pantalla (¿tarjeta al agregar un rival en Partida en vivo?
+¿qué tan detallada?) antes de programar la función.
