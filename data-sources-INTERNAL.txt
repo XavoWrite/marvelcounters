@@ -633,3 +633,47 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      * Black Panther → Jeff the Land Shark: -3 → **+5**. Un main de BP en comentarios: "su
        burbuja cancela todos mis dashes." The Thing (ya en +5/categoría 1) se dejó sin tocar, ya
        estaba bien.
+
+11) Video de 2 horas "The OFFICIAL Marvel Rivals Counter Guide" (Coach_Mills) + 41 shorts
+    procesados en una tanda grande (2026-08-15, misma noche)
+   - Xavier encontró y pegó él mismo la transcripción completa de un video de casi 2 horas de
+     Coach_Mills (canal de coaching, "Mills clan", ~170K subs) que recorre CASI TODO el roster de
+     forma sistemática (tanques, DPS y soportes, cada uno con sus counters explicados con razón
+     mecánica concreta) — la fuente más rica y de mayor esfuerzo de todo lo procesado esta sesión.
+     Se cruzó dos veces (una vez completa vía un agente que solo leyó el texto ya pegado en la
+     conversación, otra vez parcial 0:00-40:13 vía un agente que sacó su propia transcripción del
+     video real) contra toda la matriz.
+   - Problema técnico encontrado: varios agentes de navegador corriendo la misma tarea en paralelo
+     se "roban" pestañas entre sí sin que YouTube tenga nada que ver — root cause confirmado
+     (ver charla con Xavier). Lección para el futuro: NO correr más de un agente con navegador al
+     mismo tiempo en este proyecto; si Xavier puede pegar una transcripción él mismo (como hizo acá),
+     es mucho más confiable que dejar que el agente navegue.
+   - También se procesaron los 41 shorts que habían quedado pendientes de tandas anteriores (uno
+     por uno, secuencial, sin paralelismo) + los comentarios del video de 2hs.
+   - Dos correcciones de la MISMA noche (Jeff↔Black Panther, Cap↔Winter Soldier) quedaron
+     directamente contradichas por el video de 2hs, pero A SU VEZ reconfirmadas por fuentes más
+     puntuales encontradas en esta misma tanda (un comentario con 194 likes de un main de BP para
+     Jeff, y un short dedicado a Winter Soldier para Cap) — se dejaron SIN CAMBIOS, ganó la
+     fuente más específica/puntual sobre la más general.
+   - **Patrón sin resolver, pendiente de que Xavier decida**: Invisible Woman aparece en el video
+     de 2hs (encontrado independientemente 2 veces) como una buena opción contra Capitán América,
+     Thor, Venom y Black Cat — pero nuestra data tiene a los 4 aplastándola fácil (categoría 4).
+     Es UNA sola fuente (aunque de alta calidad) repetida en 4 pares, no 4 fuentes independientes
+     — se dejó sin tocar a propósito hasta tener una segunda opinión.
+   - Correcciones aplicadas (bloque "fuerte", 2+ mains/fuentes independientes cada una):
+     * Magik → Hela: -6 (Magik la aplastaba) → **+6** (Hela la countera). 2 mains de Magik
+       coinciden, contradice directamente lo que había.
+     * Magik → Peni Parker: +3 → **+6**. Mismos 2 mains de Magik la marcan como counter fuerte.
+     * Black Cat → Elsa Bloodstone: -1 → **+6**. La main #1 rankeada de Black Cat la llama
+       explícitamente "el matchup más difícil que tengo."
+     * Mister Fantastic → Thor: -2 → **+5**. 4 menciones independientes, una dice "nunca gané
+       un solo 1v1."
+     * Mister Fantastic → Wolverine: +1 → **+5**. 2 mains de Wolverine independientes coinciden.
+     * Human Torch → Spider-Man: +1 → **+6**. Consenso grande de la comunidad (varios
+       comentarios con muchos likes, incluido un jugador de Human Torch).
+     * Scarlet Witch → Spider-Man: -1 → **+5**. 5 comentarios independientes lo señalan.
+   - Candidatos más débiles (1 sola fuente buena cada uno, quedan documentados para después, NO
+     aplicados todavía): Wolverine←Invisible Woman (un main + el propio video), Black Cat←White
+     Fox/Cloak & Dagger (misma main de Elsa Bloodstone), Psylocke←Loki (main nivel Celestial),
+     Rogue←Peni Parker (el creador la llama "counter crítico"), Iron Fist←Iron Man (comentario
+     con 22 likes).
