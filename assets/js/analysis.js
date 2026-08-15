@@ -87,6 +87,45 @@ function teamArchCounts(team){
   return counts;
 }
 
+// suma el dano de ataque basico de vanguardias+duelistas contra la curacion principal de los
+// estrategas de UN MISMO equipo (pedido explicito de Xavier, 2026-08-15) -- solo cuenta heroes
+// con un DPS/HPS confiable (ver hero-basic-stats.js/heroBasicStats): si a un heroe no se le pudo
+// calcular un numero limpio (combo, cadencia compuesta, curacion que escala con %vida), se excluye
+// de la suma en vez de inventar un valor, y se avisa cuantos quedaron afuera para que no parezca
+// que el equipo "no hace nada".
+function teamDmgHealTotals(team){
+  let dmg = 0, heal = 0, dmgMissing = 0, healMissing = 0;
+  team.filter(Boolean).forEach(h=>{
+    const bs = heroBasicStats(h.n);
+    if(!bs) return;
+    if(heroHasRole(h,"Strategist")){
+      if(bs.primaryHeal){
+        if(typeof bs.primaryHeal.hps==="number") heal += bs.primaryHeal.hps;
+        else healMissing++;
+      }
+    } else if(bs.basicAttack){
+      if(typeof bs.basicAttack.dps==="number") dmg += bs.basicAttack.dps;
+      else dmgMissing++;
+    }
+  });
+  return {dmg: Math.round(dmg*10)/10, heal: Math.round(heal*10)/10, dmgMissing, healMissing};
+}
+// barrita delgada roja(dano)/verde(curacion) para un equipo -- ver teamDmgHealTotals arriba.
+function dmgHealBarHtml(team){
+  const {dmg, heal, dmgMissing, healMissing} = teamDmgHealTotals(team);
+  const total = dmg+heal;
+  const dmgPct = total>0 ? (dmg/total*100) : 50;
+  const healPct = total>0 ? (heal/total*100) : 50;
+  const missingNote = (dmgMissing+healMissing)>0
+    ? `<div class="empty-hint" style="font-size:10.5px;margin-top:3px;">${t("analysis.dmgHealBar.missingNote",{n:dmgMissing+healMissing})}</div>`
+    : "";
+  return `<div class="dmgheal-bar-wrap">
+    <div class="dmgheal-bar-outer"><div class="dmgheal-bar-dmg" style="width:${dmgPct}%;"></div><div class="dmgheal-bar-heal" style="width:${healPct}%;"></div></div>
+    <div class="dmgheal-bar-labels"><span class="dmgheal-lbl-dmg">🗡️ ${dmg} ${t("analysis.dmgHealBar.dmgUnit")}</span><span class="dmgheal-lbl-heal">✚ ${heal} ${t("analysis.dmgHealBar.healUnit")}</span></div>
+    ${missingNote}
+  </div>`;
+}
+
 // puntaje de un candidato "h" contra una lista de rivales: cuenta cuantos le gana/pierde en tu
 // matriz (goodAgainst/badAgainst), pesa por relevancia real de pelea + los ajustes de dive/shield
 // segun el equipo rival completo, SUMA el puntaje de referencia externa de cada rival puntual
@@ -403,6 +442,7 @@ function renderAnalysis(){
       left += `<br>${tp("analysis.yourComp.missingPlayers", missing, {missing})}${neededSuffix}`;
     }
     left += `</div>`;
+    left += dmgHealBarHtml(allyTeam);
   }
   left += `</div>`;
 
@@ -479,6 +519,7 @@ function renderAnalysis(){
       right += `<br>${t("analysis.rivalComp.addRestForFull")}`;
     }
     right += `</div>`;
+    right += dmgHealBarHtml(enemyTeam);
     const antiDive = antiDiveCount(enemyTeam.filter(Boolean));
     if(antiDive>=2){
       right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.antiDiveWarn", {n: antiDive})}</div>`;

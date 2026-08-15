@@ -456,3 +456,18 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      comps de mucho daño), pero quedó como infografía de referencia primero. Si Xavier confirma
      que los números se ven bien, el siguiente paso natural es usar esto para construir esa
      advertencia/recomendación real.
+   - 2026-08-15, más tarde: agregada la "barrita" que Xavier pidió después de ver la infografía
+     — por equipo (una para "Tu equipo", una para "Análisis de composición rival"), no cruzada
+     entre equipos (confirmado con él explícitamente antes de construir, ver AskUserQuestion en
+     la conversación). Suma dano de ataque básico de Vanguardias+Duelistas vs curación principal
+     de Estrategas de ESE MISMO equipo, mismo criterio de "solo lo confiable" que la tabla del
+     Glosario (héroes sin DPS/HPS limpio se excluyen de la suma y se avisa cuántos quedaron
+     afuera, en vez de tratarlos como 0). Funciones nuevas en analysis.js:
+     `teamDmgHealTotals(team)` (los números) y `dmgHealBarHtml(team)` (el HTML de la barra) —
+     compartidas entre el bloque "Tu composición" (izquierda) y "Análisis de composición rival"
+     (derecha). Colores: rojo = var(--enemy) para daño, verde = var(--st) para curación (el
+     mismo verde que ya se usaba para "estratega"/sanador principal en el resto de la app, no
+     var(--ally) que es azul). Probado con el escenario real que motivó todo esto (Winter
+     Soldier + Hela + Squirrel Girl + Jubilee del lado rival): la barra salió casi toda roja,
+     523.9 daño/seg contra apenas 25 curación/seg — exactamente la lectura visual que Xavier
+     quería poder ver de un vistazo.

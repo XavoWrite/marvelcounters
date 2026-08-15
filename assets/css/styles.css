@@ -421,6 +421,14 @@
   .winprob-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     font-size:11.5px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);}
 
+  .dmgheal-bar-wrap{margin-top:10px;}
+  .dmgheal-bar-outer{display:flex;height:8px;border-radius:6px;overflow:hidden;background:var(--panel-alt);border:1px solid var(--line);}
+  .dmgheal-bar-dmg{height:100%;background:var(--enemy);transition:width .3s;}
+  .dmgheal-bar-heal{height:100%;background:var(--st);transition:width .3s;}
+  .dmgheal-bar-labels{display:flex;justify-content:space-between;margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:10.5px;}
+  .dmgheal-lbl-dmg{color:var(--enemy);}
+  .dmgheal-lbl-heal{color:var(--st);}
+
   .editor-image-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px;}
   .editor-image-preview{width:64px;height:64px;border-radius:10px;background:var(--panel-alt);border:1px solid var(--line);
     display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
