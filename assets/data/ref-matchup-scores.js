@@ -6192,7 +6192,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Magik": {
-      "score": 1,
+      "score": 3,
       "label": "favorable"
     },
     "Black Panther": {
@@ -7253,8 +7253,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Winter Soldier": {
-      "score": 0,
-      "label": "even"
+      "score": -3,
+      "label": "weak"
     },
     "Adam Warlock": {
       "score": -3,
@@ -8109,8 +8109,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Hela": {
-      "score": 0,
-      "label": "even"
+      "score": 3,
+      "label": "favorable"
     },
     "Mister Fantastic": {
       "score": -5,
@@ -9391,7 +9391,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Moon Knight": {
-      "score": -1,
+      "score": -3,
       "label": "weak"
     },
     "Blade": {

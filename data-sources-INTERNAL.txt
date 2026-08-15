@@ -773,3 +773,48 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      Namor → Moon Knight/Hela/Hawkeye/Iron Man/Loki (mejores counters de Namor según 2 videos,
      ninguno con 2da fuente independiente ni contradicción directa con lo actual salvo Loki/Jeff/
      Squirrel Girl que sí contradicen y quedan igual sin tocar).
+
+13) Tanda de 7 videos más (Black Panther, ulti de Devil Dinosaur, ulti de Elsa Bloodstone, "3
+    counters para todos los duelistas", "3 counters para todos los tanques", arquetipos
+    Dive/Brawl/Poke, Chica Ardilla/Moon Knight/Spider-Man) — 2026-08-16
+   - Procesado por un agente en background (sin navegador, todo el texto ya pegado en la
+     conversación). Los 2 videos de "3 counters para TODOS los X" tenían nombres muy destrozados
+     por la transcripción automática — Xavier corrigió en vivo 3 de las confusiones:
+     * "Gela"/"Gele" = **Hela**, no Angela (el mismo video usa la palabra completa "Angela" en
+       otra entrada, ej. counters de Storm, así que son dos palabras distintas, no la misma mal
+       transcrita dos veces).
+     * "Widow" = **Black Widow** (sí está en el roster, Duelist — se había asumido por error que
+       el juego no la tenía).
+     * "Hokai" = **Hawkeye** (coincidía con la sospecha inicial, confirmado).
+     Quedó sin resolver: el garble de una sola letra "W" en la lista de duelistas (mejor
+     candidato: Scarlet Witch, baja confianza) y un nombre perdido/duplicado en la entrada de
+     Emma Frost del video de tanques ("Para Ema usaremos a Ema, Gela y Luna" — el primer counter
+     real se perdió en la transcripción, Xavier tampoco lo recordaba del video).
+   - Hallazgo de método importante: los 2 videos "3 counters para TODOS los X" recomiendan Emma
+     Frost en 10 de 11 tanques y Winter Soldier/Ultron/Mujer Invisible en la mayoría de
+     duelistas — patrón de "picks seguros genéricos", no análisis específico por pareja como los
+     videos dedicados a un solo héroe. Se trataron como refuerzo débil (si confirman) o señal de
+     baja confianza (si contradicen), no como fuente fuerte por sí solos.
+   - La mayoría de los pares extraídos (Black Panther←The Thing/Winter Soldier, Iron
+     Fist/Human Torch←Winter Soldier, Magik←The Thing, Doctor Strange/Groot/Magneto/Hulk/
+     Venom←Wolverine, Thor/Venom←Mujer Invisible, etc.) ya estaban en valores fuertes — solo
+     reforzados, sin cambios. Nota linda: **Spider-Man←Namor** ahora tiene 3+ fuentes
+     independientes coincidiendo (ya está en el valor máximo, +8 hardCounter, sin tocar).
+   - Aplicado:
+     * Moon Knight → Magik: +1 → **+3** (ajuste suave, reforzando el mismo sentido que ya tenía).
+       Fuente dedicada (no del par genérico), con razón mecánica concreta: "puede hacerle un
+       combo entero antes de que pueda escapar con su gancho."
+     * Winter Soldier → Hela: 0 → **+3** / Hela → Winter Soldier: 0 → **-3**. Este par venía
+       empatado a propósito desde el punto 8 (Xavier decía que él le gana a Hela, pero
+       thegamer.com y metabot.gg —51.9%/48.1%, casi 50/50— apuntaban a Hela o empate). Este video
+       suma otro voto del lado de Hela; Xavier decidió romper el empate a favor de Hela con esto.
+       Magnitud moderada (+3, no cruza a "counter fuerte") porque la evidencia de fondo sigue
+       siendo casi 50/50 en partidas reales, no un aplastamiento.
+   - No aplicado (contradicciones que salen SOLO de los videos "3 counters para TODOS", patrón
+     de picks genéricos, baja confianza): Capitán América←Winter Soldier (contradice la reversión
+     ya hecha en el punto 9, que tiene mejor respaldo), Psylocke←Mujer Invisible (contradice -5
+     ya establecido), Wolverine←Emma Frost, Doctor Strange←Gambit, Hela←Venom/Daredevil/Gambit.
+     También sin aplicar (ultimate-específico, evidencia más débil que un counter general):
+     counters de la ulti de Devil Dinosaur (Emma Frost/La Mole/Punisher/Elsa) y de la ulti de
+     Elsa Bloodstone (Punisher/Iron Man/Fénix/Psylocke/Hawkeye/Hela — mayormente ya coincidían
+     con lo que había, sin cambios).
