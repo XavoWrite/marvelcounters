@@ -1024,8 +1024,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Deadpool (Duelist)": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Ultron": {
       "score": 0,
@@ -2543,8 +2543,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Duelist)": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Ultron": {
       "score": -5,
@@ -4661,8 +4661,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Duelist)": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Ultron": {
       "score": 0,
@@ -4878,8 +4878,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Duelist)": {
-      "score": 4,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Ultron": {
       "score": 1,
@@ -8133,8 +8133,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Deadpool (Duelist)": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Ultron": {
       "score": -2,
@@ -8645,8 +8645,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "The Thing": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Thor": {
       "score": 0,
@@ -8673,8 +8673,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Iron Fist": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Iron Man": {
       "score": -1,
@@ -8712,12 +8712,12 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "White Fox": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Luna Snow": {
-      "score": -4,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Scarlet Witch": {
       "score": 4,
@@ -8776,8 +8776,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Adam Warlock": {
       "score": -2,
@@ -8816,8 +8816,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Invisible Woman": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Black Cat": {
       "score": 0,
@@ -10524,8 +10524,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Deadpool (Duelist)": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Ultron": {
       "score": 0,

@@ -980,6 +980,18 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      portugués dice lo contrario (su daño por %vida falla porque la curación de Deadpool lo
      anula). Es una contradicción real entre 2 fuentes de una sola mención cada una, no una
      confirmación — se dejó sin tocar en vez de aplicar la más reciente por defecto.
+19) Deadpool (Duelist) — pendientes aplicados (2026-08-16)
+   - Candidatos de una sola fuente cada uno (punto 14, sin conflicto entre sí, corrección suave):
+     * Deadpool (Duelist) → Iron Fist: 0 → **+2**.
+     * Deadpool (Duelist) → Winter Soldier: 0 → **+2**.
+     * Deadpool (Duelist) → The Thing: 0 → **+2** (anti-dive).
+     * Deadpool (Duelist) → Mujer Invisible: -2 → **+2** (invertido — antes Deadpool le ganaba).
+     * Deadpool (Duelist) → White Fox: 0 → **+2** (parte del combo White Fox+Luna Snow).
+     * Deadpool (Duelist) → Luna Snow: -4 → **+2** (invertido — antes Deadpool le ganaba fuerte;
+       mismo criterio de "una sola fuente = corrección suave" aunque el valor de partida fuera
+       grande, igual que se hizo con Psylocke/Mujer Invisible en el punto 13).
+   - Sin cambios, ya confirmado: Deadpool (Duelist) → Jeff the Land Shark (-1, la fuente dice que
+     Jeff sufre mucho contra él, coincide con lo que ya había).
    - Adam Warlock: todo lo que trajo la fuente nueva ya coincidía con los datos actuales (Iron
      Fist +7, Magik +6, Psylocke +6, Black Panther +5, Spider-Man +5, Captain America +4, todos
      ya en la dirección correcta) — sin cambios, solo reforzado.
