@@ -516,3 +516,67 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      decidió dejarlo como está en vez de forzar una dirección con datos tan parejos.
    - Venom: se verificó que ya coincidía con la lectura de Xavier (Winter Soldier le gana, -2 en
      nuestra data) — sin cambios, solo confirmado.
+
+9) Iron Fist, Magik, Groot, Captain America vs Winter Soldier — REVERTIDOS (2026-08-15)
+   - Xavier empezó a pasar links de YouTube (videos/shorts de 2 creadores de contenido de Marvel
+     Rivals que sigue: Jaimito Garra y al menos otro más, ver más abajo) pidiendo que se usen
+     como fuente para confirmar/corregir datos — su criterio explícito: "estos videos son
+     información más garantizada, más cerca de la verdad" que los sitios agregadores tipo
+     rivalscounter/rivalsmeta. Se armó un método para sacarles la transcripción completa (ver
+     nota técnica más abajo) y un par de agentes en background procesaron ~21 videos.
+   - Hallazgo real: el video dedicado de Jaimito Garra sobre Winter Soldier, más comentarios de
+     gente que se identifica como main de Iron Fist y de Magik en los videos dedicados a ESOS
+     personajes, coinciden en que el gancho/tirón de Winter Soldier castiga fuerte a los divers
+     cuerpo a cuerpo cuando están quietos ejecutando su combo — es decir, Winter Soldier los
+     countera A ELLOS, no al revés. Cita textual (video de Iron Fist): "durante su ataque, como
+     generalmente está algo quieto, el Winter Soldier con su gancho puede controlarlo y hasta
+     eliminarlo." Cita textual (comentario con 35 likes en el video de Magik, de alguien que dice
+     ser main de ella): "Te faltó Winter Soldier, con el jale ya te instakillea."
+   - Esto es exactamente lo opuesto a lo que se había puesto el mismo día más temprano (ver
+     entrada anterior, punto 8): Iron Fist WS→+8 y Magik WS→+7 salían de rivalscounter.com +
+     rivalsmeta.com coincidiendo. Xavier confirmó que él YA sospechaba que Iron Fist y Magik no
+     eran counters reales de Winter Soldier (por eso preguntó en primer lugar) — su conocimiento
+     de juego + 2 fuentes de video independientes (el creador + mains autodeclarados en
+     comentarios) pesa más que 2 sitios agregadores de winrate. Revertido:
+     * Iron Fist: WS→Iron Fist pasó de +8 (hardCounter) a **-6** (Winter Soldier le gana).
+     * Magik: WS→Magik pasó de +7 (hardCounter) a **-6** (Winter Soldier le gana).
+   - El mismo video también marca a **Groot** y **Capitán América** como counters reales de
+     Winter Soldier (Groot bloquea la línea de tiro/el gancho con sus muros; el escudo de Cap
+     refleja sus disparos) — que también contradecía nuestra data (WS→Groot estaba en -5, WS
+     favorecido; WS→Cap en -3, WS favorecido). Revertido:
+     * Groot: WS→Groot pasó de -5 a **+5** (Groot lo countera).
+     * Captain America: WS→Cap pasó de -3 a **+4** (Cap lo countera).
+   - Confirmado SIN cambios en la misma tanda: Hawkeye e Invisible Woman como counters de WS
+     (4ta fuente independiente ya para ambos), y toda la fila de Jubilee (6 pares, ver charla con
+     Xavier — Iron Man/Storm/Thor/Loki/Adam Warlock/Venom, fuente: TDTwo citando rivalsmeta.com,
+     los 6 ya coincidían con nuestra data, ninguno tocado).
+   - Datos NUEVOS recolectados pero TODAVÍA NO aplicados a la matriz (esperando que Xavier
+     confirme/priorice, son de pares que hoy están vacíos así que no hay "reversión" que hacer,
+     solo agregar) — quedan documentados acá para no perderlos:
+     * Black Panther: Namor (2 fuentes independientes coinciden), + The Thing, Gambit, Elsa
+       Bloodstone, Mister Fantastic, Luna Snow (de comentarios, 1 fuente cada uno).
+     * Human Torch: Spider-Man (fuerte, confirmado por un main de Torch en comentarios), + Iron
+       Man, Doctor Strange, Rocket Raccoon.
+     * Mister Fantastic: Wolverine (fuerte), + Peni Parker, Thor (un main de Fantastic dice que
+       es 50/50, no hard counter).
+     * Hela: Capitán América, Venom, Doctor Strange (tanques/escudo); Black Panther, Iron Fist,
+       Magik, Psylocke, Spider-Man, Star-Lord (flankers). Sin mención de Winter Soldier en
+       ninguna dirección en este video puntual.
+     * Scarlet Witch: Peni Parker, Hulk (anti-ulti); Punisher (el counter real más fuerte);
+       durante su ulti expuesta: Hawkeye, Hela, Winter Soldier, Punisher pueden reventarla.
+     * Hawkeye (sus propios counters, no quién él countera): Capitán América, Venom, Doctor
+       Strange (tanques); Black Panther, Iron Fist, Magik, Psylocke, Spider-Man, Scarlet Witch,
+       Star-Lord (flankers); Jeff en modo DPS.
+   - Nota técnica para el método (relevante para seguir haciendo esto con más creadores/videos):
+     los Shorts de YouTube NO muestran el botón de transcripción en su URL nativa
+     (youtube.com/shorts/ID), pero el MISMO video sí lo tiene si se carga como video normal
+     (youtube.com/watch?v=ID, mismo ID) — truco descubierto por Xavier mismo. Con eso: expandir
+     la descripción ("...más"), click en "Mostrar transcripción", listo. Ojo: no todos los shorts
+     tienen transcripción — varios de la serie "COUNTERS del X" / "Se le puede hacer frente" de
+     Jaimito Garra son tarjetas de texto sin audio (formato mudo), esos vuelven vacíos sin
+     importar el método.
+   - Segundo creador identificado: **TDTwo** (91.6K subs, contenido en inglés, cita
+     explícitamente rivalsmeta.com como su fuente — no es opinión propia, es una renarración de
+     datos agregados). También apareció un tercer nombre, **"Omega"**, en los hallazgos de Black
+     Panther — sin confirmar todavía si es el "segundo streamer" que mencionó Xavier o un tercero
+     que salió de la mezcla de links. A definir si vuelve a aparecer.

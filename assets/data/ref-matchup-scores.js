@@ -361,8 +361,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Winter Soldier": {
-      "score": 3,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Adam Warlock": {
       "score": -4,
@@ -2531,8 +2531,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Winter Soldier": {
-      "score": -8,
-      "label": "hardCountered"
+      "score": 6,
+      "label": "strong"
     },
     "Adam Warlock": {
       "score": -7,
@@ -6819,8 +6819,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Winter Soldier": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Adam Warlock": {
       "score": -1,
@@ -7982,8 +7982,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Captain America": {
-      "score": -3,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Devil Dinosaur": {
       "score": -4,
@@ -8022,8 +8022,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Iron Fist": {
-      "score": 8,
-      "label": "hardCounter"
+      "score": -6,
+      "label": "weak"
     },
     "Iron Man": {
       "score": -1,
@@ -8101,8 +8101,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Groot": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Rocket Raccoon": {
       "score": 1,
@@ -8145,8 +8145,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Magik": {
-      "score": 7,
-      "label": "hardCounter"
+      "score": -6,
+      "label": "weak"
     },
     "Black Panther": {
       "score": 6,
@@ -9427,8 +9427,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": -7,
-      "label": "hardCountered"
+      "score": 6,
+      "label": "strong"
     },
     "Adam Warlock": {
       "score": -6,
