@@ -180,7 +180,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Daredevil": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "Magneto": {
@@ -708,8 +708,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Cloak & Dagger": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Loki": {
       "score": -1,
@@ -1142,8 +1142,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Cloak & Dagger": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Loki": {
       "score": -3,
@@ -1265,7 +1265,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Daredevil": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "Magneto": {
@@ -1359,8 +1359,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCounter"
     },
     "Cloak & Dagger": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Loki": {
       "score": -1,
@@ -1576,8 +1576,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Cloak & Dagger": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Loki": {
       "score": -1,
@@ -1916,7 +1916,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Daredevil": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "Magneto": {
@@ -2010,8 +2010,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCounter"
     },
     "Cloak & Dagger": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Loki": {
       "score": 0,
@@ -3268,32 +3268,32 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Rogue": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "The Thing": {
       "score": -1,
       "label": "weak"
     },
     "Thor": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Doctor Strange": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Emma Frost": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Peni Parker": {
       "score": 0,
       "label": "even"
     },
     "Venom": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Human Torch": {
       "score": 0,
@@ -3371,12 +3371,12 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Hulk": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Groot": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Rocket Raccoon": {
       "score": -1,
@@ -3395,8 +3395,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Spider-Man": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Winter Soldier": {
       "score": 1,
@@ -3419,8 +3419,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Hawkeye": {
-      "score": 3,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Magik": {
       "score": 4,
@@ -6519,8 +6519,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Cloak & Dagger": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Loki": {
       "score": -1,
@@ -6638,7 +6638,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Daredevil": {
-      "score": -2,
+      "score": -4,
       "label": "weak"
     },
     "Magneto": {
@@ -6736,8 +6736,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Cloak & Dagger": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Loki": {
       "score": -1,
@@ -7821,8 +7821,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cloak & Dagger": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Loki": {
       "score": -1,
@@ -9123,7 +9123,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Cloak & Dagger": {
-      "score": -3,
+      "score": -4,
       "label": "weak"
     },
     "Loki": {
@@ -9931,8 +9931,8 @@ const REF_MATCHUP_SCORES = {
   },
   "Daredevil": {
     "Angela": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Captain America": {
       "score": 3,
@@ -9951,8 +9951,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Thor": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Doctor Strange": {
       "score": 4,
@@ -9963,8 +9963,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Peni Parker": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Venom": {
       "score": 2,
@@ -10050,8 +10050,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Hulk": {
-      "score": 2,
-      "label": "favorable"
+      "score": 4,
+      "label": "strong"
     },
     "Groot": {
       "score": 5,
@@ -10122,8 +10122,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Cat": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Namor": {
       "score": 5,
@@ -10765,8 +10765,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Daredevil": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Magneto": {
       "score": 3,

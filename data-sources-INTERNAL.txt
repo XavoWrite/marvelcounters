@@ -975,6 +975,28 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
        fáciles" para Deadpool según la fuente).
      * Deadpool (Vanguard) → The Thing/Black Widow/Hulk/Magneto: 0 → **+2** cada uno (picks de
        tanque razonables contra él, según la misma fuente).
+
+20) Daredevil y Cloak & Dagger — video de Coach_Mills (2026-08-16)
+   - Encontrado por un agente en background buscando específicamente estos 2 héroes (los que
+     quedaban con menos data). Fuente: el mismo video de casi 2 horas de Coach_Mills ya usado en
+     el punto 11 (canal de máxima confianza esta sesión) — sí cubre a ambos con análisis real.
+   - Daredevil: la clave es gastarle el reflect primero, luego aplicar CC. Marcarlo con
+     Hulk/Thor/Angela para forzarlo a gastar cooldowns temprano. The Thing y Peni Parker lo
+     counteran fuerte. Es buen counter de Black Cat.
+     * Daredevil → Peni Parker: +2 → **+4** (empujado a counter real, mismo sentido que ya tenía).
+     * Daredevil → Hulk/Thor/Angela: +2 → **+4** cada uno (los 3 "marcadores" recomendados,
+       empujados a counter real).
+     * Black Cat → Daredevil: 0 → **+2** (nuevo — Daredevil lo countera a él).
+     * Daredevil → The Thing ya estaba en +4, sin cambios (coincide).
+   - Cloak & Dagger: la burbuja se puede baitear con un solo engage/desengage. Son muy
+     vulnerables sin recursos (sin burbuja, doble heal wall o doble blind gastado).
+     * Cloak & Dagger → Thor/Venom/Emma Frost/Groot/Doctor Strange/Spider-Man: 0 → **+2** cada
+       uno (nuevos, sin conflicto).
+     * Cloak & Dagger → Rogue/Hulk: -1 → **+2** cada uno (invertido).
+     * Cloak & Dagger → Hawkeye: +3 → **+4** (empujado a counter real, "mucho burst").
+     * Cloak & Dagger → Magneto: ya estaba en +5 (coincide con la fuente) — **ojo**: en la
+       primera pasada de esta corrección se leyó mal el signo y se bajó por error a +2; se
+       detectó y revirtió a +5 antes de guardar el commit.
    - Excluido a propósito: **Deadpool (Vanguard) → Iron Fist** (hoy +1, ya confirmado por una
      fuente anterior del lote de Cyclops/Devil Dinosaur/Angela/Namor — punto 12). La fuente en
      portugués dice lo contrario (su daño por %vida falla porque la curación de Deadpool lo
