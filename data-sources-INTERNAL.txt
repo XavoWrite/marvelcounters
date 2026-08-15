@@ -490,3 +490,29 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      normal de ~25-55/seg) — cualquier ratio fijo dispararía casi siempre, sin señal real. Por
      eso el umbral compara contra la MEDIANA del roster (qué tan por encima de lo normal está
      ESTE rival en particular), no contra la curación propia directamente.
+
+8) Winter Soldier — 3 counters corregidos a mano (2026-08-15)
+   - Xavier preguntó puntualmente si Iron Fist countera a Winter Soldier (ya lo teníamos en +8,
+     confirmado con buen respaldo: rivalsmeta.com y un ranking de 1v9.gg lo confirman, solo
+     counterwatch.gg dice lo contrario — se dejó sin cambios, mayoría 2 a 1). De paso se
+     investigaron más fuentes (thegamer.com, 1v9.gg "10 best heroes ranked", metabot.gg para el
+     par puntual Hela/Winter Soldier) además de las ya conocidas, y salieron 3 correcciones que
+     Xavier confirmó con su propio conocimiento del juego:
+     * Hawkeye +6 (antes 0/parejo): 3 señales alineadas — thegamer.com explica el porqué ("puede
+       matarlo en 2 tiros a media distancia"), un agregado de búsqueda lo nombra "el counter más
+       grande, 33% de winrate", y Xavier lo confirmó directamente.
+     * Invisible Woman +6 (antes -1, es decir al revés — favorecía a Winter Soldier): counterwatch.gg
+       la tiene como counter #1 contra él, thegamer.com explica el mecanismo ("lo aísla de su
+       equipo y lo empuja lejos"). Xavier dijo confiar más en counterwatch.gg que en las otras
+       fuentes, así que esto pesó fuerte.
+     * Gambit +5 (antes 0/parejo): sin respaldo en ninguna fuente externa que se encontró, pero
+       Xavier dio una razón mecánica concreta y específica ("limpia la ulti de Winter y escapa
+       de su daño") — mismo criterio que con The Thing/Iron Man para The Hood: su conocimiento
+       de juego con una razón concreta pesa más que la ausencia de fuentes externas.
+   - Hela: quedó SIN CAMBIOS a propósito, en 0/parejo. Xavier dijo que en su experiencia Winter
+     Soldier gana ese 1v1, pero thegamer.com dice lo contrario (Hela lo supera en alcance) y el
+     dato real de partidas de metabot.gg da un empate prácticamente perfecto (51.9% Hela / 48.1%
+     Winter Soldier — dentro del margen de "parejo"). Se le mostró el conflicto a Xavier y
+     decidió dejarlo como está en vez de forzar una dirección con datos tan parejos.
+   - Venom: se verificó que ya coincidía con la lectura de Xavier (Winter Soldier le gana, -2 en
+     nuestra data) — sin cambios, solo confirmado.

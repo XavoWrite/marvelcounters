@@ -8141,8 +8141,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hawkeye": {
-      "score": 0,
-      "label": "even"
+      "score": 6,
+      "label": "strong"
     },
     "Magik": {
       "score": 7,
@@ -8165,8 +8165,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Invisible Woman": {
-      "score": -1,
-      "label": "weak"
+      "score": 6,
+      "label": "strong"
     },
     "Black Cat": {
       "score": 2,
@@ -8181,8 +8181,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCounter"
     },
     "Gambit": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Elsa Bloodstone": {
       "score": -3,
@@ -9210,8 +9210,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Winter Soldier": {
-      "score": 0,
-      "label": "even"
+      "score": -6,
+      "label": "weak"
     },
     "Adam Warlock": {
       "score": -4,
@@ -10512,8 +10512,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Winter Soldier": {
-      "score": 1,
-      "label": "favorable"
+      "score": -6,
+      "label": "weak"
     },
     "Adam Warlock": {
       "score": 1,
@@ -11380,8 +11380,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Winter Soldier": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     },
     "Adam Warlock": {
       "score": -2,
