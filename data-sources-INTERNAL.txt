@@ -623,3 +623,13 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      matiza, se le está dando MÁS peso al main autodeclarado que al creador del video — mismo
      criterio que se usa con el propio conocimiento de juego de Xavier (una razón mecánica
      concreta de alguien que juega mucho ese héroe pesa más que una lista genérica de counters).
+   - 3 correcciones más aplicadas de los "datos nuevos sin aplicar" del punto anterior:
+     * Iron Man → Spider-Man: +1 → **+6**. Varios comentarios independientes (incluido un main
+       autodeclarado de Spider-Man) lo insisten como su counter real; el video del creador
+       (Jaimito) ni lo menciona — hueco real en su lista.
+     * Wolverine → White Fox: -4 → **+6**. Esto era una contradicción directa: teníamos a
+       Wolverine ganándole fácil a White Fox (categoría 4), pero un main de nivel "eternal" de
+       Wolverine dice que ese es su peor matchup por lejos.
+     * Black Panther → Jeff the Land Shark: -3 → **+5**. Un main de BP en comentarios: "su
+       burbuja cancela todos mis dashes." The Thing (ya en +5/categoría 1) se dejó sin tocar, ya
+       estaba bien.

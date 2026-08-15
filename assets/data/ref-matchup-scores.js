@@ -2744,8 +2744,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Spider-Man": {
-      "score": 1,
-      "label": "favorable"
+      "score": 6,
+      "label": "strong"
     },
     "Winter Soldier": {
       "score": 1,
@@ -3118,8 +3118,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "White Fox": {
-      "score": -4,
-      "label": "weak"
+      "score": 6,
+      "label": "strong"
     },
     "Luna Snow": {
       "score": -1,
@@ -4460,8 +4460,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Black Panther": {
-      "score": 3,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Black Widow": {
       "score": 1,
@@ -4562,8 +4562,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Wolverine": {
-      "score": 4,
-      "label": "strong"
+      "score": -6,
+      "label": "weak"
     },
     "Cloak & Dagger": {
       "score": -1,
@@ -7809,7 +7809,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Iron Man": {
-      "score": -1,
+      "score": -6,
       "label": "weak"
     },
     "Storm": {
@@ -9576,8 +9576,8 @@ const REF_MATCHUP_SCORES = {
       "score": -2
     },
     "Jeff the Land Shark": {
-      "score": -3,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "White Fox": {
       "score": -5,
