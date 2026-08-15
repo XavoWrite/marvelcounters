@@ -580,3 +580,46 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      datos agregados). También apareció un tercer nombre, **"Omega"**, en los hallazgos de Black
      Panther — sin confirmar todavía si es el "segundo streamer" que mencionó Xavier o un tercero
      que salió de la mezcla de links. A definir si vuelve a aparecer.
+
+10) Segunda tanda de correcciones a Winter Soldier (2026-08-15, misma noche)
+   - Xavier pasó 23 links más (mezcla de nuevos + algunos ya pendientes de la tanda anterior), 2
+     agentes en paralelo los procesaron (~24 videos entre nuevos y pendientes). El patrón de "el
+     gancho/dash de Winter Soldier interrumpe combos de melee" se repitió tantas veces con fuentes
+     de alta credibilidad (mains autodeclarados, uno incluso GM) que se aplicaron 6 correcciones
+     más a su fila, todas confirmadas por Xavier:
+     * Wolverine: +2 → **-5**. Un main GM de Wolverine, en comentario: "solo estoy de acuerdo con
+       Punisher, Invisible Woman y Winter Soldier" como counters reales suyos.
+     * Mister Fantastic: -1 → **-5**. Un main de Fantastic: "mis únicos hard counters son Bucky,
+       Emma, Thor y Punisher."
+     * Black Panther: +6 → **-5**. Este SÍ era una contradicción directa con lo que ya teníamos
+       (antes decía que BP le ganaba a WS) — un main de BP se queja en comentarios: "Winter
+       Soldier... tiene 2 CC, si me pega cualquiera, literal no me puedo mover."
+     * Black Cat: +2 → **-4**. La main #1 ranking de Black Cat (canal KetchupRivals, video del
+       14/ago/2026, muy reciente) lo pone en su propio top-3 de matchups más difíciles: "demasiada
+       sobrevida, no muere al daño."
+     * Psylocke: +7 (hardCounter) → **+2** (suavizado, no revertido). Señal mixta: un video dice
+       que el dash de WS interrumpe su combo, pero una main de Psylocke en comentarios matiza:
+       "con Bucky es 50/50, quien gaste antes los cooldowns" — no parece un counter limpio, se
+       bajó de intensidad en vez de invertir la dirección.
+     * Magik: -6 (ya corregido en el punto 9) → **-3** (suavizado). Se reconfirma la dirección
+       general (otro video: "Bucky puede jalarla y matarla en 2 golpes"), pero una main de Magik
+       aclara la condición: "solo si él conecta el gancho, si no ella gana fácil con su combo de
+       un golpe" — es condicional, no un aplastamiento parejo, así que se bajó la magnitud.
+   - Datos NUEVOS de esta tanda, todavía SIN aplicar (quedan documentados para no perderlos,
+     pendiente de que Xavier priorice):
+     * Iron Man: comentarios insisten mucho en Spider-Man como su counter real (el video del
+       creador ni lo menciona) — hoy solo +1 en nuestra data, probablemente subvalorado.
+     * Namor: el creador "europeanbob" tiene un video de Namor con fuerte rechazo en sus propios
+       comentarios ("tan mal que da risa", "desinformación") — sus datos de Namor (y por
+       extensión cualquier otro video suyo sin segunda fuente) se tratan con menos confianza de
+       acá en adelante salvo que otra fuente independiente coincida.
+     * Wolverine: un main de nivel "eternal" dice que su peor matchup por lejos es White Fox —
+       par que hoy no tiene nada cargado.
+     * Black Panther: se reconfirma The Thing (~5 comentarios independientes, incluido un main de
+       celestial con 90hs) y aparece Jeff the Land Shark ("su burbuja cancela todos mis dashes de
+       BP") — coincide con lo que ya había encontrado un fork anterior para este héroe.
+   - Nota de credibilidad de fuentes (para criterio futuro): cuando un video del creador dice una
+     cosa pero un comentario de alguien que se autodeclara "main" de ese héroe la contradice o la
+     matiza, se le está dando MÁS peso al main autodeclarado que al creador del video — mismo
+     criterio que se usa con el propio conocimiento de juego de Xavier (una razón mecánica
+     concreta de alguien que juega mucho ese héroe pesa más que una lista genérica de counters).

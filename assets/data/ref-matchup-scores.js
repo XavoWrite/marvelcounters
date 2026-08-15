@@ -3182,8 +3182,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": -2,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Adam Warlock": {
       "score": -5,
@@ -7470,8 +7470,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Winter Soldier": {
-      "score": 1,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Adam Warlock": {
       "score": -2,
@@ -8034,8 +8034,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Wolverine": {
-      "score": 2,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Cloak & Dagger": {
       "score": -1,
@@ -8113,7 +8113,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Mister Fantastic": {
-      "score": -1,
+      "score": -5,
       "label": "weak"
     },
     "Star-Lord": {
@@ -8145,12 +8145,12 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Magik": {
-      "score": -6,
+      "score": -3,
       "label": "weak"
     },
     "Black Panther": {
-      "score": 6,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Black Widow": {
       "score": 0,
@@ -8169,16 +8169,16 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Black Cat": {
-      "score": 2,
-      "label": "favorable"
+      "score": -4,
+      "label": "weak"
     },
     "Namor": {
       "score": -2,
       "label": "weak"
     },
     "Psylocke": {
-      "score": 7,
-      "label": "hardCounter"
+      "score": 2,
+      "label": "favorable"
     },
     "Gambit": {
       "score": 5,
@@ -9427,8 +9427,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": 6,
-      "label": "strong"
+      "score": 3,
+      "label": "favorable"
     },
     "Adam Warlock": {
       "score": -6,
@@ -9644,8 +9644,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": -6,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Adam Warlock": {
       "score": -5,
@@ -10729,8 +10729,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": -2,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Adam Warlock": {
       "score": -2,
@@ -11163,8 +11163,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": -7,
-      "label": "hardCountered"
+      "score": -2,
+      "label": "weak"
     },
     "Adam Warlock": {
       "score": -6,
