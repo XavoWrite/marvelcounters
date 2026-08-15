@@ -49,8 +49,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Storm": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Wolverine": {
       "score": 2,
@@ -345,8 +345,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": 2,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Mister Fantastic": {
       "score": 1,
@@ -393,8 +393,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Widow": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     },
     "Daredevil": {
       "score": -3,
@@ -483,8 +483,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Storm": {
-      "score": 4,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Wolverine": {
       "score": 5,
@@ -917,8 +917,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Storm": {
-      "score": 6,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Wolverine": {
       "score": -4,
@@ -1134,8 +1134,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Storm": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Wolverine": {
       "score": 5,
@@ -2563,8 +2563,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Black Widow": {
-      "score": -6,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Daredevil": {
       "score": -1,
@@ -2822,28 +2822,28 @@ const REF_MATCHUP_SCORES = {
   },
   "Storm": {
     "Angela": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Captain America": {
       "score": -6,
       "label": "weak"
     },
     "Devil Dinosaur": {
-      "score": -4,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Rogue": {
       "score": -4,
       "label": "weak"
     },
     "The Thing": {
-      "score": -6,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Thor": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Doctor Strange": {
       "score": 0,
@@ -2937,8 +2937,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hulk": {
-      "score": -5,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Groot": {
       "score": -5,
@@ -2957,8 +2957,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Star-Lord": {
-      "score": -2,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Spider-Man": {
       "score": 1,
@@ -5115,8 +5115,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Widow": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Daredevil": {
       "score": -4,
@@ -6511,8 +6511,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Storm": {
-      "score": 5,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Wolverine": {
       "score": 6,
@@ -7114,8 +7114,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Captain America": {
-      "score": -2,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Devil Dinosaur": {
       "score": -4,
@@ -7245,12 +7245,12 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Star-Lord": {
-      "score": -2,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Spider-Man": {
-      "score": -1,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Winter Soldier": {
       "score": -3,
@@ -7261,8 +7261,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Strategist)": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     },
     "Deadpool (Duelist)": {
       "score": 1,
@@ -7281,8 +7281,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Panther": {
-      "score": 3,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Black Widow": {
       "score": 1,
@@ -7596,8 +7596,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Storm": {
-      "score": 2,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Wolverine": {
       "score": -1,
@@ -7675,8 +7675,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": 2,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Mister Fantastic": {
       "score": 0,
@@ -7719,8 +7719,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Black Widow": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Daredevil": {
       "score": -1,
@@ -7892,8 +7892,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": 1,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Mister Fantastic": {
       "score": 6,
@@ -7936,8 +7936,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Black Widow": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Daredevil": {
       "score": -1,
@@ -8543,8 +8543,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Hela": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Mister Fantastic": {
       "score": 0,
@@ -8575,8 +8575,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hawkeye": {
-      "score": 1,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Magik": {
       "score": 3,
@@ -9218,7 +9218,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Strategist)": {
-      "score": -1,
+      "score": -5,
       "label": "weak"
     },
     "Deadpool (Duelist)": {
@@ -9455,8 +9455,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Black Widow": {
-      "score": -5,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Daredevil": {
       "score": 0,
@@ -9628,7 +9628,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": -3,
+      "score": -5,
       "label": "weak"
     },
     "Mister Fantastic": {
@@ -9672,8 +9672,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Black Widow": {
-      "score": -4,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Daredevil": {
       "score": 0,
@@ -9718,8 +9718,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Captain America": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Devil Dinosaur": {
       "score": -1,
@@ -9758,8 +9758,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Iron Fist": {
-      "score": 6,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Iron Man": {
       "score": -1,
@@ -9805,8 +9805,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Scarlet Witch": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Phoenix": {
       "score": 1,
@@ -9853,12 +9853,12 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Star-Lord": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Spider-Man": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Winter Soldier": {
       "score": 0,
@@ -9885,12 +9885,12 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Magik": {
-      "score": 5,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Black Panther": {
-      "score": 4,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Daredevil": {
       "score": 1,

@@ -897,3 +897,67 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      gana a la propia curación de Deadpool), ←Iron Fist (curación de Deadpool anula su build de
      daño por %vida), ←Mister Fantastic (poco daño), ←The Thing/Black Widow/Hulk/Magneto (picks
      de tanque razonables, sin conflicto con lo actual).
+
+16) Deadpool (Strategist) — cerrado el último hueco total del roster (2026-08-16)
+   - Xavier confirmó con su propio conocimiento de juego: "un buen counter en un video es Scarlet
+     Witch, de ahí yo confirmo que puede ser Hela y Hawkeye pero deben tener buena puntería para
+     darle, igual que otros poke que son buenos para vencerlo, es que DP healer es el peor del
+     juego." Mismo criterio que siempre: razón mecánica concreta de Xavier + fuente externa cuenta
+     como confirmación fuerte.
+     * Scarlet Witch: ya estaba en +4 (strong) — coincidía con el video, sin cambios.
+     * Hela: 0 → **+5** (nuevo counter real, con la condición explícita de "buena puntería").
+     * Hawkeye: +1 → **+5** (mismo motivo).
+   - Con esto, Deadpool (Strategist) deja de ser el último hueco del roster sin ninguna
+     corrección aplicada (los otros huecos bajos que quedan — Black Widow, Storm, Adam Warlock —
+     tienen datos parciales, ver siguiente entrada).
+
+17) Hela, Storm, Black Widow — correcciones con nota de calibración de nivel de juego (2026-08-16)
+   - Nota importante de Xavier sobre el criterio general del proyecto: "creo que cuando hicimos
+     los datos pensamos como un jugador pro, estamos más enfocados en algo medio entre noob y
+     pro" — la app apunta a un nivel de juego medio, no profesional. Esto no cambia ningún dato
+     por sí solo, pero es contexto útil para futuras correcciones: un personaje que "solo pierde
+     contra un rival muy pro con buena puntería" cuenta como que ese rival SÍ lo countera para
+     los fines de esta app, no como empate.
+   - Aplicado (Hela, corrección fuerte — 2 videos independientes con la misma lista + Xavier
+     confirmó explícitamente cada uno con su propio razonamiento):
+     * Hela → Capitán América: -2 → **+5** (invertido).
+     * Hela → Spider-Man: -1 → **+5** (invertido).
+     * Hela → Star-Lord: -2 → **+5** (invertido).
+     * Hela → Black Panther: +3 → **+5** (empujado a counter real). Xavier: "que BP le gana a
+       Hela, sí puede ser, a menos que sea muy pro y le pueda atinar mientras le ataca o la vea
+       venir. Hela es buena cuando ve quien le ataca y tiene puntería, caso contrario es como
+       cualquier poke" — confirma la dirección para el nivel de juego que apunta la app.
+   - Aplicado (Storm, corrección SUAVE a propósito — Xavier confirmó la dirección pero pidió
+     tratarlos como "casi counters", no counters reales): "los personajes que la groundean es
+     correcto, hay que cambiar eso, esos tanques le ganan, aunque no son tan counters son como
+     casi counters":
+     * Storm → The Thing: -6 → **+2**.
+     * Storm → Devil Dinosaur: -4 → **+2**.
+     * Storm → Thor: 0 → **+2**.
+     * Storm → Angela: -1 → **+2**.
+     * Storm → Hulk: -5 → **+2**.
+   - Aplicado (Storm, corrección fuerte — 2 fuentes independientes + Xavier confirmó: "Starlord
+     sí le puede vencer a Storm es verdad"):
+     * Storm → Star-Lord: -2 → **+5** (invertido).
+   - Aplicado (Black Widow, corrección SUAVE a propósito — dependiente de habilidad según Xavier:
+     "si los divers no son buenos y atacan sin pensar BW les gana, pero es más probable que una
+     BW noob pierda contra divers, BW es como un poke" — para el nivel medio que apunta la app,
+     esto favorece a los divers pero sin ser un aplastamiento):
+     * Black Widow → Black Panther: +4 → **-2** (invertido).
+     * Black Widow → Iron Fist: +6 → **-2** (invertido).
+     * Black Widow → Magik: +5 → **-2** (invertido).
+     * Black Widow → Spider-Man: +1 → **-2** (invertido).
+     * Black Widow → Scarlet Witch: -2 → **+2** (reforzado).
+     * Black Widow → Star-Lord: -1 → **+2** (reforzado).
+   - Aplicado (Black Widow, corrección fuerte — coincide con el principio general y consistente
+     de Xavier de que los tanques de escudo son la mejor respuesta contra BW: "como siempre lo
+     mejor es usar un tanque con escudo para evitar el daño de bw"):
+     * Black Widow → Capitán América: 0 → **+5**.
+   - Nota adicional de Xavier sobre el kit de Black Widow (contexto, no un par específico, sin
+     aplicar): "BW es como una Fénix actualmente, solo que dispara más rápido, obviamente sus
+     disparos no explotan al tercero pero tiene habilidades similares" — su kit fue rediseñado y
+     ahora juega más parecido a Phoenix (proyectiles rápidos + movilidad), sin la explosión al
+     tercer golpe de Phoenix. Útil como contexto si en el futuro hay que revisar más de su fila.
+   - Adam Warlock: todo lo que trajo la fuente nueva ya coincidía con los datos actuales (Iron
+     Fist +7, Magik +6, Psylocke +6, Black Panther +5, Spider-Man +5, Captain America +4, todos
+     ya en la dirección correcta) — sin cambios, solo reforzado.
