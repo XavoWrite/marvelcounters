@@ -471,3 +471,22 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      Soldier + Hela + Squirrel Girl + Jubilee del lado rival): la barra salió casi toda roja,
      523.9 daño/seg contra apenas 25 curación/seg — exactamente la lectura visual que Xavier
      quería poder ver de un vistazo.
+   - 2026-08-15, mismo día, último paso — conectado finalmente a la recomendación real de
+     sanadores (el pedido original completo de Xavier, "cuándo curan poco recomendar uno
+     mejor"). Nueva función `enemyIsBurstHeavy(enemyTeam)` en analysis.js: cuenta como "rival de
+     ráfaga" cuando el daño promedio POR CABEZA de los heroes de daño confiables del rival supera
+     en 30% la mediana real del roster (90 daño/seg, calculada una vez sobre los 30/55 héroes
+     con DPS confiable — constante `MEDIAN_BASIC_DPS`, recalcular a mano si se re-scrapea el
+     dataset), y exige al menos 2 héroes de daño confiables para no disparar por un solo pick
+     puntual. Cuando esto da true: (1) aparece un aviso nuevo arriba de "Soporte recomendado
+     para tu línea" (`analysis.healerSupport.burstWarn`), y (2) el desempate final del orden de
+     sanadores sugeridos (que antes solo miraba riesgo y sinergia con tu vanguard) pasa a
+     priorizar curación/seg conocida — cada tarjeta de sanador ahora muestra su HPS estimado
+     entre paréntesis. Probado en vivo con el mismo trío Winter Soldier+Hela+Squirrel Girl:
+     disparó el aviso y ordenó Loki (≈100/s) y Gambit (≈55/s) primero, tal como se esperaba.
+     Nota de diseño: se evitó a propósito un umbral basado en "daño rival vs curación propia"
+     en términos absolutos (ej. "daño > 3x curación") porque los DPS crudos son estructuralmente
+     mucho más grandes que los HPS en este juego (un daño normal de ~90-200/seg vs curación
+     normal de ~25-55/seg) — cualquier ratio fijo dispararía casi siempre, sin señal real. Por
+     eso el umbral compara contra la MEDIANA del roster (qué tan por encima de lo normal está
+     ESTE rival en particular), no contra la curación propia directamente.

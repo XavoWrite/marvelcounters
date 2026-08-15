@@ -94,21 +94,33 @@ function teamArchCounts(team){
 // de la suma en vez de inventar un valor, y se avisa cuantos quedaron afuera para que no parezca
 // que el equipo "no hace nada".
 function teamDmgHealTotals(team){
-  let dmg = 0, heal = 0, dmgMissing = 0, healMissing = 0;
+  let dmg = 0, heal = 0, dmgCount = 0, healCount = 0, dmgMissing = 0, healMissing = 0;
   team.filter(Boolean).forEach(h=>{
     const bs = heroBasicStats(h.n);
     if(!bs) return;
     if(heroHasRole(h,"Strategist")){
       if(bs.primaryHeal){
-        if(typeof bs.primaryHeal.hps==="number") heal += bs.primaryHeal.hps;
+        if(typeof bs.primaryHeal.hps==="number"){ heal += bs.primaryHeal.hps; healCount++; }
         else healMissing++;
       }
     } else if(bs.basicAttack){
-      if(typeof bs.basicAttack.dps==="number") dmg += bs.basicAttack.dps;
+      if(typeof bs.basicAttack.dps==="number"){ dmg += bs.basicAttack.dps; dmgCount++; }
       else dmgMissing++;
     }
   });
-  return {dmg: Math.round(dmg*10)/10, heal: Math.round(heal*10)/10, dmgMissing, healMissing};
+  return {dmg: Math.round(dmg*10)/10, heal: Math.round(heal*10)/10, dmgCount, healCount, dmgMissing, healMissing};
+}
+// referencia para detectar un rival "de mucho daño de rafaga": mediana real del DPS de ataque
+// basico entre los 30/55 heroes con un numero confiable (ver hero-basic-stats.js) -- calculada
+// una vez el 2026-08-15, no se recalcula sola si el dataset cambia (recalcular a mano si se
+// vuelve a scrapear con datos distintos). Umbral de "rafaga": promedio por cabeza del rival 30%
+// por encima de esta mediana, con al menos 2 heroes de dano confiables (para no disparar por un
+// solo pick puntual).
+const MEDIAN_BASIC_DPS = 90;
+function enemyIsBurstHeavy(enemyTeam){
+  const {dmg, dmgCount} = teamDmgHealTotals(enemyTeam);
+  if(dmgCount<2) return false;
+  return (dmg/dmgCount) > MEDIAN_BASIC_DPS*1.3;
 }
 // barrita delgada roja(dano)/verde(curacion) para un equipo -- ver teamDmgHealTotals arriba.
 function dmgHealBarHtml(team){
@@ -628,27 +640,38 @@ function renderAnalysis(){
     const MIN_HEALER_RECS = 3;
     const riskOf = hn => riskCountersFor(hn, enemyNamesNow).reduce((s,r)=>s+r.relevance,0);
     const allStrategists = HEROES.filter(h=>h.r==="Strategist").map(h=>h.n);
+    // si el rival promedia mucho dano de rafaga por cabeza (ver enemyIsBurstHeavy), el desempate
+    // final entre sanadores igual de "seguros" pasa a preferir mas curacion/seg conocida en vez
+    // del orden arbitrario de antes -- pedido explicito de Xavier (2026-08-15), ver
+    // data-sources-INTERNAL.txt seccion 7 para el porque del umbral (mediana real del roster).
+    const burstHeavy = enemyIsBurstHeavy(enemyTeam);
+    const hpsOf = hn => { const bs = heroBasicStats(hn); return (bs && bs.primaryHeal && typeof bs.primaryHeal.hps==="number") ? bs.primaryHeal.hps : -1; };
     const pool = Array.from(new Set([...Object.keys(recs), ...allStrategists])).map(hn=>({
-      hn, risk: riskOf(hn), reasons: recs[hn] ? [...recs[hn].reasons] : []
+      hn, risk: riskOf(hn), reasons: recs[hn] ? [...recs[hn].reasons] : [], hps: hpsOf(hn)
     }));
     pool.sort((a,b)=>{
       const aRisky = a.risk>=0.4, bRisky = b.risk>=0.4;
       if(aRisky!==bRisky) return aRisky?1:-1; // los que no estan en riesgo van primero
       if((a.reasons.length>0)!==(b.reasons.length>0)) return a.reasons.length>0?-1:1; // con sinergia real primero
+      if(burstHeavy && b.hps!==a.hps) return b.hps-a.hps; // rival de rafaga: mas curacion/seg conocida primero
       return a.risk-b.risk; // entre iguales, el menos riesgoso
     });
     const nonRiskyCount = pool.filter(p=>p.risk<0.4).length;
     const keys = pool.slice(0, Math.max(MIN_HEALER_RECS, nonRiskyCount));
+    if(burstHeavy){
+      left += `<div class="comp-banner" style="margin-bottom:8px;border-color:var(--gold);">${t("analysis.healerSupport.burstWarn")}</div>`;
+    }
     if(keys.length===0){
       left += `<p class="empty-hint">${t("analysis.healerSupport.noSpecific")}</p>`;
     } else {
       left += `<div class="healer-grid">`;
-      keys.forEach(({hn, risk, reasons})=>{
+      keys.forEach(({hn, risk, reasons, hps})=>{
         const already = allyNames.includes(hn);
         const risky = risk>=0.4;
         const reasonText = reasons.length ? reasons.join("<br>") : t("analysis.healerSupport.noSynergyReason");
         const riskWarn = risky ? `<br>${t("analysis.healerSupport.riskWarn")}` : "";
-        left += `<div class="healer-card role-Strategist${risky?' risky':''}"><div class="h-name">${heroIconHtml(hn,28)}${heroLabel(hn)}${already?` <span class="already-tag">${t("analysis.healerSupport.alreadyInTeam")}</span>`:''}</div>
+        const hpsTag = hps>=0 ? ` <span class="empty-hint">(≈${hps} ${t("editor.hpsUnit")})</span>` : "";
+        left += `<div class="healer-card role-Strategist${risky?' risky':''}"><div class="h-name">${heroIconHtml(hn,28)}${heroLabel(hn)}${hpsTag}${already?` <span class="already-tag">${t("analysis.healerSupport.alreadyInTeam")}</span>`:''}</div>
           <div class="h-reason">${reasonText}${riskWarn}</div></div>`;
       });
       left += `</div>`;

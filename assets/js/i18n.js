@@ -268,6 +268,7 @@ es: {
   "analysis.healerSupport.noSynergyReason": "Sin sinergia específica catalogada con tu vanguard, pero sigue siendo una opción sólida en general.",
   "analysis.healerSupport.riskWarn": "⚠ El rival ya lo tiene bien contrarrestado — no es ideal, pero es de las mejores opciones disponibles.",
   "analysis.healerSupport.alreadyInTeam": "· ✓ ya en tu equipo",
+  "analysis.healerSupport.burstWarn": "🩸 Este rival promedia bastante más daño por cabeza que lo normal — priorizamos abajo a los sanadores con más curación/seg conocida (número oficial, ver Glosario).",
 
   "analysis.riskAlignment.title": "Alineación en riesgo",
   "analysis.riskAlignment.addYours": "Añade tu equipo para detectar picks en riesgo.",
@@ -630,6 +631,7 @@ en: {
   "analysis.healerSupport.noSynergyReason": "No specific catalogued synergy with your vanguard, but it's still a solid option overall.",
   "analysis.healerSupport.riskWarn": "⚠ The enemy already has this well countered — not ideal, but it's one of the best options available.",
   "analysis.healerSupport.alreadyInTeam": "· ✓ already on your team",
+  "analysis.healerSupport.burstWarn": "🩸 This enemy averages notably more damage per head than usual — prioritizing healers with more known healing/sec below (official number, see Glossary).",
 
   "analysis.riskAlignment.title": "Risky lineup",
   "analysis.riskAlignment.addYours": "Add your team to detect risky picks.",
