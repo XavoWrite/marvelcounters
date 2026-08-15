@@ -836,3 +836,39 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      * Hela → Venom: -2 → **+2** (invertido).
      * Hela → Daredevil: -2 → **+2** (invertido).
      * Hela → Gambit: -2 → **+2** (invertido).
+
+14) 5 videos en inglés muy detallados (Luna Snow ulti, Phoenix dedicado, guía completa "Deer Duck
+    Films", fragmentos de Deadpool, "Part 1 de 3" solo-Vanguards) — 2026-08-16
+   - Este lote por fin trajo la primera data real de **Phoenix** y de los **3 Deadpool**
+     (Vanguard/Duelist/Strategist), que eran los últimos huecos totales del roster (0 menciones
+     en todo el archivo hasta este punto). Procesado por un agente en background. Calidad alta:
+     2 de los videos (Deer Duck Films y el de "Part 1 de 3") son guías completas con razonamiento
+     mecánico específico por héroe, no picks genéricos — y ambos cubren TODOS los vanguards de
+     forma independiente (canales distintos), dando una oportunidad real de confirmación 2-fuentes.
+   - Aplicado (2 fuentes de video independientes, contradiciendo un valor que venía sin corrección
+     previa de video):
+     * Doctor Strange → Punisher: -5 → **+5** (invertido — antes Punisher le iba mal a Strange).
+       Ambos videos coinciden en que Punisher es de los mejores rompe-escudos contra él.
+     * Doctor Strange → Mantis: -1 → **+5**. Ambos videos citan su dormir como interruptor de
+       ulti de Strange.
+     * Doctor Strange → Luna Snow: -1 → **+5**. Mismo motivo (congelar + poke interrumpen su
+       ulti), ambos videos coinciden.
+     * Rogue → Emma Frost: -4 → **+5** (invertido — antes Rogue le ganaba fácil). Ambos videos
+       coinciden en que Emma Frost puede inmovilizarla y neutralizar su brawl.
+   - Aplicado (Phoenix, corrección suave, 1 sola fuente pero con mecánica muy específica del
+     video dedicado a ella):
+     * Phoenix → The Thing: -2 → **+2** (invertido). El video explica que The Thing puede saltar
+       frente a su ulti en pleno vuelo, bloquearla y proteger a su equipo.
+     * Phoenix → Star-Lord: -1 → **+2** (invertido). El video lo llama "lo más parecido a Jean
+       Grey que tenemos" — dash+invencibilidad para esquivar su ulti, puede perseguirla volando.
+   - Pendiente, sin tocar (Deadpool — primera data real, pero con una tensión real entre fuentes
+     que Xavier prefirió no resolver todavía): 2 fuentes (Deer Duck Films + el video "Part 1 de
+     3") coinciden en que Punisher/Winter Soldier/Hela cuentran bien a Deadpool Vanguard
+     (coincide con lo que ya había), pero una 3ra fuente (fragmentos) dice lo contrario — que
+     Deadpool Vanguard les va mal a Punisher y Bucky. Mayoría 2 a 1 a favor de lo actual, sin
+     tocar. Datos nuevos sin conflicto documentados para después: Invisible Woman tiene "el peor
+     momento" contra Deadpool Duelist (hoy está al revés, -2), Magneto cuenta fuerte contra
+     Deadpool Vanguard (hoy en 0), Luna Snow+White Fox combo cuenta bien contra Deadpool Duelist.
+   - También sin tocar (ultimate-específico, video de Luna Snow): Iron Man/Punisher+Rocket
+     combo/Scarlet Witch/Namor como counters de su ULTI puntualmente — evidencia más débil que
+     un counter general, mismo criterio que siempre.

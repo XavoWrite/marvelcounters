@@ -676,8 +676,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Emma Frost": {
-      "score": -4,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": 2,
@@ -960,8 +960,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Phoenix": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Squirrel Girl": {
       "score": 4,
@@ -1367,8 +1367,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Mantis": {
-      "score": -1,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Deadpool (Vanguard)": {
       "score": 0,
@@ -1386,8 +1386,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Luna Snow": {
-      "score": -1,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Scarlet Witch": {
       "score": 0,
@@ -1402,8 +1402,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Punisher": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Cyclops": {
       "score": -4,
@@ -1532,8 +1532,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Rogue": {
-      "score": 4,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "The Thing": {
       "score": 4,
@@ -3714,8 +3714,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Doctor Strange": {
-      "score": 1,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Emma Frost": {
       "score": 0,
@@ -4747,8 +4747,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Doctor Strange": {
-      "score": 1,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Emma Frost": {
       "score": -1,
@@ -5173,8 +5173,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "The Thing": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Thor": {
       "score": 3,
@@ -5292,8 +5292,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Star-Lord": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Spider-Man": {
       "score": 2,
@@ -5615,8 +5615,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Doctor Strange": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Emma Frost": {
       "score": -2,
@@ -7639,8 +7639,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Phoenix": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Squirrel Girl": {
       "score": -1,
