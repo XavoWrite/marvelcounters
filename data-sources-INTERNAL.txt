@@ -12,6 +12,27 @@ NOTA: ref-matchup-scores.json (raíz del repo) es un espejo legible de assets/da
 igual que matchup-matrix.json lo es de la matriz 1-4 en matchups.js. Tampoco se carga en la página —
 si Xavier lo edita a mano, hay que sincronizar los cambios al .js real para que se vean en la app.
 
+- 2026-08-14, más tarde: Xavier corrigió a mano 3 pares de The Hood con su propio conocimiento
+  del juego (prioridad sobre cualquier fuente scrapeada, mismo criterio que las correcciones de
+  Magneto/Devil Dinosaur/Doctor Strange anteriores). Agregados The Thing e Iron Man como counters
+  PRINCIPALES (score +5, categoría 1) — antes estaban en 0/parejo:
+    * Iron Man: por su movilidad aérea y su daño a distancia, a The Hood le cuesta mucho
+      dispararle. Además Xavier señaló que el ultimate de The Hood es de alto riesgo: se
+      transforma en un sentry estacionario (similar al de Hela), pero a diferencia de Hela —que
+      sobrevive aunque la maten en el aire y solo pierde el estado— The Hood SÍ muere si lo matan
+      mientras está en el ultimate. Iron Man es justamente el tipo de daño a distancia/aéreo que
+      puede castigar esa ventana de vulnerabilidad.
+    * The Thing: según Xavier, es un counter genérico de "divers" y de "tanques con escudo" —
+      The Hood es ambos arquetipos a la vez (dive_tank + shield_tank, ver hero-roster.js), así
+      que hereda el mismo counter por partida doble. Coherente con que The Thing ya tenía t:
+      ["brawl","melee","anti_dive"] antes de que existiera The Hood.
+  También agregado Moon Knight como "casi counter" (score +2, queda en categoría 2/parejo pero
+  visible en la subcolumna fina "Casi counters" del editor) — pedido explícito de Xavier, sin
+  justificación adicional dada, tratado igual que las otras señales suaves de la fuente original.
+  Aplicado a ref-matchup-scores.json/.js, matchup-matrix.json/matchups.js, y SEED_SCORES en
+  matchup-editor-stream.html. Los otros 3 conflictos sin resolver de la sección 6 (Peni Parker,
+  Emma Frost, Doctor Strange) siguen en 0/parejo — Xavier no los tocó en esta corrección.
+
 - 2026-08-03, más tarde: rediseñada la vista principal de matchup-editor-stream.html de una
   sola grilla plana a las 5 tablas lado a lado (mismo orden/nombres/colores que la pestaña
   Personajes: Counters / Casi counters / Parejo / Con ventaja / Presas fáciles), con
@@ -322,8 +343,27 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
    - Todo el resto de la fila de Hood (41 de 54 pares) quedó en 0/parejo por falta de dato, no
      por evidencia de que sea realmente parejo — es el mismo criterio de "incompleto a propósito"
      que ya se usa en el resto del proyecto (arch tags, Jubilee al principio, etc.).
-   - Falta agregar: ícono/imagen (PRELOADED_IMAGES en hero-images.js) y semilla de detección
-     automática (hero-icon-seed.js) — Xavier todavía no subió capturas con The Hood en pantalla,
-     así que por ahora aparece en los pickers con el mismo hueco visual que cualquier héroe sin
-     imagen cargada (getHeroImage devuelve null, no rompe nada). Pendiente para cuando traiga
-     fotos, junto con el resto del entrenamiento de detección que ya tenía pendiente.
+   - 2026-08-14, más tarde: Xavier puso 5 imágenes oficiales de The Hood en la raíz del repo
+     (Hero_Icon_The_Hood.webp, Hero_Icon_The_Hood_Gun_Demon.webp, Lord_Icon_The_Hood.webp,
+     Lord_Icon_The_Hood_Gun_Demon.webp, Champion_Icon_The_Hood_Animated.webp — assets oficiales
+     del juego/wiki, no capturas propias). Agregadas a PRELOADED_IMAGES["The Hood"] en
+     hero-images.js. Nomenclatura real del juego (confirmada contra VARIANT_BADGE en
+     tabs-editor.js: badge-lord.webp = tier Deluxe, badge-champion.webp = tier Dynamic Deluxe):
+       * "Hero_Icon_*" = ícono normal (tier Default)
+       * "Lord_Icon_*" = tier Deluxe (badge "Lord" del juego)
+       * "Champion_Icon_*_Animated" = tier Dynamic Deluxe, animado (badge "Champion")
+     Mapeado a variantes: default=Hero_Icon_The_Hood, deluxe=Lord_Icon_The_Hood,
+     dynamic=Champion_Icon_The_Hood_Animated, gun-demon=Hero_Icon_The_Hood_Gun_Demon (su forma
+     demonio, análogo a "hero-hulk"/"monster-hulk" en Hulk), gun-demon-deluxe=
+     Lord_Icon_The_Hood_Gun_Demon. OJO: el primer intento mapeó mal Lord_Icon a la clave
+     "dynamic" (asumiendo que era solo el splash-art del default) — se corrigió tras ver que la
+     etiqueta salía "Dynamic Deluxe" en vez de "Deluxe (Lord)" en el editor, confirmando el
+     significado real de cada clave contra STANDARD_LABELS/VARIANT_BADGE en tabs-editor.js.
+     Verificado en navegador (hard-reload): las 5 miniaturas de variante muestran la imagen e
+     etiqueta correctas, sin errores de consola. No hay variante "gun-demon-dynamic" (no hay
+     asset animado para la forma demonio) y no hace falta — el sistema soporta variantes
+     incompletas sin problema.
+   - Sigue pendiente: semilla de detección automática (hero-icon-seed.js) para que la IA
+     reconozca a The Hood en capturas reales de la tabla de partida (Tab) — eso necesita
+     capturas EN PARTIDA, no arte oficial/wiki como las de arriba. Xavier todavía no las subió;
+     mientras tanto el auto-detect simplemente no lo va a reconocer, sin romper nada.

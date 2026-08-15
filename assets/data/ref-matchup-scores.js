@@ -1080,8 +1080,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "The Hood": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     }
   },
   "Thor": {
@@ -2816,8 +2816,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "The Hood": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     }
   },
   "Storm": {
@@ -6236,8 +6236,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "The Hood": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     }
   },
   "Blade": {
@@ -11683,8 +11683,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "The Thing": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Thor": {
       "score": 0,
@@ -11715,8 +11715,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Storm": {
       "score": 0,
@@ -11779,8 +11779,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Moon Knight": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Blade": {
       "score": 0,
