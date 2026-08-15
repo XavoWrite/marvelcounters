@@ -680,8 +680,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Peni Parker": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Venom": {
       "score": 0,
@@ -1749,8 +1749,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Rogue": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "The Thing": {
       "score": -1,
@@ -2432,8 +2432,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Iron Man": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Storm": {
       "score": 2,
@@ -2649,8 +2649,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Iron Fist": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Storm": {
       "score": 2,
@@ -3226,7 +3226,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Invisible Woman": {
-      "score": 1,
+      "score": 2,
       "label": "favorable"
     },
     "Black Cat": {
@@ -3447,8 +3447,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Cat": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Namor": {
       "score": 1,
@@ -3672,8 +3672,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Psylocke": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Gambit": {
       "score": 3,
@@ -4697,8 +4697,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Cat": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Namor": {
       "score": 3,
@@ -10421,7 +10421,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Wolverine": {
-      "score": -1,
+      "score": -2,
       "label": "weak"
     },
     "Cloak & Dagger": {
@@ -10642,8 +10642,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cloak & Dagger": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Loki": {
       "score": -2,
@@ -10665,8 +10665,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "White Fox": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Luna Snow": {
       "score": -4,
@@ -11080,8 +11080,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Loki": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Mantis": {
       "score": -2,

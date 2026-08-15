@@ -686,3 +686,14 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      * Invisible Woman → Thor: +4 → **-4**.
      * Invisible Woman → Venom: +5 → **-5**.
      * Invisible Woman → Black Cat: +4 → **-4**.
+   - 2026-08-15, después: aplicados también los 6 candidatos "débiles" que habían quedado
+     documentados sin usar, pero como señal SUAVE (+2, categoría 2/parejo, visible solo en las
+     subcolumnas finas del editor) en vez de counter fuerte, mismo criterio que se usó para los
+     pares suaves de The Hood al principio de la sesión — cada uno tiene una sola fuente buena,
+     no las 2+ que se exige para el bloque fuerte:
+     * Wolverine → Invisible Woman: +1 → +2 (mismo sentido, reforzado).
+     * Black Cat → White Fox: -1 → +2 (invertido).
+     * Black Cat → Cloak & Dagger: -2 → +2 (invertido).
+     * Psylocke → Loki: -1 → +2 (invertido).
+     * Rogue → Peni Parker: 0 → +2.
+     * Iron Fist → Iron Man: -1 → +2 (invertido).
