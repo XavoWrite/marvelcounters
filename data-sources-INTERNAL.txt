@@ -818,3 +818,21 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      counters de la ulti de Devil Dinosaur (Emma Frost/La Mole/Punisher/Elsa) y de la ulti de
      Elsa Bloodstone (Punisher/Iron Man/Fénix/Psylocke/Hawkeye/Hela — mayormente ya coincidían
      con lo que había, sin cambios).
+   - 2026-08-16: Xavier identificó que estos 7 videos son del creador **Omega/Omeganismo**, en
+     quien confía. Aclarado el motivo real de no aplicar los 5 pares de arriba: NO era
+     desconfianza del canal (no estaba identificado todavía), sino que 2 de esos videos ("3
+     counters para TODOS los duelistas/tanques") mostraban un patrón de "picks genéricos/seguros"
+     repetidos (Emma Frost en 10 de 11 tanques, Winter Soldier/Ultron/Mujer Invisible en la
+     mayoría de duelistas) — señal más débil que un video dedicado a un solo héroe. De los 5,
+     Capitán América←Winter Soldier se dejó SIN aplicar porque contradice un valor ya confirmado
+     con 2+ fuentes de video independientes (punto 9), y ese respaldo pesa más que 1 fuente nueva
+     aunque sea de un canal de confianza. Los otros 4 SÍ venían del scrape web original sin
+     corrección previa de video — con Omega identificado como fuente de confianza, aplican bajo
+     el mismo criterio "video > web" del punto 12. Aplicados como corrección suave (+2, sin cruzar
+     el umbral de counter fuerte, mismo criterio de "una sola fuente = suave" de siempre):
+     * Psylocke → Mujer Invisible: -5 → **+2** (invertido — antes Psylocke le ganaba fácil).
+     * Wolverine → Emma Frost: -1 → **+2** (invertido).
+     * Doctor Strange → Gambit: -4 → **+2** (invertido — antes Strange le ganaba fácil).
+     * Hela → Venom: -2 → **+2** (invertido).
+     * Hela → Daredevil: -2 → **+2** (invertido).
+     * Hela → Gambit: -2 → **+2** (invertido).

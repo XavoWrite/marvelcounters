@@ -1506,8 +1506,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Gambit": {
-      "score": -4,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Elsa Bloodstone": {
       "score": -2,
@@ -1572,8 +1572,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Wolverine": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Cloak & Dagger": {
       "score": 0,
@@ -2081,8 +2081,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Mister Fantastic": {
       "score": 0,
@@ -3067,8 +3067,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCountered"
     },
     "Emma Frost": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Peni Parker": {
       "score": 0,
@@ -7146,8 +7146,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Venom": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Human Torch": {
       "score": -2,
@@ -7289,8 +7289,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Daredevil": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Magneto": {
       "score": 1,
@@ -7313,8 +7313,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Gambit": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Elsa Bloodstone": {
       "score": -4,
@@ -10062,8 +10062,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Mister Fantastic": {
       "score": 4,
@@ -10564,8 +10564,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Psylocke": {
-      "score": 5,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Gambit": {
       "score": 1,
@@ -11207,8 +11207,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Invisible Woman": {
-      "score": -5,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Black Cat": {
       "score": 0,
@@ -11257,8 +11257,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Doctor Strange": {
-      "score": 4,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Emma Frost": {
       "score": 0,
@@ -11364,8 +11364,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Mister Fantastic": {
       "score": -1,
