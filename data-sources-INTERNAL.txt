@@ -677,3 +677,12 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      Fox/Cloak & Dagger (misma main de Elsa Bloodstone), Psylocke←Loki (main nivel Celestial),
      Rogue←Peni Parker (el creador la llama "counter crítico"), Iron Fist←Iron Man (comentario
      con 22 likes).
+   - 2026-08-15, después: aplicado el patrón de Invisible Woman (Xavier decidió confiar en la
+     calidad de la fuente aunque sea una sola). Los 4 pares se invirtieron de "el rival la
+     aplasta fácil" (categoría 4) a "ella los countera" (categoría 1), con magnitud algo más
+     conservadora (+4/+4/+5/+4) que el bloque anterior por ser una sola fuente sin segunda
+     confirmación independiente:
+     * Invisible Woman → Capitán América: +4 (Cap la counterba) → **-4** (ella lo countera).
+     * Invisible Woman → Thor: +4 → **-4**.
+     * Invisible Woman → Venom: +5 → **-5**.
+     * Invisible Woman → Black Cat: +4 → **-4**.

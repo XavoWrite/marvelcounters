@@ -405,8 +405,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Invisible Woman": {
-      "score": -4,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Black Cat": {
       "score": -3,
@@ -1273,8 +1273,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Invisible Woman": {
-      "score": -4,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Black Cat": {
       "score": -1,
@@ -2141,8 +2141,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Invisible Woman": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Black Cat": {
       "score": -4,
@@ -10369,8 +10369,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Captain America": {
-      "score": 4,
-      "label": "strong"
+      "score": -4,
+      "label": "weak"
     },
     "Devil Dinosaur": {
       "score": 4,
@@ -10385,8 +10385,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Thor": {
-      "score": 4,
-      "label": "strong"
+      "score": -4,
+      "label": "weak"
     },
     "Doctor Strange": {
       "score": 3,
@@ -10401,8 +10401,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Venom": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Human Torch": {
       "score": 1,
@@ -10556,8 +10556,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Black Cat": {
-      "score": 4,
-      "label": "strong"
+      "score": -4,
+      "label": "weak"
     },
     "Namor": {
       "score": -1,
@@ -10773,8 +10773,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Invisible Woman": {
-      "score": -4,
-      "label": "weak"
+      "score": 4,
+      "label": "strong"
     },
     "Namor": {
       "score": 5,
