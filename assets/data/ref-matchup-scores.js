@@ -286,8 +286,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Jubilee": {
       "score": 1
@@ -447,8 +447,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "The Thing": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Thor": {
       "score": 0,
@@ -459,8 +459,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Emma Frost": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": 0,
@@ -542,8 +542,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Moon Knight": {
-      "score": 3,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Blade": {
       "score": 2,
@@ -558,8 +558,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Rocket Raccoon": {
-      "score": 1,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Hela": {
       "score": 4,
@@ -877,8 +877,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Devil Dinosaur": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     },
     "Rogue": {
       "score": -1,
@@ -937,8 +937,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Deadpool (Vanguard)": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Jubilee": {
       "score": -4
@@ -1154,8 +1154,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Deadpool (Vanguard)": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Jubilee": {
       "score": -4
@@ -1371,8 +1371,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Deadpool (Vanguard)": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Jubilee": {
       "score": 0
@@ -1528,8 +1528,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Devil Dinosaur": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     },
     "Rogue": {
       "score": -5,
@@ -3911,8 +3911,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Captain America": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Devil Dinosaur": {
       "score": 0,
@@ -3923,16 +3923,16 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "The Thing": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Thor": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Doctor Strange": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Emma Frost": {
       "score": 2,
@@ -4018,12 +4018,12 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Blade": {
-      "score": -3,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Hulk": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Groot": {
       "score": 0,
@@ -4038,8 +4038,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Mister Fantastic": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Star-Lord": {
       "score": 0,
@@ -4082,16 +4082,16 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Black Widow": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Daredevil": {
       "score": -2,
       "label": "weak"
     },
     "Magneto": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Invisible Woman": {
       "score": 0,
@@ -6033,7 +6033,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Devil Dinosaur": {
-      "score": -3,
+      "score": -5,
       "label": "weak"
     },
     "Rogue": {
@@ -6314,8 +6314,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
-      "score": 3,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Jubilee": {
       "score": -1
@@ -6531,8 +6531,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Jubilee": {
       "score": -4
@@ -6901,7 +6901,7 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Devil Dinosaur": {
-      "score": -1,
+      "score": -5,
       "label": "weak"
     },
     "Rogue": {
@@ -7399,8 +7399,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Jubilee": {
       "score": -3
@@ -9786,8 +9786,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Jubilee": {
       "score": 1
@@ -10220,8 +10220,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Jubilee": {
       "score": -3

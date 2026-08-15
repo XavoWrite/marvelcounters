@@ -958,6 +958,28 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      disparos no explotan al tercero pero tiene habilidades similares" — su kit fue rediseñado y
      ahora juega más parecido a Phoenix (proyectiles rápidos + movilidad), sin la explosión al
      tercer golpe de Phoenix. Útil como contexto si en el futuro hay que revisar más de su fila.
+18) Pendientes de Devil Dinosaur y Deadpool (Vanguard) aplicados (2026-08-16)
+   - Devil Dinosaur (candidatos de 2 fuentes que habían quedado documentados sin aplicar desde el
+     lote grande de Cyclops/Devil Dinosaur/Angela/Namor, ver punto 12 — en su momento solo se
+     aplicó Iron Fist, estos 4 quedaron pendientes):
+     * Devil Dinosaur → The Thing: 0 → **+5** (contaba con 2 fuentes de video independientes).
+     * Devil Dinosaur → Emma Frost: 0 → **+5** (2 fuentes).
+     * Devil Dinosaur → Rocket Raccoon: +1 → **+5** (2 fuentes, empujado a counter real).
+     * Devil Dinosaur → Moon Knight: +3 → **+5** (2 fuentes, empujado a counter real).
+   - Deadpool (Vanguard) (candidatos de una sola fuente del video en portugués, punto 14, sin
+     conflicto con otra fuente — corrección suave):
+     * Deadpool (Vanguard) → Blade: -3 → **+2** (invertido — su lifesteal + corte de curación le
+       gana a la propia curación de Deadpool).
+     * Deadpool (Vanguard) → Mister Fantastic: 0 → **-2** (mala elección, poco daño).
+     * Deadpool (Vanguard) → Doctor Strange/Captain America/Thor: 0 → **-2** cada uno ("blancos
+       fáciles" para Deadpool según la fuente).
+     * Deadpool (Vanguard) → The Thing/Black Widow/Hulk/Magneto: 0 → **+2** cada uno (picks de
+       tanque razonables contra él, según la misma fuente).
+   - Excluido a propósito: **Deadpool (Vanguard) → Iron Fist** (hoy +1, ya confirmado por una
+     fuente anterior del lote de Cyclops/Devil Dinosaur/Angela/Namor — punto 12). La fuente en
+     portugués dice lo contrario (su daño por %vida falla porque la curación de Deadpool lo
+     anula). Es una contradicción real entre 2 fuentes de una sola mención cada una, no una
+     confirmación — se dejó sin tocar en vez de aplicar la más reciente por defecto.
    - Adam Warlock: todo lo que trajo la fuente nueva ya coincidía con los datos actuales (Iron
      Fist +7, Magik +6, Psylocke +6, Black Panther +5, Spider-Man +5, Captain America +4, todos
      ya en la dirección correcta) — sin cambios, solo reforzado.
