@@ -872,3 +872,28 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
    - También sin tocar (ultimate-específico, video de Luna Snow): Iron Man/Punisher+Rocket
      combo/Scarlet Witch/Namor como counters de su ULTI puntualmente — evidencia más débil que
      un counter general, mismo criterio que siempre.
+
+15) Tercer video de vanguards (español, dialecto puertorriqueño) + video en portugués dedicado a
+    Deadpool — 2026-08-16
+   - Aplicado (2 fuentes independientes, canales/idiomas distintos):
+     * Deadpool (Vanguard) → Chica Ardilla/Squirrel Girl: -2 → **+5** (invertido). Tanto el
+       video español como el portugués la marcan por separado como uno de sus mejores counters
+       (mucho daño sostenido, rompe su escudo rápido).
+     * Rogue → Peni Parker: +2 → **+5** (reforzado a counter real). Esta fuente coincide con lo
+       que ya había aparecido en uno de los 2 videos ingleses del lote anterior (sus stuns la
+       inmovilizan, y Rogue no le puede robar habilidades porque Peni "no tiene poderes que
+       robar").
+   - Aplicado (corrección suave, 1 sola fuente, pedido explícito de Xavier de no invertir del
+     todo sino solo inclinar la balanza):
+     * Thor → Emma Frost: -1 → **+2**. La fuente decía que Emma Frost cuenta bien a Thor (modo
+       diamante + combo de agarre/patada), contradiciendo el -1 que había. Xavier pidió dejarlo
+       como "empate" pero con Emma Frost algo más fuerte que Thor, en vez de invertir del todo.
+   - Sin tocar, a propósito (empate confirmado por Xavier):
+     * Deadpool (Vanguard) vs Venom: esta fuente dice que Venom es "blanco fácil" para Deadpool,
+       pero una fuente del lote anterior decía lo contrario (que el dive de Venom lo ignora).
+       Empate 1 a 1 entre fuentes, Xavier confirmó dejarlo así.
+   - Datos nuevos sin aplicar (una sola fuente, sin conflicto pero tampoco confirmados):
+     Deadpool (Vanguard)←Blade (mecánica específica: su lifesteal + corte de curación ahora le
+     gana a la propia curación de Deadpool), ←Iron Fist (curación de Deadpool anula su build de
+     daño por %vida), ←Mister Fantastic (poco daño), ←The Thing/Black Widow/Hulk/Magneto (picks
+     de tanque razonables, sin conflicto con lo actual).

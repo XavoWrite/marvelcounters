@@ -680,8 +680,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Peni Parker": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Venom": {
       "score": 0,
@@ -1110,8 +1110,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Emma Frost": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Peni Parker": {
       "score": 1,
@@ -1540,8 +1540,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Thor": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Doctor Strange": {
       "score": -4,
@@ -1749,7 +1749,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Rogue": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     },
     "The Thing": {
@@ -4002,8 +4002,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Squirrel Girl": {
-      "score": -2,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Punisher": {
       "score": 2,
@@ -5446,8 +5446,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
-      "score": 2,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Jubilee": {
       "score": -1
