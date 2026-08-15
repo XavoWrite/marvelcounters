@@ -697,3 +697,20 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      * Psylocke → Loki: -1 → +2 (invertido).
      * Rogue → Peni Parker: 0 → +2.
      * Iron Fist → Iron Man: -1 → +2 (invertido).
+   - 2026-08-15, segunda pasada exhaustiva sobre la MISMA transcripción de 2hs (Coach_Mills) —
+     Xavier pidió repasarla más a fondo en vez de descartar afirmaciones "suaves". Confirmado que
+     Cyclops NO tiene sección en este video (0 de ~50 encabezados lo mencionan) — sigue siendo un
+     hueco real, necesita otra fuente. Encontradas 7 contradicciones nuevas (todas de esta misma
+     fuente única), aplicadas como corrección suave (+2) porque Xavier confirmó que confía en la
+     fuente pero seguimos el mismo criterio de "una sola fuente = suave" del resto de la sesión:
+     * Star-Lord → Spider-Man: +1 → **-2** (invertido, el video dice que Star-Lord no es
+       víctima de Spider-Man).
+     * Star-Lord → Black Cat: +1 → **-2** (mismo motivo).
+     * Star-Lord → Loki: -4 → **+2** (el video dice que los totems de Loki son "muy buenos"
+       contra Star-Lord — venía en categoría 4 al revés).
+     * Star-Lord → Luna Snow: -2 → **+2** (puede negar su ulti y tradear el 1v1).
+     * Doctor Strange → Invisible Woman: -3 → **+2** (su empuje cancela la ulti de Strange,
+       "realmente frustrante para él").
+     * Devil Dinosaur → Blade: -1 → **+2** (anti-cura — Dino depende de curarse para sobrevivir,
+       misma lógica que ya confirma Namor/Hela contra él).
+     * Devil Dinosaur → Venom: -1 → **+2** (mismo motivo, ulti de Venom es anti-cura).

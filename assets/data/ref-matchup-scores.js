@@ -467,8 +467,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Venom": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Human Torch": {
       "score": 1,
@@ -546,8 +546,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Blade": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Hulk": {
       "score": 0,
@@ -1490,8 +1490,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Invisible Woman": {
-      "score": -3,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Black Cat": {
       "score": 3,
@@ -1962,8 +1962,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Devil Dinosaur": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Rogue": {
       "score": 0,
@@ -3608,8 +3608,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Star-Lord": {
-      "score": 4,
-      "label": "strong"
+      "score": -2,
+      "label": "weak"
     },
     "Spider-Man": {
       "score": 1,
@@ -4858,8 +4858,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Star-Lord": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Spider-Man": {
       "score": -1,
@@ -6250,8 +6250,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Devil Dinosaur": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Rogue": {
       "score": 2,
@@ -7608,8 +7608,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Loki": {
-      "score": -4,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Mantis": {
       "score": -4,
@@ -7631,8 +7631,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Luna Snow": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Scarlet Witch": {
       "score": 4,
@@ -7683,8 +7683,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Spider-Man": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Winter Soldier": {
       "score": 1,
@@ -7735,8 +7735,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Black Cat": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Namor": {
       "score": -1,
@@ -7900,8 +7900,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Star-Lord": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Winter Soldier": {
       "score": 1,
@@ -10389,8 +10389,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Doctor Strange": {
-      "score": 3,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Emma Frost": {
       "score": 0,
@@ -10721,8 +10721,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Star-Lord": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Spider-Man": {
       "score": 0,
