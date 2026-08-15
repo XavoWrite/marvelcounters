@@ -9,6 +9,11 @@
 // Cyclops, Daredevil, Deadpool, Devil Dinosaur, Elsa Bloodstone, Emma Frost, Gambit, Hawkeye,
 // Jubilee, Punisher, Rogue, Spider-Man, Squirrel Girl, Thor, White Fox) -- deliberadamente
 // incompleto: los heroes que siguen sin "arch" quedaron sin clasificar en vez de inventar una.
+// The Hood agregado 2026-08-14 (salio 2026-08-07, temporada 9.5) -- Vanguard atipico: pelea a
+// distancia con pistolas (mas parecido a Magneto/Doctor Strange que a un tanque de choque),
+// escudo para aliados via su Cloak, y Void Walk le da movilidad para meterse a la retaguardia
+// enemiga -- de ahi el doble arquetipo shield_tank + dive_tank. Detalle completo en
+// data-sources-INTERNAL.txt.
 const HEROES = [
   // Vanguards
   {n:"Angela",r:"Vanguard",t:["dive","aerial","mobility"],arch:["dive_tank"]},
@@ -22,6 +27,7 @@ const HEROES = [
   {n:"Magneto",r:"Vanguard",t:["shield","zone","poke_resist"],arch:["shield_tank"]},
   {n:"Peni Parker",r:"Vanguard",t:["zone","turret","area_denial"],arch:["brawl_tank","bunker_tank"]},
   {n:"Rogue",r:"Vanguard",t:["dive","aerial","mobility"],arch:["brawl_tank"]},
+  {n:"The Hood",r:"Vanguard",t:["shield","dive","mobility"],arch:["shield_tank","dive_tank"]},
   {n:"The Thing",r:"Vanguard",t:["brawl","melee","anti_dive"],arch:["brawl_tank"]},
   {n:"Thor",r:"Vanguard",t:["brawl","melee","dive_lite"],arch:["brawl_tank"]},
   {n:"Venom",r:"Vanguard",t:["dive","mobility","brawl"],arch:["dive_tank"]},

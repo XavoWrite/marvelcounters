@@ -171,6 +171,10 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
   y linkean el repo rivals_counter_peaks — pedido explícito de Xavier del 2026-08-02. Ojo:
   ese repo ya NO es la fuente principal (ver arriba), solo se usa para Jubilee — si esto
   cambia de nuevo, revisar si el crédito sigue siendo preciso.
+- 2026-08-14: agregado The Hood (heroe #55, salió 2026-08-07 en la temporada 9.5) con datos
+  parciales — rivalscounter.com (fuente principal de todo el resto del roster) todavía NO lo
+  tiene catalogado a esta fecha. Ver punto 6) más abajo para la metodología completa y los
+  pares en conflicto entre fuentes que quedaron sin resolver a propósito.
 
 1) assets/data/ref-matchup-scores.js — fuente rivalscounter.com (53 héroes, sin Jubilee)
    - Sitio de terceros, no oficial. Su propio pie de página dice "AI-Powered Results" — sus
@@ -261,3 +265,65 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
    - BlurryShady/rivals-API: backend de una app de armar equipos/votar — no trae counters,
      pero sí tenía las imágenes de banner (ver punto 4).
    - nagylevo/Marvel-Rivals-Wiki: wiki fan-made con bios/cosméticos, sin matchups.
+
+6) The Hood — agregado 2026-08-14 (roster pasó de 54 a 55 héroes)
+   - Salió el 2026-08-07 (temporada 9.5), o sea 1 semana antes de este agregado. rivalscounter.com
+     (fuente principal para los otros 53 héroes no-Jubilee, ver punto 1) confirmado por búsqueda
+     directa que TODAVÍA no lo tiene catalogado en su lista de héroes a esta fecha — mismo problema
+     que tuvo Jubilee al principio (punto 3), pero acá ni siquiera hay un repo de GitHub con datos
+     reales de partidas para él todavía (Sankyuubigan/rivals_counter_peaks tampoco lo tiene, ese
+     dataset es de 2026-07-20, antes de que existiera el héroe).
+   - Rol/kit confirmado por la nota oficial de reveal (gosugamers.net) + guías (turbosmurfs.gg,
+     lootbar.gg, mobalytics.gg, beebom.com): Vanguard atípico, pelea a distancia con pistolas en
+     vez de cuerpo a cuerpo ("más parecido a Magneto o Doctor Strange que a un tanque de choque"),
+     con un sistema de "Energía Demoníaca" que sube al pegar/bloquear/recibir daño y en 100% lo
+     transforma en modo semi-demonio (rifles de fuego rápido). Su Cloak "crea escudos para
+     aliados" (de ahí el arquetipo shield_tank) y su Void Walk le da movilidad para meterse a la
+     retaguardia enemiga a buscar sanadores, con lifesteal propio para sobrevivir solo (de ahí
+     dive_tank también). Ultimate "Demon of the End": se vuelve estacionario, dispara proyectiles
+     perforantes de alto impacto y da hasta 200 de vida extra a aliados cercanos.
+   - Para los counters/contras se cruzaron 3 fuentes de stats (no hay una única "oficial" todavía
+     por lo reciente que es): counterwatch.gg (rating numérico tipo -8..+8, la más parecida en
+     formato a lo que ya usa la app), rivalsmeta.com/matchups (% de winrate real por par) y un
+     resumen agregado de una búsqueda web (que a su vez cruza thephrasemaker/games.gg/rivalsmeta).
+     Xavier: si en algún momento rivalscounter.com agrega su propia página para The Hood, lo ideal
+     es re-extraer esta fila entera desde ahí para mantener consistencia con el resto del roster
+     (que es 100% rivalscounter salvo Jubilee) — esto quedó armado con fuentes secundarias porque
+     no había otra opción todavía, no porque se haya elegido no usar la fuente principal.
+   - Pares con score fuerte (+-5, cruzan el umbral +-4 -> categoría 1/4 "counter real"), solo donde
+     2+ fuentes independientes coincidían sin contradicción:
+       * Wolverine, Iron Fist, Cloak & Dagger, Magneto y Mantis LE GANAN a The Hood (score +5 en
+         la fila de Hood). Consenso: counterwatch.gg (Wolverine/Iron Fist/Cloak & Dagger/Mantis en
+         su top-5) + el resumen agregado (mismos 3 primeros nombrados como "hardest counters",
+         Mantis en "additional counters") + beebom.com (guía de estrategia, lista a Wolverine y
+         Magneto como "amenazas naturales" de forma independiente).
+       * The Hood LE GANA a Venom (score -5 en la fila de Hood). Único par donde rivalsmeta.com
+         Y counterwatch.gg coincidieron sin contradecirse (rivalsmeta +4.22%, counterwatch +7.7).
+   - Pares con score suave (+-2, quedan en categoría 2/parejo pero sí afectan las subcolumnas finas
+     "Casi counters"/"Con ventaja" del editor y el desempate del counter definitivo), con un solo
+     respaldo de fuente cada uno — tratados como señal débil a propósito, no como counter real:
+       * Le cuestan un poco a Hood: Hawkeye, Psylocke, Magik, Jubilee (todos solo del resumen
+         agregado / rivalsmeta, sin segunda fuente que confirme).
+       * Hood les gana un poco: Captain America, Star-Lord, Ultron (todos solo de counterwatch.gg).
+   - CONFLICTOS DETECTADOS Y DEJADOS SIN RESOLVER a propósito (mismo criterio que siempre en este
+     proyecto: no inventar un valor cuando las fuentes se contradicen) — quedaron en 0/parejo:
+       * Peni Parker: rivalsmeta.com dice que Peni Parker CONTRA-cuentra a Hood (61.3% winrate,
+         "counter más dominante"), pero counterwatch.gg dice lo opuesto: Hood le gana a Peni
+         Parker (+12.6). Ojo especial acá: Peni Parker ya tiene historial de matchups mal medidos
+         en otras fuentes de este proyecto (ver punto 3, el episodio de Sankyuubigan con
+         "voladores"), así que ninguna de las dos lecturas se tomó como confiable por defecto.
+       * Emma Frost: beebom.com la lista como "amenaza natural" contra Hood, pero rivalsmeta.com
+         dice que Hood LE GANA a Emma Frost (+9.41%) — direcciones opuestas.
+       * Doctor Strange: el resumen agregado lo lista como algo que "contrarresta el ritmo de
+         combate" de Hood, pero rivalsmeta.com dice que Hood le gana a Doctor Strange (+5.06%).
+     Si Xavier tiene su propia experiencia jugando contra/con The Hood en estos 3 pares, lo mejor
+     es que los corrija a mano en matchup-editor-stream.html (igual que hizo con Magneto/Devil
+     Dinosaur/Doctor Strange antes) en vez de que se adivine desde datos que ya se sabe que chocan.
+   - Todo el resto de la fila de Hood (41 de 54 pares) quedó en 0/parejo por falta de dato, no
+     por evidencia de que sea realmente parejo — es el mismo criterio de "incompleto a propósito"
+     que ya se usa en el resto del proyecto (arch tags, Jubilee al principio, etc.).
+   - Falta agregar: ícono/imagen (PRELOADED_IMAGES en hero-images.js) y semilla de detección
+     automática (hero-icon-seed.js) — Xavier todavía no subió capturas con The Hood en pantalla,
+     así que por ahora aparece en los pickers con el mismo hueco visual que cualquier héroe sin
+     imagen cargada (getHeroImage devuelve null, no rompe nada). Pendiente para cuando traiga
+     fotos, junto con el resto del entrenamiento de detección que ya tenía pendiente.

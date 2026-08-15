@@ -210,6 +210,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Captain America": {
@@ -423,6 +427,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
+    },
+    "The Hood": {
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Devil Dinosaur": {
@@ -636,6 +644,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Rogue": {
@@ -847,6 +859,10 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -1062,6 +1078,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Thor": {
@@ -1273,6 +1293,10 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -1488,6 +1512,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -2,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Emma Frost": {
@@ -1699,6 +1727,10 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -1914,6 +1946,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Venom": {
@@ -2127,6 +2163,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
+    },
+    "The Hood": {
+      "score": 5,
+      "label": "strong"
     }
   },
   "Human Torch": {
@@ -2338,6 +2378,10 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -2553,6 +2597,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": -5,
+      "label": "weak"
     }
   },
   "Iron Man": {
@@ -2766,6 +2814,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Storm": {
@@ -2979,6 +3031,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -4,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Wolverine": {
@@ -3191,6 +3247,10 @@ const REF_MATCHUP_SCORES = {
     },
     "Elsa Bloodstone": {
       "score": -4,
+      "label": "weak"
+    },
+    "The Hood": {
+      "score": -5,
       "label": "weak"
     }
   },
@@ -3405,6 +3465,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
+    },
+    "The Hood": {
+      "score": -5,
+      "label": "weak"
     }
   },
   "Loki": {
@@ -3618,6 +3682,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Mantis": {
@@ -3831,6 +3899,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": -5,
+      "label": "weak"
     }
   },
   "Deadpool (Vanguard)": {
@@ -4044,6 +4116,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Jubilee": {
@@ -4205,6 +4281,10 @@ const REF_MATCHUP_SCORES = {
     },
     "Elsa Bloodstone": {
       "score": 2
+    },
+    "The Hood": {
+      "score": -2,
+      "label": "weak"
     }
   },
   "Jeff the Land Shark": {
@@ -4418,6 +4498,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "White Fox": {
@@ -4629,6 +4713,10 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -4844,6 +4932,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Scarlet Witch": {
@@ -5057,6 +5149,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 2,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Phoenix": {
@@ -5268,6 +5364,10 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -5483,6 +5583,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -1,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Punisher": {
@@ -5696,6 +5800,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -4,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Cyclops": {
@@ -5909,6 +6017,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -2,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Moon Knight": {
@@ -6120,6 +6232,10 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -6335,6 +6451,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Hulk": {
@@ -6546,6 +6666,10 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -6761,6 +6885,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Rocket Raccoon": {
@@ -6974,6 +7102,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 2,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Hela": {
@@ -7187,6 +7319,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -4,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Mister Fantastic": {
@@ -7398,6 +7534,10 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -7613,6 +7753,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -3,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Spider-Man": {
@@ -7826,6 +7970,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Winter Soldier": {
@@ -8039,6 +8187,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -3,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Adam Warlock": {
@@ -8252,6 +8404,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Deadpool (Strategist)": {
@@ -8463,6 +8619,10 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -8678,6 +8838,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Ultron": {
@@ -8890,6 +9054,10 @@ const REF_MATCHUP_SCORES = {
     },
     "Elsa Bloodstone": {
       "score": 1,
+      "label": "favorable"
+    },
+    "The Hood": {
+      "score": 2,
       "label": "favorable"
     }
   },
@@ -9104,6 +9272,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -4,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": -2,
+      "label": "weak"
     }
   },
   "Magik": {
@@ -9316,6 +9488,10 @@ const REF_MATCHUP_SCORES = {
     },
     "Elsa Bloodstone": {
       "score": -3,
+      "label": "weak"
+    },
+    "The Hood": {
+      "score": -2,
       "label": "weak"
     }
   },
@@ -9530,6 +9706,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Black Widow": {
@@ -9743,6 +9923,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 1,
       "label": "favorable"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Daredevil": {
@@ -9956,6 +10140,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -3,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Magneto": {
@@ -10169,6 +10357,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -3,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": -5,
+      "label": "weak"
     }
   },
   "Invisible Woman": {
@@ -10380,6 +10572,10 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Elsa Bloodstone": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
       "score": 0,
       "label": "even"
     }
@@ -10595,6 +10791,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -1,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Namor": {
@@ -10808,6 +11008,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": -3,
       "label": "weak"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Psylocke": {
@@ -11020,6 +11224,10 @@ const REF_MATCHUP_SCORES = {
     },
     "Elsa Bloodstone": {
       "score": -3,
+      "label": "weak"
+    },
+    "The Hood": {
+      "score": -2,
       "label": "weak"
     }
   },
@@ -11234,6 +11442,10 @@ const REF_MATCHUP_SCORES = {
     "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
     }
   },
   "Elsa Bloodstone": {
@@ -11445,6 +11657,228 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Gambit": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Hood": {
+      "score": 0,
+      "label": "even"
+    }
+  },
+  "The Hood": {
+    "Angela": {
+      "score": 0,
+      "label": "even"
+    },
+    "Captain America": {
+      "score": -2,
+      "label": "weak"
+    },
+    "Devil Dinosaur": {
+      "score": 0,
+      "label": "even"
+    },
+    "Rogue": {
+      "score": 0,
+      "label": "even"
+    },
+    "The Thing": {
+      "score": 0,
+      "label": "even"
+    },
+    "Thor": {
+      "score": 0,
+      "label": "even"
+    },
+    "Doctor Strange": {
+      "score": 0,
+      "label": "even"
+    },
+    "Emma Frost": {
+      "score": 0,
+      "label": "even"
+    },
+    "Peni Parker": {
+      "score": 0,
+      "label": "even"
+    },
+    "Venom": {
+      "score": -5,
+      "label": "weak"
+    },
+    "Human Torch": {
+      "score": 0,
+      "label": "even"
+    },
+    "Iron Fist": {
+      "score": 5,
+      "label": "strong"
+    },
+    "Iron Man": {
+      "score": 0,
+      "label": "even"
+    },
+    "Storm": {
+      "score": 0,
+      "label": "even"
+    },
+    "Wolverine": {
+      "score": 5,
+      "label": "strong"
+    },
+    "Cloak & Dagger": {
+      "score": 5,
+      "label": "strong"
+    },
+    "Loki": {
+      "score": 0,
+      "label": "even"
+    },
+    "Mantis": {
+      "score": 5,
+      "label": "strong"
+    },
+    "Deadpool (Vanguard)": {
+      "score": 0,
+      "label": "even"
+    },
+    "Jubilee": {
+      "score": 2,
+      "label": "favorable"
+    },
+    "Jeff the Land Shark": {
+      "score": 0,
+      "label": "even"
+    },
+    "White Fox": {
+      "score": 0,
+      "label": "even"
+    },
+    "Luna Snow": {
+      "score": 0,
+      "label": "even"
+    },
+    "Scarlet Witch": {
+      "score": 0,
+      "label": "even"
+    },
+    "Phoenix": {
+      "score": 0,
+      "label": "even"
+    },
+    "Squirrel Girl": {
+      "score": 0,
+      "label": "even"
+    },
+    "Punisher": {
+      "score": 0,
+      "label": "even"
+    },
+    "Cyclops": {
+      "score": 0,
+      "label": "even"
+    },
+    "Moon Knight": {
+      "score": 0,
+      "label": "even"
+    },
+    "Blade": {
+      "score": 0,
+      "label": "even"
+    },
+    "Hulk": {
+      "score": 0,
+      "label": "even"
+    },
+    "Groot": {
+      "score": 0,
+      "label": "even"
+    },
+    "Rocket Raccoon": {
+      "score": 0,
+      "label": "even"
+    },
+    "Hela": {
+      "score": 0,
+      "label": "even"
+    },
+    "Mister Fantastic": {
+      "score": 0,
+      "label": "even"
+    },
+    "Star-Lord": {
+      "score": -2,
+      "label": "weak"
+    },
+    "Spider-Man": {
+      "score": 0,
+      "label": "even"
+    },
+    "Winter Soldier": {
+      "score": 0,
+      "label": "even"
+    },
+    "Adam Warlock": {
+      "score": 0,
+      "label": "even"
+    },
+    "Deadpool (Strategist)": {
+      "score": 0,
+      "label": "even"
+    },
+    "Deadpool (Duelist)": {
+      "score": 0,
+      "label": "even"
+    },
+    "Ultron": {
+      "score": -2,
+      "label": "weak"
+    },
+    "Hawkeye": {
+      "score": 2,
+      "label": "favorable"
+    },
+    "Magik": {
+      "score": 2,
+      "label": "favorable"
+    },
+    "Black Panther": {
+      "score": 0,
+      "label": "even"
+    },
+    "Black Widow": {
+      "score": 0,
+      "label": "even"
+    },
+    "Daredevil": {
+      "score": 0,
+      "label": "even"
+    },
+    "Magneto": {
+      "score": 5,
+      "label": "strong"
+    },
+    "Invisible Woman": {
+      "score": 0,
+      "label": "even"
+    },
+    "Black Cat": {
+      "score": 0,
+      "label": "even"
+    },
+    "Namor": {
+      "score": 0,
+      "label": "even"
+    },
+    "Psylocke": {
+      "score": 2,
+      "label": "favorable"
+    },
+    "Gambit": {
+      "score": 0,
+      "label": "even"
+    },
+    "Elsa Bloodstone": {
       "score": 0,
       "label": "even"
     }
