@@ -428,6 +428,11 @@
   .dmgheal-bar-labels{display:flex;justify-content:space-between;margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:10.5px;}
   .dmgheal-lbl-dmg{color:var(--enemy);}
   .dmgheal-lbl-heal{color:var(--st);}
+  /* franja aparte a lo ancho completo para "Tu composicion" (opcion C del mockup de reorden,
+     2026-08-16) -- antes la barrita vivia adentro de comp-pick-row, compartiendo columna con
+     "Que deberias jugar tu" y quedaba comprimida a la mitad del ancho real */
+  .dmgheal-strip{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .dmgheal-strip .dmgheal-bar-wrap{margin-top:0;}
 
   .editor-image-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px;}
   .editor-image-preview{width:64px;height:64px;border-radius:10px;background:var(--panel-alt);border:1px solid var(--line);

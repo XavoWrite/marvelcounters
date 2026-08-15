@@ -454,7 +454,6 @@ function renderAnalysis(){
       left += `<br>${tp("analysis.yourComp.missingPlayers", missing, {missing})}${neededSuffix}`;
     }
     left += `</div>`;
-    left += dmgHealBarHtml(allyTeam);
   }
   left += `</div>`;
 
@@ -473,6 +472,13 @@ function renderAnalysis(){
   }
   left += `</div>`;
   left += `</div>`;
+
+  // barrita de dano/curacion de tu equipo, a lo ancho completo del bloque (no adentro de la fila
+  // apretada de comp-pick-row de arriba) -- pedido de Xavier, la barrita quedaba muy comprimida
+  // compartiendo columna con "Que deberias jugar tu" (opcion C de las 3 mockeadas, 2026-08-16)
+  if(allyFilled>0){
+    left += `<div class="analysis-section dmgheal-strip">${dmgHealBarHtml(allyTeam)}</div>`;
+  }
 
   // fila aparte (ancho completo del bloque, no anidada) con las listas de picks en 2 columnas reales
   // -- siempre 2 columnas, nunca 1 sola, para que la fila no se vea rota/asimetrica ni de la impresion
