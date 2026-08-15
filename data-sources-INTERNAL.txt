@@ -714,3 +714,62 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      * Devil Dinosaur → Blade: -1 → **+2** (anti-cura — Dino depende de curarse para sobrevivir,
        misma lógica que ya confirma Namor/Hela contra él).
      * Devil Dinosaur → Venom: -1 → **+2** (mismo motivo, ulti de Venom es anti-cura).
+
+12) Cyclops, Devil Dinosaur, Angela, Namor — tanda grande de videos nuevos (2026-08-15/16)
+   - Xavier pasó otra tanda grande: primera data real de Cyclops (2 videos, antes tenía 0 pares
+     cargados salvo lo poco que ya traía de rivalscounter.com), 3 videos nuevos de counters de
+     Devil Dinosaur, 2 videos de Angela y 2 de Namor. Se cruzó todo contra la matriz actual (un
+     agente en background, sin navegador — todo el texto ya estaba pegado en la conversación).
+   - Instrucción explícita de Xavier este día: "la información sacada de las páginas web no es
+     tan buena como la de los videos y mis ediciones, pero mis ediciones pueden estar mal... los
+     videos, sus datos son los mejores" — reafirma y generaliza la jerarquía ya usada (punto 9):
+     video > web scrapeada, pero SIGUE aplicando el mismo criterio de magnitud según cantidad de
+     fuentes independientes (1 fuente = suave/moderado, 2+ fuentes o 1 fuente + razón mecánica
+     concreta de Xavier = corrección fuerte) — no cambia el umbral, cambia la prioridad cuando
+     video y web se contradicen.
+   - Aplicado (2 fuentes de video independientes cada uno, contra un valor que venía del scrape
+     original de rivalscounter.com sin corrección previa):
+     * Devil Dinosaur → Iron Fist: -2 → **+5**. Dos shorts distintos de counters de Devil
+       Dinosaur lo rankean #2 con la misma razón (golpes de % de vida de Iron Fist). Contradecía
+       directo el valor web (que decía que a Iron Fist le iba mal contra Dino).
+     * Cyclops → Daredevil: +3 → **+5**. Reforzado por 2 fuentes de video independientes (una en
+       inglés citando stats, "11.8% de ventaja"; otra en español, "excelente counter, está
+       roto") — coincide con y empuja el valor web que ya venía parejo hacia counter real.
+   - RECHAZADO — video de Namor con datos de stats agregadas: afirmaba "Black Panther tiene 61%
+     de winrate contra Namor" y "los tanques (Cap, Venom, Thor) lo aplastan". Esto repite EXACTO
+     el mismo patrón ya descartado 3 veces en este proyecto (Sankyuubigan punto 3, metabot.gg
+     punto 1-nota, AdamWyatt34 punto 5 — todos con el mismo error de fondo: winrate agregado con
+     ambos héroes en partida se contamina con la composición de equipo, no aísla el 1v1 real). El
+     número (61%) es casi idéntico al de AdamWyatt34 (59%), ya rechazado contra el ancla verificada
+     Namor/Black Panther (+7 hardCounter, Namor SÍ lo countera). Conclusión: este video
+     probablemente está citando la misma stat de rivalsmeta, no dando análisis propio — no cuenta
+     como "dato de video" real para este criterio. Xavier confirmó con su propio razonamiento de
+     juego (Namor es débil si queda solo/aislado por dives, pero contra Cap/Thor/Venom en un 1v1
+     limpio le va bien o al menos parejo — Venom es dive y Namor es counter de dives, así que es
+     "una apuesta" más que un counter claro) — fila de Namor sin cambios.
+   - Aplicado (Angela — video de counters + razonamiento mecánico propio de Xavier para cada uno,
+     mismo criterio que ya se usó con Iron Man/The Thing para The Hood o Gambit para Winter
+     Soldier: su conocimiento de juego con una razón concreta cuenta como confirmación fuerte):
+     * Angela → White Fox: -4 → **+5** (invertido — antes Angela le ganaba fácil a White Fox).
+       Video la marca como counter (+5 rating); Xavier: "tiene un poder que la desequilibra."
+     * Angela → Mantis: -4 → **+5** (invertido). Video la marca como counter; Xavier: "la puede
+       dormir" (el stun de Mantis anula su combate).
+     * Angela → Rocket Raccoon: -1 → **+5**. Video la marca como counter; Xavier: dos razones —
+       el fuego sostenido de Rocket "le tumba el escudo" y Rocket "es muy escurridizo para
+       golpearlo con Angela."
+   - Ajuste suave (Angela → Peni Parker, -1 → **-3**, sin cruzar el umbral fuerte): el video
+     decía lo contrario (Peni Parker cuenta como counter de Angela, "counter más dominante" según
+     su propia fuente), pero Xavier lo contradijo con su propio conocimiento — Angela puede alejar
+     a Peni de su nido de minas y ponerla en desventaja, y la respuesta de Peni (atraparla en el
+     aire) "ya está complicada con las últimas actualizaciones que nerfearon a Peni." Se reforzó
+     la dirección YA existente (Angela favorecida) en vez de invertirla, con magnitud moderada por
+     ser una lectura matizada/con peros de un solo lado.
+   - Pendiente, sin tocar (contradicciones de una sola fuente de video, sin segunda fuente ni
+     razonamiento propio de Xavier que la respalde — documentado para si aparece más data):
+     Angela → Devil Dinosaur (video: Devil Dinosaur +22.4 rating como counter de Angela, hoy en
+     0/parejo), Angela → Wolverine (video: +9.3 rating, hoy ya en +2 a favor de Wolverine, mismo
+     sentido pero sin confirmar la magnitud), Angela → Invisible Woman/Jeff/Luna Snow/The
+     Thing/Groot/Namor (predicciones pre-lanzamiento de un video, sin partidas reales todavía).
+     Namor → Moon Knight/Hela/Hawkeye/Iron Man/Loki (mejores counters de Namor según 2 videos,
+     ninguno con 2da fuente independiente ni contradicción directa con lo actual salvo Loki/Jeff/
+     Squirrel Girl que sí contradicen y quedan igual sin tocar).

@@ -29,7 +29,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Peni Parker": {
-      "score": -1,
+      "score": -3,
       "label": "weak"
     },
     "Venom": {
@@ -65,8 +65,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Mantis": {
-      "score": -4,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Deadpool (Vanguard)": {
       "score": 1,
@@ -80,8 +80,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "White Fox": {
-      "score": -4,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Luna Snow": {
       "score": 5,
@@ -124,8 +124,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Rocket Raccoon": {
-      "score": -1,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Hela": {
       "score": 4,
@@ -475,8 +475,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Iron Fist": {
-      "score": -2,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Iron Man": {
       "score": 2,
@@ -1737,7 +1737,7 @@ const REF_MATCHUP_SCORES = {
   },
   "Peni Parker": {
     "Angela": {
-      "score": 1,
+      "score": 3,
       "label": "favorable"
     },
     "Captain America": {
@@ -2396,8 +2396,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Devil Dinosaur": {
-      "score": 2,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Rogue": {
       "score": 0,
@@ -3690,8 +3690,8 @@ const REF_MATCHUP_SCORES = {
   },
   "Mantis": {
     "Angela": {
-      "score": 4,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Captain America": {
       "score": 1,
@@ -4506,8 +4506,8 @@ const REF_MATCHUP_SCORES = {
   },
   "White Fox": {
     "Angela": {
-      "score": 4,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Captain America": {
       "score": 0,
@@ -5987,8 +5987,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Daredevil": {
-      "score": 3,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Magneto": {
       "score": 4,
@@ -6893,8 +6893,8 @@ const REF_MATCHUP_SCORES = {
   },
   "Rocket Raccoon": {
     "Angela": {
-      "score": 1,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Captain America": {
       "score": 4,
@@ -10038,7 +10038,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Cyclops": {
-      "score": -3,
+      "score": -5,
       "label": "weak"
     },
     "Moon Knight": {
