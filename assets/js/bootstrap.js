@@ -145,6 +145,8 @@ setTimeout(triggerMijinEasterEgg, 7*60*1000);
 
 renderBanSlots();
 renderSlots();
+renderBasicStatsInfographic();
+onLangChange(renderBasicStatsInfographic);
 
 /* ---------------- IDIOMA: wiring final ---------------- */
 // va al final porque para este punto ya se registraron todos los onLangChange (analysis, slots,

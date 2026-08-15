@@ -244,6 +244,18 @@ es: {
   "glossary.playmaker.desc": "Menos curación, más movilidad y utilidad para habilitar jugadas del equipo (empujes, escapes, buffs de daño).",
   "glossary.guardian.desc": "Utilidad pesada — poca curación pero mucho control de daño, escudos o CC. Brilla en composiciones con varios soportes.",
 
+  "glossary.basicStats.title": "💥 Daño y curación de ataques básicos",
+  "glossary.basicStats.hint": "Números oficiales sacados directo de marvelrivals.com (no estimados). Cuando el ataque es un combo o tiene cadencia compuesta, se muestra el texto oficial tal cual en vez de inventar un promedio.",
+  "glossary.basicStats.dmgTableTitle": "Vanguardias y duelistas — ataque básico",
+  "glossary.basicStats.healTableTitle": "Estrategas — curación principal (no siempre es el ataque básico)",
+  "glossary.basicStats.colHero": "Héroe",
+  "glossary.basicStats.colAbility": "Habilidad",
+  "glossary.basicStats.colValue": "Daño / cadencia oficial",
+  "glossary.basicStats.colHealValue": "Curación oficial",
+  "glossary.basicStats.colDps": "DPS estimado",
+  "glossary.basicStats.colHps": "HPS estimado",
+  "glossary.basicStats.noEstimate": "combo / cadencia compuesta — sin promedio",
+
   "glossary.dataSources.title": "🗂️ Fuentes de datos",
   "glossary.dataSources.body": `La matriz de matchups se arma con el aporte de mi comunidad de TikTok (¡gracias por cada sugerencia y corrección!).`,
 
@@ -318,6 +330,10 @@ es: {
   "status.ocrStartFailed": "No se pudo iniciar el lector de nombres offline.",
 
   "editor.noResults": "Sin resultados para ese filtro/búsqueda.",
+  "editor.basicAttackLabel": "daño de ataque básico",
+  "editor.primaryHealLabel": "curación principal",
+  "editor.dpsUnit": "daño/seg",
+  "editor.hpsUnit": "curación/seg",
   "editor.variantDefault": "Default",
   "editor.variantDeluxe": "Deluxe (Lord)",
   "editor.variantDynamic": "Dynamic Deluxe",
@@ -587,6 +603,18 @@ en: {
   "glossary.playmaker.desc": "Less healing, more mobility and utility to enable team plays (pushes, escapes, damage buffs).",
   "glossary.guardian.desc": "Utility-heavy — low healing but lots of damage mitigation, shielding, or CC. Shines in multi-support compositions.",
 
+  "glossary.basicStats.title": "💥 Basic attack damage & healing",
+  "glossary.basicStats.hint": "Official numbers pulled straight from marvelrivals.com (not estimates). When an attack is a multi-hit combo or has a compound rate, the official text is shown as-is instead of inventing an average.",
+  "glossary.basicStats.dmgTableTitle": "Vanguards & Duelists — basic attack",
+  "glossary.basicStats.healTableTitle": "Strategists — main healing (not always the basic attack)",
+  "glossary.basicStats.colHero": "Hero",
+  "glossary.basicStats.colAbility": "Ability",
+  "glossary.basicStats.colValue": "Official damage / rate",
+  "glossary.basicStats.colHealValue": "Official healing",
+  "glossary.basicStats.colDps": "Est. DPS",
+  "glossary.basicStats.colHps": "Est. HPS",
+  "glossary.basicStats.noEstimate": "combo / compound rate — no average shown",
+
   "glossary.dataSources.title": "🗂️ Data sources",
   "glossary.dataSources.body": `The matchup matrix is built with input from my TikTok community (thanks for every suggestion and correction!).`,
 
@@ -661,6 +689,10 @@ en: {
   "status.ocrStartFailed": "Couldn't start the offline name reader.",
 
   "editor.noResults": "No results for that filter/search.",
+  "editor.basicAttackLabel": "basic attack damage",
+  "editor.primaryHealLabel": "main healing",
+  "editor.dpsUnit": "dmg/sec",
+  "editor.hpsUnit": "heal/sec",
   "editor.variantDefault": "Default",
   "editor.variantDeluxe": "Deluxe (Lord)",
   "editor.variantDynamic": "Dynamic Deluxe",

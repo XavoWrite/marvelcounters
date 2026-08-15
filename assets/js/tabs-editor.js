@@ -132,6 +132,22 @@ async function renderEditorDetail(name){
           <span class="hq-stat"><b>${s.pickRate.toFixed(1)}%</b> ${t("editor.metaPickRate")}</span>
           <span class="hq-stat"><b>${s.banRate.toFixed(1)}%</b> ${t("editor.metaBanRate")}</span>
         </div>`; })()}
+        ${(()=>{
+          const bs = heroBasicStats(name);
+          if(!bs) return "";
+          const parts = [];
+          if(bs.basicAttack){
+            const ba = bs.basicAttack;
+            const dpsText = (typeof ba.dps==="number") ? `≈${ba.dps} ${t("editor.dpsUnit")}` : (ba.dmgRaw||"");
+            parts.push(`<span class="hq-stat basic-stat-dmg" title="${(ba.dmgRaw||"").replace(/"/g,'&quot;')}${ba.rateRaw?" · "+ba.rateRaw.replace(/"/g,'&quot;'):""}"><b>${dpsText}</b> ${t("editor.basicAttackLabel")}</span>`);
+          }
+          if(bs.primaryHeal){
+            const ph = bs.primaryHeal;
+            const hpsText = (typeof ph.hps==="number") ? `≈${ph.hps} ${t("editor.hpsUnit")}` : (ph.raw||"");
+            parts.push(`<span class="hq-stat basic-stat-heal" title="${(ph.name||"").replace(/"/g,'&quot;')}${ph.raw?" · "+ph.raw.replace(/"/g,'&quot;'):""}"><b>${hpsText}</b> ${t("editor.primaryHealLabel")}</span>`);
+          }
+          return parts.length ? `<div class="hq-stat-row">${parts.join("")}</div>` : "";
+        })()}
         <div class="variant-view-row">
           ${presentVariants.length===0 ? `<span class="variant-label">${t("editor.noPreloadedImages")}</span>` : presentVariants.map(v=>`
             <div class="variant-thumb">
@@ -191,5 +207,62 @@ async function renderEditorDetail(name){
       editorPreviewTimer = setInterval(()=>{ idx = (idx+1)%availableImgs.length; paint(); }, 1500);
     }
   }
+}
+
+// tabla de daño/curación de ataques básicos para la pestaña Glosario -- ver
+// data-sources-INTERNAL.txt y assets/data/hero-basic-stats.js para de donde salen estos numeros
+// (oficiales de marvelrivals.com, no estimados). Se renderiza una sola vez al arrancar y de nuevo
+// si cambia el idioma (los headers de la tabla estan traducidos, los numeros no cambian).
+function renderBasicStatsInfographic(){
+  const container = document.getElementById("basicStatsInfographic");
+  if(!container || typeof HERO_BASIC_STATS==="undefined") return;
+
+  const dmgRows = HEROES.map(h=>{
+    const bs = HERO_BASIC_STATS[h.n];
+    const ba = bs && bs.basicAttack;
+    return {h, ba};
+  }).filter(r=>r.ba);
+  dmgRows.sort((a,b)=>{
+    const ad = typeof a.ba.dps==="number" ? a.ba.dps : -1;
+    const bd = typeof b.ba.dps==="number" ? b.ba.dps : -1;
+    if(bd!==ad) return bd-ad;
+    return a.h.n.localeCompare(b.h.n);
+  });
+
+  const healRows = HEROES.filter(h=>heroHasRole(h,"Strategist")).map(h=>{
+    const bs = HERO_BASIC_STATS[h.n];
+    const ph = bs && bs.primaryHeal;
+    return {h, ph};
+  }).filter(r=>r.ph);
+  healRows.sort((a,b)=>{
+    const ah = typeof a.ph.hps==="number" ? a.ph.hps : -1;
+    const bh = typeof b.ph.hps==="number" ? b.ph.hps : -1;
+    if(bh!==ah) return bh-ah;
+    return a.h.n.localeCompare(b.h.n);
+  });
+
+  const dmgTable = `<div class="basic-stats-table-title">${t("glossary.basicStats.dmgTableTitle")}</div>
+    <div class="basic-stats-table-wrap"><table class="basic-stats-table"><thead><tr>
+      <th>${t("glossary.basicStats.colHero")}</th><th>${t("glossary.basicStats.colAbility")}</th>
+      <th>${t("glossary.basicStats.colValue")}</th><th>${t("glossary.basicStats.colDps")}</th>
+    </tr></thead><tbody>${dmgRows.map(({h,ba})=>`<tr>
+      <td class="bst-hero">${heroIconHtml(h.n,20)}${heroLabel(h.n)}</td>
+      <td>${ba.name}</td>
+      <td class="bst-raw">${[ba.dmgRaw,ba.rateRaw].filter(Boolean).join(" · ")}</td>
+      <td class="bst-num">${typeof ba.dps==="number" ? ba.dps : `<span class="empty-hint">${t("glossary.basicStats.noEstimate")}</span>`}</td>
+    </tr>`).join("")}</tbody></table></div>`;
+
+  const healTable = `<div class="basic-stats-table-title">${t("glossary.basicStats.healTableTitle")}</div>
+    <div class="basic-stats-table-wrap"><table class="basic-stats-table"><thead><tr>
+      <th>${t("glossary.basicStats.colHero")}</th><th>${t("glossary.basicStats.colAbility")}</th>
+      <th>${t("glossary.basicStats.colHealValue")}</th><th>${t("glossary.basicStats.colHps")}</th>
+    </tr></thead><tbody>${healRows.map(({h,ph})=>`<tr>
+      <td class="bst-hero">${heroIconHtml(h.n,20)}${heroLabel(h.n)}</td>
+      <td>${ph.name}${ph.key?` <span class="empty-hint">(${ph.key})</span>`:""}</td>
+      <td class="bst-raw">${ph.raw||""}</td>
+      <td class="bst-num">${typeof ph.hps==="number" ? ph.hps : `<span class="empty-hint">${t("glossary.basicStats.noEstimate")}</span>`}</td>
+    </tr>`).join("")}</tbody></table></div>`;
+
+  container.innerHTML = dmgTable + healTable;
 }
 

@@ -162,6 +162,14 @@ function heroMetaStats(name){
   if(typeof REF_HERO_META_STATS==="undefined") return null;
   return REF_HERO_META_STATS[name] || null;
 }
+// daño del ataque basico / curacion principal, sacado de las paginas oficiales de marvelrivals.com
+// (numeros reales del juego, no estimados) -- ver data-sources-INTERNAL.txt para la metodologia y
+// por que ~25 de 55 heroes solo tienen el texto crudo sin un DPS/HPS calculado (combos de varios
+// golpes, cadencias compuestas, etc. que no se reducen a un solo numero de forma honesta).
+function heroBasicStats(name){
+  if(typeof HERO_BASIC_STATS==="undefined") return null;
+  return HERO_BASIC_STATS[name] || null;
+}
 // la gente lee mejor una cara que un nombre: chip con el icono del heroe para mostrar en vez de solo texto.
 // al pasar el mouse se cambia por la variante "dynamic" (el splash art) y se agranda -- ver heroIconPreview.
 function heroIconHtml(name, size){

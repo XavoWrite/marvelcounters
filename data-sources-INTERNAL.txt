@@ -286,6 +286,48 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
    - BlurryShady/rivals-API: backend de una app de armar equipos/votar — no trae counters,
      pero sí tenía las imágenes de banner (ver punto 4).
    - nagylevo/Marvel-Rivals-Wiki: wiki fan-made con bios/cosméticos, sin matchups.
+   - 2026-08-14 (repos que trajo Xavier + re-búsqueda propia, nada nuevo sirvió):
+     * v1raeth/marvelrivals_stats: pick rate/protect rate/ban rate de TORNEOS PRO (IGNITE
+       2026), no datos de jugadores comunes. Xavier sospechaba esto y tenía razón — son .md
+       con una sola tabla por torneo (~47-94 partidas de muestra), sin ninguna columna de
+       matchup/counter (nada de "héroe A vs héroe B"). Ni siquiera sirve como reemplazo de
+       ref-hero-meta-stats.js: la muestra de un torneo es mucho más chica y sesgada al meta
+       competitivo que el winrate general de rivals-hq (que ya se usa, y se actualiza cada 6hs
+       con muestra de comunidad completa). Sin usar.
+     * dante-2a/proficiencycalculator: no tiene nada que ver con counters — es una calculadora
+       de "proficiency" (dominio/maestría de personaje, no queda claro con qué métrica exacta),
+       proyecto chico (12 commits, 0 estrellas). Sin usar.
+     * iFraan/mrivals: paquete npm que envuelve tracker.gg (via TRNetwork) para stats de UN
+       jugador puntual por username — mismo problema de siempre (ver Bronxproject/
+       MarvelRivalsAPI-Wrapper arriba): no hay búsqueda de jugador arbitrario ni datos de
+       matchup, solo "tu propio historial". Confirma otra vez que no hay API pública real para
+       eso, no hace falta seguir buscando esto en particular. Sin usar.
+     * Búsqueda general de repos nuevos con datos de matchup/counters (no solo los que trajo
+       Xavier): nada nuevo apareció más allá de las mismas webs ya conocidas (counterwatch.gg,
+       rivalsmeta.com, rivalscounter.com) — ninguna tiene su dataset publicado en GitHub como
+       repo aparte, todo vive server-side en sus propias webs.
+     * AdamWyatt34/marvel-rivals-team-composer (traido por Xavier, 2026-08-15): el mas
+       sofisticado con diferencia -- motor de scoring con shrinkage estadistico bayesiano,
+       backtesting, calibracion diaria, se auto-actualiza por GitHub Actions, y YA tiene a The
+       Hood cargado (snapshot generado 2026-08-15, matriz completa de 55 heroes, conteos de
+       partidas reales, 100% consistente entre ambas direcciones). Fuente: rivalsmeta.com (API
+       no documentada). DESCARTADO tras cruzar su snapshot.json crudo contra 3 anclas que ya
+       sabiamos correctas por experiencia real de Xavier: dice que Peni Parker le gana a Iron
+       Man 63.5% (mismo error que tumbo a Sankyuubigan -- Peni sufre contra voladores en la
+       practica), que Human Torch le gana a Spider-Man 55.3% (mismo error que tumbo a
+       metabot.gg), y que Black Panther le gana a Namor 59% (contradice el ancla ya verificada
+       del proyecto: Namor SI countera a Black Panther, +7 hardCounter). Tercera fuente
+       independiente que cae en el mismo patron -- sugiere que "winrate agregado cuando ambos
+       heroes estan en la partida" tiene un problema de fondo (se contamina con la composicion
+       de equipo, no aisla el 1v1 real), no un bug puntual de una sola fuente. Aplica tambien a
+       los pares de The Hood que salian de este snapshot (Wolverine/Cloak & Dagger/Magneto
+       salian casi parejos, Peni Parker salia como counter fuerte, Moon Knight salia favorable
+       PARA Hood, contradiciendo lo que Xavier ya habia corregido a mano) -- no se uso nada de
+       esto. Si aparece este repo de nuevo, no hace falta re-evaluar el dataset crudo, ya
+       sabemos que falla en el mismo lugar que los anteriores. (Quedo sin probar si el sitio en
+       vivo del repo, que aplica su propio ajuste estadistico encima del snapshot crudo,
+       corrige este sesgo -- no se investigo por alcance/tiempo, no por haberlo descartado a
+       propósito.)
 
 6) The Hood — agregado 2026-08-14 (roster pasó de 54 a 55 héroes)
    - Salió el 2026-08-07 (temporada 9.5), o sea 1 semana antes de este agregado. rivalscounter.com
@@ -367,3 +409,50 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      reconozca a The Hood en capturas reales de la tabla de partida (Tab) — eso necesita
      capturas EN PARTIDA, no arte oficial/wiki como las de arriba. Xavier todavía no las subió;
      mientras tanto el auto-detect simplemente no lo va a reconocer, sin romper nada.
+
+7) assets/data/hero-basic-stats.js — daño de ataque básico / curación principal (2026-08-15)
+   - Xavier pidió esto porque quería saber si el daño de ataque básico de un duelist tipo Winter
+     Soldier ("Buki") combinado con Hela/Elsa Bloodstone/Squirrel Girl era demasiado para lo que
+     curan sanadores como Jubilee o Rocket Raccoon — quería recomendar sanadores más fuertes
+     contra comps de mucho daño de ráfaga. Primero pidió buscar en GitHub un dataset de estos
+     números; en vez de eso se encontró que marvelrivals.com (la misma fuente oficial ya usada
+     para ref-ultimates-official.json) publica la tabla COMPLETA de habilidades de cada héroe
+     (no solo el ultimate), con Daño/Curación/Cadencia numéricos reales por habilidad.
+   - Scrapeados los 55 héroes (un agente en background, guardado incremental cada 5 héroes) desde
+     sus páginas de anuncio oficiales (mismo patrón de URL que ref-ultimates-official.json).
+     Backup crudo completo (todas las habilidades, no solo daño/curación) en
+     scratchpad de la sesión: hero-ability-stats-raw.json (~908KB) — no se subió al repo, si hace
+     falta reprocesar algo mejor volver a scrapear que confiar en un archivo temporal viejo.
+   - Metodología para el dato final (hero-basic-stats.js):
+     * "basicAttack" = la habilidad #1 de cada héroe (SIEMPRE "Key: Left Click" en las 55,
+       verificado). Se calculó un DPS estimado SOLO cuando el daño y la cadencia son valores
+       simples (un número de daño + "N rondas/golpes por segundo" o "Ns por ronda/golpe", con
+       o sin multiplicador de perdigones si es escopeta) — 30 de 55 héroes calificaron.
+     * Los otros 25 quedaron con el texto oficial crudo (daño + cadencia) sin promedio inventado,
+       porque son combos de varios golpes con daño distinto por golpe (Rogue, Iron Fist, Blade,
+       Wolverine, Captain America), cadencias no uniformes (ráfaga + pausa: Moon Knight,
+       Elsa Bloodstone, Psylocke), o daño que escala con un recurso (Emma Frost, Hawkeye
+       cargando). Mejor mostrar el número real y confuso que un promedio limpio pero falso.
+     * "primaryHeal" (solo los 13 strategists) = la habilidad de curación NO-ultimate con el
+       valor más limpio en formato "N/s", excluyendo la ultimate (cruzada contra
+       ref-ultimates-official.json) y las habilidades pasivas. 11 de 13 dieron un HPS limpio;
+       Luna Snow y Mantis quedaron con texto crudo porque su curación principal escala con % de
+       vida máxima del objetivo, no es un número fijo.
+     * OJO importante encontrado en el camino: para varios sanadores (Jubilee, Jeff the Land
+       Shark, Luna Snow) el ataque básico (clic izquierdo) en realidad hace daño Y cura al mismo
+       tiempo (probablemente golpea aliados con curación y rivales con daño) — Jeff cura 130/s
+       con su básico, que es más que la mayoría de las curaciones "dedicadas" de otros
+       sanadores. Jubilee básico: 11 de daño Y 15 de curación por golpe simultáneos.
+     * Bug real encontrado y corregido durante el armado: un filtro de texto que buscaba "heal"
+       en el título de cada stat agarraba falsos positivos con "Health" (ej. "Illusion Health"
+       de Mantis, que es la vida de un señuelo, no una curación) — se corrigió a exigir
+       "healing" completo o "heal" como palabra exacta.
+   - UI: tabla nueva en el tab Glosario (dos tablas: daño de básicos ordenada de mayor a menor
+     DPS, y curación principal de sanadores ordenada de mayor a menor HPS) vía
+     renderBasicStatsInfographic() en tabs-editor.js, más una línea nueva en la ficha de cada
+     héroe en Personajes (junto al winrate/pickrate/banrate ya existente).
+   - NO se conectó todavía a la lógica de recomendación de sanadores (suggestHealers en
+     analysis.js) — eso era el pedido original de Xavier (recomendar healers fuertes contra
+     comps de mucho daño), pero quedó como infografía de referencia primero. Si Xavier confirma
+     que los números se ven bien, el siguiente paso natural es usar esto para construir esa
+     advertencia/recomendación real.

@@ -171,6 +171,18 @@
   .hq-stat-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;cursor:help;}
   .hq-stat{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
   .hq-stat b{color:var(--st);font-size:12.5px;}
+  .hq-stat.basic-stat-dmg b{color:var(--enemy);}
+  .hq-stat.basic-stat-heal b{color:var(--st);}
+
+  .basic-stats-table-title{font-weight:700;font-size:13.5px;margin:18px 0 8px;color:var(--text);}
+  .basic-stats-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
+  .basic-stats-table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap;}
+  .basic-stats-table th{text-align:left;padding:8px 10px;background:var(--panel-alt);color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;position:sticky;top:0;}
+  .basic-stats-table td{padding:7px 10px;border-top:1px solid var(--line);}
+  .basic-stats-table td.bst-hero{display:flex;align-items:center;gap:7px;font-weight:700;}
+  .basic-stats-table td.bst-raw{white-space:normal;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;max-width:420px;}
+  .basic-stats-table td.bst-num{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--gold);text-align:right;}
+  .basic-stats-table td.bst-num .empty-hint{font-weight:400;font-size:11px;}
   .counter-card .role-mini{font-size:10px;color:var(--muted);margin-left:6px;}
   .counter-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;}
   .pill{background:var(--panel-alt);border:1px solid var(--line);border-radius:20px;padding:5px 11px;font-size:12px;display:flex;align-items:center;gap:6px;}
