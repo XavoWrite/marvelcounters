@@ -1845,3 +1845,23 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      **146.2 dps** (muy cerca del cálculo oficial, lo confirma y reemplaza el numero de baja
      confianza).
    - Probado con Python (json.loads), sintaxis válida.
+
+48) Wolverine (Savage Claw): dps calculado con dato real de Xavier, sin Berserker Rage (2026-08-16)
+   - Savage Claw no tiene daño fijo: "15 + 1.5% de la vida máxima del rival por golpe, con un
+     extra de 0.057% por punto de Rage" — escala con la vida del OBJETIVO, a diferencia de todos
+     los demás héroes calculados hasta ahora. Por eso una prueba contra un tanque (como el primer
+     intento de Xavier contra Magneto) no es comparable con el resto del roster, que usa una vida
+     de referencia de 250 (típica de un dps).
+   - Xavier repitió la prueba (sin Berserker Rage, arrancando desde 0) contra personajes de vida
+     confirmada: contra Black Widow (275 de vida, confirmado por Xavier) tarda 4.41s en vencerla.
+     También probó contra Luna Snow (4.33s) y un bot de práctica (4.21s) pero sin vida confirmada
+     para esos dos, así que no se usaron — Black Widow fue la única con dato de vida seguro.
+   - Cada garrazo carga 10/100 de Berserker Rage (confirmado en esta prueba, coincide con el
+     dato oficial; la medición anterior contra Magneto había dado ~7/100 por golpe, probablemente
+     impreciso).
+   - Xavier repitió la prueba contra otra Black Widow, esta vez ya con Berserker Rage al 100/100
+     (8 golpes): tarda 3.23s en vencerla. Se combinan ambas peleas como una secuencia real
+     sostenida (el Rage se va cargando durante el combate, igual que el método usado con Emma
+     Frost): 550 (2x275) ÷ (4.41+3.23=7.64s) = **72.0 dps**. Reemplaza el 62.4 de la primera
+     pelea sola.
+   - Probado con Python (json.loads), sintaxis válida.

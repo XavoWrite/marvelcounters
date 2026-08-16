@@ -229,8 +229,9 @@ const HERO_BASIC_STATS = {
   "Wolverine": {
     "basicAttack": {
       "name": "Savage Claw",
-      "dmgRaw": "Base Damage: 15 damage per strike",
-      "rateRaw": "Attack Interval: The first three strikes have an interval of 0.27s between them, while the fourth strike has a 0.84s interval from the third strike"
+      "dmgRaw": "Base Damage: 15 + 1.5% de la vida maxima del rival por golpe (escala con la vida del objetivo, no es un numero fijo, extra +0.057%/punto de Rage). Secuencia real sostenida de Xavier contra Black Widow (275 de vida confirmada, 2026-08-16): primera pelea sin Berserker Rage (arrancando desde 0) tarda 4.41s; segunda pelea ya con Rage al 100/100 (8 golpes) tarda 3.23s. Se suman como una pelea real continua donde el Rage se va cargando: 550 (2x275) / 7.64s. Pruebas similares contra Luna Snow (4.33s) y un bot de practica (4.21s) dan tiempos parecidos pero sin vida confirmada, no se usaron",
+      "rateRaw": "Attack Interval: The first three strikes have an interval of 0.27s between them, while the fourth strike has a 0.84s interval from the third strike. Cada garrazo carga 10/100 de Berserker Rage (confirmado en esta prueba, coincide con el dato oficial)",
+      "dps": 72.0
     }
   },
   "Cloak & Dagger": {
