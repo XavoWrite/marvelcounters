@@ -1099,3 +1099,26 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
        el umbral de counter real; Spider-Man/Rogue/Emma Frost/Venom/Iron Fist/Hulk/Mister
        Fantastic quedan en apenas +1, sin corrección profunda todavía pese a que varios videos ya
        los mencionaron de pasada como "melee que atraviesa el escudo").
+
+23) Cloak & Dagger — 4 divers corregidos con el conocimiento de juego de Xavier (2026-08-16)
+   - Xavier revisó la fila de Cloak & Dagger (ya tocada en el punto 20 con el video de
+     Coach_Mills, pero esos 4 pares específicos quedaron sin tocar, del scrape web original) y
+     notó que Black Panther, Magik, Iron Fist y Psylocke aparecían como "counter fuerte" contra
+     ella — los 4 son divers, y según su conocimiento de juego eso está mal: Cloak & Dagger
+     sobrevive más tiempo que otros sanadores contra la mayoría de los divers (fade +
+     invulnerabilidad de su ulti, anti-heal en su forma Cloak, y un aim-assist parecido al de
+     Scarlet Witch que le da precisión poco común en un sanador). Las únicas excepciones reales
+     que dio son Blade (su anti-heal/lifesteal le gana a la sobrevida de C&D) y Thor (puede
+     empujarla fuera de su burbuja) — ambos ya estaban correctamente puestos a su favor (Blade +1,
+     Thor +2) desde el punto 20, así que no se tocaron.
+   - Aplicado (razonamiento propio de Xavier, mismo criterio de siempre — corrección real, no
+     suave, porque da mecánica concreta para cada punto):
+     * Cloak & Dagger → Black Panther: +4 → **0** (de counter fuerte a parejo).
+     * Cloak & Dagger → Magik: +4 → **0**.
+     * Cloak & Dagger → Iron Fist: +5 → **0**.
+     * Cloak & Dagger → Psylocke: +4 → **0**.
+   - Nota: se dejó en "parejo" (0) y no invertido a favor de Cloak & Dagger, porque Xavier dijo
+     que ella "puede sobrevivir cierto tiempo más" — es una lectura de resistencia/neutralización,
+     no de que ella les gane a esos divers de forma clara. Spider-Man/Wolverine/Star-Lord/
+     Daredevil (también divers) ya estaban correctamente a favor de Cloak & Dagger de antes, sin
+     tocar.

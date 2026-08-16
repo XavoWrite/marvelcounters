@@ -2444,8 +2444,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cloak & Dagger": {
-      "score": -5,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Loki": {
       "score": -1,
@@ -3300,8 +3300,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Iron Fist": {
-      "score": 5,
-      "label": "strong"
+      "score": 0,
+      "label": "even"
     },
     "Iron Man": {
       "score": 2,
@@ -3423,12 +3423,12 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Magik": {
-      "score": 4,
-      "label": "strong"
+      "score": 0,
+      "label": "even"
     },
     "Black Panther": {
-      "score": 4,
-      "label": "strong"
+      "score": 0,
+      "label": "even"
     },
     "Black Widow": {
       "score": 1,
@@ -3455,8 +3455,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Psylocke": {
-      "score": 4,
-      "label": "strong"
+      "score": 0,
+      "label": "even"
     },
     "Gambit": {
       "score": 2,
@@ -9340,8 +9340,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cloak & Dagger": {
-      "score": -4,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Loki": {
       "score": -1,
@@ -9557,8 +9557,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cloak & Dagger": {
-      "score": -4,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Loki": {
       "score": 1,
@@ -11076,8 +11076,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Cloak & Dagger": {
-      "score": -4,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Loki": {
       "score": 2,
