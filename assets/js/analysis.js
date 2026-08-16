@@ -4,22 +4,22 @@ function roleCounts(team){
   team.forEach(h=>{ if(h && c[h.r]!==undefined) c[h.r]++; });
   return c;
 }
-// "topPick" (ver topCounterPick mas abajo) es el heroe con mejor puntaje contra ESTE rival puntual
-// -- pedido de Xavier (2026-08-16): la comp "equilibrada" (el caso mas comun, sin arquetipo raro
-// que ya trae su propio consejo puntual) no debe quedar en texto generico ("ajusta counters segun
-// los heroes de abajo"), tiene que nombrar un heroe concreto para vencer a ESTE equipo.
-function compArchetype(counts, filled, topPick){
+// bug real corregido (2026-08-16, señalado por Xavier con una captura de 5 vanguardias): antes
+// "v>=3" siempre mostraba el label fijo "Triple tanque" sin importar si eran 3, 4 o 5 -- ahora el
+// label interpola el conteo real ({v}/{s}/{d}). Tambien se saco la sugerencia de heroe puntual de
+// aca adentro (el "Con {hero} le ganas" que solo aparecia en el caso balanced) -- Xavier: "no
+// comprendi que hace el personaje ahi, que tiene que ver la composicion equilibrada con el
+// personaje". Ahora el pick sugerido (topCounterPick) es SIEMPRE un callout aparte, con su propio
+// icono, para cualquier arquetipo -- ver bloque que llama a compArchetype en renderAnalysis.
+function compArchetype(counts, filled){
   if(filled<6) return null;
   const {Vanguard:v, Duelist:d, Strategist:s} = counts;
-  if(v>=3) return {label:t("analysis.archetype.tripleVanguard.label"), advice:t("analysis.archetype.tripleVanguard.advice")};
-  if(s>=3) return {label:t("analysis.archetype.tripleStrategist.label"), advice:t("analysis.archetype.tripleStrategist.advice")};
-  if(d>=4) return {label:t("analysis.archetype.quadDuelist.label"), advice:t("analysis.archetype.quadDuelist.advice")};
+  if(v>=3) return {label:t("analysis.archetype.tripleVanguard.label", {v}), advice:t("analysis.archetype.tripleVanguard.advice")};
+  if(s>=3) return {label:t("analysis.archetype.tripleStrategist.label", {s}), advice:t("analysis.archetype.tripleStrategist.advice")};
+  if(d>=4) return {label:t("analysis.archetype.quadDuelist.label", {d}), advice:t("analysis.archetype.quadDuelist.advice")};
   if(v===1) return {label:t("analysis.archetype.soloVanguard.label"), advice:t("analysis.archetype.soloVanguard.advice")};
   if(s===1) return {label:t("analysis.archetype.soloStrategist.label"), advice:t("analysis.archetype.soloStrategist.advice")};
-  const advice = topPick
-    ? t("analysis.archetype.balanced.adviceWithPick", {hero: heroIconHtml(topPick.n,16)+"<b>"+heroLabel(topPick.n)+"</b>", role: t('role.'+topPick.r)})
-    : t("analysis.archetype.balanced.advice");
-  return {label:t("analysis.archetype.balanced.label"), advice};
+  return {label:t("analysis.archetype.balanced.label"), advice:t("analysis.archetype.balanced.advice")};
 }
 
 // mejor heroe posible (cualquier rol, sin banear) contra el equipo rival COMPLETO -- reusa
@@ -116,8 +116,33 @@ const DIVE_SURVIVOR_TIER = {
   "White Fox": 1.35, "Gambit": 1.25, "Jubilee": 1.2,
   "Loki": 1.12, "Rocket Raccoon": 1.08, "Ultron": 1.08,
 };
-function diveSurvivorBonus(hero, enemyDive){
-  if(enemyDive>=2 && DIVE_SURVIVOR_TIER[hero.n]) return DIVE_SURVIVOR_TIER[hero.n];
+// enemyVanguard (2026-08-16): la misma lista de supervivencia aplica cuando el rival tiene 3+
+// vanguardias -- pedido de Xavier: "se deben recomendar curadores que puedan escapar o curarse a
+// si mismos de los tanques". Un tanque que te persigue cuerpo a cuerpo (Hulk, The Thing, Devil
+// Dinosaur) le exige al sanador la misma herramienta de escape/autososten que un dive directo.
+function diveSurvivorBonus(hero, enemyDive, enemyVanguard){
+  if((enemyDive>=2 || enemyVanguard>=3) && DIVE_SURVIVOR_TIER[hero.n]) return DIVE_SURVIVOR_TIER[hero.n];
+  return 1;
+}
+
+// cuenta cuantas vanguardias tiene el EQUIPO RIVAL -- sirve para priorizar anti-tanques (dano por
+// % de vida maxima) y sanadores que se autosostienen contra presion sostenida de tanques.
+function enemyVanguardCount(enemyTeam){
+  return enemyTeam.filter(h=>h && h.r==="Vanguard").length;
+}
+// duelistas especializados en reventar tanques via dano por % de vida maxima + autocuracion --
+// pedido de Xavier (2026-08-16): "cuando el equipo rival tenga 3 o mas tanques se debe recomendar
+// usar Wolverine o Iron Fist, que son anti-tanques". Confirmado con busqueda de la comunidad
+// (2026-08-16): Wolverine "hard counters heavy tank teams" (se autocura, aguanta pegado mas
+// tiempo), Iron Fist "great against tanks" (mas dano cuanto mas baja la vida del objetivo).
+// Punisher/Hela/Winter Soldier como alternativa de presion sostenida a distancia, un escalon mas
+// abajo en el mismo consenso.
+const ANTI_TANK_TIER = {
+  "Wolverine": 1.5, "Iron Fist": 1.4,
+  "Punisher": 1.15, "Hela": 1.15, "Winter Soldier": 1.15,
+};
+function antiTankBonus(hero, enemyVanguard){
+  if(enemyVanguard>=3 && ANTI_TANK_TIER[hero.n]) return ANTI_TANK_TIER[hero.n];
   return 1;
 }
 
@@ -278,12 +303,14 @@ function candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow){
     const ref = (typeof externalMatchupScore==="function") ? externalMatchupScore(e.n, h.n) : null;
     if(ref) refSum += ref.score;
   });
-  // bonus de supervivencia: sanadores que aguantan un dive directo cuando el rival tiene 2+
-  // divers, y tanques de escudo que aguantan poke cuando el rival tiene 2+ poke -- ver
-  // diveSurvivorBonus/pokeResistBonus mas arriba. Se calculan del enemyList ya recibido, no hace
-  // falta pasar parametros nuevos a esta funcion compartida.
-  const survivalBonus = diveSurvivorBonus(h, enemyDiveCount(enemyList)) * pokeResistBonus(h, enemyPokeCount(enemyList));
-  const base = goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow)*survivalBonus - badAgainst*2;
+  // bonus de supervivencia: sanadores que aguantan un dive directo (o 3+ tanques encima) cuando
+  // corresponde, y tanques de escudo que aguantan poke cuando el rival tiene 2+ poke -- ver
+  // diveSurvivorBonus/pokeResistBonus mas arriba. bonus de anti-tanque: duelistas que revientan
+  // tanques cuando el rival tiene 3+ vanguardias -- ver antiTankBonus. Se calculan del enemyList
+  // ya recibido, no hace falta pasar parametros nuevos a esta funcion compartida.
+  const enemyVanguardNow = enemyVanguardCount(enemyList);
+  const survivalBonus = diveSurvivorBonus(h, enemyDiveCount(enemyList), enemyVanguardNow) * pokeResistBonus(h, enemyPokeCount(enemyList));
+  const base = goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow)*survivalBonus*antiTankBonus(h,enemyVanguardNow) - badAgainst*2;
   return {score: base + refSum*0.03 + archCycleBonus(h,enemyList), goodAgainst, badAgainst};
 }
 
@@ -593,20 +620,13 @@ function renderAnalysis(){
   if(allyFilled===0){
     left += `<p class="empty-hint">${t("analysis.yourComp.addYours")}</p>`;
   } else {
+    // maximo UNA linea de texto aparte de los chips -- pedido de Xavier (2026-08-16): esta caja
+    // llegaba a apilar hasta 3 lineas (aviso de vanguard + aviso de strategist + jugadores
+    // faltantes), "muy grande... falta priorizar". Prioridad: primero jugadores faltantes (lo mas
+    // accionable), despues el desbalance de rol mas grave si ya estas 6/6 -- nunca las dos a la vez.
+    // El caso "2-2-2 perfecto" ya no dice nada aparte: los chips ya lo muestran de un vistazo.
     const myCounts = roleCounts(allyTeam);
     left += `<div class="comp-banner">${t("analysis.yourComp.summary", {counts: roleCountsIconsHtml(myCounts), n: allyFilled})}`;
-    if(myCounts.Vanguard<=1 && allyFilled>=4){
-      left += `<br>${myCounts.Vanguard===0 ? t("analysis.yourComp.vanguardWarnZero") : t("analysis.yourComp.vanguardWarnOne")}`;
-    } else if(myCounts.Vanguard>=4){
-      left += `<br>${t("analysis.yourComp.tooManyVanguard")}`;
-    }
-    if(myCounts.Strategist<=1 && allyFilled>=4){
-      left += `<br>${myCounts.Strategist===0 ? t("analysis.yourComp.strategistWarnZero") : t("analysis.yourComp.strategistWarnOne")}`;
-    } else if(myCounts.Strategist>=3){
-      left += `<br>${t("analysis.yourComp.tooManyStrategist")}`;
-    } else if(myCounts.Strategist===2 && myCounts.Vanguard===2){
-      left += `<br>${t("analysis.yourComp.perfectBalance")}`;
-    }
     if(allyFilled<6){
       const missing = 6-allyFilled;
       const target = {Vanguard:2, Duelist:2, Strategist:2};
@@ -617,6 +637,14 @@ function renderAnalysis(){
         .map(x=> `${roleIconHtml(x.r,16)}${x.gap>1 ? `${x.gap} ${t('role.'+x.r)}` : t('role.'+x.r)}`);
       const neededSuffix = needed.length ? t("analysis.yourComp.neededRoles", {roles: needed.join(", ")}) : "";
       left += `<br>${tp("analysis.yourComp.missingPlayers", missing, {missing})}${neededSuffix}`;
+    } else if(myCounts.Vanguard<=1){
+      left += `<br>${myCounts.Vanguard===0 ? t("analysis.yourComp.vanguardWarnZero") : t("analysis.yourComp.vanguardWarnOne")}`;
+    } else if(myCounts.Vanguard>=4){
+      left += `<br>${t("analysis.yourComp.tooManyVanguard")}`;
+    } else if(myCounts.Strategist<=1){
+      left += `<br>${myCounts.Strategist===0 ? t("analysis.yourComp.strategistWarnZero") : t("analysis.yourComp.strategistWarnOne")}`;
+    } else if(myCounts.Strategist>=3){
+      left += `<br>${t("analysis.yourComp.tooManyStrategist")}`;
     }
     left += `</div>`;
   }
@@ -689,8 +717,7 @@ function renderAnalysis(){
   } else {
     const counts = roleCounts(enemyTeam);
     const enemyFilledArr = enemyTeam.filter(Boolean);
-    const topPick = enemyFilled===6 ? topCounterPick(enemyFilledArr, bannedPool()) : null;
-    const arche = compArchetype(counts, enemyFilled, topPick);
+    const arche = compArchetype(counts, enemyFilled);
     right += `<div class="comp-banner">${t("analysis.rivalComp.detected", {counts: roleCountsIconsHtml(counts), n: enemyFilled})}`;
     if(arche){
       right += `<br><b>${arche.label}.</b> ${arche.advice}`;
@@ -698,21 +725,36 @@ function renderAnalysis(){
       right += `<br>${t("analysis.rivalComp.addRestForFull")}`;
     }
     right += `</div>`;
+    // pick sugerido SIEMPRE aparte de la descripcion del arquetipo (ver compArchetype) -- pedido de
+    // Xavier (2026-08-16): "no comprendi que hace el personaje ahi, que tiene que ver la
+    // composicion equilibrada con el personaje". Ahora es su propio callout con icono, para
+    // cualquier arquetipo, no solo el caso "equilibrada".
+    if(enemyFilled===6){
+      const topPick = topCounterPick(enemyFilledArr, bannedPool());
+      if(topPick){
+        right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.topPick", {hero: heroIconHtml(topPick.n,18)+"<b>"+heroLabel(topPick.n)+"</b>", role: t('role.'+topPick.r)})}</div>`;
+      }
+    }
+    // avisos de anti-dive/escudo: antes eran un parrafo generico ("2 herramientas anti-dive, tu
+    // dive no va a rematar el combo...") -- pedido de Xavier (2026-08-16): "no es una advertencia
+    // porque es obvio, debemos señalar personaje o personajes". Ahora, si hay 2+ del grupo Y se
+    // puede nombrar una amenaza concreta contra TU equipo actual (mostDangerousEnemyHtml), se
+    // muestra SOLO esa linea con el heroe -- sin parrafo, sin nada si no hay un heroe concreto que
+    // nombrar (ej. todavia no marcaste tu equipo).
     const allyNamesForThreat = allyTeam.filter(Boolean).map(h=>h.n);
     const antiDiveGroup = enemyTeam.filter(h=>h && h.t && (h.t.includes("anti_dive")||h.t.includes("peel")));
     if(antiDiveGroup.length>=2){
       const threat = mostDangerousEnemyHtml(antiDiveGroup, allyNamesForThreat);
-      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.antiDiveWarn", {n: antiDiveGroup.length})}${threat?`<br>${threat}`:""}</div>`;
+      if(threat) right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;
     }
     const shieldGroup = enemyTeam.filter(h=>h && h.t && h.t.includes("shield"));
     if(shieldGroup.length>=2){
       const threat = mostDangerousEnemyHtml(shieldGroup, allyNamesForThreat);
-      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.shieldWarn", {n: shieldGroup.length})}${threat?`<br>${threat}`:""}</div>`;
+      if(threat) right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;
     }
-    // antes aca iba el "perfil de arquetipos" (lista de emojis con conteos, ej. "Dive x1 · Escudo
-    // x1..."). Pedido de Xavier (2026-08-16): "esto lo siento inecesario, mucho texto, podriamos
-    // cambiarlo por otra cosa" -- lo mismo que pidio para el aviso de amenaza, pero al reves: en
-    // vez de un peligro del rival, el punto flaco que le podemos explotar (ver weakestLinkHtml).
+    // simetrico al de arriba pero en positivo: el rival mas explotable con dive (ver
+    // weakestLinkHtml) -- ocupa el lugar donde antes iba el "perfil de arquetipos" (lista de
+    // emojis con conteos).
     const weakLink = weakestLinkHtml(enemyFilledArr, bannedPool());
     if(weakLink){
       right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--good, #2ecc71);">${weakLink}</div>`;
@@ -738,6 +780,7 @@ function renderAnalysis(){
     const shieldHeavyNow = shieldHeavyCount(enemyListForRoles);
     const enemyDiveNow = enemyDiveCount(enemyListForRoles);
     const enemyPokeNow = enemyPokeCount(enemyListForRoles);
+    const enemyVanguardNow = enemyVanguardCount(enemyListForRoles);
     left += `<div class="role-rec-grid">`;
     ["Vanguard","Duelist","Strategist"].forEach(role=>{
       const scores = {};
@@ -746,22 +789,22 @@ function renderAnalysis(){
           const ch = byName[c.c];
           if(!ch || !heroHasRole(ch, role)) return;
           if(banned.has(c.c)) return; // no tiene sentido recomendar algo baneado
-          if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow), survival:diveSurvivorBonus(ch, enemyDiveNow)*pokeResistBonus(ch, enemyPokeNow), refSum:0, archBonus:archCycleBonus(ch, enemyListForRoles)};
+          if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow), survival:diveSurvivorBonus(ch, enemyDiveNow, enemyVanguardNow)*pokeResistBonus(ch, enemyPokeNow), tank:antiTankBonus(ch, enemyVanguardNow), refSum:0, archBonus:archCycleBonus(ch, enemyListForRoles)};
           scores[c.c].hits++;
           if(c.refScore) scores[c.c].refSum += c.refScore.score;
         });
       });
-      // se ordena por hits*relevancia*viabilidad de dive*bonus de shield-break (no solo hits) para
-      // que un sanador que "contrarresta" por utilidad indirecta, o un dive que el rival tiene bien
-      // frenado, no le gane el lugar a algo que de verdad rinde contra esta composición puntual --
-      // el puntaje de referencia externa (refSum) se suma como afinador chico; el ciclo de
-      // arquetipos (archBonus, ver archCycleBonus) se suma a peso completo, igual que en
-      // candidateScoreAgainst, para que desempate con el mismo peso que un matchup 1v1 real entre
-      // candidatos que quedan parejos en lo anterior.
+      // se ordena por hits*relevancia*viabilidad de dive*bonus de shield-break*bonus de anti-tanque
+      // (no solo hits) para que un sanador que "contrarresta" por utilidad indirecta, o un dive que
+      // el rival tiene bien frenado, no le gane el lugar a algo que de verdad rinde contra esta
+      // composición puntual -- el puntaje de referencia externa (refSum) se suma como afinador
+      // chico; el ciclo de arquetipos (archBonus, ver archCycleBonus) se suma a peso completo,
+      // igual que en candidateScoreAgainst, para que desempate con el mismo peso que un matchup 1v1
+      // real entre candidatos que quedan parejos en lo anterior.
       // 4 en vez de 3 -- con retrato en vez de tarjeta de texto, 3 quedaba como una "L" (2 arriba +
       // 1 abajo suelto); 4 completa un cuadrado 2x2 parejo dentro de la columna angosta
       const ranked = Object.entries(scores)
-        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield*b[1].survival + b[1].refSum*0.03 + b[1].archBonus) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield*a[1].survival + a[1].refSum*0.03 + a[1].archBonus))
+        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield*b[1].survival*b[1].tank + b[1].refSum*0.03 + b[1].archBonus) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield*a[1].survival*a[1].tank + a[1].refSum*0.03 + a[1].archBonus))
         .slice(0,4);
       left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(role,16)}${t('role.'+role)}</div>`;
       if(ranked.length===0){
@@ -901,6 +944,7 @@ function renderAnalysis(){
     const shieldHeavyNow = shieldHeavyCount(enemyListForDefinitive);
     const enemyDiveNow = enemyDiveCount(enemyListForDefinitive);
     const enemyPokeNow = enemyPokeCount(enemyListForDefinitive);
+    const enemyVanguardNow = enemyVanguardCount(enemyListForDefinitive);
     const pillHtml = (c, isDefinitive)=>{
       const cls = `pill ${c.have?'have':''} ${c.banned?'hidden-pill':''} ${isDefinitive?'top-pill':''}`;
       // el logo de clase (Vanguard/Duelist/Strategist) es lo unico que distingue, a simple vista,
@@ -930,7 +974,7 @@ function renderAnalysis(){
         // proposito para no tapar la matriz propia ni el ajuste de dive/shield, solo desempata
         // entre candidatos parejos.
         const refBonus = c.refScore ? c.refScore.score*0.03 : 0;
-        const score = c.relevance * diveViability(ch, antiDiveNow) * shieldBreakBonus(ch, shieldHeavyNow) * diveSurvivorBonus(ch, enemyDiveNow) * pokeResistBonus(ch, enemyPokeNow) + refBonus;
+        const score = c.relevance * diveViability(ch, antiDiveNow) * shieldBreakBonus(ch, shieldHeavyNow) * diveSurvivorBonus(ch, enemyDiveNow, enemyVanguardNow) * pokeResistBonus(ch, enemyPokeNow) * antiTankBonus(ch, enemyVanguardNow) + refBonus;
         if(score>bestScore){ bestScore = score; definitiveName = c.c; }
       });
       let ordered = counters;

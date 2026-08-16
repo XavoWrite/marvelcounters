@@ -1204,3 +1204,80 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      Duelistas (Wolverine 4/6, Winter Soldier 2/6, Squirrel Girl 3/6, Hela 2/6) y la fila de
      alternativas de Estratega (Healpool, Mantis, Loki) como casilleros compactos, mismo look que
      el resto de la página. 0 errores de consola tras hard-reload.
+
+25) Tercera tanda: "ventajas y desventajas" en vez de análisis, anti-tanque, y bug del label de
+    arquetipo (2026-08-16)
+   - Xavier mandó 4 capturas (guardadas en la raíz del repo como "Captura de pantalla 2026-08-16
+     0051*.png" y "...0109*.png", no se suben a git, son solo referencia de la conversación) con
+     anotaciones a mano señalando: la palabra "Punto flaco" (jerga argentina confusa — "¿una
+     persona flaca?"), "Comp equilibrada" (leía como "computadora"), el pick de héroe pegado
+     dentro de la misma oración que la descripción del arquetipo (sin relación aparente), "anti-
+     dive" en inglés sin traducir, y las cajas "Tu composición"/"Qué deberías jugar tú" con
+     demasiado texto apilado.
+   - **Bug real corregido**: `compArchetype()` con `v>=3` siempre devolvía el label fijo "Triple
+     tanque" sin importar el conteo real — con una captura de un rival de 5 vanguardias (Devil
+     Dinosaur, The Thing, Hulk, Emma Frost, Magneto + Rocket Raccoon) seguía diciendo "Triple
+     tanque". Ahora los labels de tripleVanguard/tripleStrategist/quadDuelist interpolan el
+     conteo real ({v}/{s}/{d} vía i18n), mismo criterio en ES y EN.
+   - **Pick sugerido separado del arquetipo**: antes el texto "Con {héroe} le ganás a este
+     equipo" solo aparecía pegado adentro del consejo del caso "balanced", fusionado en una sola
+     oración — Xavier: "no comprendí qué hace el personaje ahí, qué tiene que ver la composición
+     equilibrada con el personaje". Ahora `topCounterPick()` se muestra SIEMPRE como su propio
+     comp-banner con ícono (🏆 "Tu mejor pick contra este equipo: {héroe} ({rol})"), separado de
+     la descripción del arquetipo, para cualquier arquetipo (no solo balanced). Se sacó
+     `analysis.archetype.balanced.adviceWithPick` (ya no se usa).
+   - **Avisos de anti-dive/escudo simplificados**: el párrafo genérico ("2 herramientas anti-
+     dive — tu dive puro no va a rematar el combo...") se sacó por completo. Xavier: "no es una
+     advertencia porque es obvio, debemos señalar personaje o personajes... era mejor dejar la
+     fila con la amenaza del equipo es tal personaje". Ahora, si hay 2+ del grupo Y se puede
+     nombrar una amenaza concreta contra el equipo propio actual (`mostDangerousEnemyHtml`), se
+     muestra SOLO esa línea ("⚠️ Vigilá a: {héroe}") — nada si no hay ally picks todavía para
+     calcular una amenaza puntual. De paso resuelve la queja de "anti-dive" sin traducir: ya no
+     aparece esa palabra en la UI en absoluto.
+   - **"Punto flaco" renombrado**: ahora "🎯 Conviene divear a {rival}: {héroe} es tu mejor
+     opción." — mismo dato (weakestLinkHtml sin cambios de lógica), solo texto neutro en vez de
+     la jerga.
+   - **Título de sección renombrado**: "Análisis de composición rival" → "Ventajas y
+     desventajas" (ES) / "Advantages & disadvantages" (EN) — idea de Xavier, encaja con el
+     contenido real de la sección (arquetipo + pick sugerido + amenaza + punto explotable +
+     aviso de sin-lifeline).
+   - **"Tu composición" recortada a máximo 1 línea extra** (antes hasta 3 podían apilarse: aviso
+     de vanguard + aviso de strategist + jugadores faltantes). Prioridad: primero jugadores
+     faltantes (si allyFilled<6, lo más accionable), si no, el desbalance de rol más grave (0-1 o
+     4+ vanguardias antes que lo mismo de estrategas). El caso "2-2-2 perfecto" ya no agrega
+     ninguna línea — los chips de rol ya lo muestran de un vistazo, se sacó
+     `analysis.yourComp.perfectBalance` (sin uso).
+   - **Sistema anti-tanque nuevo** (`ANTI_TANK_TIER`/`antiTankBonus`, analysis.js): pedido
+     concreto de Xavier — "cuando el equipo rival tenga 3 o más tanques se debe recomendar usar
+     Wolverine o Iron Fist, que son anti-tanques... se debe recomendar curadores que puedan
+     escapar o curarse a sí mismos". Antes de programar, se confirmó con búsqueda web (no solo
+     el conocimiento de Xavier, esta vez con fuente externa):
+       * esports.net / gamerant / dexerto (búsqueda "how to counter triple tank Wolverine Iron
+         Fist"): Wolverine "hard counters heavy tank teams" (encima se autocura, aguanta más
+         tiempo pegado al objetivo), Iron Fist "great against tanks" (más daño cuanto más baja
+         la vida del objetivo — K'un-Lun Kick). Punisher/Hela/Winter Soldier como alternativa de
+         presión sostenida a distancia, un escalón más abajo en el mismo consenso.
+       * Aplicado como multiplicador (Wolverine 1.5, Iron Fist 1.4, Punisher/Hela/Winter Soldier
+         1.15) activo cuando `enemyVanguardCount>=3`, mismo patrón que DIVE_SURVIVOR_TIER/
+         SHIELD_TANK_TIER — se multiplica en las 3 fórmulas de puntaje compartidas
+         (`candidateScoreAgainst`, "Mejores picks por rol", "Counters sugeridos por héroe").
+       * Para los sanadores "que puedan escapar o curarse a sí mismos de los tanques": en vez de
+         armar una lista nueva desde cero, se reusa `DIVE_SURVIVOR_TIER` (Cloak & Dagger,
+         Healpool, White Fox, Gambit, Jubilee, Loki, Rocket Raccoon, Ultron) — un tanque brawler
+         que persigue cuerpo a cuerpo (Hulk, The Thing, Devil Dinosaur) le exige al sanador la
+         misma herramienta de escape/autosostén que un dive directo, así que `diveSurvivorBonus`
+         ahora también se activa con `enemyVanguardCount>=3` (antes solo con `enemyDive>=2`).
+   - Probado en vivo (inyección de equipos vía consola, ES y EN, escenario real de la captura de
+     Xavier — rival de 5 vanguardias): confirmado el label dinámico "5 tanques / línea
+     reforzada", el callout de pick separado, "Vigilá a: Devil Dinosaur", "Conviene divear a The
+     Thing: Star-Lord es tu mejor opción", "Tu composición" sin línea extra en 2-2-2 perfecto, y
+     Wolverine apareciendo en el 3er lugar de "Mejores picks contra esta composición" → Duelista
+     (antes NO aparecía en el top 4 para este mismo rival, confirmado comparando con la captura
+     original de Xavier). 0 errores de consola.
+   - **Pendiente, explícitamente para después**: el caso de 3+ estrategas rivales (contraparte del
+     3+ tanques) y compuestos mixtos (3 tanques + 3 healers a la vez) — Xavier pidió buscar en
+     internet cómo se contrarrestan antes de programarlo, no se investigó todavía. También sigue
+     pendiente: "daño principal" vs "daño total" por héroe (agentes en background scrapeando el
+     kit completo de los 55 héroes desde marvelrivals.com, guardado en
+     `hero-full-abilities-RAW-partA.json`/`-partB.json` en la raíz del repo — sin terminar
+     todavía a la fecha de este punto).
