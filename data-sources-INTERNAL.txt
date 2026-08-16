@@ -1450,3 +1450,53 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      le hace counter." — y "Amenaza: Emma Frost — contrarrestalo con Human Torch." sin ninguna
      salvedad (correcto, no hay counter real contra él en este equipo). 0 errores de consola, ES
      y EN.
+
+31) Repaso sistemático: tanques de escudo débiles al melé, tanques grandes débiles al proyectil (2026-08-16)
+   - Xavier pidió aplicar un principio general de diseño: "los tanques con escudo son débiles al
+     melé, los tanques grandes son débiles a los proyectiles". Antes de programar nada, se comparó
+     este principio contra la matriz REAL agrupando héroes por arquetipo ya cargado (`arch`) y tag:
+     shield_tank (Deadpool Vanguard, Devil Dinosaur, Doctor Strange, Emma Frost, Groot, Magneto,
+     The Hood) x duelistas melé/dive (12 héroes) = 84 pares; brawl_tank (Devil Dinosaur, Emma
+     Frost, Hulk, Peni Parker, Rogue, The Thing, Thor) x duelistas poke/sniper/ranged (11 héroes)
+     = 77 pares.
+   - Resultado: 84 pares escudo-vs-melé → 12 ya alineados, 54 parejos, **18 al revés** (el tanque
+     le gana al duelista). 77 pares tanque-grande-vs-proyectil → 18 ya alineados, 57 parejos, solo
+     **2 al revés**.
+   - Los 20 pares "al revés" se repasaron con Xavier uno por uno usando el kit de habilidades real
+     (de `hero-full-abilities-RAW-partA.json`, el scrapeo completo del punto 24), no solo la
+     corazonada del principio general. Los 20 quedaron CONFIRMADOS tal cual están, sin tocar —
+     todos tienen una razón mecánica real:
+     * Emma Frost (7 pares, ya sabida de antes) y Groot (4 pares, nuevo) → ambos tienen control
+       real que atrapa divers (modo diamante/stun de Emma; Strangling Prison de Groot, raíces que
+       atrapan+dañan, más sus muros que bloquean el paso) — no es un escudo pasivo, es CC de
+       verdad.
+     * Devil Dinosaur (3 pares) → su propio kit es todo cuerpo a cuerpo (mordida que escala a
+       %vida en Frenzied Feast + dash de alcance en Savage Predation) y remata a divers frágiles
+       antes de que lo bajen a él.
+     * Doctor Strange (2 pares) → escudo (Shield of the Seraphim) + escape (Cloak of Levitation,
+       dash+vuelo) le alcanza.
+     * Magneto (1 par, vs Star-Lord) → sus escudos cargan un contraataque (Mag-Cannon, más daño
+       cuanto más absorbe) que castiga el engage.
+     * Emma Frost y Thor vs Mister Fantastic (2 pares del grupo tanque-grande) → sin revisar en
+       detalle, cantidad chica, se dejaron como estaban.
+   - **Implementado como bonus general** (no como edición de matchup-matrix.json, ya que no hay
+     pares puntuales mal — el hueco real son los 54+57 pares "parejos" sin corregir uno por uno):
+     `meleeVsShieldTankBonus(hero, enemyList)` y `rangedVsBrawlTankBonus(hero, enemyList)` en
+     analysis.js — +0.6 SUMADO (no multiplicado) al score de cualquier duelista con tag melee/dive
+     contra cualquier enemigo con arquetipo shield_tank, y cualquier duelista con tag poke/sniper/
+     ranged/long_range contra cualquier enemigo con arquetipo brawl_tank. Aplica parejo por tag, a
+     diferencia de ANTI_TANK_TIER/SHIELD_TANK_TIER/DIVE_SURVIVOR_TIER (que son favoritos
+     NOMBRADOS de Xavier) — este es el primer bonus de esta familia basado en arquetipo, no en
+     lista de nombres. Los 20 pares confirmados arriba siguen mandando por matriz real (categoría
+     1/4, ya suman goodAgainst/badAgainst reales), este bonus solo empuja a los que hoy están
+     parejos.
+   - **Bug propio encontrado y corregido antes de confirmar nada**: la primera versión MULTIPLICABA
+     el bonus (1.15x) sobre "base" — pero "base" es `goodAgainst*2*... - badAgainst*2`, así que
+     para un matchup genuinamente parejo (goodAgainst=0) el multiplicador no hacía NADA
+     (0 × 1.15 = 0), justo la población que tenía que empujar. Probado en vivo (Black Cat vs
+     Deadpool Vanguard, matchup parejo real confirmado): con multiplicación el score no cambiaba;
+     cambiado a SUMA (mismo patrón que archCycleBonus/refSum, que ya se suman en vez de
+     multiplicarse) y confirmado que ahora sí aporta +0.6 al score.
+   - Probado en vivo (rival con 4 tanques de escudo — Groot/Magneto/The Hood/Emma Frost): Wolverine
+     e Iron Fist suben en la columna de Duelista, "Tu mejor pick contra este equipo: Wolverine".
+     0 errores de consola.

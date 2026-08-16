@@ -208,6 +208,35 @@ function pokeResistBonus(hero, enemyPoke){
   return 1;
 }
 
+// principio general de Xavier (2026-08-16): "los tanques con escudo son debiles al mele, los
+// tanques grandes son debiles a los proyectiles". A diferencia de ANTI_TANK_TIER/SHIELD_TANK_TIER
+// (favoritos NOMBRADOS), esto es un bonus PAREJO por tag/arquetipo, para cualquier duelista
+// cuerpo a cuerpo/dive contra cualquier tanque con arquetipo shield_tank, y cualquier duelista a
+// distancia contra cualquier tanque con arquetipo brawl_tank. Se reviso la matriz real contra
+// este principio (84 pares escudo-vs-mele, 77 pares tanque grande-vs-proyectil): la enorme
+// mayoria esta "pareja" (nada corregido todavia, este bonus cubre eso) y los 20 pares que ya
+// estaban EN CONTRA del principio general (el tanque le gana al duelista) se repasaron uno por
+// uno con Xavier -- las excepciones tienen mecanica real que las justifica (Emma Frost/Groot
+// tienen control que atrapa divers; Devil Dinosaur mata rapido con su propio combo cuerpo a
+// cuerpo; Doctor Strange/Magneto tienen escape o contraataque cargado) y se confirmaron TAL CUAL
+// estan, sin tocar -- esos pares siguen mandando por matriz real (categoria 1/4), este bonus
+// generico no los pisa porque candidateScoreAgainst ya parte de goodAgainst/badAgainst reales.
+// OJO: se SUMAN (como archCycleBonus), no se multiplican -- un multiplicador sobre "base" no hace
+// nada para un matchup realmente parejo (goodAgainst=0, 0*cualquier-cosa=0), que es justo la
+// poblacion que este bonus tiene que empujar. Probado en vivo antes de confirmar esto (Black Cat
+// vs Deadpool Vanguard, matchup parejo real): con multiplicacion el bonus no cambiaba el score en
+// absoluto; con suma, sí.
+function meleeVsShieldTankBonus(hero, enemyList){
+  if(!hero.t || !(hero.t.includes("melee")||hero.t.includes("dive"))) return 0;
+  const shieldTanks = enemyList.filter(e=>e.arch && e.arch.includes("shield_tank")).length;
+  return shieldTanks>0 ? 0.6 : 0;
+}
+function rangedVsBrawlTankBonus(hero, enemyList){
+  if(!hero.t || !(hero.t.includes("poke")||hero.t.includes("sniper")||hero.t.includes("ranged")||hero.t.includes("long_range"))) return 0;
+  const brawlTanks = enemyList.filter(e=>e.arch && e.arch.includes("brawl_tank")).length;
+  return brawlTanks>0 ? 0.6 : 0;
+}
+
 // ciclo de counters entre arquetipos de Duelista (mismo patron piedra-papel-tijera que usan varias
 // guias de la comunidad, ver hero-roster.js): Todoterreno > Cuerpo a cuerpo > Flanker > Poke >
 // Todoterreno. Antes esto sumaba nada mas cuando el candidato le ganaba en el papel al arquetipo
@@ -377,8 +406,9 @@ function candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow){
   // ya recibido, no hace falta pasar parametros nuevos a esta funcion compartida.
   const enemyVanguardNow = enemyVanguardCount(enemyList);
   const survivalBonus = diveSurvivorBonus(h, enemyDiveCount(enemyList), enemyVanguardNow) * pokeResistBonus(h, enemyPokeCount(enemyList));
+  const tankTypeBonus = meleeVsShieldTankBonus(h,enemyList) + rangedVsBrawlTankBonus(h,enemyList);
   const base = goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow)*survivalBonus*antiTankBonus(h,enemyVanguardNow) - badAgainst*2;
-  return {score: base + refSum*0.03 + archCycleBonus(h,enemyList), goodAgainst, badAgainst};
+  return {score: base + refSum*0.03 + archCycleBonus(h,enemyList) + tankTypeBonus, goodAgainst, badAgainst};
 }
 
 // el "por que" de cada sanador recomendado esta en el diccionario (analysis.healerWhy.<tag>) para
@@ -872,7 +902,7 @@ function renderAnalysis(){
           const ch = byName[c.c];
           if(!ch || !heroHasRole(ch, role)) return;
           if(banned.has(c.c)) return; // no tiene sentido recomendar algo baneado
-          if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow), survival:diveSurvivorBonus(ch, enemyDiveNow, enemyVanguardNow)*pokeResistBonus(ch, enemyPokeNow), tank:antiTankBonus(ch, enemyVanguardNow), refSum:0, archBonus:archCycleBonus(ch, enemyListForRoles)};
+          if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow), survival:diveSurvivorBonus(ch, enemyDiveNow, enemyVanguardNow)*pokeResistBonus(ch, enemyPokeNow), tank:antiTankBonus(ch, enemyVanguardNow), tankTypeBonus:meleeVsShieldTankBonus(ch, enemyListForRoles)+rangedVsBrawlTankBonus(ch, enemyListForRoles), refSum:0, archBonus:archCycleBonus(ch, enemyListForRoles)};
           scores[c.c].hits++;
           if(c.refScore) scores[c.c].refSum += c.refScore.score;
         });
@@ -887,7 +917,7 @@ function renderAnalysis(){
       // 4 en vez de 3 -- con retrato en vez de tarjeta de texto, 3 quedaba como una "L" (2 arriba +
       // 1 abajo suelto); 4 completa un cuadrado 2x2 parejo dentro de la columna angosta
       const ranked = Object.entries(scores)
-        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield*b[1].survival*b[1].tank + b[1].refSum*0.03 + b[1].archBonus) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield*a[1].survival*a[1].tank + a[1].refSum*0.03 + a[1].archBonus))
+        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield*b[1].survival*b[1].tank + b[1].refSum*0.03 + b[1].archBonus + b[1].tankTypeBonus) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield*a[1].survival*a[1].tank + a[1].refSum*0.03 + a[1].archBonus + a[1].tankTypeBonus))
         .slice(0,4);
       left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(role,16)}${t('role.'+role)}</div>`;
       if(ranked.length===0){
@@ -1057,7 +1087,7 @@ function renderAnalysis(){
         // proposito para no tapar la matriz propia ni el ajuste de dive/shield, solo desempata
         // entre candidatos parejos.
         const refBonus = c.refScore ? c.refScore.score*0.03 : 0;
-        const score = c.relevance * diveViability(ch, antiDiveNow) * shieldBreakBonus(ch, shieldHeavyNow) * diveSurvivorBonus(ch, enemyDiveNow, enemyVanguardNow) * pokeResistBonus(ch, enemyPokeNow) * antiTankBonus(ch, enemyVanguardNow) + refBonus;
+        const score = c.relevance * diveViability(ch, antiDiveNow) * shieldBreakBonus(ch, shieldHeavyNow) * diveSurvivorBonus(ch, enemyDiveNow, enemyVanguardNow) * pokeResistBonus(ch, enemyPokeNow) * antiTankBonus(ch, enemyVanguardNow) + refBonus + meleeVsShieldTankBonus(ch, enemyListForDefinitive) + rangedVsBrawlTankBonus(ch, enemyListForDefinitive);
         if(score>bestScore){ bestScore = score; definitiveName = c.c; }
       });
       let ordered = counters;
