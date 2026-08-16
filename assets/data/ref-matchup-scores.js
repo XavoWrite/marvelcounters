@@ -2286,8 +2286,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hulk": {
-      "score": -2,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Groot": {
       "score": -4,
@@ -5473,8 +5473,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Punisher": {
-      "score": 1,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Cyclops": {
       "score": 0,
@@ -5690,8 +5690,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Squirrel Girl": {
-      "score": -1,
-      "label": "weak"
+      "score": 2,
+      "label": "favorable"
     },
     "Cyclops": {
       "score": 0,
@@ -5774,7 +5774,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Magneto": {
-      "score": 1,
+      "score": 2,
       "label": "favorable"
     },
     "Invisible Woman": {
@@ -6499,8 +6499,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Human Torch": {
-      "score": 2,
-      "label": "favorable"
+      "score": -2,
+      "label": "weak"
     },
     "Iron Fist": {
       "score": -1,
@@ -6618,7 +6618,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Ultron": {
-      "score": -1,
+      "score": -2,
       "label": "weak"
     },
     "Hawkeye": {
@@ -8965,7 +8965,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Hulk": {
-      "score": 1,
+      "score": 2,
       "label": "favorable"
     },
     "Groot": {
@@ -10251,7 +10251,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Punisher": {
-      "score": -1,
+      "score": -2,
       "label": "weak"
     },
     "Cyclops": {

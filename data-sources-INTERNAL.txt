@@ -1315,3 +1315,112 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      disponible (Punisher / Hela según el caso), y el aviso de sin-lifeline nombra un estratega
      propio concreto en vez del párrafo explicativo. 0 errores de consola en ambos escenarios y
      ambos idiomas.
+
+27) Corrección Punisher vs Magneto/Chica Ardilla en ref-matchup-scores.json (2026-08-16)
+   - Xavier aclaró el origen de ambos datos, pedidos en el punto anterior:
+     * Magneto → Punisher: "estaba en los videos, decía que al usar su ulti Magneto le hacía
+       counter [a Punisher]" — mecánicamente plausible (la burbuja de Magneto bloquea fuego
+       sostenido a distancia como el de Punisher), tratado como fuente única (no pudo re-citar el
+       video puntual en este mensaje) → corrección suave, magnitud ±2.
+     * Chica Ardilla → Punisher: conocimiento propio de Xavier, con mecánica concreta — "yo uso
+       muchas veces a Chica Ardilla y esta logra vencer a Punisher varias veces por el daño de sus
+       nueces, igual que puede vencer a otros pokes con facilidad, solo que su falta de movilidad
+       la hace vulnerable... no es el mejor DPS para otro tipo de encuentros" (la salvedad es
+       sobre su versatilidad general, no sobre este matchup puntual) → fuente única con
+       razonamiento mecánico propio → corrección suave, magnitud ±2, mismo criterio de siempre.
+   - Ojo importante: la matriz PROPIA (matchup-matrix.json, categoría 1-4, la que usa
+     getMatchupCode/getCounters/"Alineación en riesgo") NO tenía a Magneto entre los counters
+     reales de Punisher — la lista real ahí es Iron Fist/Black Panther/Magik/Psylocke. Lo que se
+     corrigió es el score de REFERENCIA EXTERNA (ref-matchup-scores.json, rivalscounter.com,
+     usado solo como afinador chico de 0.03 en las fórmulas de puntaje) — de +1/-1 (ambos
+     "parejo"/leve) a +2/-2 ("favorable"/"weak" reforzado). Como ±2 no cruza el umbral ±4, la
+     categoría 1-4 de matchup-matrix.json NO cambia (sigue en "parejo" en ambos pares) — el efecto
+     es sutil (desempate en la fórmula de puntaje), no un cambio visible en la matriz principal.
+     Si Xavier quiere que Magneto/Chica Ardilla aparezcan como counters REALES de Punisher en
+     "Counters sugeridos por héroe", eso requeriría editar matchup-matrix.json directamente
+     (categoría 1), no solo el score de referencia — pendiente de confirmar si es lo que quiere.
+   - Aplicado: `ref-matchup-scores.json` (Punisher↔Magneto y Punisher↔Squirrel Girl, las 4
+     entradas direccionales) + regenerado `assets/data/ref-matchup-scores.js` desde el JSON
+     (diff verificado: solo esas 4 entradas cambiaron). Verificado en vivo con
+     `externalMatchupScore("Punisher","Magneto")`/`(...,"Squirrel Girl")` → {score:2,
+     label:"favorable"} en ambos, `getMatchupCode` sin cambios (sigue 2/parejo). 0 errores de
+     consola.
+   - Nota técnica descubierta en el camino: existe un TERCER archivo raíz con datos de matchups,
+     `matchup-scores-export.json` (gitignored, no listado antes en este archivo), que alimenta
+     `SEED_SCORES` en matchup-editor-stream.html. Se comparó contra ref-matchup-scores.json y
+     tienen 346 de 2970 pares con valores distintos — NO son un espejo 1:1 estricto (parece un
+     snapshot más viejo usado como punto de partida del editor visual, no algo que se
+     resincroniza en cada corrección puntual). Se dejó sin tocar a propósito para esta corrección
+     — matchup-editor-stream.html es una herramienta aparte, no afecta lo que ve el usuario en
+     la app. Si en algún momento hay que reconciliar los 3 archivos raíz de matchups, señalarlo
+     antes de asumir que están sincronizados.
+
+28) Bugs de UI corregidos con capturas de Xavier (2026-08-16)
+   - **"Vigilá a: Doctor Strange" duplicado**: Doctor Strange tiene tags "shield" Y "anti_dive" a
+     la vez (hero-roster.js) — al ser la amenaza mayor calculada independientemente para el grupo
+     anti-dive Y para el grupo de escudo, el mismo texto salía dos veces seguidas. Corregido con
+     un Set que deduplica por el HTML ya armado antes de agregar cada banner.
+   - **Fila anti-tanque no mostraba a Wolverine/Iron Fist**: la primera versión (punto 26) elegía
+     "el que mejor puntúe contra ESTA composición puntual" entre todo ANTI_TANK_TIER, lo cual
+     podía dejarlos afuera si Punisher rendía mejor en la matriz 1v1 para ese rival específico —
+     confirmado con captura de Xavier mostrando "Usá Punisher" en vez de los 2 nombres pedidos.
+     Corregido: ahora se nombran SIEMPRE Wolverine e Iron Fist (si no están baneados), sin
+     competencia de puntaje; solo cae a las alternativas de presión a distancia
+     (Punisher/Hela/Winter Soldier) si ambos especialistas están baneados. El "evitar a X" ahora
+     exige que TODOS los héroes recomendados pierdan contra ese tanque puntual (intersección, no
+     unión) para no sobre-advertir. Probado en vivo con el escenario exacto de la captura de
+     Xavier (rival: The Thing/Doctor Strange/Magneto/Emma Frost/Hulk/Rocket Raccoon): confirmado
+     "Usá Wolverine / Iron Fist contra sus tanques — evitá pelear con The Thing." 0 errores de
+     consola.
+
+29) Punisher/Magneto/Chica Ardilla a counter real + más correcciones + rediseño de avisos (2026-08-16)
+   - **Bug propio detectado y corregido durante la edición**: al principio invertí Magneto↔Hawkeye
+     por error (pensé que la matriz decía "Hawkeye le gana fácil a Magneto" cuando en realidad
+     decía lo correcto — "Magneto le gana fácil a Hawkeye" — me confundí de argumento al leer
+     `getMatchupCode(a,b)`). Revertido antes de guardar nada. Lección: `matrix[H][X]=1` significa
+     "X contrarresta a H" (malo para H); `matrix[H][X]=4` significa "H le gana fácil a X" (bueno
+     para H) — y para que un par quede consistente hay que escribir AMBAS direcciones a la vez
+     (matrix[H][X]=1 y matrix[X][H]=4, nunca solo una).
+   - **Punisher vs Magneto/Chica Ardilla → counters REALES** (pedido explícito de Xavier: "hacé
+     que sean counters reales de Punisher"): editado matchup-matrix.json (no solo el score de
+     referencia del punto 27) — `matrix["Punisher"]["Magneto"]=1`,
+     `matrix["Magneto"]["Punisher"]=4`, mismo patrón para Squirrel Girl. Regenerado
+     `assets/js/matchups.js` (línea 17, `const MATCHUP_MATRIX = {...}`) desde el JSON raíz.
+     **Bug de regeneración encontrado y corregido en el momento**: la primera regeneración agregó
+     una llave de cierre de más (`}}}');` en vez de `}});`) porque `json.dumps()` del objeto ya
+     trae sus propias 2 llaves de cierre (una del héroe interno, una del objeto externo) — agregar
+     "};" de más rompía el parseo (`SyntaxError: Unexpected token '}'`, confirmado en consola).
+     Corregido y verificado con `python -c "... == ..."` (True) antes de dar por buena la
+     regeneración. Verificado en vivo: `getCounters("Punisher",[])` ahora incluye Magneto y
+     Squirrel Girl junto a Iron Fist/Black Panther/Magik/Psylocke; "Alineación en riesgo" de
+     Punisher muestra "Lo contrarrestan: Magneto" correctamente.
+   - **Hulk vs voladores (Human Torch, Ultron)**: Xavier — "Human Torch es un volador y Hulk puede
+     tumbar a los voladores, a Human Torch y Ultron se le complica pero lo puede lograr". Fuente
+     única con razón mecánica pero con matiz de incertidumbre ("se le complica") → corrección
+     suave (±2, sin cruzar el umbral de counter real), solo en `ref-matchup-scores.json`:
+     Human Torch↔Hulk: -2/+2 → +2/-2 (invertido). Ultron↔Hulk: +1/-1 → +2/-2 (mismo sentido,
+     reforzado). NO se tocó matchup-matrix.json para este par — a diferencia de Punisher/Magneto,
+     acá no hubo pedido explícito de Xavier de subirlo a counter real, solo reforzar la referencia.
+   - **"❤️‍🩹 Rival sin sanador principal" eliminado por completo** — Xavier: "eso no nos sirve
+     como ventaja". Se sacó el banner, la función helper y las claves i18n
+     (`analysis.rivalComp.noLifelineWarn`). El parámetro `role` de `topCounterPick()` (agregado en
+     el punto 26 solo para esto) también se sacó por quedar sin uso.
+   - **"Vigilá a: {héroe}" rediseñado** para incluir el counter, mismo formato "X — usá Y" que ya
+     tenía `weakestLinkHtml` — Xavier: "vigilá a sería mejor decir el enemigo más fuerte es, lo
+     contrarrestás con, y sale el personaje". `mostDangerousEnemyHtml()` ahora también devuelve
+     cuál de tus héroes YA ELEGIDOS lo contrarresta (el de mayor relevancia entre los que tenés).
+     Nuevo texto: "⚠️ Amenaza: {héroe} — contrarrestalo con {counter}." Si no hay un counter propio
+     que nombrar, no se muestra nada (mismo criterio que antes).
+   - Probado en vivo (ES y EN, escenario con Loki de sanador rival + Magneto/Hulk de tanques):
+     confirmado "Amenaza: Emma Frost — contrarrestalo con Human Torch.", "Punto débil rival: Loki
+     — usá Hawkeye." (sin cambios), "Usá Wolverine / Iron Fist contra sus tanques — evitá pelear
+     con The Thing.", el banner de sin-lifeline ya no aparece en ningún lado, y "Alineación en
+     riesgo" de Punisher muestra a Magneto como counter real. 0 errores de consola en ambos
+     idiomas tras corregir el bug de regeneración.
+   - Xavier preguntó por qué el sistema recomendaba a Hawkeye contra Loki y si "es porque es el
+     menos peor" — no llegué a confirmar el detalle puntual de ESE cálculo (no hubo tiempo en esta
+     tanda), queda pendiente si vuelve a preguntarlo con una composición específica.
+   - Xavier pidió explícitamente sugerencias de proceso para reducir la carga de estar mandando
+     capturas y correcciones sueltas una por una — pendiente de proponerle algo concreto (ej.
+     un formulario/plantilla corta para reportar correcciones, o revisar en bloque cada N
+     correcciones en vez de una por una) en la próxima respuesta.

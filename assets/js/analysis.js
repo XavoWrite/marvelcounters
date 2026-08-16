@@ -26,17 +26,13 @@ function compArchetype(counts, filled){
 // candidateScoreAgainst (misma formula que recommendMyPick/suggestGhostFills/Mejores picks por
 // rol) para que la sugerencia de la comp "equilibrada" sea consistente con el resto de la app, no
 // un criterio nuevo aparte.
-// "role" opcional (2026-08-16): filtra los candidatos a un solo rol -- reusado para sugerir
-// especificamente un ESTRATEGA propio en el aviso de "sin sanador principal rival" (ver
-// noLifelineWarn en renderAnalysis), en vez de un parrafo sin accion concreta.
-function topCounterPick(enemyList, banned, role){
+function topCounterPick(enemyList, banned){
   if(!enemyList.length) return null;
   const antiDiveNow = antiDiveCount(enemyList);
   const shieldHeavyNow = shieldHeavyCount(enemyList);
   let best = null, bestScore = -Infinity;
   HEROES.forEach(h=>{
     if(banned.has(h.n)) return;
-    if(role && !heroHasRole(h, role)) return;
     const {score} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
     if(score>bestScore){ bestScore=score; best=h; }
   });
@@ -163,24 +159,26 @@ function antiTankBonus(hero, enemyVanguard){
 // fila explicita para el caso 3+ vanguardias -- antes el bonus de ANTI_TANK_TIER solo influia el
 // orden de "Mejores picks por rol", en silencio. Pedido de Xavier (2026-08-16): "deberia salir una
 // fila que diga, usar a wolverine y iron fist... mostrando que si hay the thing evitar la pelea
-// con este e ir por los otros tanques" -- nombra el mejor anti-tanque disponible Y, dentro de los
-// vanguardias rivales puntuales, cuales le convienen (matriz 1v1 a su favor) y cuales evitar
-// (matriz 1v1 en su contra), en vez de tratar a todos los tanques rivales igual.
+// con este e ir por los otros tanques".
+// ajuste (2026-08-16, con captura): la primera version elegia "el que mejor puntue" de
+// ANTI_TANK_TIER contra la composicion puntual -- eso podia dejar afuera a Wolverine/Iron Fist si
+// otro pick del tier (ej. Punisher) rendia mejor en la matriz 1v1 para ESE rival especifico.
+// Xavier pidio los nombres puntuales, no "el que mejor puntue": ahora se nombran SIEMPRE los 2
+// especialistas anti-tanque (dano por % de vida + autocuracion) si no estan baneados, y solo cae
+// a las alternativas de presion a distancia (Punisher/Hela/Winter Soldier) si ambos lo estan.
+// "Evitar a X" ahora exige que TODOS los heroes recomendados pierdan contra ese tanque puntual
+// (interseccion, no union) para no marcar "evitar" con demasiada facilidad si solo uno de los dos
+// tiene una mala matriz contra el.
 function antiTankRowHtml(enemyList, banned){
   const vanguards = enemyList.filter(h=>h.r==="Vanguard");
   if(vanguards.length<3) return "";
-  let best = null, bestScore = -Infinity;
-  const antiDiveNow = antiDiveCount(enemyList), shieldHeavyNow = shieldHeavyCount(enemyList);
-  Object.keys(ANTI_TANK_TIER).forEach(n=>{
-    if(banned.has(n)) return;
-    const h = byName[n];
-    if(!h) return;
-    const {score} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
-    if(score>bestScore){ bestScore=score; best=h; }
-  });
-  if(!best) return "";
-  const avoid = vanguards.filter(v=>getMatchupCode(best.n, v.n)===1).map(v=>heroLabel(v.n));
-  const heroTag = heroIconHtml(best.n,18)+"<b>"+heroLabel(best.n)+"</b>";
+  let picks = ["Wolverine","Iron Fist"].filter(n=>!banned.has(n) && byName[n]);
+  if(!picks.length){
+    picks = Object.keys(ANTI_TANK_TIER).filter(n=>!banned.has(n) && byName[n]).slice(0,1);
+  }
+  if(!picks.length) return "";
+  const avoid = vanguards.filter(v=>picks.every(n=>getMatchupCode(n, v.n)===1)).map(v=>heroLabel(v.n));
+  const heroTag = picks.map(n=>heroIconHtml(n,18)+"<b>"+heroLabel(n)+"</b>").join(" / ");
   return avoid.length
     ? t("analysis.rivalComp.antiTankAvoid", {hero: heroTag, avoid: avoid.join(", ")})
     : t("analysis.rivalComp.antiTank", {hero: heroTag});
@@ -292,16 +290,25 @@ function dmgHealBarHtml(team){
 // que mas te cuenta a TI -- mide con la misma cuenta que ya usa computeWinProbability (cuantos de
 // TUS picks actuales contrarresta, pesado por relevancia). Pedido de Xavier (2026-08-16): en vez
 // de solo avisar "el rival tiene 2 escudos", nombrar a quien de ese grupo es la amenaza real.
+// devuelve tambien CUAL de tus heroes ya elegidos lo contrarresta -- pedido de Xavier
+// (2026-08-16): "vigila a seria mejor decir el enemigo mas fuerte es, lo contrarrestas con y sale
+// el personaje", mismo formato "X -- usa Y" que ya tiene weakestLinkHtml.
 function mostDangerousEnemyHtml(enemyGroup, allyNames){
   if(!allyNames.length) return "";
-  let best = null, bestScore = 0;
+  let best = null, bestScore = 0, bestCounter = null;
   enemyGroup.forEach(e=>{
     const haveCounters = getCounters(e.n, allyNames).filter(c=>c.have);
     const score = haveCounters.reduce((s,c)=>s+c.relevance,0);
-    if(score>bestScore){ bestScore=score; best=e; }
+    if(score>bestScore){
+      bestScore = score; best = e;
+      bestCounter = haveCounters.slice().sort((a,b)=>b.relevance-a.relevance)[0];
+    }
   });
-  if(!best) return "";
-  return t("analysis.rivalComp.biggestThreat", {hero: heroIconHtml(best.n,18)+"<b>"+heroLabel(best.n)+"</b>"});
+  if(!best || !bestCounter) return "";
+  return t("analysis.rivalComp.biggestThreat", {
+    hero: heroIconHtml(best.n,18)+"<b>"+heroLabel(best.n)+"</b>",
+    counter: heroIconHtml(bestCounter.c,18)+"<b>"+heroLabel(bestCounter.c)+"</b>",
+  });
 }
 
 // veredicto CRUZADO (a diferencia de dmgHealBarHtml, que solo mira UN equipo): compara el dano
@@ -781,16 +788,28 @@ function renderAnalysis(){
     // puede nombrar una amenaza concreta contra TU equipo actual (mostDangerousEnemyHtml), se
     // muestra SOLO esa linea con el heroe -- sin parrafo, sin nada si no hay un heroe concreto que
     // nombrar (ej. todavia no marcaste tu equipo).
+    // bug real corregido (2026-08-16, captura de Xavier: "Vigilá a: Doctor Strange" salía DOS
+    // veces seguidas) -- un heroe puede tener tag "shield" Y "anti_dive" a la vez (Doctor Strange
+    // es el caso: shield_tank con anti_dive en hero-roster.js), asi que si es la amenaza mas
+    // grande de AMBOS grupos, el texto identico se repetia. shownThreats deduplica por el HTML ya
+    // armado (mismo heroe = mismo string exacto).
     const allyNamesForThreat = allyTeam.filter(Boolean).map(h=>h.n);
+    const shownThreats = new Set();
     const antiDiveGroup = enemyTeam.filter(h=>h && h.t && (h.t.includes("anti_dive")||h.t.includes("peel")));
     if(antiDiveGroup.length>=2){
       const threat = mostDangerousEnemyHtml(antiDiveGroup, allyNamesForThreat);
-      if(threat) right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;
+      if(threat && !shownThreats.has(threat)){
+        shownThreats.add(threat);
+        right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;
+      }
     }
     const shieldGroup = enemyTeam.filter(h=>h && h.t && h.t.includes("shield"));
     if(shieldGroup.length>=2){
       const threat = mostDangerousEnemyHtml(shieldGroup, allyNamesForThreat);
-      if(threat) right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;
+      if(threat && !shownThreats.has(threat)){
+        shownThreats.add(threat);
+        right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;
+      }
     }
     // simetrico al de arriba pero en positivo: el rival mas explotable con dive (ver
     // weakestLinkHtml) -- ocupa el lugar donde antes iba el "perfil de arquetipos" (lista de
@@ -805,17 +824,9 @@ function renderAnalysis(){
     if(antiTankRow){
       right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--good, #2ecc71);">${antiTankRow}</div>`;
     }
-    const enemyStrategists = enemyFilledArr.filter(h=>h.r==="Strategist");
-    const allStrategistsClassified = enemyStrategists.length>0 && enemyStrategists.every(h=>h.arch && h.arch.length);
-    if(allStrategistsClassified && !enemyStrategists.some(h=>h.arch.includes("lifeline"))){
-      // pedido de Xavier (2026-08-16): "me parece mucho texto... deberia recomendar un healer
-      // para mi equipo" -- en vez de solo explicar por que el sostén rival es mas bajo de lo que
-      // parece, ahora nombra directamente tu mejor estratega disponible contra este rival puntual.
-      const healer = topCounterPick(enemyFilledArr, bannedPool(), "Strategist");
-      if(healer){
-        right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.noLifelineWarn", {hero: heroIconHtml(healer.n,18)+"<b>"+heroLabel(healer.n)+"</b>"})}</div>`;
-      }
-    }
+    // el aviso de "sin sanador principal" se sacó por completo -- pedido de Xavier (2026-08-16):
+    // "eso no nos sirve como ventaja". El pick de estratega recomendado ya sale, con mas contexto,
+    // en "Mejores picks por rol" (columna Estratega) mas abajo -- no hacia falta un banner aparte.
   }
 
   right += `</div>`;

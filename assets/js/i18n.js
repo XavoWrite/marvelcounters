@@ -207,10 +207,9 @@ es: {
   "analysis.healEff.efficient": "Curación eficiente contra el rival",
   "analysis.healEff.inefficient": "Curación insuficiente contra el rival",
   "analysis.healEff.detail": "Rival: ~{enemyDps} daño/seg por cabeza · tu curación total: {heal}/seg",
-  "analysis.rivalComp.biggestThreat": "⚠️ Vigilá a: {hero}",
+  "analysis.rivalComp.biggestThreat": "⚠️ Amenaza: {hero} — contrarrestalo con {counter}.",
   "analysis.rivalComp.weakestLink": "🎯 Punto débil rival: {weak} — usá {counter}.",
   "analysis.rivalComp.topPick": "🏆 Tu mejor pick contra este equipo: {hero} ({role})",
-  "analysis.rivalComp.noLifelineWarn": "❤️‍🩹 Rival sin sanador principal — {hero} es tu mejor estratega acá.",
   "analysis.rivalComp.antiTank": "🐺 Usá {hero} contra sus tanques.",
   "analysis.rivalComp.antiTankAvoid": "🐺 Usá {hero} contra sus tanques — evitá pelear con {avoid}.",
 
@@ -576,10 +575,9 @@ en: {
   "analysis.healEff.efficient": "Efficient healing against the enemy",
   "analysis.healEff.inefficient": "Insufficient healing against the enemy",
   "analysis.healEff.detail": "Enemy: ~{enemyDps} dmg/s per head · your total healing: {heal}/s",
-  "analysis.rivalComp.biggestThreat": "⚠️ Watch out for: {hero}",
+  "analysis.rivalComp.biggestThreat": "⚠️ Threat: {hero} — counter it with {counter}.",
   "analysis.rivalComp.weakestLink": "🎯 Weak link: {weak} — use {counter}.",
   "analysis.rivalComp.topPick": "🏆 Your best pick against this team: {hero} ({role})",
-  "analysis.rivalComp.noLifelineWarn": "❤️‍🩹 No enemy lifeline healer — {hero} is your best strategist here.",
   "analysis.rivalComp.antiTank": "🐺 Use {hero} against their tanks.",
   "analysis.rivalComp.antiTankAvoid": "🐺 Use {hero} against their tanks — avoid fighting {avoid}.",
 
