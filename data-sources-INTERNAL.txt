@@ -1500,3 +1500,49 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
    - Probado en vivo (rival con 4 tanques de escudo — Groot/Magneto/The Hood/Emma Frost): Wolverine
      e Iron Fist suben en la columna de Duelista, "Tu mejor pick contra este equipo: Wolverine".
      0 errores de consola.
+
+32) "Daño principal" recalculado para los 55 héroes con el kit completo (2026-08-16)
+   - Xavier pidió retomar esto usando el scrapeo completo de habilidades del punto 24
+     (`hero-full-abilities-RAW-partA/B.json`), no solo el ataque básico aislado que se había
+     guardado originalmente. Se delegó a un fork (mismo criterio ya validado a mano con Iron Man y
+     Spider-Man): identificar la habilidad "Normal Attack" real (Key: <icono>, primera del JSON),
+     calcular DPS limpio cuando el patrón de daño/cadencia es fijo y predecible (incluyendo ciclos
+     de combo de varios golpes, mismo criterio que el fix de Spider-Man), y dejar el texto crudo
+     sin dps cuando escala con recurso/carga/vida — mismo criterio "mejor confuso que limpio pero
+     falso" de siempre.
+   - Editado `assets/data/hero-basic-stats.js`: 20 de 55 héroes cambiaron, 35 quedaron iguales
+     (ya estaban bien). Verificados a mano contra el JSON crudo antes de confiar en el resultado
+     del fork (Cyclops, Hulk, y las 3 curaciones corregidas — los 4 casos coinciden exactamente
+     con el texto fuente):
+     * **Bug real (no solo un hueco)**: Cyclops tenía 36.7 dps, calculado ignorando que su Optic
+       Blast pega 3 veces por ráfaga ("Hit Checks Per Attack: 3") — el dato viejo solo usaba
+       22×(1/0.6). Corregido a **110.0** (22×3/0.6).
+     * Huecos rellenados con ciclos de combo limpios (mismo patrón que Spider-Man): Spider-Man
+       57.7, Iron Fist 78.9, Rogue 82.7, The Thing 60.2, Devil Dinosaur 77.6, Moon Knight 111.9,
+       Psylocke 40.0, Elsa Bloodstone 23.9 (ráfaga+pausa), Black Widow 90.0, Doctor Strange 100.1,
+       Loki 43.8 (cálculo directo simple), Magneto 50.0, Peni Parker 50.0, White Fox 88.9 (estos 3
+       con daño directo + campo de área secundario -- solo se cuenta el directo, mismo criterio
+       que Iron Man).
+     * **Hulk — decisión de diseño confirmada con Xavier**: tiene 3 formas (Bruce Banner débil con
+       pistola de 80 dps; Hero Hulk, la forma de combate real; Monster Hulk, un power-up temporal
+       de 12s activado con "Hulk Smash!" que da más daño todavía -- 134.6 dps con su propio Heavy
+       Blow, no usado). Se usa **Hero Hulk** (45 dmg, Attack Interval 0.467s → **96.4 dps**) como
+       representativo, mismo criterio que excluir ultimates/power-ups temporales de otros héroes.
+       Confirmado por Xavier ("dejalo así").
+     * **Luna Snow — dato con confianza más baja, sin objeción de Xavier**: 144.0 dps (72 dmg de
+       ráfaga de 3 tiros / 0.5s de cadencia entre ráfagas). El texto no es tan explícito como los
+       demás casos de ráfaga+pausa, pero la lectura más razonable del texto ("Fire Rate: 0.5s for
+       three shots") coincide con el cálculo. Verificado el texto crudo, se sostiene.
+     * 3 curaciones de estrategas corregidas -- el nombre de habilidad guardado (de la sesión
+       2026-08-15 original) ya NO EXISTE en el kit actual, en ningún lado (verificado contra el
+       JSON crudo completo, no solo comparado con lo viejo): Gambit "Favorable Odds" (dato de su
+       ULTIMATE, mal etiquetado) → **"Kinetic Cards"** (su básico, con curación real); Jubilee
+       "Vampiric Kin" (no existe) → **"Energy Plasmoids"** (120/s); Invisible Woman "First Family"
+       (no existe) → **"Guardian Shield"** (50/s).
+   - **Sin resolver, dejado sin tocar**: Cloak & Dagger -- su curación guardada ("Dagger Storm",
+     50/s) tampoco existe en el kit actual, pero no se encontró un reemplazo limpio no-ultimate
+     entre sus habilidades (solo "Eternal Bond", claramente su ultimate). Necesita revisión manual
+     con Xavier más adelante.
+   - Sin cambios (ya correctos o genuinamente sin dato limpio posible -- daño que escala con
+     carga/energía/%vida): Emma Frost, Hawkeye, Wolverine, Captain America, Blade, Black Cat,
+     Daredevil, Invisible Woman (básico), Ultron, Venom, y el resto de los 35 no listados arriba.

@@ -15,25 +15,26 @@ const HERO_BASIC_STATS = {
       "dps": 88.0
     },
     "primaryHeal": {
-      "name": "VAMPIRIC KIN",
-      "key": "C",
-      "hps": 25.0,
-      "raw": "Healing Over Time: 25/s"
+      "name": "Energy Plasmoids",
+      "key": "Left Click",
+      "hps": 120,
+      "raw": "Healing: 15 per hit (parte del ataque basico, antes referenciaba una habilidad 'Vampiric Kin' que no existe en el kit actual)"
     }
   },
   "Cyclops": {
     "basicAttack": {
       "name": "Optic Blast",
-      "dmgRaw": "Damage per Tick: 22",
-      "rateRaw": "Attack Interval: 0.6s",
-      "dps": 36.7
+      "dmgRaw": "Damage: 22 per tick, 3 ticks per attack (66 total)",
+      "rateRaw": "Attack Interval: 0.6s per attack",
+      "dps": 110.0
     }
   },
   "Devil Dinosaur": {
     "basicAttack": {
       "name": "Primal Bite",
-      "dmgRaw": "Damage: 75",
-      "rateRaw": "Attack Interval: 1st and 3rd attacks: 1s; 2nd attack: 0.9s"
+      "dmgRaw": "Damage: 75 per hit (3-hit cycle)",
+      "rateRaw": "Attack Interval: 1s, 0.9s, 1s (cycle repeats)",
+      "dps": 77.6
     }
   },
   "Black Cat": {
@@ -44,9 +45,10 @@ const HERO_BASIC_STATS = {
   },
   "White Fox": {
     "basicAttack": {
-      "name": "YEOWOO GUSEUL",
-      "dmgRaw": "Damage: Direct hit: 40 per round; bounce hit: 25 per round",
-      "rateRaw": "Fire Rate: 0.45s per round"
+      "name": "Yeowoo Guseul",
+      "dmgRaw": "Damage: 40 per round (direct hit, excluye el rebote secundario)",
+      "rateRaw": "Fire Rate: 0.45s per round",
+      "dps": 88.9
     },
     "primaryHeal": {
       "name": "FOX FORM AWAKENING",
@@ -57,15 +59,18 @@ const HERO_BASIC_STATS = {
   },
   "Elsa Bloodstone": {
     "basicAttack": {
-      "name": "DOUBLE-BARREL BLASTER",
-      "dmgRaw": "Damage: 4.5 per round",
-      "rateRaw": "Fire Rate: The firing interval between shots is 0.12s, with an interval of 0.8s between each round of shooting"
+      "name": "Double-Barrel Blaster",
+      "dmgRaw": "Damage: 4.5 per round, 10 rounds per cast (45 total)",
+      "rateRaw": "Fire Rate: 0.12s between rounds within a cast, 0.8s between casts",
+      "dps": 23.9
     }
   },
   "Rogue": {
     "basicAttack": {
       "name": "Power Surge Punch",
-      "dmgRaw": "Damage: The first two strikes deal 35 damage, while the third strike deals 45 damage"
+      "dmgRaw": "Damage: 35 per hit (first 2 strikes), 45 on 3rd strike (115 total per 3-hit cycle)",
+      "rateRaw": "Attack Speed: 0.33s between first 2 strikes, 0.73s before 3rd",
+      "dps": 82.7
     }
   },
   "Gambit": {
@@ -76,10 +81,10 @@ const HERO_BASIC_STATS = {
       "dps": 44.4
     },
     "primaryHeal": {
-      "name": "FAVORABLE ODDS",
-      "key": "C",
-      "hps": 55.0,
-      "raw": "Healing Amount: 55/s"
+      "name": "Kinetic Cards",
+      "key": "Left Click",
+      "hps": 66.7,
+      "raw": "Card Healing: 30 health per round (parte del ataque basico, antes se referenciaba mal a un dato de su ultimate)"
     }
   },
   "Deadpool (Vanguard)": {
@@ -163,8 +168,9 @@ const HERO_BASIC_STATS = {
   "The Thing": {
     "basicAttack": {
       "name": "Rocky Jab",
-      "dmgRaw": "Damage: Double strike, 40 per hit",
-      "rateRaw": "Attack Interval: Double strike 0.33s between attacks, 1s between sets."
+      "dmgRaw": "Damage: 40 per hit (double strike, 80 total)",
+      "rateRaw": "Attack Interval: 0.33s between the 2 hits, 1s between sets",
+      "dps": 60.2
     }
   },
   "Human Torch": {
@@ -182,10 +188,10 @@ const HERO_BASIC_STATS = {
       "rateRaw": "Fire Rate: 0.5s per hit"
     },
     "primaryHeal": {
-      "name": "FIRST FAMILY",
-      "key": "C",
-      "hps": 25.0,
-      "raw": "Healing Amount: 25/s"
+      "name": "Guardian Shield",
+      "key": "<icon>",
+      "hps": 50,
+      "raw": "Healing Amount: 50/sec (antes referenciaba una habilidad 'First Family' que no existe en el kit actual)"
     }
   },
   "Mister Fantastic": {
@@ -208,7 +214,8 @@ const HERO_BASIC_STATS = {
     "basicAttack": {
       "name": "Widow's Bite Baton",
       "dmgRaw": "Damage: 45",
-      "rateRaw": "Fire Rate: 2 strikes per second"
+      "rateRaw": "Fire Rate: 2 strikes per second",
+      "dps": 90
     }
   },
   "Wolverine": {
@@ -234,15 +241,17 @@ const HERO_BASIC_STATS = {
   "Iron Fist": {
     "basicAttack": {
       "name": "Jeet Kune Do",
-      "dmgRaw": "Damage: The first four strikes each deal 35 damage, while the fifth strike deals 55 damage",
-      "rateRaw": "Attack Interval: The first four strikes have an interval of 0.45s between them, while the fifth strike has a 0.67s interval from the fourth strike"
+      "dmgRaw": "Damage: 35 per hit (first 4 strikes), 55 on 5th strike (195 total per 5-hit cycle)",
+      "rateRaw": "Attack Interval: 0.45s between first 4 strikes, 0.67s before 5th",
+      "dps": 78.9
     }
   },
   "Psylocke": {
     "basicAttack": {
       "name": "Psionic Crossbow",
-      "dmgRaw": "Damage: 12 damage per round",
-      "rateRaw": "Fire Rate: The firing interval between shots is 0.2s, with an interval of 0.6s between each round of shooting"
+      "dmgRaw": "Damage: 12 per round, 4 rounds per cast (48 total)",
+      "rateRaw": "Fire Rate: 0.2s between rounds within a cast, 0.6s between casts",
+      "dps": 40.0
     }
   },
   "Hawkeye": {
@@ -270,8 +279,9 @@ const HERO_BASIC_STATS = {
   "Moon Knight": {
     "basicAttack": {
       "name": "Crescent Dart",
-      "dmgRaw": "Damage: 25 damage per round",
-      "rateRaw": "Fire Rate: The firing interval between shots is 0.05s, with an interval of 0.57s between each round of shooting"
+      "dmgRaw": "Damage: 25 per round, 3 rounds per cycle (75 total)",
+      "rateRaw": "Fire Rate: 0.05s between rounds within a cycle, 0.57s between cycles",
+      "dps": 111.9
     }
   },
   "Star-Lord": {
@@ -309,8 +319,9 @@ const HERO_BASIC_STATS = {
   "Spider-Man": {
     "basicAttack": {
       "name": "Spider-Power",
-      "dmgRaw": "Damage: 25",
-      "rateRaw": "Attack Interval: 0.37s per punch"
+      "dmgRaw": "Damage: 25 per punch (x2) + 40 per kick (x1) = 90 por ciclo de 3 golpes",
+      "rateRaw": "Attack Interval: 0.37s por puñetazo, 0.82s por patada",
+      "dps": 57.7
     }
   },
   "Black Panther": {
@@ -339,10 +350,10 @@ const HERO_BASIC_STATS = {
   },
   "Hulk": {
     "basicAttack": {
-      "name": "Gamma Ray Gun",
-      "dmgRaw": "Damage: 16",
-      "rateRaw": "Fire Rate: 5 rounds per second",
-      "dps": 80.0
+      "name": "Heavy Blow (Hero Hulk)",
+      "dmgRaw": "Damage: 45 (forma Hero Hulk, no la pistola debil de Bruce Banner)",
+      "rateRaw": "Attack Interval: 0.467s",
+      "dps": 96.4
     }
   },
   "Jeff the Land Shark": {
@@ -370,8 +381,9 @@ const HERO_BASIC_STATS = {
   "Luna Snow": {
     "basicAttack": {
       "name": "Light & Dark Ice",
-      "dmgRaw": "Damage: 24 damage per round, for a total of 72 damage",
-      "rateRaw": "Fire Rate: 0.5s for three shots. The interval between the first two shots is 0.05s"
+      "dmgRaw": "Damage: 24 per round, 3 rounds per cycle (72 total)",
+      "rateRaw": "Fire Rate: 0.5s per 3-shot cycle (baja confianza: no se aclara un hueco aparte entre ciclos)",
+      "dps": 144.0
     },
     "primaryHeal": {
       "name": "Light & Dark Ice",
@@ -410,8 +422,9 @@ const HERO_BASIC_STATS = {
   "Loki": {
     "basicAttack": {
       "name": "Mystical Missile",
-      "dmgRaw": "Damage: The projectile deals no damage, while the spell field inflicts 25 damage per cast",
-      "rateRaw": "Fire Rate: 1.75 rounds per second"
+      "dmgRaw": "Damage: 25 (spell field only, projectile itself deals 0)",
+      "rateRaw": "Fire Rate: 1.75 rounds per second",
+      "dps": 43.8
     },
     "primaryHeal": {
       "name": "Regeneration Domain",
@@ -436,8 +449,9 @@ const HERO_BASIC_STATS = {
   "Peni Parker": {
     "basicAttack": {
       "name": "Cyber-Web Cluster",
-      "dmgRaw": "Damage: Projectile Damage: 15; Spell Field Damage: 15",
-      "rateRaw": "Fire Rate: 3.33 rounds per second"
+      "dmgRaw": "Damage: 15 (daño directo del proyectil, excluye el campo de daño adicional)",
+      "rateRaw": "Fire Rate: 3.33 rounds per second",
+      "dps": 50.0
     }
   },
   "Thor": {
@@ -451,8 +465,9 @@ const HERO_BASIC_STATS = {
   "Magneto": {
     "basicAttack": {
       "name": "Iron Volley",
-      "dmgRaw": "Damage: Projectile Damage: 40. The spell field deals 40 damage at its center, reducing to 50% within a 3m radius from the center",
-      "rateRaw": "Attack Interval: 0.8s"
+      "dmgRaw": "Damage: 40 (projectile only, excluye el campo de daño adicional)",
+      "rateRaw": "Attack Interval: 0.8s",
+      "dps": 50.0
     }
   },
   "Venom": {
@@ -480,8 +495,9 @@ const HERO_BASIC_STATS = {
   "Doctor Strange": {
     "basicAttack": {
       "name": "Daggers of Denak",
-      "dmgRaw": "Damage: 18",
-      "rateRaw": "Fire Rate: 5.56 rounds per second, with a 0.03-second interval between every two rounds"
+      "dmgRaw": "Damage: 18 per hit",
+      "rateRaw": "Fire Rate: 5.56 rounds per second",
+      "dps": 100.1
     }
   }
 };
