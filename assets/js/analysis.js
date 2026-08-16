@@ -4,7 +4,11 @@ function roleCounts(team){
   team.forEach(h=>{ if(h && c[h.r]!==undefined) c[h.r]++; });
   return c;
 }
-function compArchetype(counts, filled){
+// "topPick" (ver topCounterPick mas abajo) es el heroe con mejor puntaje contra ESTE rival puntual
+// -- pedido de Xavier (2026-08-16): la comp "equilibrada" (el caso mas comun, sin arquetipo raro
+// que ya trae su propio consejo puntual) no debe quedar en texto generico ("ajusta counters segun
+// los heroes de abajo"), tiene que nombrar un heroe concreto para vencer a ESTE equipo.
+function compArchetype(counts, filled, topPick){
   if(filled<6) return null;
   const {Vanguard:v, Duelist:d, Strategist:s} = counts;
   if(v>=3) return {label:t("analysis.archetype.tripleVanguard.label"), advice:t("analysis.archetype.tripleVanguard.advice")};
@@ -12,7 +16,51 @@ function compArchetype(counts, filled){
   if(d>=4) return {label:t("analysis.archetype.quadDuelist.label"), advice:t("analysis.archetype.quadDuelist.advice")};
   if(v===1) return {label:t("analysis.archetype.soloVanguard.label"), advice:t("analysis.archetype.soloVanguard.advice")};
   if(s===1) return {label:t("analysis.archetype.soloStrategist.label"), advice:t("analysis.archetype.soloStrategist.advice")};
-  return {label:t("analysis.archetype.balanced.label"), advice:t("analysis.archetype.balanced.advice")};
+  const advice = topPick
+    ? t("analysis.archetype.balanced.adviceWithPick", {hero: heroIconHtml(topPick.n,16)+"<b>"+heroLabel(topPick.n)+"</b>", role: t('role.'+topPick.r)})
+    : t("analysis.archetype.balanced.advice");
+  return {label:t("analysis.archetype.balanced.label"), advice};
+}
+
+// mejor heroe posible (cualquier rol, sin banear) contra el equipo rival COMPLETO -- reusa
+// candidateScoreAgainst (misma formula que recommendMyPick/suggestGhostFills/Mejores picks por
+// rol) para que la sugerencia de la comp "equilibrada" sea consistente con el resto de la app, no
+// un criterio nuevo aparte.
+function topCounterPick(enemyList, banned){
+  if(!enemyList.length) return null;
+  const antiDiveNow = antiDiveCount(enemyList);
+  const shieldHeavyNow = shieldHeavyCount(enemyList);
+  let best = null, bestScore = -Infinity;
+  HEROES.forEach(h=>{
+    if(banned.has(h.n)) return;
+    const {score} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
+    if(score>bestScore){ bestScore=score; best=h; }
+  });
+  return best;
+}
+
+// simetrico a mostDangerousEnemyHtml (que nombra la amenaza real del rival): busca el heroe rival
+// mas "explotable" -- el que tiene el counter de dive disponible mas fuerte, ej. Jeff o Mantis -- y
+// sugiere ese dive puntual. Pedido de Xavier (2026-08-16): "si hay un jeff o una mantis, sugerir un
+// dive, el dive mas fuerte por asi decirlo". No filtra por lo que el jugador ya tiene en su equipo
+// (a diferencia de mostDangerousEnemyHtml) porque esto es una sugerencia de PICK, no un aviso sobre
+// tu roster actual. Ocupa el lugar donde antes iba el "perfil de arquetipos" (lista de emojis) --
+// mismo pedido, "recomendar otra cosa a nuestro beneficio" en vez de una lista de conteos.
+function weakestLinkHtml(enemyList, banned){
+  let bestEnemy = null, bestCounter = null, bestScore = 0;
+  enemyList.forEach(e=>{
+    getCounters(e.n, []).forEach(c=>{
+      if(banned.has(c.c)) return;
+      const ch = byName[c.c];
+      if(!ch || !ch.t || !ch.t.includes("dive")) return;
+      if(c.relevance>bestScore){ bestScore=c.relevance; bestEnemy=e; bestCounter=c.c; }
+    });
+  });
+  if(!bestEnemy || !bestCounter) return "";
+  return t("analysis.rivalComp.weakestLink", {
+    weak: heroIconHtml(bestEnemy.n,18)+"<b>"+heroLabel(bestEnemy.n)+"</b>",
+    counter: heroIconHtml(bestCounter,18)+"<b>"+heroLabel(bestCounter)+"</b>",
+  });
 }
 
 // Heroes con herramientas dedicadas a frenar el dive -- bloquean movilidad (The Thing), dan
@@ -116,38 +164,33 @@ function archCycleBonus(hero, enemyList){
   });
   return bonus;
 }
-// cuenta arquetipos presentes en un equipo, agrupados por el nombre del arquetipo (ver arch.* en
-// i18n.js) -- para mostrar el "perfil" del equipo (cuantos Poke, cuantos Flanker, etc) y para
-// detectar huecos como "0 Lifeline" (poca sanacion sostenida real, mas alla de cuantos Strategist
-// haya en total).
-function teamArchCounts(team){
-  const counts = {};
-  team.forEach(h=>{
-    if(!h || !h.arch) return;
-    h.arch.forEach(a=>{ counts[a] = (counts[a]||0)+1; });
-  });
-  return counts;
-}
-
 // suma el dano de ataque basico de vanguardias+duelistas contra la curacion principal de los
 // estrategas de UN MISMO equipo (pedido explicito de Xavier, 2026-08-15) -- solo cuenta heroes
 // con un DPS/HPS confiable (ver hero-basic-stats.js/heroBasicStats): si a un heroe no se le pudo
 // calcular un numero limpio (combo, cadencia compuesta, curacion que escala con %vida), se excluye
 // de la suma en vez de inventar un valor, y se avisa cuantos quedaron afuera para que no parezca
 // que el equipo "no hace nada".
+// bug real corregido (2026-08-16, señalado por Xavier con el ejemplo de Ultron): antes esta
+// funcion sumaba SOLO curacion para un Strategist y SOLO dano para el resto, como si fueran
+// mutuamente excluyentes -- pero varios sanadores tienen ataque basico que hace dano de verdad
+// (Ultron: el rayo del clic izquierdo no cura nada, lo que cura son los drones de su E; mismo
+// patron dual en Jeff/Jubilee, donde el clic izquierdo SI hace ambas cosas a la vez). Con el bug,
+// 9 de los 13 estrategas tenian un dano de ataque basico limpio (Adam Warlock, Cloak & Dagger,
+// Deadpool Strategist, Gambit, Jeff, Jubilee, Mantis, Rocket Raccoon) que nunca se sumaba al
+// total del equipo. Ahora se revisan basicAttack y primaryHeal por separado para CADA heroe, sin
+// importar el rol -- si tiene ambos (dano Y curacion), suma a los dos totales.
 function teamDmgHealTotals(team){
   let dmg = 0, heal = 0, dmgCount = 0, healCount = 0, dmgMissing = 0, healMissing = 0;
   team.filter(Boolean).forEach(h=>{
     const bs = heroBasicStats(h.n);
     if(!bs) return;
-    if(heroHasRole(h,"Strategist")){
-      if(bs.primaryHeal){
-        if(typeof bs.primaryHeal.hps==="number"){ heal += bs.primaryHeal.hps; healCount++; }
-        else healMissing++;
-      }
-    } else if(bs.basicAttack){
+    if(bs.basicAttack){
       if(typeof bs.basicAttack.dps==="number"){ dmg += bs.basicAttack.dps; dmgCount++; }
       else dmgMissing++;
+    }
+    if(heroHasRole(h,"Strategist") && bs.primaryHeal){
+      if(typeof bs.primaryHeal.hps==="number"){ heal += bs.primaryHeal.hps; healCount++; }
+      else healMissing++;
     }
   });
   return {dmg: Math.round(dmg*10)/10, heal: Math.round(heal*10)/10, dmgCount, healCount, dmgMissing, healMissing};
@@ -599,10 +642,16 @@ function renderAnalysis(){
   // -- siempre 2 columnas, nunca 1 sola, para que la fila no se vea rota/asimetrica ni de la impresion
   // de que "desaparecio" una columna
   if(rec){
+    // retrato tipo casillero (mismo lenguaje visual que "Mejores picks contra esta composicion" y
+    // que "Tu equipo") en vez de la tarjeta horizontal de texto que tenia antes -- pedido de
+    // Xavier (2026-08-16, eligio la opcion 1 de 3 mockups): el "por que" (good/bad matchups) pasa
+    // al tooltip (title), no ocupa renglon aparte.
     const renderPickCard = p=>{
       const badSuffix = p.badAgainst>0 ? t("analysis.pickCard.badSuffix", {bad:p.badAgainst}) : "";
-      return `<div class="healer-card role-${p.h.r}"><div class="h-name">${heroIconHtml(p.h.n,28)}${heroLabel(p.h.n)} ${roleIconHtml(p.h.r,15)}</div>
-      <div class="h-reason">${t("analysis.pickCard.reason", {good:p.goodAgainst, total:enemyFilled, badSuffix})}</div></div>`;
+      const reason = t("analysis.pickCard.reason", {good:p.goodAgainst, total:enemyFilled, badSuffix});
+      return `<div class="pick-slot role-${p.h.r}" title="${reason.replace(/"/g,'&quot;')}">
+        ${heroIconHtml(p.h.n,40)}<div class="name">${heroLabel(p.h.n)}</div><div class="role">${roleIconHtml(p.h.r,12)}${p.goodAgainst}/${enemyFilled}</div>
+      </div>`;
     };
     const col2Title = rec.sameRoleAsNeed ? t("analysis.pickCard.col2TitleAlt") : t("analysis.pickCard.col2TitlePreferSame");
     const col2Sub = rec.sameRoleAsNeed
@@ -614,7 +663,7 @@ function renderAnalysis(){
     if(rec.inRolePicks.length===0){
       left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noCandidates")}</p>`;
     } else {
-      left += rec.inRolePicks.map(renderPickCard).join("");
+      left += `<div class="pick-slot-row">${rec.inRolePicks.map(renderPickCard).join("")}</div>`;
     }
     left += `</div>`;
     left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.currentRole||rec.roleNeed,16)}${col2Title}</div>
@@ -622,7 +671,7 @@ function renderAnalysis(){
     if(rec.topOverallPicks.length===0){
       left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noData")}</p>`;
     } else {
-      left += rec.topOverallPicks.map(renderPickCard).join("");
+      left += `<div class="pick-slot-row">${rec.topOverallPicks.map(renderPickCard).join("")}</div>`;
     }
     left += `</div>`;
     left += `</div>`;
@@ -639,7 +688,9 @@ function renderAnalysis(){
     right += `<p class="empty-hint">${t("analysis.rivalComp.addSix")}</p>`;
   } else {
     const counts = roleCounts(enemyTeam);
-    const arche = compArchetype(counts, enemyFilled);
+    const enemyFilledArr = enemyTeam.filter(Boolean);
+    const topPick = enemyFilled===6 ? topCounterPick(enemyFilledArr, bannedPool()) : null;
+    const arche = compArchetype(counts, enemyFilled, topPick);
     right += `<div class="comp-banner">${t("analysis.rivalComp.detected", {counts: roleCountsIconsHtml(counts), n: enemyFilled})}`;
     if(arche){
       right += `<br><b>${arche.label}.</b> ${arche.advice}`;
@@ -658,18 +709,13 @@ function renderAnalysis(){
       const threat = mostDangerousEnemyHtml(shieldGroup, allyNamesForThreat);
       right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.shieldWarn", {n: shieldGroup.length})}${threat?`<br>${threat}`:""}</div>`;
     }
-    // perfil de arquetipos (ver teamArchCounts en analysis.js y la nota sobre "arch" en
-    // hero-roster.js) -- ademas del conteo de roles de arriba, muestra la mezcla de ESTILO de
-    // juego del rival (cuantos Poke, cuantos Flanker, etc) y detecta huecos puntuales que el
-    // conteo de roles solo no ve, como un Strategist que no es realmente un sanador fuerte. El
-    // aviso de "sin sanador principal" solo dispara si TODOS los strategist presentes ya tienen
-    // arquetipo cargado -- si alguno todavia no fue investigado, mejor no avisar nada a inventar.
-    const enemyFilledArr = enemyTeam.filter(Boolean);
-    const archCounts = teamArchCounts(enemyFilledArr);
-    const archKeys = Object.keys(archCounts);
-    if(archKeys.length>0){
-      const archList = archKeys.map(a=>`${t("arch."+a)} ×${archCounts[a]}`).join(" · ");
-      right += `<div class="comp-banner" style="margin-top:8px;">🧬 ${t("analysis.rivalComp.archProfile")} ${archList}</div>`;
+    // antes aca iba el "perfil de arquetipos" (lista de emojis con conteos, ej. "Dive x1 · Escudo
+    // x1..."). Pedido de Xavier (2026-08-16): "esto lo siento inecesario, mucho texto, podriamos
+    // cambiarlo por otra cosa" -- lo mismo que pidio para el aviso de amenaza, pero al reves: en
+    // vez de un peligro del rival, el punto flaco que le podemos explotar (ver weakestLinkHtml).
+    const weakLink = weakestLinkHtml(enemyFilledArr, bannedPool());
+    if(weakLink){
+      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--good, #2ecc71);">${weakLink}</div>`;
     }
     const enemyStrategists = enemyFilledArr.filter(h=>h.r==="Strategist");
     const allStrategistsClassified = enemyStrategists.length>0 && enemyStrategists.every(h=>h.arch && h.arch.length);

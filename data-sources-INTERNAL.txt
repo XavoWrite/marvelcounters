@@ -1122,3 +1122,85 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      no de que ella les gane a esos divers de forma clara. Spider-Man/Wolverine/Star-Lord/
      Daredevil (también divers) ya estaban correctamente a favor de Cloak & Dagger de antes, sin
      tocar.
+
+24) Segunda tanda de pulido de texto/UI + nombres de Deadpool + bug de daño de sanadores (2026-08-16)
+   - Sin cambios de datos de matchups en este punto — todo es código (analysis.js, team-state.js,
+     i18n.js). No hace falta tocar matchup-matrix.json/ref-matchup-scores.json ni sus espejos.
+   - **Nombres de display de Deadpool** (heroLabel en team-state.js): pedido de Xavier — "en ves
+     de llamarlo deadpool cambiaremos su nombre, lo pondremos tankpool, deadpool y healpool". Solo
+     cambia el TEXTO que se muestra (DEADPOOL_DISPLAY_NAMES, un lookup antes del regex genérico de
+     heroLabel) — la clave interna sigue siendo "Deadpool (Vanguard/Duelist/Strategist)" en todos
+     lados (hero-roster.js, matchups, hero-basic-stats.js, etc), a propósito, para no tener que
+     tocar ninguna otra parte de la app:
+       * Deadpool (Vanguard) → se muestra "Tankpool"
+       * Deadpool (Duelist)  → se muestra "Deadpool" (sin cambio, es el "de base")
+       * Deadpool (Strategist) → se muestra "Healpool"
+   - **Bug real corregido en teamDmgHealTotals()** (analysis.js): la función trataba "es
+     Strategist" y "tiene daño de ataque básico confiable" como mutuamente excluyentes (if/else),
+     así que el daño de 8 sanadores con basicAttack.dps real (Ultron, Adam Warlock, Cloak &
+     Dagger, Deadpool Strategist/Healpool, Gambit, Jeff, Jubilee, Mantis, Rocket Raccoon) quedaba
+     afuera de la suma de daño del equipo aunque sí se calculara. Señalado por Xavier con el
+     ejemplo de Ultron ("el ataque principal de ultron es un rayo que hace daño, no cura, lo que
+     cura son sus drones"). Ahora se chequea basicAttack y primaryHeal de forma independiente por
+     héroe. Probado en vivo vía consola: `teamDmgHealTotals([byName["Gambit"]])` → antes hubiera
+     dado dmg:0 (por ser Strategist), ahora da dmg:44.4 + heal:55, ambos correctos. Ojo: el
+     ataque básico de Ultron en sí (ENCEPHALO-RAY) no tiene un dps limpio (combo de 2 partes,
+     6 golpes de 12 + un golpe de área de 75) así que sigue sin contar para la suma de daño —
+     eso es comportamiento correcto (dmgMissing), no el bug original.
+   - **Arquetipo "Comp equilibrada 2-2-2"**: antes tenía un texto genérico fijo ("Formación
+     estándar. Ajusta counters individuales..."). Pedido de Xavier: "debería sugerir como ir con
+     este personaje para vencer a este equipo". Ahora, solo para el caso balanced (los demás
+     arquetipos ya nombran héroes concretos en su consejo), se calcula `topCounterPick()` — reusa
+     `candidateScoreAgainst` (la misma fórmula de recommendMyPick/Mejores picks por rol) sobre
+     TODOS los héroes sin banear, agarra el de mayor puntaje contra el equipo rival completo, y
+     arma el texto "Con {héroe} ({rol}) le ganás a este equipo." Label acortado a "Comp equilibrada
+     2-2-2" (antes "Composición equilibrada 2-2-2").
+   - **Texto de avisos anti-dive/escudo acortado**: pedido de Xavier de recortar palabras. Se sacó
+     la lista de nombres de héroes entre paréntesis del cuerpo del párrafo (esa lista ya no
+     aportaba nada nuevo que el llamado de "amenaza real" — mostDangerousEnemyHtml, agregado en el
+     punto 22 — no diera con un héroe concreto). El texto de "amenaza real" (biggestThreat) se
+     mantuvo intacto, tal cual Xavier pidió explícitamente conservarlo.
+   - **"Perfil de arquetipos del rival" reemplazado por "Punto flaco" (weakestLinkHtml)**: Xavier
+     dijo que la lista de emojis con conteos de arquetipos ("🦅 Dive x1 · 🛡️ Escudo x1...") era
+     texto innecesario y pidió "recomendar otra cosa a nuestro beneficio" — en el mismo mensaje ya
+     había descrito la idea concreta (simétrica a "amenaza real", pero al revés): "si hay un jeff
+     o una mantis, sugerir un dive, el dive más fuerte". weakestLinkHtml() recorre el equipo rival
+     completo, junta TODOS los counters con tag "dive" (sin filtrar por lo que el jugador ya tiene,
+     a diferencia de mostDangerousEnemyHtml, porque esto es una sugerencia de qué PICKEAR) y se
+     queda con el par (rival, counter) de mayor relevancia. La función teamArchCounts() quedó sin
+     usar en ningún otro lado tras este cambio, así que se borró en vez de dejarla muerta.
+   - Nota de diseño, no un bug: en las pruebas, "Punto flaco" a veces señaló a Groot (un tanque de
+     escudo) en vez de a un sanador fáctilmente frágil tipo Jeff/Mantis — porque el criterio es
+     puramente "cuál rival tiene el counter de dive con mayor relevancia en la matriz", no
+     "cuál rival es intrínsecamente frágil". Es coherente con el resto de la app (misma fuente de
+     relevancia que usa mostDangerousEnemyHtml/candidateScoreAgainst), pero si Xavier prefiere que
+     sesgue hacia sanadores/soportes específicamente en vez de "el counter más fuerte exista donde
+     exista", es un ajuste a conversar, no algo que se haya decidido unilateralmente acá.
+   - Probado en vivo (ES y EN, hard-reload): Tankpool/Healpool aparecen correctamente en el
+     selector de héroes, en las tarjetas de equipo y en "Alineación en riesgo" (via heroLabel).
+     Con rival 3-tanques (Groot/Magneto/The Thing) se vieron los avisos de anti-dive+escudo
+     acortados + el nuevo "Punto flaco" con borde verde. Cambiando a rival 2-2-2 (Groot/Magneto,
+     Mister Fantastic/Iron Fist, Mantis/Jeff) se vio el texto dinámico "Comp equilibrada 2-2-2.
+     Con Wolverine (Duelista) le ganás a este equipo." en ambos idiomas. 0 errores de consola en
+     ningún punto.
+   - **Pendiente, sin resolver en este punto** (mismos items que ya estaban abiertos del punto 22,
+     Xavier no dio detalles nuevos en este mensaje): "daño principal" vs "daño básico" héroe por
+     héroe (empezar por Spider-Man), lógica de counters contra 3-tanques/3-healers (a conversar en
+     conjunto), fila de Magneto con poca data, y el pedido más vago de reordenar visualmente "Tu
+     composición"/"Qué deberías jugar tú" (Xavier no dio specifics de qué está "desordenado" — hay
+     que preguntarle o proponerle mockups antes de tocar el layout).
+   - Seguimiento inmediato: se armaron 3 mockups (artifact aparte, no en el repo) para "Qué
+     deberías jugar tú" — ① slots compactos (mismo lenguaje visual que "Mejores picks contra esta
+     composición"), ② tarjeta única fusionada, ③ comparativa de 2 columnas pero con tarjetas
+     chicas. Xavier eligió la ①. Aplicado en `renderPickCard()` dentro de "Qué deberías jugar tú"
+     (analysis.js): las dos columnas (mejores opciones del rol que falta / alternativas de tu rol
+     actual) ahora renderizan `.pick-slot` (ícono + nombre + rol + N/M) dentro de `.pick-slot-row`,
+     igual que "Mejores picks contra esta composición" más abajo — el detalle de good/bad matchups
+     que antes iba en un párrafo (`.h-reason`) ahora es el tooltip (`title`) del casillero. La
+     tarjeta de texto vieja (`.healer-card`/`.h-name`/`.h-reason`) sigue en uso en otro lado
+     ("Soporte recomendado para tu línea", más abajo en renderAnalysis) así que no se tocó ni se
+     borró esa clase CSS. Probado en vivo inyectando equipos vía consola (allyTeam/enemyTeam/
+     myAllyIndex + renderSlots()) para no tener que re-clickear el modal 12 veces: se ve la fila de
+     Duelistas (Wolverine 4/6, Winter Soldier 2/6, Squirrel Girl 3/6, Hela 2/6) y la fila de
+     alternativas de Estratega (Healpool, Mantis, Loki) como casilleros compactos, mismo look que
+     el resto de la página. 0 errores de consola tras hard-reload.

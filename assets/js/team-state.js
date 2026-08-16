@@ -140,7 +140,18 @@ const ALT_APPEARANCE_HEROES = { "Loki": ["default", "lady-loki"] };
 // nombre para mostrar: sin el "(Vanguard)/(Duelist)/(Strategist)" en ingles del multi-rol de
 // Deadpool -- el icono de clase que ya se muestra al lado (roleIconHtml/roleTagsHtml) alcanza para
 // distinguir cual es cual, no hace falta repetirlo en ingles dentro del nombre.
+// los 3 Deadpool mostraban el mismo nombre "Deadpool" en pantalla (solo el icono de rol los
+// distinguia, facil de pasar por alto) -- pedido de Xavier, 2026-08-16: nombres de display
+// distintos para cada uno, sin tocar la clave interna "Deadpool (Vanguard/Duelist/Strategist)"
+// que sigue igual en hero-roster.js/la matriz/etc. Vanguard="Tankpool" (tanque), Duelist se queda
+// "Deadpool" (es el DPS, el nombre "de base"), Strategist="Healpool" (sanador).
+const DEADPOOL_DISPLAY_NAMES = {
+  "Deadpool (Vanguard)": "Tankpool",
+  "Deadpool (Duelist)": "Deadpool",
+  "Deadpool (Strategist)": "Healpool",
+};
 function heroLabel(name){
+  if(DEADPOOL_DISPLAY_NAMES[name]) return DEADPOOL_DISPLAY_NAMES[name];
   return name.replace(/ \((Vanguard|Duelist|Strategist)\)$/, "");
 }
 // puntaje de referencia externa (metodologia completa en data-sources-INTERNAL.txt, no se carga
