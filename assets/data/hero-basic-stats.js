@@ -17,8 +17,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Energy Plasmoids",
       "key": "Left Click",
-      "hps": 120,
-      "raw": "Healing: 15 per hit (parte del ataque basico, antes referenciaba una habilidad 'Vampiric Kin' que no existe en el kit actual)"
+      "hps": 60,
+      "raw": "Healing: 15 per hit -- ataque hibrido (el mismo disparo dana O cura segun el objetivo, no las dos cosas a la vez), hps real 120 dividido a la mitad para no contar dano y curacion simultaneos del mismo disparo (pedido de Xavier, 2026-08-16)"
     }
   },
   "Cyclops": {
@@ -83,8 +83,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Kinetic Cards",
       "key": "Left Click",
-      "hps": 66.7,
-      "raw": "Card Healing: 30 health per round (parte del ataque basico, antes se referenciaba mal a un dato de su ultimate)"
+      "hps": 33.4,
+      "raw": "Card Healing: 30 health per round -- ataque hibrido (el mismo disparo dana O cura segun el objetivo), hps real 66.7 dividido a la mitad (pedido de Xavier, 2026-08-16)"
     }
   },
   "Deadpool (Vanguard)": {
@@ -113,8 +113,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "DUAL DESERT EAGLES - STRATEGIST",
       "key": "Left Click",
-      "hps": 112.5,
-      "raw": "Healing: 45 per round"
+      "hps": 56.25,
+      "raw": "Healing: 45 per round -- ataque hibrido (el mismo disparo dana O cura segun el objetivo), hps real 112.5 dividido a la mitad (pedido de Xavier, 2026-08-16)"
     }
   },
   "Daredevil": {
@@ -366,8 +366,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Joyful Splash",
       "key": "Left Click",
-      "hps": 130.0,
-      "raw": "Healing Amount: 130/s"
+      "hps": 65.0,
+      "raw": "Healing Amount: 130/s -- ataque hibrido (el mismo disparo dana O cura segun el objetivo), hps real 130 dividido a la mitad (pedido de Xavier, 2026-08-16)"
     }
   },
   "Punisher": {
@@ -427,10 +427,10 @@ const HERO_BASIC_STATS = {
       "dps": 43.8
     },
     "primaryHeal": {
-      "name": "Regeneration Domain",
-      "key": "SHIFT",
-      "hps": 100.0,
-      "raw": "Healing Amount: 100/s"
+      "name": "Mystical Missile",
+      "key": "Left Click",
+      "hps": 105.0,
+      "raw": "Area Of Effect Healing: 40 per hit -- ataque hibrido (mismo disparo dana y cura, /2 = 35/s) x3 por sus clones, que disparan lo mismo (pedido de Xavier, 2026-08-16: antes se usaba Regeneration Domain, que tiene 30s de cooldown para solo 5s activo, no es sostenido)"
     }
   },
   "Mantis": {

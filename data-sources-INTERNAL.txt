@@ -1546,3 +1546,59 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
    - Sin cambios (ya correctos o genuinamente sin dato limpio posible -- daño que escala con
      carga/energía/%vida): Emma Frost, Hawkeye, Wolverine, Captain America, Blade, Black Cat,
      Daredevil, Invisible Woman (básico), Ultron, Venom, y el resto de los 35 no listados arriba.
+
+33) Cloak & Dagger verificada (sin cambios), sanadores híbridos divididos a la mitad, y "ataque
+    básico" → "daño principal" (2026-08-16)
+   - **Cloak & Dagger**: Xavier pidió buscar el reemplazo de curación. Resultó que el dato viejo
+     ("Dagger Storm", 50/s) YA ERA CORRECTO — el fork del punto 32 dijo que no existía porque el
+     scrape original de esta heroína (punto 24) solo capturó su forma "Cloak" completa, nunca
+     entró al toggle de la forma "Dagger" donde vive esa habilidad. Se confirmó en vivo en la
+     página oficial (toggle Cloak/Dagger junto al nombre): Dagger Storm existe, 50/s de curación
+     sostenida + 60 de curación única al impactar, cooldown 12s/duración 6s. Sin cambios en
+     hero-basic-stats.js para este héroe.
+   - **Sanadores con ataque básico híbrido (mismo disparo daña O cura, no las dos cosas a la
+     vez)**: Xavier notó que Healpool (Deadpool Strategist) tenía demasiada curación para ser
+     "el peor sanador" — se confirmó el patrón con una búsqueda programática (basicAttack.name
+     === primaryHeal.name): son 4 héroes, todos con la MISMA ability generando dps Y hps
+     simultáneos en la barra de daño/curación del equipo, como si pudieran hacer ambas cosas a la
+     vez cuando en realidad hay que elegir el objetivo por disparo. Xavier eligió la opción de
+     **dividir el hps a la mitad** (no excluirlo, no dejarlo como está):
+     * Jubilee: 120 → **60**
+     * Gambit: 66.7 → **33.4**
+     * Deadpool (Strategist)/Healpool: 112.5 → **56.25**
+     * Jeff the Land Shark: 130 → **65**
+     Documentado en el campo `raw` de cada uno para que quede claro por qué el número no coincide
+     con el texto crudo de la habilidad.
+   - **"Daño de ataque básico" → "daño principal"**: pedido de Xavier con captura (ficha de Hela
+     en Personajes, círculo en la etiqueta) — mismo pedido de mucho antes en la sesión ("el ataque
+     básico real es el golpe débil de R3, no lo que mostramos"). Cambiada la clave
+     `editor.basicAttackLabel` (ES: "daño de ataque básico" → "daño principal"; EN: "basic attack
+     damage" → "main damage"). Esta etiqueta se usa en la ficha de héroe de Personajes y en la
+     infografía de básicos del Glosario (`tabs-editor.js`). Probado en vivo con Hela (la misma
+     captura que mandó Xavier): ahora dice "daño principal", 0 errores de consola.
+   - **Loki — investigado, cambio propuesto pero SIN aplicar todavía (falta confirmar con
+     Xavier)**: no hay ninguna habilidad de "lámparas" en su kit real (puede que Xavier esté
+     confundiendo el nombre/visual con otra cosa) — revisado el kit completo, no aparece nada así.
+     PERO se encontró un problema real y distinto: su `primaryHeal` actual ("Regeneration
+     Domain", 100/s) tiene "Duration: 5s" y "Cooldown: 30s" — es decir, ese número de 100/s solo
+     está activo 5 de cada 30 segundos (16.7% de uptime), no es un heal sostenido como el de
+     Luna Snow o Mantis. Tratarlo como 100/s sostenido lo hace ver como uno de los sanadores más
+     fuertes del roster cuando en realidad es un heal de cooldown largo. Mismo criterio que ya se
+     usó con el uppercut de Spider-Man (Amazing Combo, cargas con cooldown): el hps "efectivo"
+     ajustado por duty-cycle sería 100×(5/30) = **16.7/s**. No se aplicó el cambio todavía —
+     pendiente de que Xavier confirme si quiere ese ajuste (bajaría mucho su ranking de sanador)
+     o prefiere otro tratamiento.
+
+34) Loki — curación principal cambiada a su ataque básico con multiplicador de clones (2026-08-16)
+   - Xavier confirmó/corrigió: no es "Regeneration Domain" (30s cooldown, poco sostenido, ver
+     punto 33) — su curación real de referencia es el disparo de su bastón (Mystical Missile, su
+     ataque básico), que además se triplica porque sus clones disparan lo mismo. Explícitamente
+     lo encuadró en la misma categoría que los sanadores híbridos del punto 33 ("también hace daño
+     así como los híbridos").
+   - Aplicado: `primaryHeal` pasa de Regeneration Domain (100/s) a Mystical Missile — 40 de
+     curación de área por golpe × 1.75 rondas/seg = 70/s base → ÷2 por ser híbrido (mismo criterio
+     que Jubilee/Gambit/Healpool/Jeff) = 35/s → ×3 por los clones = **105/s**. Documentado el
+     cálculo completo en el campo `raw`. Probado en vivo (`heroBasicStats("Loki")`), 0 errores de
+     consola.
+   - Nota: esto convierte a Loki en un 5to caso de "básico híbrido" (basicAttack.name ===
+     primaryHeal.name = "Mystical Missile"), mismo patrón que los 4 del punto 33.

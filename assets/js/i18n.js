@@ -340,7 +340,7 @@ es: {
   "status.ocrStartFailed": "No se pudo iniciar el lector de nombres offline.",
 
   "editor.noResults": "Sin resultados para ese filtro/búsqueda.",
-  "editor.basicAttackLabel": "daño de ataque básico",
+  "editor.basicAttackLabel": "daño principal",
   "editor.primaryHealLabel": "curación principal",
   "editor.dpsUnit": "daño/seg",
   "editor.hpsUnit": "curación/seg",
@@ -709,7 +709,7 @@ en: {
   "status.ocrStartFailed": "Couldn't start the offline name reader.",
 
   "editor.noResults": "No results for that filter/search.",
-  "editor.basicAttackLabel": "basic attack damage",
+  "editor.basicAttackLabel": "main damage",
   "editor.primaryHealLabel": "main healing",
   "editor.dpsUnit": "dmg/sec",
   "editor.hpsUnit": "heal/sec",
