@@ -92,24 +92,24 @@ const HERO_BASIC_STATS = {
   },
   "Deadpool (Duelist)": {
     "basicAttack": {
-      "name": "DUAL DESERT EAGLES - VANGUARD",
-      "dmgRaw": "Damage: 36 damage per round",
+      "name": "DUAL DESERT EAGLES - DUELIST",
+      "dmgRaw": "Damage: 38 per hit",
       "rateRaw": "Fire Rate: 2.5 rounds per second",
-      "dps": 90.0
+      "dps": 95.0
     }
   },
   "Deadpool (Strategist)": {
     "basicAttack": {
-      "name": "DUAL DESERT EAGLES - VANGUARD",
-      "dmgRaw": "Damage: 36 damage per round",
+      "name": "DUAL DESERT EAGLES - STRATEGIST",
+      "dmgRaw": "Damage: 25 damage per round",
       "rateRaw": "Fire Rate: 2.5 rounds per second",
-      "dps": 90.0
+      "dps": 62.5
     },
     "primaryHeal": {
-      "name": "THE BAN HAMMER",
-      "key": "Q",
-      "hps": 25.0,
-      "raw": "Healing Over Time During Activation: 25/s"
+      "name": "DUAL DESERT EAGLES - STRATEGIST",
+      "key": "Left Click",
+      "hps": 112.5,
+      "raw": "Healing: 45 per round"
     }
   },
   "Daredevil": {
