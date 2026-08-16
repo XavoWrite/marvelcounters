@@ -129,10 +129,10 @@ const HERO_BASIC_STATS = {
   },
   "Angela": {
     "basicAttack": {
-      "name": "Spear of Ichors",
-      "dmgRaw": "Damage: 45",
-      "rateRaw": "Attack Interval: 0.96s per hit",
-      "dps": 46.9
+      "name": "Axes of Ichors (en el suelo)",
+      "dmgRaw": "Damage: 30 los primeros 3 golpes, 50 el cuarto. Angela tiene dos ataques segun si esta volando (Spear of Ichors) o en el suelo (Axes of Ichors, mas fuerte). Dato real de Xavier en partida (2026-08-16) contra Black Widow (275 de vida): volando, 7 golpes de Spear of Ichors la vencen en 6.32s (275/6.32=43.5 dps); en el suelo, 8 golpes de Axes of Ichors la vencen en 3.48s (275/3.48=79.0 dps, casi el doble). Se usa el de tierra como daño principal por ser el mas fuerte y el que mas se usa en pelea real",
+      "rateRaw": "Attack Interval: First three strikes: 0.4s per hit; the forth strike: 0.6s per hit",
+      "dps": 79.0
     }
   },
   "Blade": {
@@ -184,16 +184,17 @@ const HERO_BASIC_STATS = {
   "Human Torch": {
     "basicAttack": {
       "name": "Fire Cluster",
-      "dmgRaw": "Shot Damage oficial: 5.5 per round -- probablemente por cada proyectil individual DENTRO de una rafaga (el nombre es literal, 'cluster'), pero ninguna fuente dice cuantos proyectiles hay por rafaga. Dato real de Xavier en partida (2026-08-16): apuntando a la cabeza, mata a un dps de 250 de vida en 1.05s reales",
+      "dmgRaw": "Shot Damage oficial: 5.5 per round -- probablemente por cada proyectil individual DENTRO de una rafaga (el nombre es literal, 'cluster'), pero ninguna fuente dice cuantos proyectiles hay por rafaga. Dato real de Xavier en partida (2026-08-16) contra Black Widow (275 de vida): apuntando al cuerpo (no a la cabeza), 4 ataques la vencen en 1.85s. Xavier tambien midio el caso de 2 headshots (0.85s = 323.5 dps) pero aclaro que acertar los 2 headshots seguidos es casi imposible para un jugador normal ('o eres hacker o alguien muy bueno'), asi que se usa el dato de cuerpo por ser representativo de un jugador promedio (mismo criterio que Doctor Strange)",
       "rateRaw": "El calculo oficial (5.5 x 2 rondas/s = 11 dps) es claramente muy bajo comparado con el resultado real en partida; se usa el tiempo medido en su lugar",
-      "dps": 238.1
+      "dps": 148.6
     }
   },
   "Invisible Woman": {
     "basicAttack": {
       "name": "Orb Projection",
-      "dmgRaw": "Damage: Deal 30 damage per hit upon being shot out and 15 damage per hit on its return journey.",
-      "rateRaw": "Fire Rate: 0.5s per hit"
+      "dmgRaw": "Damage: Deal 30 damage per hit upon being shot out and 15 damage per hit on its return journey (ataque hibrido, el mismo orbe dana o cura segun a quien le pegue). Dato real de Xavier en partida (2026-08-16) contra Black Widow (275 de vida): 7 golpes la vencen en 3.35s",
+      "rateRaw": "Fire Rate oficial: 0.5s per hit",
+      "dps": 82.1
     },
     "primaryHeal": {
       "name": "Guardian Shield",
@@ -213,9 +214,9 @@ const HERO_BASIC_STATS = {
   "Squirrel Girl": {
     "basicAttack": {
       "name": "Burst Acorn",
-      "dmgRaw": "Spell Field Damage: 110",
-      "rateRaw": "Fire Rate: 1.49 acorns per second",
-      "dps": 163.9
+      "dmgRaw": "Spell Field Damage: 110. Dato real de Xavier en partida (2026-08-16) contra Black Widow (275 de vida): solo necesita 3 nueces (todas directas) para vencer a un enemigo, la vence en 1.58s",
+      "rateRaw": "Fire Rate oficial: 1.49 acorns per second (163.9 dps teorico, usado antes)",
+      "dps": 174.1
     }
   },
   "Black Widow": {
@@ -237,8 +238,8 @@ const HERO_BASIC_STATS = {
   "Cloak & Dagger": {
     "basicAttack": {
       "name": "Darkforce Cloak + Lightforce Dagger (combinado)",
-      "dmgRaw": "Cloak (Darkforce Cloak, spell field automatico): 80/s. Dagger (Lightforce Dagger, ataque hibrido -- el mismo tiro dana O cura segun el objetivo): 18 dmg x 2.27 golpes/s = 40.9/s. Se suman ambas personas porque representan el daño principal del mismo héroe (pedido de Xavier, 2026-08-16, guia mobalytics.gg/marvel-rivals/cloak-and-dagger-guide)",
-      "dps": 120.9
+      "dmgRaw": "Cloak (Darkforce Cloak, spell field automatico): 80/s oficial. Dagger (Lightforce Dagger, ataque hibrido -- el mismo tiro dana O cura segun el objetivo): 18 dmg x 2.27 golpes/s = 40.9/s oficial. Se suman ambas personas porque representan el daño principal del mismo héroe (pedido de Xavier, 2026-08-16, guia mobalytics.gg/marvel-rivals/cloak-and-dagger-guide). Corregido con datos reales de Xavier en partida (2026-08-16) contra Black Widow (275 de vida) probando cada persona por separado: Cloak sola la vence en 3.56s (77.2 dps real); Dagger sola (con una recarga completa, 12+4=16 disparos en total) la vence en 9.19s (29.9 dps real, mas bajo que el teorico porque si se cuenta la recarga)",
+      "dps": 107.1
     },
     "primaryHeal": {
       "name": "Dagger Storm",
@@ -306,17 +307,17 @@ const HERO_BASIC_STATS = {
   "Scarlet Witch": {
     "basicAttack": {
       "name": "Chaos Control",
-      "dmgRaw": "Damage: 8.5 per hit",
-      "rateRaw": "Fire Rate: 0.1s per hit",
-      "dps": 85.0
+      "dmgRaw": "Damage: 8.5 per hit. Dato real de Xavier en partida (2026-08-16) contra Black Widow (275 de vida): la vence en 3.36s",
+      "rateRaw": "Fire Rate oficial: 0.1s per hit (85.0 dps teorico, usado antes, muy cerca del real)",
+      "dps": 81.8
     }
   },
   "Winter Soldier": {
     "basicAttack": {
       "name": "Roterstern",
-      "dmgRaw": "Projectile Damage: 80 (revisado 2026-08-16: solo 3 balas, se agotan en 1.2s, pero Xavier decidio no restar tiempo de recarga -- usar el calculo simple igual)",
-      "rateRaw": "Fire Rate: 2.5 rounds per second",
-      "dps": 200.0
+      "dmgRaw": "Projectile Damage: 80. Corregido de nuevo 2026-08-16 con dato real de Xavier contra Black Widow (275 de vida): mezcla realista de un jugador promedio, 2 disparos al cuerpo + 1 headshot, vence en 1.25s. Xavier probo tambien opciones puramente de cuerpo (99.6-101.9 dps) y puramente headshot con 2 tiros (348.1 dps, poco realista para un jugador promedio) antes de asentarse en esta mezcla como la representativa",
+      "rateRaw": "Fire Rate oficial: 2.5 rounds per second (usado antes para el calculo simple de 200 dps, sin contar recarga ni mezcla de headshots)",
+      "dps": 220.0
     }
   },
   "Magik": {
@@ -346,9 +347,9 @@ const HERO_BASIC_STATS = {
   "Hela": {
     "basicAttack": {
       "name": "Nightsword Thorn",
-      "dmgRaw": "Damage: 80",
-      "rateRaw": "Fire Rate: 2 rounds per second",
-      "dps": 160.0
+      "dmgRaw": "Damage: 80. Dato real de Xavier en partida (2026-08-16) contra Black Widow (275 de vida): 4 dagas la vencen en 1.78s",
+      "rateRaw": "Fire Rate oficial: 2 rounds per second (160.0 dps teorico, usado antes; 4 dagas a 2/s = 2s, cerca del tiempo real medido)",
+      "dps": 154.5
     }
   },
   "Storm": {
@@ -384,9 +385,9 @@ const HERO_BASIC_STATS = {
   "Punisher": {
     "basicAttack": {
       "name": "Adjudication",
-      "dmgRaw": "Damage: 19 damage per round",
-      "rateRaw": "Fire Rate: 10 rounds per second",
-      "dps": 190.0
+      "dmgRaw": "Damage: 19 damage per round. Dato real de Xavier en partida (2026-08-16) contra Black Widow (275 de vida): la vence en 1.59s usando 16 de sus 40 balas (le sobraron 24/40)",
+      "rateRaw": "Fire Rate oficial: 10 rounds per second (190.0 dps teorico, usado antes; 16 balas a 10/s = 1.6s, coincide con el tiempo real medido)",
+      "dps": 173.0
     }
   },
   "Luna Snow": {
@@ -405,9 +406,9 @@ const HERO_BASIC_STATS = {
   "Adam Warlock": {
     "basicAttack": {
       "name": "Quantum Magic",
-      "dmgRaw": "Damage: 60 damage per round",
-      "rateRaw": "Fire Rate: 2 rounds per second",
-      "dps": 120.0
+      "dmgRaw": "Damage: 60 damage per round. Dato real de Xavier en partida (2026-08-16) contra Black Widow (275 de vida): 5 lanzas de luz la vencen en 2.38s",
+      "rateRaw": "Fire Rate oficial: 2 rounds per second (120.0 dps teorico, usado antes; 5 disparos a 2/s = 2.5s, cerca del tiempo real medido)",
+      "dps": 115.5
     },
     "primaryHeal": {
       "name": "Soul Bond",
@@ -419,9 +420,9 @@ const HERO_BASIC_STATS = {
   "Rocket Raccoon": {
     "basicAttack": {
       "name": "Bombard Mode",
-      "dmgRaw": "Damage: 16 damage per round",
-      "rateRaw": "Fire Rate: 12.05 rounds per second",
-      "dps": 192.8
+      "dmgRaw": "Damage: 16 damage per round. Dato real de Xavier en partida (2026-08-16) contra Black Widow (275 de vida): disparando al cuerpo (Rocket es pequeño y no siempre da headshot, dato de jugador promedio), la vence en 1.85s",
+      "rateRaw": "Fire Rate oficial: 12.05 rounds per second (192.8 dps teorico, usado antes)",
+      "dps": 148.6
     },
     "primaryHeal": {
       "name": "Repair Mode",

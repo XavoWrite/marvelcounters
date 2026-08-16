@@ -1865,3 +1865,74 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      Frost): 550 (2x275) ÷ (4.41+3.23=7.64s) = **72.0 dps**. Reemplaza el 62.4 de la primera
      pelea sola.
    - Probado con Python (json.loads), sintaxis válida.
+
+49) Human Torch (Fire Cluster): corregido de headshot a golpes de cuerpo, mismo criterio que
+    Doctor Strange (2026-08-16)
+   - El punto 46 había usado un dato de "apuntando a la cabeza" (238.1 dps) sin saber cuántos
+     golpes hacían falta. Xavier midió de nuevo contra Black Widow (275 de vida): 2 headshots la
+     matan en 0.85s (323.5 dps), pero aclaró que acertar los 2 headshots seguidos es casi
+     imposible para un jugador normal ("o eres hacker o alguien muy bueno"). Con golpes al
+     cuerpo, 4 ataques la matan en 1.85s.
+   - Se usa el dato de cuerpo por ser representativo de un jugador promedio (mismo criterio que
+     Doctor Strange, punto 37: reflejar lo que usa el jugador promedio, no el techo de habilidad).
+     Dps: 275 ÷ 1.85 = **148.6 dps**. Reemplaza el 238.1 anterior.
+   - Probado con Python (json.loads), sintaxis válida.
+
+50) Winter Soldier (Roterstern): revertida la decisión de "no contar la recarga", corregido con
+    mezcla real de cuerpo+cabeza (2026-08-16)
+   - En el punto 36 Xavier había decidido explícitamente NO restar tiempo de recarga y quedarse
+     con el cálculo simple (80 x 2.5/s = 200 dps). Volviendo a probar en partida real contra
+     Black Widow (275 de vida), aparecieron varios escenarios:
+       - 3 disparos al cuerpo + recarga + 1 disparo más: 2.76s (99.6 dps)
+       - 3 disparos al cuerpo + rematar con la E (que recarga sola y termina la eliminación): 2.70s
+         (101.9 dps)
+       - 2 headshots seguidos: 0.79s (348.1 dps) — Xavier aclaró que Winter Soldier (como Black
+         Widow) tiene la pistola tapándole la cabeza en el modelo, dificultando el headshot; no
+         representativo de un jugador promedio
+       - Mezcla realista de un jugador promedio (2 disparos al cuerpo + 1 headshot): 1.25s
+   - Se usa la mezcla realista como representativa (mismo criterio que Human Torch/Doctor
+     Strange): 275 ÷ 1.25 = **220.0 dps**. Reemplaza el 200.0 anterior, revirtiendo la decisión
+     del punto 36 con datos más completos.
+   - Probado con Python (json.loads), sintaxis válida.
+
+51) Rocket Raccoon, Punisher, Squirrel Girl, Hela, Invisible Woman, Cloak & Dagger: corregidos
+    con datos reales de Xavier contra Black Widow, 275 de vida (2026-08-16)
+   - Xavier pidió no verificar en vivo en el navegador por ahora para este lote (se hará más
+     adelante); solo se validó sintaxis JSON con Python en cada paso.
+   - **Rocket Raccoon** (Bombard Mode): antes 192.8 dps teórico (16x12.05/s), sin ajustar por
+     munición. Real: dispara al cuerpo (es pequeño y no siempre acierta headshot, dato de jugador
+     promedio), vence a Black Widow en 1.85s → 275÷1.85 = **148.6 dps**.
+   - **Punisher** (Adjudication): antes 190.0 dps teórico. Real: la vence en 1.59s usando 16 de
+     sus 40 balas (16 a 10/s=1.6s, coincide con lo medido) → 275÷1.59 = **173.0 dps**.
+   - **Squirrel Girl** (Burst Acorn): antes 163.9 dps teórico. Real: solo necesita 3 nueces
+     directas, la vence en 1.58s → 275÷1.58 = **174.1 dps**.
+   - **Hela** (Nightsword Thorn, nunca antes repasada con Xavier): antes 160.0 dps teórico. Real:
+     4 dagas la vencen en 1.78s (cerca del teórico de 2s) → 275÷1.78 = **154.5 dps**.
+   - **Invisible Woman** (Orb Projection, era la única sin ningún dps): ataque híbrido (el mismo
+     orbe daña o cura según a quién le pega). Real: 7 golpes la vencen en 3.35s →
+     275÷3.35 = **82.1 dps**. Antes no tenía dps en absoluto.
+   - **Cloak & Dagger**: se había combinado con números teóricos (80+40.9=120.9, punto 38).
+     Xavier probó cada persona por separado en partida real: Cloak sola vence a Black Widow en
+     3.56s (275÷3.56=77.2 dps, muy cerca del teórico 80); Dagger sola, con una recarga completa
+     de por medio (12+4=16 disparos en total), la vence en 9.19s (275÷9.19=29.9 dps, bastante
+     más bajo que el teórico 40.9 porque acá sí se cuenta la recarga). Combinado real:
+     77.2+29.9 = **107.1 dps**. Reemplaza el 120.9 anterior.
+   - **Adam Warlock** (Quantum Magic): antes 120.0 dps teórico. Real: 5 lanzas de luz la vencen
+     en 2.38s (cerca del teórico de 2.5s) → 275÷2.38 = **115.5 dps**.
+
+52) Scarlet Witch, Angela: corregidas con datos reales; Black Panther y Deadpool (Duelist)
+    dejados sin cambios a pedido de Xavier (2026-08-16)
+   - **Scarlet Witch** (Chaos Control): antes 85.0 dps teórico. Real: la vence en 3.36s (muy
+     cerca del teórico) → 275÷3.36 = **81.8 dps**.
+   - **Angela**: tiene dos ataques según si vuela (Spear of Ichors, el que estaba cargado antes)
+     o está en el suelo (Axes of Ichors, mucho más fuerte). Xavier midió los dos contra Black
+     Widow: volando, 7 golpes en 6.32s (275÷6.32=43.5 dps); en el suelo, 8 golpes en 3.48s
+     (275÷3.48=79.0 dps, casi el doble). Se cambia el daño principal a Axes of Ichors (tierra) por
+     ser el más fuerte y el que más se usa en pelea real. `basicAttack.name` pasa a "Axes of
+     Ichors (en el suelo)".
+   - **Black Panther** y **Deadpool (Duelist)**: Xavier dijo que no sabe jugarlos bien y que le
+     tomaría tiempo entender cómo hacen tanto daño (combos sofisticados); pidió dejarlos como
+     están, sin cambios.
+   - Xavier consideró que los datos de daño del resto del roster ya están bien; el siguiente
+     foco pasa a ser las curaciones (hps) de los sanadores.
+   - Probado con Python (json.loads), sintaxis válida.
