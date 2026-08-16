@@ -40,7 +40,7 @@ const HERO_BASIC_STATS = {
   "Black Cat": {
     "basicAttack": {
       "name": "FELINE FURY",
-      "dmgRaw": "Damage: 35"
+      "dmgRaw": "Damage: 35 (verificado en vivo 2026-08-16: la pagina oficial no publica cadencia/intervalo para este ataque, no se puede calcular dps sin inventar un numero)"
     }
   },
   "White Fox": {
@@ -120,7 +120,7 @@ const HERO_BASIC_STATS = {
   "Daredevil": {
     "basicAttack": {
       "name": "JUSTICE JAB",
-      "dmgRaw": "Damage: 35"
+      "dmgRaw": "Damage: 35 (misma limitacion que Black Cat: la pagina oficial no publica cadencia para este ataque)"
     }
   },
   "Angela": {
@@ -134,8 +134,9 @@ const HERO_BASIC_STATS = {
   "Blade": {
     "basicAttack": {
       "name": "Ancestral Sword",
-      "dmgRaw": "Damage: Cause 26 damage per single slash; double strike cause 13 damage per hit",
-      "rateRaw": "Attack Interval: 2 strikes per second"
+      "dmgRaw": "Damage: 26 per slash (double strike variant: 2x13, mismo total) a 2 golpes/seg",
+      "rateRaw": "Attack Interval: 2 strikes per second",
+      "dps": 52.0
     }
   },
   "Phoenix": {
@@ -149,8 +150,9 @@ const HERO_BASIC_STATS = {
   "Ultron": {
     "basicAttack": {
       "name": "ENCEPHALO-RAY",
-      "dmgRaw": "Damage: First beam 6 rounds in 0.5s, 12 per hit; second single-cast spell field 75 per hit",
-      "rateRaw": "Fire Rate: 1.58s per round"
+      "dmgRaw": "Damage: ciclo completo = beam (6x12=72) + spell field (75) = 147 cada 1.58s",
+      "rateRaw": "Fire Rate: 1.58s per round",
+      "dps": 93.0
     },
     "primaryHeal": {
       "name": "IMPERATIVE: PATCH",
@@ -473,8 +475,9 @@ const HERO_BASIC_STATS = {
   "Venom": {
     "basicAttack": {
       "name": "Dark Predation",
-      "dmgRaw": "Damage: 20",
-      "rateRaw": "Attack Interval: 0.9s, with a 0.1s interval between each tendril"
+      "dmgRaw": "Damage: 4 tendrils x 20 = 80 por ciclo de 0.9s",
+      "rateRaw": "Attack Interval: 0.9s, with a 0.1s interval between each tendril",
+      "dps": 88.9
     }
   },
   "Groot": {
@@ -487,9 +490,10 @@ const HERO_BASIC_STATS = {
   },
   "Captain America": {
     "basicAttack": {
-      "name": "Sentinel Strike",
-      "dmgRaw": "Damage: Melee Attack Damage: 45, Flying Shield Damage: 45",
-      "rateRaw": "Attack Interval: Melee 1st Hit: 0.4s, Melee 2nd Hit: 0.5s, Flying Shield 1st Hit: 0.5s, Flying Shield 2nd Hit: 0.57s"
+      "name": "Sentinel Strike (melee)",
+      "dmgRaw": "Damage: 45 por golpe, modo melee (tiene 2do modo de escudo volador con numeros similares, se uso melee por ser el modo base)",
+      "rateRaw": "Attack Interval: ~0.45s promedio (1er golpe 0.4s, 2do golpe 0.5s)",
+      "dps": 100.0
     }
   },
   "Doctor Strange": {

@@ -1602,3 +1602,32 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      consola.
    - Nota: esto convierte a Loki en un 5to caso de "básico híbrido" (basicAttack.name ===
      primaryHeal.name = "Mystical Missile"), mismo patrón que los 4 del punto 33.
+
+35) Completado el repaso de huecos restantes de daño/curación (2026-08-16)
+   - Xavier pidió terminar de completar los datos de daño/curación que quedaban sin numero limpio.
+     Quedaban 10 héroes sin `dps` en basicAttack y 2 estrategas sin `hps` en primaryHeal (Luna
+     Snow y Mantis, ya documentados como %vida máxima, sin cambios). Revisados los 10 con el texto
+     completo + 2 verificaciones en vivo:
+   - **Corregidos con ciclo completo** (mismo criterio que Spider-Man/Iron Fist del punto 32):
+     * Ultron (ENCEPHALO-RAY): antes sin dato, ahora **93.0** (beam 6×12=72 + spell field 75 = 147
+       cada 1.58s).
+     * Venom (Dark Predation): antes sin dato, ahora **88.9** (4 tendrils × 20 = 80 cada 0.9s).
+     * Blade (Ancestral Sword): antes sin dato, ahora **52.0** (26 dmg × 2 golpes/seg; la variante
+       "double strike" da el mismo total repartido en 2 hits, no cambia el promedio) — confianza
+       moderada, el texto no aclara con qué frecuencia ocurre la variante.
+     * Captain America (Sentinel Strike): antes sin dato, ahora **100.0**, usando el modo melee
+       (45 dmg, intervalo promedio ~0.45s entre 1er y 2do golpe) — confianza moderada, tiene un
+       2do modo (escudo volador) con números similares que no se usó; "Change Form" en el casting
+       sugiere que son modos alternativos, no simultáneos.
+   - **Verificados en vivo, confirmado que NO se puede calcular** (no es un hueco del scrape, la
+     página oficial directamente no publica cadencia para estos 2): Black Cat (Feline Fury, 35
+     dmg) y Daredevil (Justice Jab, 35 dmg) — ambos ataques melee sin campo de "Fire Rate" ni
+     "Attack Interval" en ningún lado de la ficha oficial. Documentado en el `dmgRaw` para que
+     quede constancia de que se revisó y no es un descuido.
+   - **Sin cambios, confirmado que siguen siendo genuinamente sin dato limpio posible** (escalan
+     con energía/carga/%vida, no con cadencia fija): Emma Frost (daño sube con energía 0-140/s),
+     Wolverine (daño = % de la vida máxima del objetivo), Hawkeye (daño cargado 28-70 sin cadencia
+     de disparos repetidos publicada), Invisible Woman (proyectil de ida y vuelta con daño Y
+     curación distintos en cada tramo, demasiado ambiguo para promediar con confianza), Luna Snow
+     y Mantis (curación escala con %vida máxima del objetivo).
+   - Probado en vivo (`heroBasicStats(...)` para los 6 héroes tocados), 0 errores de consola.
