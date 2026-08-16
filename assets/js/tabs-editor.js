@@ -246,7 +246,7 @@ function renderBasicStatsInfographic(){
       <th>${t("glossary.basicStats.colHero")}</th><th>${t("glossary.basicStats.colAbility")}</th>
       <th>${t("glossary.basicStats.colValue")}</th><th>${t("glossary.basicStats.colDps")}</th>
     </tr></thead><tbody>${dmgRows.map(({h,ba})=>`<tr>
-      <td class="bst-hero">${heroIconHtml(h.n,20)}${heroLabel(h.n)}</td>
+      <td class="bst-hero">${heroIconHtml(h.n,20)}${heroLabel(h.n)}${roleIconHtml(h.r,13)}</td>
       <td>${ba.name}</td>
       <td class="bst-raw">${[ba.dmgRaw,ba.rateRaw].filter(Boolean).join(" · ")}</td>
       <td class="bst-num">${typeof ba.dps==="number" ? ba.dps : `<span class="empty-hint">${t("glossary.basicStats.noEstimate")}</span>`}</td>
@@ -257,7 +257,7 @@ function renderBasicStatsInfographic(){
       <th>${t("glossary.basicStats.colHero")}</th><th>${t("glossary.basicStats.colAbility")}</th>
       <th>${t("glossary.basicStats.colHealValue")}</th><th>${t("glossary.basicStats.colHps")}</th>
     </tr></thead><tbody>${healRows.map(({h,ph})=>`<tr>
-      <td class="bst-hero">${heroIconHtml(h.n,20)}${heroLabel(h.n)}</td>
+      <td class="bst-hero">${heroIconHtml(h.n,20)}${heroLabel(h.n)}${roleIconHtml(h.r,13)}</td>
       <td>${ph.name}${ph.key?` <span class="empty-hint">(${ph.key})</span>`:""}</td>
       <td class="bst-raw">${ph.raw||""}</td>
       <td class="bst-num">${typeof ph.hps==="number" ? ph.hps : `<span class="empty-hint">${t("glossary.basicStats.noEstimate")}</span>`}</td>
