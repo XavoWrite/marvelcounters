@@ -1017,3 +1017,41 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
    - Adam Warlock: todo lo que trajo la fuente nueva ya coincidía con los datos actuales (Iron
      Fist +7, Magik +6, Psylocke +6, Black Panther +5, Spider-Man +5, Captain America +4, todos
      ya en la dirección correcta) — sin cambios, solo reforzado.
+
+21) Sistema de "supervivencia" — sanadores vs dive, tanques de escudo vs poke (2026-08-16)
+   - Pedido de Xavier: quería que el análisis tomara en cuenta qué sanadores sobreviven bien un
+     dive directo y qué tanques de escudo reducen mejor el daño de poke/proyectiles, basado en su
+     propio conocimiento de juego (mismo criterio que otras veces esta sesión — su razonamiento
+     mecánico concreto cuenta como fuente confiable sin necesidad de video externo).
+   - Sanadores resistentes a dive (DIVE_SURVIVOR_TIER en analysis.js), de más a menos, según
+     Xavier: Deadpool (Strategist) y Cloak & Dagger primero (mucha vida propia/curación pasiva y
+     fade+invulnerabilidad respectivamente), White Fox (puede noquear a quien le hace dive),
+     Gambit (movilidad + corta cura), Jubilee (puede congelar), Loki ("a veces", tiene
+     escape/clones pero es más frágil), Rocket Raccoon y Ultron (pueden huir volando/rodando,
+     los más débiles del grupo si los alcanzan). El resto de los sanadores (Luna Snow, Mantis,
+     Invisible Woman, Adam Warlock) no entran a propósito — no mueren siempre a un dive, es que
+     no tienen una herramienta dedicada de supervivencia como estos.
+   - Tanques de escudo vs poke (SHIELD_TANK_TIER en analysis.js), de más a menos eficaces según
+     Xavier: Magneto (burbuja total, el más eficaz), Doctor Strange (escudo direccional grande),
+     Emma Frost (modo diamante), The Hood (el más pobre del grupo — su escudo deja pasar daño
+     reducido o lo rebota, no lo bloquea del todo).
+   - Xavier eligió que esto sea un bonus AUTOMÁTICO en las recomendaciones, sin aviso visible en
+     pantalla (a diferencia del aviso de "rival de ráfaga", que sí es visible) — mismo patrón que
+     antiDiveCount/shieldHeavyCount ya existentes, pero mirando al equipo RIVAL en vez del propio:
+     * `enemyDiveCount`/`enemyPokeCount`: cuentan cuántos rivales tienen tag "dive"/"poke".
+     * `diveSurvivorBonus`/`pokeResistBonus`: multiplican el puntaje del candidato (1.08–1.5x)
+       cuando el rival tiene 2+ divers/pokers Y el candidato está en la lista de arriba.
+     * Aplicado en las 3 fórmulas de puntaje ya existentes (candidateScoreAgainst, "Mejores picks
+       por rol", "Counters sugeridos por héroe" — mismo patrón que diveViability/shieldBreakBonus)
+       y como desempate extra en el sort de "Soporte recomendado" (mismo lugar donde ya vive el
+       desempate por rival de ráfaga).
+   - Probado en vivo: equipo rival con 3 divers (Spider-Man, Black Panther, Psylocke) hizo que
+     "Soporte recomendado" ordenara a Gambit y Loki primero, por encima de Luna Snow/Mantis —
+     funciona como se esperaba.
+   - De paso, se agregó una SEGUNDA barrita (healEfficiencyHtml), aparte de la barrita existente
+     de daño/curación del mismo equipo (dmgHealBarHtml, que Xavier pidió conservar sin cambios) —
+     esta nueva compara el daño promedio por cabeza del equipo RIVAL (mismo cálculo que
+     enemyIsBurstHeavy) contra la curación TOTAL del equipo propio, con un veredicto
+     eficiente/ineficiente. Se muestra en ambos lados (Tu Equipo: daño del rival vs tu curación;
+     Equipo Enemigo: tu daño vs la curación del rival), ancladas debajo de cada panel de 6
+     casilleros junto a la barrita original.

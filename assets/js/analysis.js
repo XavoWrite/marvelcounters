@@ -42,6 +42,48 @@ function shieldBreakBonus(hero, shieldHeavy){
   return 1;
 }
 
+// cuenta cuantos duelistas/vanguardias "dive" tiene el EQUIPO RIVAL (a diferencia de
+// antiDiveCount, que cuenta tus propias herramientas anti-dive) -- sirve para saber cuando
+// priorizar sanadores que sobreviven bien a un dive directo.
+function enemyDiveCount(enemyTeam){
+  return enemyTeam.filter(h=>h && h.t && h.t.includes("dive")).length;
+}
+// cuenta cuantos duelistas "poke" (dano sostenido a distancia) tiene el rival -- sirve para
+// saber cuando priorizar tanques de escudo que reducen ese dano.
+function enemyPokeCount(enemyTeam){
+  return enemyTeam.filter(h=>h && h.t && h.t.includes("poke")).length;
+}
+
+// sanadores con buena supervivencia personal contra un dive directo, segun el conocimiento de
+// juego de Xavier (2026-08-16): Deadpool (Strategist) y Cloak & Dagger primero (mucha vida
+// propia/curacion pasiva y fade+invulnerabilidad respectivamente), despues White Fox (puede
+// noquear a quien le hace dive), Gambit (movilidad + corta cura), Jubilee (puede congelar),
+// Loki ("a veces", tiene escape/clones pero es mas fragil), Rocket Raccoon y Ultron (pueden huir
+// volando/rodando, pero son los mas debiles del grupo si los alcanzan). El resto de los
+// sanadores (Luna Snow, Mantis, Invisible Woman, Adam Warlock) no entran en esta lista a
+// proposito -- no significa que mueran siempre a un dive, es que no tienen una herramienta
+// dedicada de supervivencia como estos. Documentado en data-sources-INTERNAL.txt.
+const DIVE_SURVIVOR_TIER = {
+  "Deadpool (Strategist)": 1.5, "Cloak & Dagger": 1.5,
+  "White Fox": 1.35, "Gambit": 1.25, "Jubilee": 1.2,
+  "Loki": 1.12, "Rocket Raccoon": 1.08, "Ultron": 1.08,
+};
+function diveSurvivorBonus(hero, enemyDive){
+  if(enemyDive>=2 && DIVE_SURVIVOR_TIER[hero.n]) return DIVE_SURVIVOR_TIER[hero.n];
+  return 1;
+}
+
+// tanques de escudo, de mas a menos eficaces reduciendo dano de poke/proyectiles, segun el
+// conocimiento de juego de Xavier (2026-08-16): Magneto (burbuja total, el mas eficaz), Doctor
+// Strange (escudo direccional grande), Emma Frost (modo diamante), The Hood (el mas pobre del
+// grupo -- su escudo deja pasar dano reducido o lo rebota, no lo bloquea del todo). Documentado
+// en data-sources-INTERNAL.txt.
+const SHIELD_TANK_TIER = {"Magneto": 1.5, "Doctor Strange": 1.35, "Emma Frost": 1.2, "The Hood": 1.08};
+function pokeResistBonus(hero, enemyPoke){
+  if(enemyPoke>=2 && SHIELD_TANK_TIER[hero.n]) return SHIELD_TANK_TIER[hero.n];
+  return 1;
+}
+
 // ciclo de counters entre arquetipos de Duelista (mismo patron piedra-papel-tijera que usan varias
 // guias de la comunidad, ver hero-roster.js): Todoterreno > Cuerpo a cuerpo > Flanker > Poke >
 // Todoterreno. Antes esto sumaba nada mas cuando el candidato le ganaba en el papel al arquetipo
@@ -138,6 +180,27 @@ function dmgHealBarHtml(team){
   </div>`;
 }
 
+// veredicto CRUZADO (a diferencia de dmgHealBarHtml, que solo mira UN equipo): compara el dano
+// promedio por cabeza del equipo RIVAL (mismo criterio que enemyIsBurstHeavy, ya que sumar el
+// dano de los 6 rivales como si le pegaran todos a la vez a un mismo blanco seria un peor caso
+// irreal) contra la curacion TOTAL de "myTeam" -- responde "si un solo atacante rival me enfoca,
+// mi curacion total le hace frente o no". Pedido explicito de Xavier (2026-08-16), se agrega
+// APARTE de dmgHealBarHtml (que sigue mostrando el dano/curacion del mismo equipo), no lo
+// reemplaza -- las dos lecturas sirven para cosas distintas.
+function healEfficiencyHtml(myTeam, enemyTeam){
+  const enemy = teamDmgHealTotals(enemyTeam);
+  const mine = teamDmgHealTotals(myTeam);
+  if(enemy.dmgCount===0 || mine.healCount===0) return "";
+  const enemyPerHead = Math.round(enemy.dmg/enemy.dmgCount*10)/10;
+  const efficient = mine.heal >= enemyPerHead;
+  const cls = efficient ? "healeff-good" : "healeff-bad";
+  const verdict = efficient ? t("analysis.healEff.efficient") : t("analysis.healEff.inefficient");
+  return `<div class="healeff-wrap ${cls}">
+    <span class="healeff-verdict">${efficient?"✅":"⚠️"} ${verdict}</span>
+    <span class="healeff-detail">${t("analysis.healEff.detail",{enemyDps:enemyPerHead, heal:mine.heal})}</span>
+  </div>`;
+}
+
 // puntaje de un candidato "h" contra una lista de rivales: cuenta cuantos le gana/pierde en tu
 // matriz (goodAgainst/badAgainst), pesa por relevancia real de pelea + los ajustes de dive/shield
 // segun el equipo rival completo, SUMA el puntaje de referencia externa de cada rival puntual
@@ -156,7 +219,12 @@ function candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow){
     const ref = (typeof externalMatchupScore==="function") ? externalMatchupScore(e.n, h.n) : null;
     if(ref) refSum += ref.score;
   });
-  const base = goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow) - badAgainst*2;
+  // bonus de supervivencia: sanadores que aguantan un dive directo cuando el rival tiene 2+
+  // divers, y tanques de escudo que aguantan poke cuando el rival tiene 2+ poke -- ver
+  // diveSurvivorBonus/pokeResistBonus mas arriba. Se calculan del enemyList ya recibido, no hace
+  // falta pasar parametros nuevos a esta funcion compartida.
+  const survivalBonus = diveSurvivorBonus(h, enemyDiveCount(enemyList)) * pokeResistBonus(h, enemyPokeCount(enemyList));
+  const base = goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow)*survivalBonus - badAgainst*2;
   return {score: base + refSum*0.03 + archCycleBonus(h,enemyList), goodAgainst, badAgainst};
 }
 
@@ -418,6 +486,14 @@ function renderAnalysis(){
   if(allyBarEl) allyBarEl.innerHTML = allyFilled>0 ? dmgHealBarHtml(allyTeam) : "";
   if(enemyBarEl) enemyBarEl.innerHTML = enemyFilled>0 ? dmgHealBarHtml(enemyTeam) : "";
 
+  // veredicto cruzado de eficiencia (dano del rival vs tu curacion, y viceversa) -- ver
+  // healEfficiencyHtml arriba. Solo tiene sentido con los dos equipos cargados.
+  const allyEffEl = document.getElementById("allyHealEff");
+  const enemyEffEl = document.getElementById("enemyHealEff");
+  const bothFilled = allyFilled>0 && enemyFilled>0;
+  if(allyEffEl) allyEffEl.innerHTML = bothFilled ? healEfficiencyHtml(allyTeam, enemyTeam) : "";
+  if(enemyEffEl) enemyEffEl.innerHTML = bothFilled ? healEfficiencyHtml(enemyTeam, allyTeam) : "";
+
   // probabilidad de victoria (heurística orientativa, no un cálculo real de winrate) -- el detalle
   // de que te esta jugando en contra ya se explica en "Alineación en riesgo", no se repite aca
   left += `<div class="analysis-section"><div class="sec-title">${t("analysis.winProb.title")}</div>`;
@@ -581,6 +657,8 @@ function renderAnalysis(){
     const allyNamesNow = allyTeam.filter(Boolean).map(h=>h.n);
     const antiDiveNow = antiDiveCount(enemyListForRoles);
     const shieldHeavyNow = shieldHeavyCount(enemyListForRoles);
+    const enemyDiveNow = enemyDiveCount(enemyListForRoles);
+    const enemyPokeNow = enemyPokeCount(enemyListForRoles);
     left += `<div class="role-rec-grid">`;
     ["Vanguard","Duelist","Strategist"].forEach(role=>{
       const scores = {};
@@ -589,7 +667,7 @@ function renderAnalysis(){
           const ch = byName[c.c];
           if(!ch || !heroHasRole(ch, role)) return;
           if(banned.has(c.c)) return; // no tiene sentido recomendar algo baneado
-          if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow), refSum:0, archBonus:archCycleBonus(ch, enemyListForRoles)};
+          if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow), survival:diveSurvivorBonus(ch, enemyDiveNow)*pokeResistBonus(ch, enemyPokeNow), refSum:0, archBonus:archCycleBonus(ch, enemyListForRoles)};
           scores[c.c].hits++;
           if(c.refScore) scores[c.c].refSum += c.refScore.score;
         });
@@ -604,7 +682,7 @@ function renderAnalysis(){
       // 4 en vez de 3 -- con retrato en vez de tarjeta de texto, 3 quedaba como una "L" (2 arriba +
       // 1 abajo suelto); 4 completa un cuadrado 2x2 parejo dentro de la columna angosta
       const ranked = Object.entries(scores)
-        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield + b[1].refSum*0.03 + b[1].archBonus) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield + a[1].refSum*0.03 + a[1].archBonus))
+        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield*b[1].survival + b[1].refSum*0.03 + b[1].archBonus) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield*a[1].survival + a[1].refSum*0.03 + a[1].archBonus))
         .slice(0,4);
       left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(role,16)}${t('role.'+role)}</div>`;
       if(ranked.length===0){
@@ -654,14 +732,20 @@ function renderAnalysis(){
     // del orden arbitrario de antes -- pedido explicito de Xavier (2026-08-15), ver
     // data-sources-INTERNAL.txt seccion 7 para el porque del umbral (mediana real del roster).
     const burstHeavy = enemyIsBurstHeavy(enemyTeam);
+    // si el rival tiene 2+ divers, el desempate tambien prioriza sanadores con buena
+    // supervivencia personal contra un dive directo (ver DIVE_SURVIVOR_TIER) -- pedido de
+    // Xavier, 2026-08-16, mismo patron que el desempate por rafaga de arriba.
+    const diveHeavy = enemyDiveCount(enemyTeam.filter(Boolean))>=2;
     const hpsOf = hn => { const bs = heroBasicStats(hn); return (bs && bs.primaryHeal && typeof bs.primaryHeal.hps==="number") ? bs.primaryHeal.hps : -1; };
     const pool = Array.from(new Set([...Object.keys(recs), ...allStrategists])).map(hn=>({
-      hn, risk: riskOf(hn), reasons: recs[hn] ? [...recs[hn].reasons] : [], hps: hpsOf(hn)
+      hn, risk: riskOf(hn), reasons: recs[hn] ? [...recs[hn].reasons] : [], hps: hpsOf(hn),
+      survivalTier: DIVE_SURVIVOR_TIER[hn] || 0
     }));
     pool.sort((a,b)=>{
       const aRisky = a.risk>=0.4, bRisky = b.risk>=0.4;
       if(aRisky!==bRisky) return aRisky?1:-1; // los que no estan en riesgo van primero
       if((a.reasons.length>0)!==(b.reasons.length>0)) return a.reasons.length>0?-1:1; // con sinergia real primero
+      if(diveHeavy && b.survivalTier!==a.survivalTier) return b.survivalTier-a.survivalTier; // rival de dive: sanadores resistentes primero
       if(burstHeavy && b.hps!==a.hps) return b.hps-a.hps; // rival de rafaga: mas curacion/seg conocida primero
       return a.risk-b.risk; // entre iguales, el menos riesgoso
     });
@@ -736,6 +820,8 @@ function renderAnalysis(){
     const enemyListForDefinitive = enemyTeam.filter(Boolean);
     const antiDiveNow = antiDiveCount(enemyListForDefinitive);
     const shieldHeavyNow = shieldHeavyCount(enemyListForDefinitive);
+    const enemyDiveNow = enemyDiveCount(enemyListForDefinitive);
+    const enemyPokeNow = enemyPokeCount(enemyListForDefinitive);
     const pillHtml = (c, isDefinitive)=>{
       const cls = `pill ${c.have?'have':''} ${c.banned?'hidden-pill':''} ${isDefinitive?'top-pill':''}`;
       // el logo de clase (Vanguard/Duelist/Strategist) es lo unico que distingue, a simple vista,
@@ -765,7 +851,7 @@ function renderAnalysis(){
         // proposito para no tapar la matriz propia ni el ajuste de dive/shield, solo desempata
         // entre candidatos parejos.
         const refBonus = c.refScore ? c.refScore.score*0.03 : 0;
-        const score = c.relevance * diveViability(ch, antiDiveNow) * shieldBreakBonus(ch, shieldHeavyNow) + refBonus;
+        const score = c.relevance * diveViability(ch, antiDiveNow) * shieldBreakBonus(ch, shieldHeavyNow) * diveSurvivorBonus(ch, enemyDiveNow) * pokeResistBonus(ch, enemyPokeNow) + refBonus;
         if(score>bestScore){ bestScore = score; definitiveName = c.c; }
       });
       let ordered = counters;

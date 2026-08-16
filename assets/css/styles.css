@@ -79,6 +79,16 @@
   /* barrita de dano/curacion anclada debajo de los 6 casilleros -- ver renderAnalysis() en
      analysis.js para el porque (garantiza la misma altura en Tu Equipo y Equipo Enemigo) */
   #allyDmgHealBar:not(:empty), #enemyDmgHealBar:not(:empty){margin-top:12px;padding-top:10px;border-top:1px solid var(--line);}
+  /* veredicto cruzado de eficiencia (dano rival vs tu curacion) -- ver healEfficiencyHtml en
+     analysis.js */
+  #allyHealEff:not(:empty), #enemyHealEff:not(:empty){margin-top:8px;}
+  .healeff-wrap{border-radius:8px;padding:6px 10px;font-size:11.5px;display:flex;flex-direction:column;gap:2px;}
+  .healeff-good{background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.35);}
+  .healeff-bad{background:rgba(255,59,78,.1);border:1px solid rgba(255,59,78,.35);}
+  .healeff-verdict{font-weight:700;}
+  .healeff-good .healeff-verdict{color:var(--st);}
+  .healeff-bad .healeff-verdict{color:var(--enemy);}
+  .healeff-detail{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10.5px;}
   @media(max-width:420px){.slots{grid-template-columns:repeat(2,1fr);}}
   .slot{background:var(--panel-alt);border:1.5px dashed var(--line);border-radius:10px;padding:10px 8px;text-align:center;
     cursor:pointer;min-height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:.15s;}
