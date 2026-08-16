@@ -55,7 +55,7 @@ es: {
   "comp.avoidtitle": "🚫 Evitar: 1 solo estratega",
   "comp.avoidbody": "Cae a ~42-46% de winrate — se pierde la mayoría de las veces. Solo unas pocas comps muy específicas y coordinadas lo compensan (ej. Doctor Strange sosteniendo solo, o con el team-up de Iron Man). Si puedes, suma un segundo estratega.",
 
-  "bans.title": "Baneos (desde Oro II)",
+  "bans.title": "🚫 Baneos (desde Oro II) — opcional, tocá para abrir",
   "bans.allyTitle": "Baneos · Tu equipo",
   "bans.allyHint": "Los 3 héroes que baneó tu equipo (desde Oro II).",
   "bans.enemyTitle": "Baneos · Equipo enemigo",
@@ -418,7 +418,7 @@ en: {
   "comp.avoidtitle": "🚫 Avoid: a single strategist",
   "comp.avoidbody": "Drops to around a 42-46% winrate — you lose most of the time. Only a few very specific, coordinated comps make up for it (e.g. Doctor Strange holding alone, or with Iron Man's team-up). Add a second strategist if you can.",
 
-  "bans.title": "Bans (from Gold II)",
+  "bans.title": "🚫 Bans (from Gold II) — optional, tap to open",
   "bans.allyTitle": "Bans · Your team",
   "bans.allyHint": "The 3 heroes your team banned (from Gold II).",
   "bans.enemyTitle": "Bans · Enemy team",

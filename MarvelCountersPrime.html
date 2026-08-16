@@ -80,25 +80,27 @@
     <p class="empty-hint" style="margin-top:8px;" data-i18n-html="team.footerHint">La identificación del héroe intenta ser automática (comparando contra capturas reales) pero es experimental — los casilleros marcados "auto" siempre hay que revisarlos, y si corregís uno la app aprende de esa corrección para la próxima vez. La posición calibrada además sirve de guía visual si preferís elegir a mano. La zona de "nombre" se lee sola con OCR offline y rellena el Explorador de Jugadores.</p>
   </div>
 
-  <div class="sec-title" style="margin-top:0;" data-i18n="bans.title">Baneos (desde Oro II)</div>
-  <div class="teams">
-    <div class="vs-divider"><span>VS</span></div>
-    <div class="panel ally ban-panel">
-      <div class="panel-head">
-        <div class="panel-title" data-i18n="bans.allyTitle">Baneos · Tu equipo</div>
+  <details class="ban-collapse">
+    <summary data-i18n="bans.title">🚫 Baneos (desde Oro II) — opcional, tocá para abrir</summary>
+    <div class="teams">
+      <div class="vs-divider"><span>VS</span></div>
+      <div class="panel ally ban-panel">
+        <div class="panel-head">
+          <div class="panel-title" data-i18n="bans.allyTitle">Baneos · Tu equipo</div>
+        </div>
+        <p class="empty-hint" style="margin:0 0 10px;" data-i18n="bans.allyHint">Los 3 héroes que baneó tu equipo (desde Oro II).</p>
+        <div class="slots" id="banAllySlots"></div>
       </div>
-      <p class="empty-hint" style="margin:0 0 10px;" data-i18n="bans.allyHint">Los 3 héroes que baneó tu equipo (desde Oro II).</p>
-      <div class="slots" id="banAllySlots"></div>
-    </div>
-    <div class="panel enemy ban-panel">
-      <div class="panel-head">
-        <div class="panel-title" data-i18n="bans.enemyTitle">Baneos · Equipo enemigo</div>
+      <div class="panel enemy ban-panel">
+        <div class="panel-head">
+          <div class="panel-title" data-i18n="bans.enemyTitle">Baneos · Equipo enemigo</div>
+        </div>
+        <p class="empty-hint" style="margin:0 0 10px;" data-i18n="bans.enemyHint">Los del rival — si no sabes cuáles fueron, déjalos vacíos. Pueden repetirse con los tuyos (doble baneo).</p>
+        <div class="slots" id="banEnemySlots"></div>
       </div>
-      <p class="empty-hint" style="margin:0 0 10px;" data-i18n="bans.enemyHint">Los del rival — si no sabes cuáles fueron, déjalos vacíos. Pueden repetirse con los tuyos (doble baneo).</p>
-      <div class="slots" id="banEnemySlots"></div>
     </div>
-  </div>
-  <p class="empty-hint" style="text-align:center;margin:6px 0 18px;"><span data-i18n="bans.footerHint">Un héroe baneado (de cualquiera de los dos lados) se quita automáticamente de los equipos de abajo y no se puede seleccionar mientras siga baneado.</span> <button class="ban-clear-btn" id="clearBansBtn" style="margin:0 0 0 6px;" data-i18n="bans.clearBtn">Limpiar todos los baneos</button></p>
+    <p class="empty-hint" style="text-align:center;margin:6px 0 18px;"><span data-i18n="bans.footerHint">Un héroe baneado (de cualquiera de los dos lados) se quita automáticamente de los equipos de abajo y no se puede seleccionar mientras siga baneado.</span> <button class="ban-clear-btn" id="clearBansBtn" style="margin:0 0 0 6px;" data-i18n="bans.clearBtn">Limpiar todos los baneos</button></p>
+  </details>
 
   <div class="team-tools">
     <button class="ban-clear-btn" id="swapTeamsBtn" data-i18n="teamtools.swap">🔄 Voltear equipos (izq ↔ der)</button>
