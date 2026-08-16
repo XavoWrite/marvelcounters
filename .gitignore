@@ -7,6 +7,9 @@
 /matchup-scores-export.json
 /matchup-review-priority.txt
 
+# Guias/PDFs de referencia usados al investigar datos de habilidades, no se suben
+guias-referencia/
+
 # Screenshots and test images used while building/testing, not needed to run the html
 capturas-pruebas/
 *.png
