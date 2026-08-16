@@ -1281,3 +1281,37 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      kit completo de los 55 héroes desde marvelrivals.com, guardado en
      `hero-full-abilities-RAW-partA.json`/`-partB.json` en la raíz del repo — sin terminar
      todavía a la fecha de este punto).
+
+26) Corrección del "punto débil" (ya no sugiere divear tanques) + fila anti-tanque explícita +
+    aviso de sin-lifeline accionable (2026-08-16)
+   - Xavier probó el punto 25 en vivo y encontró un bug real: `weakestLinkHtml` sugirió "divear a
+     Doctor Strange" en un rival de 5 tanques — Strange es un tanque de escudo, no un objetivo
+     frágil. El criterio viejo solo miraba qué par (rival, counter con tag "dive") tenía mayor
+     relevancia en la matriz, sin filtrar si el rival elegido era de rol Vanguardia. Corregido:
+     los Vanguardia quedan excluidos del pool de "rival débil" (un tanque nunca es el punto flaco
+     de su propio equipo). De paso se sacó el filtro de tag "dive" del lado del counter sugerido
+     — Xavier: "contrarrestar a Rocket [Raccoon] con el mejor personaje posible", no
+     necesariamente un diver. Wording nuevo, sin la palabra "divear" pegada a un objetivo
+     cualquiera: "🎯 Punto débil rival: {rival} — usá {counter}."
+   - **Fila anti-tanque explícita nueva** (`antiTankRowHtml`): antes el bonus de ANTI_TANK_TIER
+     (punto 25) solo influía el orden de "Mejores picks por rol" en silencio, sin decirlo en
+     ningún texto. Xavier: "debería salir una fila que diga, usar a Wolverine y Iron Fist...
+     mostrando que si hay The Thing evitar la pelea con este e ir por los otros tanques". Ahora,
+     con 3+ vanguardias rivales, se nombra el mejor anti-tanque disponible (misma lista
+     ANTI_TANK_TIER) Y se revisa la matriz 1v1 real contra CADA vanguardia rival puntual: si
+     alguno lo contrarresta a él (categoría 1, matchup en contra), se lista aparte para evitar —
+     "🐺 Usá {héroe} contra sus tanques — evitá pelear con {tanque(s)}." Si no hay ninguno malo,
+     el texto se acorta a "Usá {héroe} contra sus tanques." (sin mencionar evitar nada).
+   - **Aviso de "sin sanador principal" reescrito**: el párrafo viejo (2 oraciones explicando por
+     qué el sostén rival es más bajo de lo que parece) no decía qué hacer — Xavier: "no sé para
+     qué es este texto, debería recomendar un healer para mi equipo". `topCounterPick()` ganó un
+     3er parámetro opcional `role` (filtra candidatos a un solo rol) para poder reusarlo acá
+     restringido a Strategist. Texto nuevo, con el héroe interpolado: "❤️‍🩹 Rival sin sanador
+     principal — {héroe} es tu mejor estratega acá."
+   - Probado en vivo (ES y EN, inyección de equipos vía consola, 2 escenarios de 5 tanques con
+     healer distinto cada vez — Rocket Raccoon y Mantis): confirmado que el "punto débil" ahora
+     señala siempre al sanador rival (nunca a un tanque), con un counter distinto y coherente en
+     cada caso (Iron Fist / Hawkeye), la fila anti-tanque nueva aparece con el mejor pick
+     disponible (Punisher / Hela según el caso), y el aviso de sin-lifeline nombra un estratega
+     propio concreto en vez del párrafo explicativo. 0 errores de consola en ambos escenarios y
+     ambos idiomas.

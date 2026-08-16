@@ -26,13 +26,17 @@ function compArchetype(counts, filled){
 // candidateScoreAgainst (misma formula que recommendMyPick/suggestGhostFills/Mejores picks por
 // rol) para que la sugerencia de la comp "equilibrada" sea consistente con el resto de la app, no
 // un criterio nuevo aparte.
-function topCounterPick(enemyList, banned){
+// "role" opcional (2026-08-16): filtra los candidatos a un solo rol -- reusado para sugerir
+// especificamente un ESTRATEGA propio en el aviso de "sin sanador principal rival" (ver
+// noLifelineWarn en renderAnalysis), en vez de un parrafo sin accion concreta.
+function topCounterPick(enemyList, banned, role){
   if(!enemyList.length) return null;
   const antiDiveNow = antiDiveCount(enemyList);
   const shieldHeavyNow = shieldHeavyCount(enemyList);
   let best = null, bestScore = -Infinity;
   HEROES.forEach(h=>{
     if(banned.has(h.n)) return;
+    if(role && !heroHasRole(h, role)) return;
     const {score} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
     if(score>bestScore){ bestScore=score; best=h; }
   });
@@ -46,13 +50,23 @@ function topCounterPick(enemyList, banned){
 // (a diferencia de mostDangerousEnemyHtml) porque esto es una sugerencia de PICK, no un aviso sobre
 // tu roster actual. Ocupa el lugar donde antes iba el "perfil de arquetipos" (lista de emojis) --
 // mismo pedido, "recomendar otra cosa a nuestro beneficio" en vez de una lista de conteos.
+// bug real corregido (2026-08-16, señalado por Xavier): esto llegaba a sugerir "divear" a un
+// VANGUARDIA (le tocó Doctor Strange en un equipo de 5 tanques) porque el criterio viejo solo
+// miraba cual par (rival, counter con tag dive) tenia mayor relevancia en la matriz, sin importar
+// si el rival elegido era realmente fragil -- "divear a un tanque es muy dificil". Xavier: "el
+// personaje mas debil del equipo de 5 tanques y un healer es el healer, sin el todos los tanques
+// o escapan o son vencidos... contrarrestar a rocket con el mejor personaje posible". Dos cambios:
+// 1) se excluyen los VANGUARDIA del pool de "rival debil" (un tanque nunca es el punto flaco de su
+// propio equipo, por definicion), 2) el counter sugerido ya no se limita a heroes con tag "dive"
+// -- se busca el mejor counter posible en general (misma matriz, ya viene ordenada por relevancia
+// en getCounters), no necesariamente un diver.
 function weakestLinkHtml(enemyList, banned){
   let bestEnemy = null, bestCounter = null, bestScore = 0;
   enemyList.forEach(e=>{
+    if(e.r==="Vanguard") return;
     getCounters(e.n, []).forEach(c=>{
       if(banned.has(c.c)) return;
-      const ch = byName[c.c];
-      if(!ch || !ch.t || !ch.t.includes("dive")) return;
+      if(!byName[c.c]) return;
       if(c.relevance>bestScore){ bestScore=c.relevance; bestEnemy=e; bestCounter=c.c; }
     });
   });
@@ -144,6 +158,32 @@ const ANTI_TANK_TIER = {
 function antiTankBonus(hero, enemyVanguard){
   if(enemyVanguard>=3 && ANTI_TANK_TIER[hero.n]) return ANTI_TANK_TIER[hero.n];
   return 1;
+}
+
+// fila explicita para el caso 3+ vanguardias -- antes el bonus de ANTI_TANK_TIER solo influia el
+// orden de "Mejores picks por rol", en silencio. Pedido de Xavier (2026-08-16): "deberia salir una
+// fila que diga, usar a wolverine y iron fist... mostrando que si hay the thing evitar la pelea
+// con este e ir por los otros tanques" -- nombra el mejor anti-tanque disponible Y, dentro de los
+// vanguardias rivales puntuales, cuales le convienen (matriz 1v1 a su favor) y cuales evitar
+// (matriz 1v1 en su contra), en vez de tratar a todos los tanques rivales igual.
+function antiTankRowHtml(enemyList, banned){
+  const vanguards = enemyList.filter(h=>h.r==="Vanguard");
+  if(vanguards.length<3) return "";
+  let best = null, bestScore = -Infinity;
+  const antiDiveNow = antiDiveCount(enemyList), shieldHeavyNow = shieldHeavyCount(enemyList);
+  Object.keys(ANTI_TANK_TIER).forEach(n=>{
+    if(banned.has(n)) return;
+    const h = byName[n];
+    if(!h) return;
+    const {score} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
+    if(score>bestScore){ bestScore=score; best=h; }
+  });
+  if(!best) return "";
+  const avoid = vanguards.filter(v=>getMatchupCode(best.n, v.n)===1).map(v=>heroLabel(v.n));
+  const heroTag = heroIconHtml(best.n,18)+"<b>"+heroLabel(best.n)+"</b>";
+  return avoid.length
+    ? t("analysis.rivalComp.antiTankAvoid", {hero: heroTag, avoid: avoid.join(", ")})
+    : t("analysis.rivalComp.antiTank", {hero: heroTag});
 }
 
 // tanques de escudo, de mas a menos eficaces reduciendo dano de poke/proyectiles, segun el
@@ -759,10 +799,22 @@ function renderAnalysis(){
     if(weakLink){
       right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--good, #2ecc71);">${weakLink}</div>`;
     }
+    // fila explicita contra 3+ tanques (ver antiTankRowHtml) -- antes esto solo influia el orden
+    // de "Mejores picks por rol" en silencio, sin decirlo. Pedido de Xavier (2026-08-16).
+    const antiTankRow = antiTankRowHtml(enemyFilledArr, bannedPool());
+    if(antiTankRow){
+      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--good, #2ecc71);">${antiTankRow}</div>`;
+    }
     const enemyStrategists = enemyFilledArr.filter(h=>h.r==="Strategist");
     const allStrategistsClassified = enemyStrategists.length>0 && enemyStrategists.every(h=>h.arch && h.arch.length);
     if(allStrategistsClassified && !enemyStrategists.some(h=>h.arch.includes("lifeline"))){
-      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.noLifelineWarn")}</div>`;
+      // pedido de Xavier (2026-08-16): "me parece mucho texto... deberia recomendar un healer
+      // para mi equipo" -- en vez de solo explicar por que el sostén rival es mas bajo de lo que
+      // parece, ahora nombra directamente tu mejor estratega disponible contra este rival puntual.
+      const healer = topCounterPick(enemyFilledArr, bannedPool(), "Strategist");
+      if(healer){
+        right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.noLifelineWarn", {hero: heroIconHtml(healer.n,18)+"<b>"+heroLabel(healer.n)+"</b>"})}</div>`;
+      }
     }
   }
 
