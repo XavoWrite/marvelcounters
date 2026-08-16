@@ -1631,3 +1631,58 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      curación distintos en cada tramo, demasiado ambiguo para promediar con confianza), Luna Snow
      y Mantis (curación escala con %vida máxima del objetivo).
    - Probado en vivo (`heroBasicStats(...)` para los 6 héroes tocados), 0 errores de consola.
+
+36) Repaso de "daño principal" con criterio de Xavier: héroes con problema de munición (2026-08-16)
+   - Xavier notó que el dps de Star-Lord (260, el más alto del roster) venía de sumar toda su
+     munición sin restar que se agota en segundos -- se confirmó que el problema es real y más
+     amplio: 3 héroes tienen munición que se agota en menos de 3 segundos a su cadencia (Star-Lord
+     1.25s, Winter Soldier 1.2s, Doctor Strange 2.16s), y ninguno tiene tiempo de recarga publicado
+     en la página oficial. Se repasó cada uno CON Xavier, uno por uno, con su propio criterio para
+     cada caso (no una regla única para los 3):
+   - **Star-Lord** (Element Guns): Xavier dio el tiempo de recarga de memoria (~1.5s) y pidió
+     contar 1 ráfaga + 1 recarga como el ciclo completo (ignora la habilidad que recarga con
+     invulnerabilidad, "para no hacer lío"). 50 balas x 6.5 dmg = 325 por ráfaga, ráfaga 1.25s +
+     recarga 1.5s = ciclo de 2.75s → **260 → 118.2 dps**.
+   - **Winter Soldier** (Roterstern): Xavier pidió explícitamente NO restar la recarga para este
+     (a diferencia de Star-Lord) -- "contemos el daño que hace cada bala", cálculo simple sin
+     ajustar. Se mantiene en **200 dps** (sin cambio numérico, pero documentado que fue decisión
+     explícita, no un descuido, para que no se vuelva a marcar como pendiente).
+   - **Doctor Strange**: Xavier pidió algo más grande -- cambiar el "daño principal" DE RAÍZ, de
+     Daggers of Denak (su básico normal) a **Maelstrom of Madness** (su explosión de Dark Magic
+     cargado al 100%), porque es lo que de verdad hace más daño. La página oficial no publica el
+     máximo de Dark Magic ni el daño de la explosión a full carga -- Xavier pasó un texto de guía
+     comunitaria (no la página oficial) confirmando max = 100 stacks, daño = 1.3 por stack
+     (coincide con el dato oficial que ya teníamos) → **100 × 1.3 = 130 de daño al explotar**.
+     Para el tiempo de carga, Xavier aclaró un criterio importante: contar SOLO el método de
+     juego promedio (dagas, sin el weave de cuerpo a cuerpo que junta stacks más rápido, "un
+     jugador promedio... se les olvida a los nuevos") y sin contar recarga de las dagas (mismo
+     pedido que Winter Soldier). 100 stacks ÷ 3.5 por golpe de daga = 28.6 golpes ÷ 5.56 golpes/seg
+     = 5.14s → **100.1 → 25.3 dps**. Cambia tambien el `name` del basicAttack (de "Daggers of
+     Denak" a "Maelstrom of Madness") para que quede claro en la UI cual es la fuente real del
+     numero.
+   - Los 3 probados en vivo (`heroBasicStats(...)`), 0 errores de consola.
+   - Nota de proceso: Xavier expresó dudas sobre la división a la mitad de los sanadores híbridos
+     del punto 33 (8 de 13 estrategas son híbridos, no es la excepción) y pidió empezar un repaso
+     completo, héroe por héroe, con su propio criterio de juego en cada caso en vez de una regla
+     genérica aplicada a todos. Este punto (36) es la primera tanda de ese repaso (los 3 casos de
+     munición). Falta seguir con el resto del roster y decidir que hacer con los sanadores
+     hibridos (revertir la mitad, dejarla, o algo intermedio) -- pendiente, Xavier todavia no dio
+     una decision final sobre eso.
+
+37) Doctor Strange corregido de nuevo: el "3.5 por golpe" era por impacto interno, no por tiro (2026-08-16)
+   - Xavier pasó el link de una guía comunitaria (mobalytics.gg/marvel-rivals/dr-strange-guide,
+     vía navegador porque WebFetch dio 403) que confirmó el total de 130 de daño a full carga
+     (coincide con lo ya aplicado), pero no traía tiempo de recarga.
+   - Xavier después describió un video propio: viendo la barra de Dark Magic en pantalla, cada
+     TIRO completo de Daggers of Denak (no cada uno de los 5 impactos internos que describe
+     "Casting: Five-round delayed hit projectiles") suma ~17.5 Dark Magic (acumulado real: 17,
+     35, 52, 70 en 4 tiros) — el "3.5 Dark Magic per hit" de la página oficial se refería a cada
+     uno de esos 5 impactos internos de UN tiro, no a 3.5 por tiro completo como yo había asumido
+     en el punto 36. Con el dato correcto (17.5 por tiro, no 3.5): 100 ÷ 17.5 = 5.7 tiros ÷
+     5.56/seg = 1.03s para cargar completo (le alcanza un solo cargador de 12, ni hace falta
+     recargar) → **25.3 → 126.5 dps**. Probado en vivo, 0 errores de consola.
+   - Lección para el resto del repaso: cuando una habilidad describe "N rounds" dentro de un solo
+     "release"/tiro (shotgun-style), el dato de generación/daño "por hit" de OTRA habilidad que la
+     referencia (ej. Price of Magic mencionando "Daggers of Denak: cada hit genera 3.5") probablemente
+     se refiere al impacto interno, no al tiro completo — hay que multiplicar por la cantidad de
+     impactos internos si el video/experiencia de Xavier no confirma el numero total directamente.

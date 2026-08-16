@@ -289,9 +289,9 @@ const HERO_BASIC_STATS = {
   "Star-Lord": {
     "basicAttack": {
       "name": "Element Guns",
-      "dmgRaw": "Damage: 6.5 damage per round",
-      "rateRaw": "Fire Rate: 40 rounds per second",
-      "dps": 260.0
+      "dmgRaw": "Damage: 6.5 x 50 balas = 325 por rafaga (rafaga de 1.25s + recarga ~1.5s, dato de Xavier 2026-08-16 -- se ignora la recarga con invulnerabilidad de su habilidad para no complicar, se cuenta solo 1 rafaga+recarga)",
+      "rateRaw": "Fire Rate: 40 rounds per second, ciclo completo 2.75s",
+      "dps": 118.2
     }
   },
   "Scarlet Witch": {
@@ -305,7 +305,7 @@ const HERO_BASIC_STATS = {
   "Winter Soldier": {
     "basicAttack": {
       "name": "Roterstern",
-      "dmgRaw": "Projectile Damage: 80",
+      "dmgRaw": "Projectile Damage: 80 (revisado 2026-08-16: solo 3 balas, se agotan en 1.2s, pero Xavier decidio no restar tiempo de recarga -- usar el calculo simple igual)",
       "rateRaw": "Fire Rate: 2.5 rounds per second",
       "dps": 200.0
     }
@@ -498,10 +498,10 @@ const HERO_BASIC_STATS = {
   },
   "Doctor Strange": {
     "basicAttack": {
-      "name": "Daggers of Denak",
-      "dmgRaw": "Damage: 18 per hit",
-      "rateRaw": "Fire Rate: 5.56 rounds per second",
-      "dps": 100.1
+      "name": "Maelstrom of Madness",
+      "dmgRaw": "Damage: 100 stacks de Dark Magic x 1.3 = 130 al explotar (pedido de Xavier 2026-08-16: su daño principal real es esta explosion, no las Daggers of Denak sueltas). Xavier vio en un video que cada TIRO completo de dagas (no cada uno de los 5 impactos internos) suma ~17.5 Dark Magic (17, 35, 52, 70 acumulado en 4 tiros)",
+      "rateRaw": "100/17.5 = 5.7 tiros de daga a 5.56/seg = 1.03s para juntar la carga completa (le alcanza 1 solo cargador de 12, no hace falta recargar)",
+      "dps": 126.5
     }
   }
 };
