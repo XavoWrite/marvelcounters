@@ -158,6 +158,8 @@ es: {
   "analysis.winProb.oneVanguard": "-15: un solo vanguardia — backline expuesto, alto riesgo de dive",
   "analysis.winProb.noStrategist": "-22: sin estratega — no tienes sanación sostenida",
   "analysis.winProb.oneStrategist": "-12: un solo estratega — sanación insuficiente para sostener peleas",
+  "analysis.winProb.healEfficient": "+6: tu curación aguanta el daño promedio del rival",
+  "analysis.winProb.healInefficient": "-10: tu curación no alcanza contra el daño promedio del rival",
   "analysis.winProb.noDuelist": "-12: sin duelista — te falta daño para cerrar peleas",
   "analysis.winProb.tooManyDuelist": "-8: casi todo el equipo es duelista — poco frente y poco sostén",
 
@@ -198,7 +200,7 @@ es: {
 
   "analysis.rivalComp.title": "Análisis de composición rival",
   "analysis.rivalComp.addSix": "Añade los 6 héroes enemigos (foto o manual) para ver el análisis de composición.",
-  "analysis.rivalComp.detected": "Detectado: <b>{counts}</b> ({n}/6 añadidos).",
+  "analysis.rivalComp.detected": "{counts} <span class=\"empty-hint\">({n}/6)</span>",
   "analysis.rivalComp.addRestForFull": "Añade los héroes restantes para un diagnóstico completo del arquetipo de equipo.",
   "analysis.dmgHealBar.dmgUnit": "daño/seg (tanques+duelistas)",
   "analysis.dmgHealBar.healUnit": "curación/seg (sanadores)",
@@ -208,6 +210,7 @@ es: {
   "analysis.healEff.detail": "Rival: ~{enemyDps} daño/seg por cabeza · tu curación total: {heal}/seg",
   "analysis.rivalComp.antiDiveWarn": "🛡️ Este rival tiene {n} herramientas anti-dive (bloquea movilidad, escuda al backline o te niega la visión) — un duelista de <b>buceo puro</b> (Spider-Man, Daredevil, Iron Fist, Psylocke, Black Panther) no va a poder rematar su combo. Priorizá poke/ranged (Hela, Punisher, Namor, Hawkeye) o presión sostenida en vez de dive.",
   "analysis.rivalComp.shieldWarn": "🔰 Este rival tiene {n} escudos (Doctor Strange, Groot, Magneto, Emma Frost, Deadpool Vanguard o Invisible Woman) — sin romperlos, el resto del equipo ni te va a sentir. Priorizá <b>shield-breakers</b> (Namor, Punisher, Hela, Winter Soldier) por encima de daño que el escudo simplemente absorbe.",
+  "analysis.rivalComp.biggestThreat": "⚡ La amenaza real de ese grupo: {hero}",
   "analysis.rivalComp.archProfile": "Perfil de arquetipos del rival:",
   "analysis.rivalComp.noLifelineWarn": "❤️‍🩹 Ningún estratega rival es un <b>sanador principal (Lifeline)</b> — su sostén real es más bajo de lo que parece por la cantidad de estrategas. Presión sostenida puede forzar picks antes de que logren estabilizar.",
 
@@ -524,6 +527,8 @@ en: {
   "analysis.winProb.oneVanguard": "-15: only one vanguard — exposed backline, high dive risk",
   "analysis.winProb.noStrategist": "-22: no strategist — you have no sustained healing",
   "analysis.winProb.oneStrategist": "-12: only one strategist — not enough healing to hold fights",
+  "analysis.winProb.healEfficient": "+6: your healing keeps up with the enemy's average damage",
+  "analysis.winProb.healInefficient": "-10: your healing falls short against the enemy's average damage",
   "analysis.winProb.noDuelist": "-12: no duelist — you're missing damage to close out fights",
   "analysis.winProb.tooManyDuelist": "-8: almost the whole team is duelists — little frontline and little sustain",
 
@@ -564,7 +569,7 @@ en: {
 
   "analysis.rivalComp.title": "Enemy composition analysis",
   "analysis.rivalComp.addSix": "Add all 6 enemy heroes (screenshot or manual) to see the composition analysis.",
-  "analysis.rivalComp.detected": "Detected: <b>{counts}</b> ({n}/6 added).",
+  "analysis.rivalComp.detected": "{counts} <span class=\"empty-hint\">({n}/6)</span>",
   "analysis.rivalComp.addRestForFull": "Add the remaining heroes for a full team archetype diagnosis.",
   "analysis.dmgHealBar.dmgUnit": "dmg/sec (vanguards+duelists)",
   "analysis.dmgHealBar.healUnit": "heal/sec (strategists)",
@@ -574,6 +579,7 @@ en: {
   "analysis.healEff.detail": "Enemy: ~{enemyDps} dmg/s per head · your total healing: {heal}/s",
   "analysis.rivalComp.antiDiveWarn": "🛡️ This enemy has {n} anti-dive tools (blocks mobility, shields the backline, or denies your vision) — a <b>pure dive</b> duelist (Spider-Man, Daredevil, Iron Fist, Psylocke, Black Panther) won't be able to land their combo. Prioritize poke/ranged (Hela, Punisher, Namor, Hawkeye) or sustained pressure instead of dive.",
   "analysis.rivalComp.shieldWarn": "🔰 This enemy has {n} shields (Doctor Strange, Groot, Magneto, Emma Frost, Deadpool Vanguard or Invisible Woman) — without breaking them, the rest of the team won't even feel your damage. Prioritize <b>shield-breakers</b> (Namor, Punisher, Hela, Winter Soldier) over damage the shield just absorbs.",
+  "analysis.rivalComp.biggestThreat": "⚡ The real threat in that group: {hero}",
   "analysis.rivalComp.archProfile": "Enemy archetype profile:",
   "analysis.rivalComp.noLifelineWarn": "❤️‍🩹 No enemy strategist is a real <b>Lifeline healer</b> — their actual sustain is lower than the strategist count suggests. Sustained pressure can force picks before they manage to stabilize.",
 

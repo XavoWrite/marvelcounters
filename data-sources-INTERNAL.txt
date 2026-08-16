@@ -1055,3 +1055,47 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      eficiente/ineficiente. Se muestra en ambos lados (Tu Equipo: daño del rival vs tu curación;
      Equipo Enemigo: tu daño vs la curación del rival), ancladas debajo de cada panel de 6
      casilleros junto a la barrita original.
+
+22) Tanda grande de ajustes de interfaz/lógica (2026-08-16)
+   - Se eliminó la "Matriz de la partida" (tabla completa 6×6) del final de la pestaña "Partida en
+     vivo" — pedido de Xavier: "nadie va a bajar tanto y ponerse a entender en media partida".
+     `renderMatchupGrid()` sigue definida en analysis.js por si se reutiliza en otro lado, solo se
+     dejó de llamar desde `renderAnalysis()`.
+   - "Tu composición" y "Qué deberías jugar tú" pasaron de texto "2 Vanguardia · 2 Duelista..." a
+     chips de ícono grande + número (`roleCountsIconsHtml` en team-state.js), sin el nombre del
+     rol en texto. En "Qué deberías jugar tú" el chip del rol recomendado se resalta con un color
+     distinto (clase `.highlight`, fondo/borde dorado).
+   - La barrita de daño/curación (`.dmgheal-bar-outer`) pasó de un fill plano de 2 colores a un
+     look "segmentado" tipo medidor de energía — más alta (14px), con un repeating-linear-gradient
+     encima del color sólido para las divisiones, sin agregar divs nuevos por segmento.
+   - `computeWinProbability` ahora también factoriza el balance daño/curación: si la curación
+     total propia alcanza o supera el daño promedio por cabeza del rival (mismo cálculo que
+     `enemyIsBurstHeavy`), +6 puntos; si queda muy por debajo (<60% de ese promedio), -10 puntos.
+     Solo dispara con datos suficientes de ambos lados (mismo umbral de 2+ héroes con DPS
+     confiable que ya usaba `enemyIsBurstHeavy`).
+   - "Análisis de composición rival": el texto "Detectado: 2 Vanguardia · 3 Duelista..." se
+     acortó a los mismos chips de ícono grande usados en "Tu composición", sin la palabra
+     "Detectado" ni el punto final.
+   - Nueva función `mostDangerousEnemyHtml`: dentro de un grupo de rivales detectado (los que
+     tienen escudo, o los que tienen anti-dive), busca cuál de ellos contrarresta más a TU equipo
+     actual (misma cuenta que ya usa `computeWinProbability` para el bonus por counters) y lo
+     nombra en el aviso — pedido de Xavier: "destacar el rival más fuerte de ese equipo... que
+     hace más counter a tu equipo o más daño". Aplicado en los avisos de escudo y anti-dive.
+   - Probado en vivo (Doctor Strange en Tu Equipo, Magneto+Hela en el rival): confirmados los
+     chips de ícono en ambos lados, la barrita segmentada visible, el texto acortado de Análisis
+     rival ("🛡️1 ⚔️1 ⚔️0 (2/6)"), y 0 errores de consola tras hard-reload.
+   - **Pendiente, explícitamente para resolver junto con Xavier (no implementado todavía)**:
+     * "Daño principal" en vez de "daño básico": varios héroes tienen su daño real en una
+       habilidad distinta del ataque básico (ej. Spider-Man — la telaraña/golpe del clic
+       izquierdo no es su daño real, sería el combo de doble salto). Xavier quiere revisar esto
+       héroe por héroe en vivo, empezando por los casos que él mismo identifique.
+     * Lógica de "counters contra 3 tanques" / "3 healers": Xavier mencionó Iron Fist y Wolverine
+       como candidatos contra comps de 3 tanques (daño por %vida), y anti-heal (Blade) o daño
+       sostenido fuerte (Moon Knight, Winter Soldier, Chica Ardilla) contra comps de 3 healers,
+       pero pidió explícitamente analizarlo en conjunto antes de programarlo — no aplicado.
+     * Perfil de arquetipos del rival: Xavier quiere que también recomiende algo accionable (no
+       solo listar los arquetipos) — pendiente de definir qué exactamente recomendar.
+     * Magneto — fila con poca data confirmada (revisado en esta sesión: solo Wolverine +6 pasa
+       el umbral de counter real; Spider-Man/Rogue/Emma Frost/Venom/Iron Fist/Hulk/Mister
+       Fantastic quedan en apenas +1, sin corrección profunda todavía pese a que varios videos ya
+       los mencionaron de pasada como "melee que atraviesa el escudo").

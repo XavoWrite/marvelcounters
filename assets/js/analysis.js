@@ -180,6 +180,22 @@ function dmgHealBarHtml(team){
   </div>`;
 }
 
+// dentro de un grupo de rivales (ej. los que tienen escudo, o los que tienen anti-dive), busca al
+// que mas te cuenta a TI -- mide con la misma cuenta que ya usa computeWinProbability (cuantos de
+// TUS picks actuales contrarresta, pesado por relevancia). Pedido de Xavier (2026-08-16): en vez
+// de solo avisar "el rival tiene 2 escudos", nombrar a quien de ese grupo es la amenaza real.
+function mostDangerousEnemyHtml(enemyGroup, allyNames){
+  if(!allyNames.length) return "";
+  let best = null, bestScore = 0;
+  enemyGroup.forEach(e=>{
+    const haveCounters = getCounters(e.n, allyNames).filter(c=>c.have);
+    const score = haveCounters.reduce((s,c)=>s+c.relevance,0);
+    if(score>bestScore){ bestScore=score; best=e; }
+  });
+  if(!best) return "";
+  return t("analysis.rivalComp.biggestThreat", {hero: heroIconHtml(best.n,18)+"<b>"+heroLabel(best.n)+"</b>"});
+}
+
 // veredicto CRUZADO (a diferencia de dmgHealBarHtml, que solo mira UN equipo): compara el dano
 // promedio por cabeza del equipo RIVAL (mismo criterio que enemyIsBurstHeavy, ya que sumar el
 // dano de los 6 rivales como si le pegaran todos a la vez a un mismo blanco seria un peor caso
@@ -465,6 +481,25 @@ function computeWinProbability(allyTeam, enemyTeam){
     }
   }
 
+  // mismo criterio que healEfficiencyHtml (dano promedio por cabeza del rival vs tu curacion
+  // total) pero como modificador numerico -- pedido de Xavier (2026-08-16): la probabilidad de
+  // victoria tambien deberia reflejar si tu curacion aguanta o no la presion del rival, no solo
+  // matchups y balance de roles. Solo dispara con datos suficientes de ambos lados (mismo umbral
+  // que enemyIsBurstHeavy) para no meter ruido con equipos incompletos o sin sanadores con HPS
+  // confiable.
+  const dmgHealMy = teamDmgHealTotals(allyList);
+  const dmgHealEnemy = teamDmgHealTotals(enemyList);
+  if(dmgHealEnemy.dmgCount>=2 && dmgHealMy.healCount>=1){
+    const enemyPerHead = dmgHealEnemy.dmg/dmgHealEnemy.dmgCount;
+    if(dmgHealMy.heal >= enemyPerHead){
+      score += 6;
+      reasons.push(t("analysis.winProb.healEfficient"));
+    } else if(dmgHealMy.heal < enemyPerHead*0.6){
+      score -= 10;
+      reasons.push(t("analysis.winProb.healInefficient"));
+    }
+  }
+
   score = Math.max(5, Math.min(95, Math.round(score)));
   return {prob:score, reasons};
 }
@@ -516,7 +551,7 @@ function renderAnalysis(){
     left += `<p class="empty-hint">${t("analysis.yourComp.addYours")}</p>`;
   } else {
     const myCounts = roleCounts(allyTeam);
-    left += `<div class="comp-banner">${t("analysis.yourComp.summary", {counts: roleCountsHtml(myCounts), n: allyFilled})}`;
+    left += `<div class="comp-banner">${t("analysis.yourComp.summary", {counts: roleCountsIconsHtml(myCounts), n: allyFilled})}`;
     if(myCounts.Vanguard<=1 && allyFilled>=4){
       left += `<br>${myCounts.Vanguard===0 ? t("analysis.yourComp.vanguardWarnZero") : t("analysis.yourComp.vanguardWarnOne")}`;
     } else if(myCounts.Vanguard>=4){
@@ -555,7 +590,7 @@ function renderAnalysis(){
     left += `<p class="empty-hint">${t("analysis.whatToPlay.addEnemy")}</p>`;
   } else {
     rec = recommendMyPick();
-    left += `<div class="comp-banner">${t("analysis.whatToPlay.summary", {counts: roleCountsHtml(rec.fixedCounts), role: roleIconHtml(rec.roleNeed,16)+t('role.'+rec.roleNeed)})}</div>`;
+    left += `<div class="comp-banner">${t("analysis.whatToPlay.summary", {counts: roleCountsIconsHtml(rec.fixedCounts, 22, rec.roleNeed), role: roleIconHtml(rec.roleNeed,16)+t('role.'+rec.roleNeed)})}</div>`;
   }
   left += `</div>`;
   left += `</div>`;
@@ -593,15 +628,10 @@ function renderAnalysis(){
     left += `</div>`;
   }
 
-  // matriz de matchups de la partida actual: tus 6 vs los 6 rivales -- va abajo de todo, a lo ancho,
-  // porque es la parte mas dificil de leer de un vistazo y no conviene que compita por espacio arriba
-  bottom += `<div class="analysis-section"><div class="sec-title">${t("analysis.matrix.title")}</div>`;
-  if(allyFilled===0 || enemyFilled===0){
-    bottom += `<p class="empty-hint">${t("analysis.matrix.needBoth")}</p>`;
-  } else {
-    bottom += renderMatchupGrid(allyTeam.filter(Boolean), enemyTeam.filter(Boolean));
-  }
-  bottom += `</div>`;
+  // la matriz de matchups completa (tus 6 vs los 6 rivales) se sacó -- pedido de Xavier,
+  // 2026-08-16: "nadie va a bajar tanto y ponerse a entender en media partida". renderMatchupGrid
+  // sigue definida arriba por si se reutiliza en otro lado (ej. el editor), solo se dejó de
+  // llamar desde acá.
 
   // comp analysis (lado del rival)
   right += `<div class="analysis-section"><div class="sec-title">${t("analysis.rivalComp.title")}</div>`;
@@ -610,20 +640,23 @@ function renderAnalysis(){
   } else {
     const counts = roleCounts(enemyTeam);
     const arche = compArchetype(counts, enemyFilled);
-    right += `<div class="comp-banner">${t("analysis.rivalComp.detected", {counts: roleCountsHtml(counts), n: enemyFilled})}`;
+    right += `<div class="comp-banner">${t("analysis.rivalComp.detected", {counts: roleCountsIconsHtml(counts), n: enemyFilled})}`;
     if(arche){
       right += `<br><b>${arche.label}.</b> ${arche.advice}`;
     } else {
       right += `<br>${t("analysis.rivalComp.addRestForFull")}`;
     }
     right += `</div>`;
-    const antiDive = antiDiveCount(enemyTeam.filter(Boolean));
-    if(antiDive>=2){
-      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.antiDiveWarn", {n: antiDive})}</div>`;
+    const allyNamesForThreat = allyTeam.filter(Boolean).map(h=>h.n);
+    const antiDiveGroup = enemyTeam.filter(h=>h && h.t && (h.t.includes("anti_dive")||h.t.includes("peel")));
+    if(antiDiveGroup.length>=2){
+      const threat = mostDangerousEnemyHtml(antiDiveGroup, allyNamesForThreat);
+      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.antiDiveWarn", {n: antiDiveGroup.length})}${threat?`<br>${threat}`:""}</div>`;
     }
-    const shieldHeavy = shieldHeavyCount(enemyTeam.filter(Boolean));
-    if(shieldHeavy>=2){
-      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.shieldWarn", {n: shieldHeavy})}</div>`;
+    const shieldGroup = enemyTeam.filter(h=>h && h.t && h.t.includes("shield"));
+    if(shieldGroup.length>=2){
+      const threat = mostDangerousEnemyHtml(shieldGroup, allyNamesForThreat);
+      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.shieldWarn", {n: shieldGroup.length})}${threat?`<br>${threat}`:""}</div>`;
     }
     // perfil de arquetipos (ver teamArchCounts en analysis.js y la nota sobre "arch" en
     // hero-roster.js) -- ademas del conteo de roles de arriba, muestra la mezcla de ESTILO de

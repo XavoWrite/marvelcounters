@@ -204,6 +204,15 @@ function roleIconHtml(role, size){
 function roleCountsHtml(counts, size){
   return ["Vanguard","Duelist","Strategist"].map(r=>`${roleIconHtml(r,size||16)}${counts[r]} ${t('role.'+r)}`).join(" · ");
 }
+// version compacta: solo icono (mas grande) + numero, sin el nombre del rol en texto -- pedido de
+// Xavier (2026-08-16), "solo necesitamos el icono un poquito mas grande". "highlightRole" resalta
+// un rol puntual (el que conviene jugar) con un color distinto via la clase CSS "highlight".
+function roleCountsIconsHtml(counts, size, highlightRole){
+  return ["Vanguard","Duelist","Strategist"].map(r=>{
+    const cls = r===highlightRole ? "role-count-chip highlight" : "role-count-chip";
+    return `<span class="${cls}" title="${t('role.'+r)}">${roleIconHtml(r,size||22)}<b>${counts[r]}</b></span>`;
+  }).join("");
+}
 function renderSideSlots(containerId, arr, side){
   const el = document.getElementById(containerId);
   el.innerHTML = "";

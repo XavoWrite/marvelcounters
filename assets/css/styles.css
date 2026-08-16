@@ -177,6 +177,12 @@
   .comp-banner{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;
     padding:14px 16px;font-size:14px;line-height:1.55;}
   .comp-banner b{color:var(--gold);}
+  /* chips de icono grande + numero para el resumen de roles (Tu composicion / Que deberias
+     jugar tu) -- pedido de Xavier, 2026-08-16, en vez del texto "2 Vanguardia · 2 Duelista..." */
+  .role-count-chip{display:inline-flex;align-items:center;gap:5px;background:var(--panel-alt);
+    border:1px solid var(--line);border-radius:20px;padding:4px 10px 4px 8px;margin-right:6px;
+    font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;}
+  .role-count-chip.highlight{background:rgba(255,193,69,.15);border-color:var(--gold);color:var(--gold);}
   .empty-hint{color:var(--muted);font-size:13.5px;font-style:italic;}
 
   .counter-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:10px;}
@@ -450,9 +456,16 @@
     font-size:11.5px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);}
 
   .dmgheal-bar-wrap{margin-top:10px;}
-  .dmgheal-bar-outer{display:flex;height:8px;border-radius:6px;overflow:hidden;background:var(--panel-alt);border:1px solid var(--line);}
-  .dmgheal-bar-dmg{height:100%;background:var(--enemy);transition:width .3s;}
-  .dmgheal-bar-heal{height:100%;background:var(--st);transition:width .3s;}
+  /* barra segmentada tipo "medidor de energia" en vez de un fill plano de 2 colores -- pedido de
+     Xavier (2026-08-16), sentia la version anterior demasiado simple. Los segmentos son un
+     repeating-linear-gradient encima del color solido (no divs nuevos por segmento, mas liviano
+     y sigue funcionando con el ancho dinamico en %). */
+  .dmgheal-bar-outer{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--panel-alt);
+    border:1px solid var(--line);box-shadow:inset 0 1px 3px rgba(0,0,0,.4);gap:2px;padding:2px;}
+  .dmgheal-bar-dmg, .dmgheal-bar-heal{height:100%;border-radius:4px;transition:width .3s;
+    background-image:repeating-linear-gradient(90deg, rgba(255,255,255,.22) 0, rgba(255,255,255,.22) 3px, transparent 3px, transparent 7px);}
+  .dmgheal-bar-dmg{background-color:var(--enemy);}
+  .dmgheal-bar-heal{background-color:var(--st);}
   .dmgheal-bar-labels{display:flex;justify-content:space-between;margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:10.5px;}
   .dmgheal-lbl-dmg{color:var(--enemy);}
   .dmgheal-lbl-heal{color:var(--st);}
