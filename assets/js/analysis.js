@@ -56,6 +56,14 @@ function topCounterPick(enemyList, banned){
 // propio equipo, por definicion), 2) el counter sugerido ya no se limita a heroes con tag "dive"
 // -- se busca el mejor counter posible en general (misma matriz, ya viene ordenada por relevancia
 // en getCounters), no necesariamente un diver.
+// Xavier (2026-08-16): "aun asi habiendo counters en el equipo contrario... son los menos
+// peores?" -- el counter sugerido puede a su vez estar countereado por OTRO rival del mismo
+// equipo (ej. Hawkeye le gana a Loki, pero Magneto le gana a Hawkeye) y eso no se avisaba.
+// Devuelve los nombres de rivales (fuera del objetivo original) que contrarrestan de verdad
+// (categoria 1, no un desempate chico) al counter sugerido.
+function counterRisks(counterName, enemyList, excludeName){
+  return enemyList.filter(e=>e.n!==excludeName && getMatchupCode(counterName, e.n)===1).map(e=>e.n);
+}
 function weakestLinkHtml(enemyList, banned){
   let bestEnemy = null, bestCounter = null, bestScore = 0;
   enemyList.forEach(e=>{
@@ -67,10 +75,15 @@ function weakestLinkHtml(enemyList, banned){
     });
   });
   if(!bestEnemy || !bestCounter) return "";
-  return t("analysis.rivalComp.weakestLink", {
+  let html = t("analysis.rivalComp.weakestLink", {
     weak: heroIconHtml(bestEnemy.n,18)+"<b>"+heroLabel(bestEnemy.n)+"</b>",
     counter: heroIconHtml(bestCounter,18)+"<b>"+heroLabel(bestCounter)+"</b>",
   });
+  const risks = counterRisks(bestCounter, enemyList, bestEnemy.n);
+  if(risks.length){
+    html += " " + t("analysis.rivalComp.counterRisk", {names: risks.map(n=>"<b>"+heroLabel(n)+"</b>").join(", ")});
+  }
+  return html;
 }
 
 // Heroes con herramientas dedicadas a frenar el dive -- bloquean movilidad (The Thing), dan
@@ -293,7 +306,7 @@ function dmgHealBarHtml(team){
 // devuelve tambien CUAL de tus heroes ya elegidos lo contrarresta -- pedido de Xavier
 // (2026-08-16): "vigila a seria mejor decir el enemigo mas fuerte es, lo contrarrestas con y sale
 // el personaje", mismo formato "X -- usa Y" que ya tiene weakestLinkHtml.
-function mostDangerousEnemyHtml(enemyGroup, allyNames){
+function mostDangerousEnemyHtml(enemyGroup, allyNames, fullEnemyList){
   if(!allyNames.length) return "";
   let best = null, bestScore = 0, bestCounter = null;
   enemyGroup.forEach(e=>{
@@ -305,10 +318,17 @@ function mostDangerousEnemyHtml(enemyGroup, allyNames){
     }
   });
   if(!best || !bestCounter) return "";
-  return t("analysis.rivalComp.biggestThreat", {
+  let html = t("analysis.rivalComp.biggestThreat", {
     hero: heroIconHtml(best.n,18)+"<b>"+heroLabel(best.n)+"</b>",
     counter: heroIconHtml(bestCounter.c,18)+"<b>"+heroLabel(bestCounter.c)+"</b>",
   });
+  if(fullEnemyList){
+    const risks = counterRisks(bestCounter.c, fullEnemyList, best.n);
+    if(risks.length){
+      html += " " + t("analysis.rivalComp.counterRisk", {names: risks.map(n=>"<b>"+heroLabel(n)+"</b>").join(", ")});
+    }
+  }
+  return html;
 }
 
 // veredicto CRUZADO (a diferencia de dmgHealBarHtml, que solo mira UN equipo): compara el dano
@@ -797,7 +817,7 @@ function renderAnalysis(){
     const shownThreats = new Set();
     const antiDiveGroup = enemyTeam.filter(h=>h && h.t && (h.t.includes("anti_dive")||h.t.includes("peel")));
     if(antiDiveGroup.length>=2){
-      const threat = mostDangerousEnemyHtml(antiDiveGroup, allyNamesForThreat);
+      const threat = mostDangerousEnemyHtml(antiDiveGroup, allyNamesForThreat, enemyFilledArr);
       if(threat && !shownThreats.has(threat)){
         shownThreats.add(threat);
         right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;
@@ -805,7 +825,7 @@ function renderAnalysis(){
     }
     const shieldGroup = enemyTeam.filter(h=>h && h.t && h.t.includes("shield"));
     if(shieldGroup.length>=2){
-      const threat = mostDangerousEnemyHtml(shieldGroup, allyNamesForThreat);
+      const threat = mostDangerousEnemyHtml(shieldGroup, allyNamesForThreat, enemyFilledArr);
       if(threat && !shownThreats.has(threat)){
         shownThreats.add(threat);
         right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;

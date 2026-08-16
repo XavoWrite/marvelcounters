@@ -1424,3 +1424,29 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      capturas y correcciones sueltas una por una — pendiente de proponerle algo concreto (ej.
      un formulario/plantilla corta para reportar correcciones, o revisar en bloque cada N
      correcciones en vez de una por una) en la próxima respuesta.
+
+30) Aviso de "counter del counter" — responde la pregunta de Xavier sobre Hawkeye/Human Torch (2026-08-16)
+   - Xavier preguntó por qué el sistema recomendaba Hawkeye (contra Loki) y Human Torch (contra
+     Emma Frost) cuando el equipo rival tenía a Hulk y Magneto — "¿son los menos peores? ¿los que
+     tienen algo de ventaja sobre los otros tanques?". Verificado con datos reales, no era
+     "el menos peor": Hawkeye SÍ es un counter real y fuerte de Loki (categoría 1, score +5
+     externo) — pero Magneto (y también Venom) SÍ contrarrestan de verdad a Hawkeye (categoría 1
+     en su contra). Human Torch, en cambio, SÍ es un counter real de Emma Frost Y contra Hulk/
+     Magneto está genuinamente "parejo" en la matriz — no hay un riesgo real ahí con los datos
+     actuales (si Xavier tiene otra experiencia con Human Torch vs Hulk/Magneto, sería una
+     corrección de matriz nueva, no algo que el sistema esté ignorando).
+   - El hueco real: ni "Punto débil rival" ni "Amenaza" avisaban si el counter SUGERIDO a su vez
+     tiene un counter real DENTRO del mismo equipo rival (ej. Hawkeye gana a Loki, pero pierde
+     contra Magneto, que está en el mismo equipo). Se agregó `counterRisks()` (analysis.js): busca,
+     dentro del equipo rival completo (excluyendo al objetivo original), cualquier héroe que
+     contrarreste de verdad (categoría 1, no un desempate chico) al counter sugerido, y lo agrega
+     como salvedad al final del texto. Aplicado en `weakestLinkHtml` (ya recibía el equipo
+     completo) y en `mostDangerousEnemyHtml` (necesitó un 3er parámetro nuevo, `fullEnemyList`,
+     ya que antes solo recibía el subgrupo anti-dive/escudo, no el equipo rival completo — los 2
+     call-sites en renderAnalysis ahora pasan `enemyFilledArr`).
+   - Texto nuevo (se agrega solo si hay riesgo real, si no, no aparece nada extra): "⚠️ Ojo: {nombres}
+     le hace counter." Probado en vivo con el escenario exacto de Xavier (rival: The Thing/Venom/
+     Magneto/Emma Frost/Hulk/Loki): "Punto débil rival: Loki — usá Hawkeye. ⚠️ Ojo: Venom, Magneto
+     le hace counter." — y "Amenaza: Emma Frost — contrarrestalo con Human Torch." sin ninguna
+     salvedad (correcto, no hay counter real contra él en este equipo). 0 errores de consola, ES
+     y EN.
