@@ -76,6 +76,9 @@
   .status-line{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--gold);margin:-4px 0 10px;min-height:14px;}
 
   .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+  /* barrita de dano/curacion anclada debajo de los 6 casilleros -- ver renderAnalysis() en
+     analysis.js para el porque (garantiza la misma altura en Tu Equipo y Equipo Enemigo) */
+  #allyDmgHealBar:not(:empty), #enemyDmgHealBar:not(:empty){margin-top:12px;padding-top:10px;border-top:1px solid var(--line);}
   @media(max-width:420px){.slots{grid-template-columns:repeat(2,1fr);}}
   .slot{background:var(--panel-alt);border:1.5px dashed var(--line);border-radius:10px;padding:10px 8px;text-align:center;
     cursor:pointer;min-height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:.15s;}
@@ -203,15 +206,18 @@
   .counters-more summary:hover{color:var(--text);}
 
   /* Baneos colapsado por defecto -- ocupaba mucho espacio arriba de todo, antes de la accion
-     principal (armar equipos). Sigue siendo el mismo sec-title de siempre como <summary>, solo
-     que ahora arranca cerrado y se abre con un clic (pedido de Xavier, 2026-08-16). */
+     principal (armar equipos). El <summary> se ve como un boton real (borde, fondo, padding) en
+     vez de solo texto con flechita, para que quede claro que es clickeable (pedido de Xavier,
+     2026-08-16 -- el primer intento con flechita nomas no se notaba lo suficiente como boton). */
   .ban-collapse{margin-bottom:14px;}
-  .ban-collapse summary{cursor:pointer;font-family:'Anton',sans-serif;font-size:16px;letter-spacing:.5px;
-    text-transform:uppercase;color:var(--gold);padding:2px 0;list-style:none;}
+  .ban-collapse summary{cursor:pointer;display:inline-flex;align-items:center;gap:7px;
+    font-family:'Anton',sans-serif;font-size:14px;letter-spacing:.4px;text-transform:uppercase;
+    color:var(--gold);background:var(--panel-alt);border:1.5px solid var(--gold);border-radius:9px;
+    padding:8px 16px;list-style:none;}
   .ban-collapse summary::-webkit-details-marker{display:none;}
-  .ban-collapse summary::before{content:'▸ ';display:inline-block;transition:transform .15s;}
+  .ban-collapse summary::before{content:'▸';display:inline-block;transition:transform .15s;font-size:12px;}
   .ban-collapse[open] summary::before{transform:rotate(90deg);}
-  .ban-collapse summary:hover{color:#fff;}
+  .ban-collapse summary:hover{background:var(--gold);color:var(--bg);}
   .ban-collapse .teams{margin-top:12px;}
 
   .healer-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}

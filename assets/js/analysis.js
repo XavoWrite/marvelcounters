@@ -407,6 +407,17 @@ function renderAnalysis(){
   const allyFilled = allyTeam.filter(Boolean).length;
   let left = "", right = "", bottom = "";
 
+  // barritas de dano/curacion ancladas debajo de cada panel de 6 casilleros (Tu Equipo / Equipo
+  // Enemigo), NO adentro de las columnas de analisis -- esas dos columnas tienen contenido de
+  // largo muy distinto (Probabilidad de victoria a la izquierda no tiene equivalente a la
+  // derecha), asi que la barrita quedaba a alturas distintas segun el lado. Los paneles de
+  // casilleros en cambio SIEMPRE miden lo mismo de los dos lados, asi que ancladas ahi quedan
+  // garantizadas al mismo nivel (pedido de Xavier, 2026-08-16).
+  const allyBarEl = document.getElementById("allyDmgHealBar");
+  const enemyBarEl = document.getElementById("enemyDmgHealBar");
+  if(allyBarEl) allyBarEl.innerHTML = allyFilled>0 ? dmgHealBarHtml(allyTeam) : "";
+  if(enemyBarEl) enemyBarEl.innerHTML = enemyFilled>0 ? dmgHealBarHtml(enemyTeam) : "";
+
   // probabilidad de victoria (heurística orientativa, no un cálculo real de winrate) -- el detalle
   // de que te esta jugando en contra ya se explica en "Alineación en riesgo", no se repite aca
   left += `<div class="analysis-section"><div class="sec-title">${t("analysis.winProb.title")}</div>`;
@@ -473,13 +484,6 @@ function renderAnalysis(){
   left += `</div>`;
   left += `</div>`;
 
-  // barrita de dano/curacion de tu equipo, a lo ancho completo del bloque (no adentro de la fila
-  // apretada de comp-pick-row de arriba) -- pedido de Xavier, la barrita quedaba muy comprimida
-  // compartiendo columna con "Que deberias jugar tu" (opcion C de las 3 mockeadas, 2026-08-16)
-  if(allyFilled>0){
-    left += `<div class="analysis-section dmgheal-strip">${dmgHealBarHtml(allyTeam)}</div>`;
-  }
-
   // fila aparte (ancho completo del bloque, no anidada) con las listas de picks en 2 columnas reales
   // -- siempre 2 columnas, nunca 1 sola, para que la fila no se vea rota/asimetrica ni de la impresion
   // de que "desaparecio" una columna
@@ -537,7 +541,6 @@ function renderAnalysis(){
       right += `<br>${t("analysis.rivalComp.addRestForFull")}`;
     }
     right += `</div>`;
-    right += dmgHealBarHtml(enemyTeam);
     const antiDive = antiDiveCount(enemyTeam.filter(Boolean));
     if(antiDive>=2){
       right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.antiDiveWarn", {n: antiDive})}</div>`;
