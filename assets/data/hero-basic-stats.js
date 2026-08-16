@@ -17,8 +17,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Energy Plasmoids",
       "key": "Left Click",
-      "hps": 60,
-      "raw": "Healing: 15 per hit -- ataque hibrido (el mismo disparo dana O cura segun el objetivo, no las dos cosas a la vez), hps real 120 dividido a la mitad para no contar dano y curacion simultaneos del mismo disparo (pedido de Xavier, 2026-08-16)"
+      "hps": 120,
+      "raw": "Healing: 15 per hit -- ataque hibrido (el mismo disparo dana O cura segun el objetivo, no las dos cosas a la vez). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: el dato es oficial de la pagina, dividirlo nerfea la curacion sin motivo real)"
     }
   },
   "Cyclops": {
@@ -40,7 +40,9 @@ const HERO_BASIC_STATS = {
   "Black Cat": {
     "basicAttack": {
       "name": "FELINE FURY",
-      "dmgRaw": "Damage: 35 (verificado en vivo 2026-08-16: la pagina oficial no publica cadencia/intervalo para este ataque, no se puede calcular dps sin inventar un numero)"
+      "dmgRaw": "Damage: 35 per hit",
+      "rateRaw": "Cadencia: pagina oficial y guias no publican intervalo; dato de Xavier por experiencia propia (2026-08-16): 7 golpes bastan para vencer a un dps normal en 2.90s reales = 2.41 golpes/s",
+      "dps": 84.5
     }
   },
   "White Fox": {
@@ -83,8 +85,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Kinetic Cards",
       "key": "Left Click",
-      "hps": 33.4,
-      "raw": "Card Healing: 30 health per round -- ataque hibrido (el mismo disparo dana O cura segun el objetivo), hps real 66.7 dividido a la mitad (pedido de Xavier, 2026-08-16)"
+      "hps": 66.7,
+      "raw": "Card Healing: 30 health per round -- ataque hibrido (el mismo disparo dana O cura segun el objetivo). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: dato oficial, no corresponde nerfearlo)"
     }
   },
   "Deadpool (Vanguard)": {
@@ -113,14 +115,16 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "DUAL DESERT EAGLES - STRATEGIST",
       "key": "Left Click",
-      "hps": 56.25,
-      "raw": "Healing: 45 per round -- ataque hibrido (el mismo disparo dana O cura segun el objetivo), hps real 112.5 dividido a la mitad (pedido de Xavier, 2026-08-16)"
+      "hps": 112.5,
+      "raw": "Healing: 45 per round -- ataque hibrido (el mismo disparo dana O cura segun el objetivo). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: dato oficial, no corresponde nerfearlo)"
     }
   },
   "Daredevil": {
     "basicAttack": {
       "name": "JUSTICE JAB",
-      "dmgRaw": "Damage: 35 (misma limitacion que Black Cat: la pagina oficial no publica cadencia para este ataque)"
+      "dmgRaw": "Damage: 35 per hit (confirmado 35 sobre 25 de una guia comunitaria desactualizada: 7 golpes x 35=245, cerca de los 250 de vida de un duelista tipico y consistente con 'vencer al enemigo' en 7 golpes; 25 no alcanzaria)",
+      "rateRaw": "Cadencia: pagina oficial y guias no publican intervalo; dato de Xavier por experiencia propia (2026-08-16): 7 golpes de Justice Jab bastan para vencer al enemigo en 2.76s reales = 2.54 golpes/s",
+      "dps": 88.8
     }
   },
   "Angela": {
@@ -133,10 +137,10 @@ const HERO_BASIC_STATS = {
   },
   "Blade": {
     "basicAttack": {
-      "name": "Ancestral Sword",
-      "dmgRaw": "Damage: 26 per slash (double strike variant: 2x13, mismo total) a 2 golpes/seg",
-      "rateRaw": "Attack Interval: 2 strikes per second",
-      "dps": 52.0
+      "name": "Bloodline Awakening (combo espada)",
+      "dmgRaw": "Combo real de un jugador promedio (pedido de Xavier, 2026-08-16: Bloodline Awakening es como un dive, es lo que usa el jugador promedio, y a diferencia de la espada sola reduce la curacion del rival): 5 golpes de Ancestral Sword (26x5=130) + Whirlwind Slash (64) + 5 golpes mas (130) + Whirlwind Slash (64) = 388 de dano total. Blade tambien tiene Hunter's Shotgun (escopeta a distancia, alternativa de poke, no la principal): 2 disparos a la cabeza matan a un dps en 0.93s medido por Xavier = ~268.8 dps, no usado como daño principal porque el jugador promedio va al cuerpo a cuerpo",
+      "rateRaw": "Duracion real del combo completo: 3.81s (medido por Xavier en partida)",
+      "dps": 101.8
     }
   },
   "Phoenix": {
@@ -164,23 +168,25 @@ const HERO_BASIC_STATS = {
   "Emma Frost": {
     "basicAttack": {
       "name": "TELEPATHIC PULSE",
-      "dmgRaw": "Damage: Damage increases with energy: 0 - 70/s, 99 - 110/s, full energy - 140/s"
+      "dmgRaw": "Damage: Damage increases with energy: 0 - 70/s, 99 - 110/s, full energy - 140/s. El daño sube en tiempo real con una barra de energia propia que sube +12/s pegandole a un heroe y baja si deja de pegar 4s; con 70 de municion a 10/s de consumo (7s por cargador) rara vez se llega a energia alta desde cero",
+      "rateRaw": "Dato real de Xavier en partida (2026-08-16): mata a un dps en 3.37s arrancando sin energia (termina con 33 en la barra), y a un segundo dps en 2.82s arrancando ya con esos 33 (termina con 60) -- secuencia real sostenida: 500 (2x250 de vida tipica) / 6.19s",
+      "dps": 80.8
     }
   },
   "The Thing": {
     "basicAttack": {
-      "name": "Rocky Jab",
-      "dmgRaw": "Damage: 40 per hit (double strike, 80 total)",
-      "rateRaw": "Attack Interval: 0.33s between the 2 hits, 1s between sets",
-      "dps": 60.2
+      "name": "Stone Haymaker",
+      "dmgRaw": "Damage: 55 + 10% de la vida maxima del rival por golpe (con un dps de 250 de vida tipica: 55+25=80 por golpe). Xavier confirmo que este es el golpe que mas se usa en partidas reales, Rocky Jab rara vez se usa (pedido de Xavier, 2026-08-16)",
+      "rateRaw": "Sin cadencia publicada en ninguna fuente oficial ni guia. Dato real de Xavier en partida: cada golpe (animacion completa) tarda ~1.06s, y matar a un dps de 250 de vida se demora 4.71s reales en total (varios golpes en secuencia)",
+      "dps": 53.1
     }
   },
   "Human Torch": {
     "basicAttack": {
       "name": "Fire Cluster",
-      "dmgRaw": "Shot Damage: 5.5 per round",
-      "rateRaw": "Fire Rate: 0.5s per round",
-      "dps": 11.0
+      "dmgRaw": "Shot Damage oficial: 5.5 per round -- probablemente por cada proyectil individual DENTRO de una rafaga (el nombre es literal, 'cluster'), pero ninguna fuente dice cuantos proyectiles hay por rafaga. Dato real de Xavier en partida (2026-08-16): apuntando a la cabeza, mata a un dps de 250 de vida en 1.05s reales",
+      "rateRaw": "El calculo oficial (5.5 x 2 rondas/s = 11 dps) es claramente muy bajo comparado con el resultado real en partida; se usa el tiempo medido en su lugar",
+      "dps": 238.1
     }
   },
   "Invisible Woman": {
@@ -229,15 +235,15 @@ const HERO_BASIC_STATS = {
   },
   "Cloak & Dagger": {
     "basicAttack": {
-      "name": "Darkforce Cloak",
-      "dmgRaw": "Damage: 80/s",
-      "dps": 80.0
+      "name": "Darkforce Cloak + Lightforce Dagger (combinado)",
+      "dmgRaw": "Cloak (Darkforce Cloak, spell field automatico): 80/s. Dagger (Lightforce Dagger, ataque hibrido -- el mismo tiro dana O cura segun el objetivo): 18 dmg x 2.27 golpes/s = 40.9/s. Se suman ambas personas porque representan el daño principal del mismo héroe (pedido de Xavier, 2026-08-16, guia mobalytics.gg/marvel-rivals/cloak-and-dagger-guide)",
+      "dps": 120.9
     },
     "primaryHeal": {
       "name": "Dagger Storm",
       "key": "Right Click",
       "hps": 50.0,
-      "raw": "Healing Amount: 50/s"
+      "raw": "Healing Amount: 50/s -- verificado en vivo en la pagina oficial 2026-08-16; una guia comunitaria (mobalytics) decia 45/s pero puede estar desactualizada de parche, se prioriza el dato oficial"
     }
   },
   "Iron Fist": {
@@ -258,16 +264,18 @@ const HERO_BASIC_STATS = {
   },
   "Hawkeye": {
     "basicAttack": {
-      "name": "Piercing Arrow",
-      "dmgRaw": "Damage: 28 - 70 (Maximum damage is achieved after 0.9s of charging)"
+      "name": "Piercing Arrow + Archer's Focus (headshot cargado)",
+      "dmgRaw": "Piercing Arrow: 28-70 cargando 0.9s. Archer's Focus (pasiva): +0-90 de daño extra apuntando 0.9s, se suma al daño base de Piercing Arrow, tambien puede critear. Xavier eligio este escenario (headshot con carga completa) como el representativo, aunque el mismo aclaro que Hawkeye es dificil de calcular porque su daño real depende mucho de la punteria del jugador",
+      "rateRaw": "Dato real de Xavier en partida (2026-08-16): levantar el arco, cargar Archer's Focus, disparar y dar en la cabeza mata a un dps en 1.32s desde frio (arranque en 0)",
+      "dps": 189.4
     }
   },
   "Iron Man": {
     "basicAttack": {
       "name": "Repulsor Blast",
-      "dmgRaw": "Damage: 35",
+      "dmgRaw": "Damage: 35 (impacto directo) + 45 (Spell Field Damage, campo en 3m de radio) = 80 por disparo si ambas partes le pegan al mismo objetivo. Confirmado por Xavier (2026-08-16): 3 disparos ya eliminan a un dps normal de 250 de vida (3x80=240, coincide; con solo el directo de 35 harian falta 7+ disparos, no coincide)",
       "rateRaw": "Fire Rate: 1.67 rounds per second",
-      "dps": 58.4
+      "dps": 133.6
     }
   },
   "Namor": {
@@ -368,8 +376,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Joyful Splash",
       "key": "Left Click",
-      "hps": 65.0,
-      "raw": "Healing Amount: 130/s -- ataque hibrido (el mismo disparo dana O cura segun el objetivo), hps real 130 dividido a la mitad (pedido de Xavier, 2026-08-16)"
+      "hps": 130.0,
+      "raw": "Healing Amount: 130/s -- ataque hibrido (el mismo disparo dana O cura segun el objetivo). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: dato oficial, no corresponde nerfearlo)"
     }
   },
   "Punisher": {
@@ -384,8 +392,8 @@ const HERO_BASIC_STATS = {
     "basicAttack": {
       "name": "Light & Dark Ice",
       "dmgRaw": "Damage: 24 per round, 3 rounds per cycle (72 total)",
-      "rateRaw": "Fire Rate: 0.5s per 3-shot cycle (baja confianza: no se aclara un hueco aparte entre ciclos)",
-      "dps": 144.0
+      "rateRaw": "Fire Rate oficial: 0.5s per 3-shot cycle (144.0 dps, baja confianza original). Confirmado y ajustado con dato real de Xavier en partida (2026-08-16): unos 4 proyectiles matan a un dps de 250 de vida en 1.71s reales",
+      "dps": 146.2
     },
     "primaryHeal": {
       "name": "Light & Dark Ice",
@@ -431,16 +439,16 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Mystical Missile",
       "key": "Left Click",
-      "hps": 105.0,
-      "raw": "Area Of Effect Healing: 40 per hit -- ataque hibrido (mismo disparo dana y cura, /2 = 35/s) x3 por sus clones, que disparan lo mismo (pedido de Xavier, 2026-08-16: antes se usaba Regeneration Domain, que tiene 30s de cooldown para solo 5s activo, no es sostenido)"
+      "hps": 210.0,
+      "raw": "Area Of Effect Healing: 40 per hit -- ataque hibrido (mismo disparo dana O cura), 40x1.75/s=70/s, x3 por sus clones, que disparan lo mismo (pedido de Xavier, 2026-08-16: antes se usaba Regeneration Domain, que tiene 30s de cooldown para solo 5s activo, no es sostenido; el 08-16 se revirtio la division a la mitad que se le habia aplicado a los hibridos por pedido de Xavier, dato oficial no debe nerfearse)"
     }
   },
   "Mantis": {
     "basicAttack": {
       "name": "Life Energy Blast",
       "dmgRaw": "Damage: 55 damage per round",
-      "rateRaw": "Fire Rate: 2.5 rounds per second",
-      "dps": 137.5
+      "rateRaw": "Fire Rate oficial: 2.5 rounds per second (137.5 dps). Confirmado con dato real de Xavier en partida (2026-08-16): 4 proyectiles matan a un dps de 250 de vida en 1.38s reales",
+      "dps": 181.2
     },
     "primaryHeal": {
       "name": "Healing Flower",

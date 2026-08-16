@@ -1686,3 +1686,162 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      referencia (ej. Price of Magic mencionando "Daggers of Denak: cada hit genera 3.5") probablemente
      se refiere al impacto interno, no al tiro completo — hay que multiplicar por la cantidad de
      impactos internos si el video/experiencia de Xavier no confirma el numero total directamente.
+
+38) Se revierte la división a la mitad de los sanadores híbridos + Cloak & Dagger sumado (2026-08-16)
+   - Xavier pidió sacar guías comunitarias en PDF (mobalytics.gg) para los héroes en duda: Black
+     Cat, Blade, Cloak & Dagger, Cyclops, Daredevil, Emma Frost, Hawkeye, Invisible Woman, Luna
+     Snow, Mantis, Wolverine (guardadas en la raíz del repo, gitignored, no se commitean).
+   - Cloak & Dagger: la guía reveló que mi scrape original solo había capturado la persona de
+     Cloak (Darkforce Cloak, spell field automático 80/s); la persona de Dagger tiene su propio
+     ataque básico "Lightforce Dagger" (18 dmg, 2.27 golpes/s = 40.9/s) que nunca se había
+     capturado. Es HÍBRIDO igual que Jubilee/Gambit/Healpool/Jeff (el mismo tiro daña a un
+     enemigo O cura a un aliado). Xavier pidió sumar Cloak + Dagger como un solo "daño principal"
+     del héroe combinado: 80 + 40.9 = **120.9 dps**. `basicAttack.name` pasa a "Darkforce Cloak +
+     Lightforce Dagger (combinado)".
+   - La guía también decía que Dagger Storm cura 45/s en vez del 50/s verificado en vivo en la
+     página oficial — se prioriza el dato oficial (50/s se mantiene) porque la guía puede estar
+     desactualizada de parche; queda anotado en el `raw` por si se necesita revisar de nuevo.
+   - Black Cat (Feline Fury) y Daredevil (Justice Jab): las guías tampoco traen tabla de datos
+     con cadencia para esos golpes cuerpo a cuerpo — mismo callejón sin salida que la página
+     oficial, no se puede armar dps sin inventar un número. Además la guía de Daredevil dice
+     Damage: 25 en vez del 35 verificado en la página oficial — discrepancia sin resolver, Xavier
+     va a revisar la guía en más detalle (como hizo con Doctor Strange) para dar más certeza.
+   - **Decisión clave: se revierte la división a la mitad** que se les había aplicado a los 4
+     sanadores híbridos en el punto 33 (y a Loki en el 35). Motivo (palabras de Xavier): los datos
+     que se sacan de la página oficial ya son oficiales, y dividirlos a la mitad "estaríamos
+     nerfeando" la curación sin una razón real del juego — la mitad no representaba ninguna
+     mecánica real, era una suposición mía. Revertido a los valores originales:
+       - Jubilee: hps 60 → **120**
+       - Gambit: hps 33.4 → **66.7**
+       - Deadpool (Strategist) / Healpool: hps 56.25 → **112.5**
+       - Jeff the Land Shark: hps 65.0 → **130.0**
+       - Loki (Mystical Missile, x3 por clones): hps 105.0 → **210.0** (40 x 1.75/s = 70/s base,
+         x3 = 210, sin la división a la mitad que tenía antes)
+     Esto cierra el punto abierto desde el 33/35 sobre qué hacer con la regla de los híbridos:
+     la regla se elimina, no se ajusta.
+   - Probado con Python (json.loads sobre el bloque de HERO_BASIC_STATS), sintaxis válida, 55
+     héroes. Probado en vivo en el navegador (heroBasicStats(...) para los 6 casos tocados),
+     0 errores de consola.
+
+39) Black Cat (Feline Fury): dps calculado con experiencia propia de Xavier (2026-08-16)
+   - Ni la página oficial ni la guía de mobalytics publican cadencia para este golpe cuerpo a
+     cuerpo (ver punto 38). Xavier midió en partida real: 7 golpes de Feline Fury alcanzan para
+     vencer a un dps de vida normal, y tardó 2.90s reales en darlos.
+   - Cadencia: 7 golpes ÷ 2.90s = 2.41 golpes/s. Con el daño ya confirmado (35 por golpe):
+     35 x 2.41 = **84.5 dps**. Agregado `rateRaw` y `dps` a `basicAttack` (antes solo tenía
+     `dmgRaw` sin cadencia ni dps).
+   - Probado con Python (json.loads), sintaxis válida. Probado en vivo en el navegador
+     (heroBasicStats('Black Cat')), 0 errores de consola.
+
+40) Daredevil (Justice Jab): dps calculado con experiencia propia de Xavier, resuelve la
+    discrepancia de daño del punto 38 (2026-08-16)
+   - Xavier midió en partida real: 7 golpes de Justice Jab bastan para vencer al enemigo,
+     tardando 2.76s reales.
+   - Esto también resuelve la duda del punto 38 sobre si el daño real es 35 (página oficial) o
+     25 (guía de mobalytics): 7 x 35 = 245, muy cerca de los 250 de vida típicos de un duelista
+     y consistente con "vencer al enemigo" en esos 7 golpes. 7 x 25 = 175 no alcanzaría para
+     matar a un duelista de vida normal. Se confirma el 35 oficial, la guía estaba desactualizada.
+   - Cadencia: 7 golpes ÷ 2.76s = 2.54 golpes/s. Dps: 35 x 2.54 = **88.8 dps**.
+   - Probado con Python (json.loads), sintaxis válida. Probado en vivo en el navegador
+     (heroBasicStats('Daredevil')), 0 errores de consola.
+
+41) Blade: daño principal cambiado de la espada sola al combo de Bloodline Awakening (2026-08-16)
+   - Blade tiene tres fuentes de daño: Ancestral Sword (espada básica, lo que estaba cargado
+     antes: 26 dmg x 2 golpes/s = 52.0 dps), Hunter's Shotgun (escopeta a distancia con perdigones)
+     y Bloodline Awakening (tecla E, combo: los golpes de espada acumulan velocidad de ataque y
+     cada 5 golpes se dispara un Whirlwind Slash de 64 de daño, ademas de aplicar reduccion de
+     curacion al rival).
+   - Xavier confirmó que el jugador promedio usa Bloodline Awakening porque juega como un dive
+     (no la espada suelta), y que a diferencia de la espada sola, el combo reduce la curación del
+     enemigo — un beneficio real que la espada sola no tiene. Se sigue el mismo criterio que con
+     Doctor Strange (punto 37): reflejar lo que usa el jugador promedio, no la opción teórica.
+   - Combo medido por Xavier en partida: 5 golpes de espada (26x5=130) + Whirlwind Slash (64) +
+     5 golpes más (130) + Whirlwind Slash (64) = 388 de daño total, en 3.81s reales →
+     388 ÷ 3.81 = **101.8 dps**. `basicAttack.name` pasa a "Bloodline Awakening (combo espada)".
+   - Hunter's Shotgun (escopeta) queda documentada como alternativa de poke a distancia, no como
+     daño principal: Xavier midió 2 disparos a la cabeza matando a un dps en 0.93s reales
+     (la medición más confiable de las dos que dio, la otra fue 1.05s) → 250 ÷ 0.93 ≈ 268.8 dps,
+     anotado en el `dmgRaw` por si se necesita en el futuro pero no aplicado como número principal.
+   - Probado con Python (json.loads), sintaxis válida. Probado en vivo en el navegador
+     (heroBasicStats('Blade')), 0 errores de consola.
+
+42) Emma Frost (Telepathic Pulse): dps calculado con experiencia propia de Xavier (2026-08-16)
+   - El daño de Telepathic Pulse escala en tiempo real con una barra de energía propia de Emma
+     (sube +12/s pegándole a un héroe, baja -30/s si deja de pegar 4s): 70/s a 0 energía, 110/s a
+     99 energía, 140/s a energía llena. Además tiene solo 70 de munición a 10/s de consumo (7s
+     por cargador), así que rara vez se llega a energía alta arrancando desde cero — elegir 140/s
+     de una hubiese sido un número poco realista.
+   - Xavier midió en partida real una secuencia sostenida: mata a un primer dps en 3.37s
+     arrancando sin energía (termina con 33 en la barra), y a un segundo dps en 2.82s arrancando
+     ya con esos 33 (termina con 60). Los tiempos son consistentes con la interpolación lineal
+     entre los 3 puntos oficiales (70/s a 0, 110/s a 99), lo cual valida la medición.
+   - Secuencia completa: 500 (2 x 250 de vida típica) ÷ (3.37+2.82=6.19s) = **80.8 dps**. Se
+     prefiere este numero de combate real sostenido en vez de fijar el peor caso (70) o el mejor
+     caso, casi nunca alcanzable (140).
+   - Probado con Python (json.loads), sintaxis válida. Probado en vivo en el navegador
+     (heroBasicStats('Emma Frost')), 0 errores de consola.
+
+43) Hawkeye (Piercing Arrow + Archer's Focus): dps calculado con experiencia propia de Xavier,
+    elegido el escenario de headshot cargado (2026-08-16)
+   - Hawkeye tiene 3 escenarios de daño distintos según cómo se juegue: headshot cargado desde
+     frío (1.32s medido), "2 flechas normales sin cabeza" (mencionado pero sin tiempo exacto), y
+     ya con el arco arriba en medio de un intercambio (0.53s, mas parece el ultimo tiro de un
+     intercambio en curso que un ciclo completo desde vida llena). Xavier mismo dijo que Hawkeye
+     es difícil de calcular porque su daño real depende mucho de la puntería del jugador, no de
+     una cadencia fija.
+   - Xavier eligió el primer caso como representativo: levantar el arco, cargar Archer's Focus
+     (la pasiva que suma 0-90 de daño extra apuntando 0.9s, aplicado sobre Piercing Arrow 28-70
+     cargando 0.9s) y dar en la cabeza, matando a un dps en **1.32s** desde frío.
+   - Dps: 250 (vida típica) ÷ 1.32s = **189.4 dps**. `basicAttack.name` pasa a "Piercing Arrow +
+     Archer's Focus (headshot cargado)" para dejar claro que el número asume headshot con carga
+     completa, no un disparo cualquiera.
+   - Probado con Python (json.loads), sintaxis válida. Probado en vivo en el navegador
+     (heroBasicStats('Hawkeye')), 0 errores de consola.
+
+44) Iron Man (Repulsor Blast): daño directo + campo se suman, confirmado con la vida típica
+    de un dps (2026-08-16)
+   - Xavier reportó que 3 disparos de Repulsor Blast ya eliminan a un dps común. La página
+     oficial da Damage: 35 (impacto directo) y Spell Field Damage: 45 (campo de daño en 3m de
+     radio). Si solo contara el directo (35), harían falta 7+ disparos para matar 250 de vida —
+     no coincide. Sumando ambos (35+45=80 por disparo), 3 disparos = 240, muy cerca de los 250
+     típicos — coincide con la observación de Xavier, confirmando que ambas partes del daño le
+     pegan al mismo objetivo cuando el impacto es cercano.
+   - Dps: 80 x 1.67 rondas/s (cadencia oficial) = **133.6 dps**. Reemplaza el 58.4 anterior que
+     solo contaba el daño directo.
+   - Confirmado y aplicado por Xavier.
+
+45) The Thing: ataque principal cambiado de Rocky Jab a Stone Haymaker (2026-08-16)
+   - Xavier confirmó que Stone Haymaker es el golpe que más se usa en partidas reales; Rocky Jab
+     (el que estaba cargado antes, 60.2 dps) rara vez se usa.
+   - Stone Haymaker no tiene cadencia publicada en ninguna fuente oficial ni en las guías. Su
+     daño es 55 + 10% de la vida máxima del rival por golpe (con un dps de 250 de vida típica:
+     55+25=80 por golpe).
+   - Xavier midió en partida real: cada golpe individual (animación completa) tarda ~1.06s, y
+     matar a un dps de 250 de vida toma 4.71s reales en total (varios golpes en secuencia). Se
+     usa el mismo método que con Emma Frost/Black Cat/Daredevil (vida ÷ tiempo total real, no
+     daño-por-golpe x cadencia-de-un-solo-golpe, para no perder el overhead real de la secuencia
+     completa): 250 ÷ 4.71 = **53.1 dps**.
+   - Probado con Python (json.loads), sintaxis válida.
+
+46) Human Torch (Fire Cluster): dps recalculado con tiempo real, el dato oficial estaba muy
+    bajo (2026-08-16)
+   - El cálculo oficial (5.5 daño x 2 rondas/s = 11 dps) es absurdamente bajo — Xavier reportó
+     que 2 ataques (apuntando a la cabeza) ya matan a un dps normal, algo imposible con 11 dps.
+     Se sospecha que "5.5 per round" es el daño de cada proyectil individual DENTRO de una
+     ráfaga (el nombre "Fire Cluster" lo sugiere), pero ninguna fuente dice cuántos proyectiles
+     hay por ráfaga, así que no se puede reconstruir matemáticamente.
+   - Xavier midió en partida real: apuntando a la cabeza, mata a un dps de 250 de vida en 1.05s
+     reales. Dps: 250 ÷ 1.05 = **238.1 dps**.
+   - Probado con Python (json.loads), sintaxis válida. Probado en vivo en el navegador
+     (heroBasicStats('Iron Man'), 'The Thing', 'Human Torch'), 0 errores de consola.
+
+47) Mantis y Luna Snow: dps confirmado/ajustado con dato real de Xavier (2026-08-16)
+   - Mantis (Life Energy Blast): el cálculo oficial (55 x 2.5 rondas/s = 137.5 dps) ya era
+     razonable, pero Xavier lo confirmó con un dato real: 4 proyectiles matan a un dps de 250 de
+     vida en 1.38s reales → 250 ÷ 1.38 = **181.2 dps**. Reemplaza el 137.5 anterior.
+   - Luna Snow (Light & Dark Ice): el cálculo oficial (144.0 dps) tenía baja confianza (no
+     quedaba claro si había hueco entre ciclos de 3 disparos). Xavier midió en partida real:
+     unos 4 proyectiles matan a un dps de 250 de vida en 1.71s reales → 250 ÷ 1.71 =
+     **146.2 dps** (muy cerca del cálculo oficial, lo confirma y reemplaza el numero de baja
+     confianza).
+   - Probado con Python (json.loads), sintaxis válida.
