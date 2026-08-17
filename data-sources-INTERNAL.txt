@@ -2031,3 +2031,54 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      por hero/ability/field, y vuelve a escribir con `json.dumps(indent=2)` — se confirmó antes
      que el formato del archivo coincide byte a byte con esa salida, así que el diff queda
      limpio (solo las líneas tocadas).
+
+55) Auditoría de counters con 4 sub-análisis en paralelo (fork) + correcciones reales de Xavier
+    (2026-08-17)
+   - Xavier pidió sugerencias de counters para los 55 héroes usando el kit oficial completo
+     (`hero-full-abilities-RAW-partA/B.json`) + dps/hps real (`hero-basic-stats.js`) + tags de
+     `hero-roster.js`, comparado contra `matchup-matrix.json` vigente. Explícitamente pidió que
+     fuera SOLO UN REPORTE primero (artifact), sin tocar la matriz todavía.
+   - Se repartió en 4 forks en paralelo (Vanguard / Duelist×2 / Strategist). Salieron 8 pares
+     marcados como "posible contradicción con la matriz actual".
+   - **Lección importante**: al armar el reporte final, mezclé mal la convención de signos de
+     distintos forks (algunos leyeron correctamente que score positivo = malo para el héroe de la
+     fila, otros no) y terminé reportando como "bug" 4 pares que en realidad YA estaban bien
+     cargados: The Hood vs Iron Man, The Hood vs The Thing, Punisher vs Magik, Magneto vs Iron Man.
+     Antes de tocar nada se re-verificó cada uno directo contra `matchup-matrix.json`/
+     `ref-matchup-scores.json` (usando la columna de categoría 1-4, más fácil de leer sin
+     confundirse que el score con signo) y los 4 resultaron correctos — Xavier los confirmó con
+     su conocimiento real (Iron Man gasta los escudos de Hood y su ulti puede destruir la de Hood
+     matándolo; The Thing atraviesa escudos; en promedio los divers ganan a Punisher, incluyendo
+     Magik; Magneto tiene un team-up con Scarlet Witch que genera una espada letal contra
+     voladores poco móviles como Iron Man, y puede absorber la ulti de Iron Man con Meteor M).
+     **No se tocó nada de estos 4 pares.**
+   - **Cambios reales aplicados** (los únicos 2 de los 8 marcados que sí hacía falta corregir):
+     - **Daredevil vs Hawkeye**: la matriz tenía a Hawkeye contando a Daredevil (score +5/cat 1
+       para Daredevil). Xavier: "se supone que todos los divers le deben ganar a Hawkeye... si
+       eres diver, Ojo de Halcón no debe verte llegar y lo vences fácilmente". Se invirtió:
+       Daredevil→Hawkeye ahora -6 (cat 4), Hawkeye→Daredevil +6 (cat 1) — mismo orden de magnitud
+       que los otros divers que ya counterean a Hawkeye (Psylocke/Magik/Iron Fist, -8 cada uno).
+     - **Jubilee vs Mantis**: tenía a Mantis counterando fuerte (+10/-10, cat 1/4). Xavier explicó
+       que es un matchup de rango: Mantis debería ganar a distancia, Jubilee de cerca — no es un
+       counter claro de ninguna de las dos. Se suavizó a parejo: ambos lados a 0 (cat 2).
+   - **Dejado como está a propósito** (Xavier confirmó que el dato actual ya es correcto):
+     - White Fox vs Wolverine (White Fox le gana, -6/+6): no es porque Wolverine sea "anti-
+       sanador" (esa era mi hipótesis, incorrecta) — White Fox tiene un modo que empuja y cura
+       mientras hace daño, la hace fuerte contra divers en general.
+     - Jubilee vs Peni Parker (Peni le gana, +12/-12): Xavier confirmó que una Jubilee que sabe
+       jugar puede romper el nido de Peni y contrarrestar su ulti con la propia, pero la mayoría
+       de las Jubilees todavía no saben hacer esto — el dato actual representa bien al jugador
+       promedio (mismo criterio de "representar al jugador típico" usado en el resto del proyecto
+       para dps/cadencia, ej. Winter Soldier/Human Torch).
+   - Mecánica de la corrección: script de Python que edita `ref-matchup-scores.json` y
+     `matchup-matrix.json`, y luego re-sincroniza los mismos 4 pares dentro de los const inline de
+     `assets/js/matchups.js` (MATCHUP_MATRIX, JSON en una sola línea) y
+     `assets/data/ref-matchup-scores.js` (REF_MATCHUP_SCORES, JSON con indent=2) — se verificó con
+     un round-trip (`json.dumps` reproduce el archivo byte a byte) antes de tocar nada, y se
+     confirmó al final que los 4 archivos quedaron idénticos entre sí.
+   - **Nota para más adelante**: `matchup-editor-stream.html` tiene su propia copia hardcodeada
+     (`SEED_SCORES`) que NO se re-sincronizó esta vez (solo se justifica el esfuerzo de
+     re-sincronizarla para altas de héroes nuevos, no para 2 pares sueltos) — va a quedar
+     ligeramente desactualizada en esos 2 pares hasta la próxima sync grande.
+   - El artifact del reporte completo (55 héroes, con los 8 casos marcados) sigue publicado y se
+     actualizó para reflejar el estado final de cada uno de los 8.

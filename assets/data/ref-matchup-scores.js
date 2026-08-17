@@ -3762,7 +3762,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Jubilee": {
-      "score": -10
+      "score": 0,
+      "label": "even"
     },
     "Jeff the Land Shark": {
       "score": 0,
@@ -4175,7 +4176,8 @@ const REF_MATCHUP_SCORES = {
       "score": 4
     },
     "Mantis": {
-      "score": 10
+      "score": 0,
+      "label": "even"
     },
     "Deadpool (Vanguard)": {
       "score": -1
@@ -9242,8 +9244,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Daredevil": {
-      "score": -5,
-      "label": "weak"
+      "score": 6,
+      "label": "hardCounter"
     },
     "Magneto": {
       "score": 5,
@@ -10098,8 +10100,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Hawkeye": {
-      "score": 5,
-      "label": "strong"
+      "score": -6,
+      "label": "hardCountered"
     },
     "Magik": {
       "score": 0,
