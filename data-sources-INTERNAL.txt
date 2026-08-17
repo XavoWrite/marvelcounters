@@ -1936,3 +1936,78 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
    - Xavier consideró que los datos de daño del resto del roster ya están bien; el siguiente
      foco pasa a ser las curaciones (hps) de los sanadores.
    - Probado con Python (json.loads), sintaxis válida.
+
+53) Metodología nueva para sanadores: bot de Galacta (250 de vida, barra de 10 unidades = 25 c/u)
+    como target estándar para medir daño Y curación por separado (2026-08-16, tras un corte de
+    luz que interrumpió la sesión anterior)
+   - A diferencia del daño (medido contra Black Widow/Luna Snow, heroes con vida real), las
+     curaciones se miden contra un bot de Galacta aliado/enemigo: 250 de vida total, mostrada
+     como una barra de 10 unidades (cada unidad = 25 de vida).
+   - **Elsa Bloodstone** (Double-Barrel Blaster): antes 23.9 dps teórico (4.5 x 10 rondas, muy
+     bajo). Real: contra Luna Snow (275 de vida), la venció en 2.06s usando 8 de sus 12 balas
+     (sobraron 4/12) → 275÷2.06 = **133.5 dps**.
+   - **Luna Snow** (Light & Dark Ice, ataque híbrido daño=curación): se descartan dos pruebas
+     previas menos directas (vs. "un dps de 250 de vida" genérico: 146.2 dps; prueba espejo
+     Luna-vs-Luna a 275 de vida: 125.0 dps) en favor del bot de Galacta como target estándar
+     acordado para sanadores:
+       - Daño: venció a un bot de Galacta (250 de vida) en 1.84s usando 12 de sus 30 proyectiles
+         (sobraron 18/30) → 250÷1.84 = **135.9 dps**.
+       - Curación: un bot aliado de Galacta bajó a 50/250 (2/10 de su barra); Luna lo recuperó a
+         250/250 (los 200 de vida restantes, 8/10) en 1.53s → 200÷1.53 = **130.7 hps**. Primer
+         valor de `hps` que tiene Luna Snow (antes no tenía, solo curación puntual sin tasa).
+   - Los dos números de Luna Snow (135.9 dps / 130.7 hps) son consistentes entre sí (ambos
+     ~130-136), lo cual tiene sentido tratándose de la misma habilidad híbrida.
+   - **Loki** (Mystical Missile, con sus 3 clones activos): antes 43.8 dps teórico (sin contar
+     clones) / 210.0 hps teórico (40x1.75/s=70/s, x3 clones). Real contra bot de Galacta (250 de
+     vida): daño, lo venció en 2.00s usando 5/10 cargas de su bastón → 250÷2.00 = **125.0 dps**;
+     curación, recuperó 200 de vida en 1.95s → 200÷1.95 = **102.6 hps**, bastante más bajo que el
+     teórico (probablemente los 3 clones no siempre pegan al mismo objetivo en pelea real).
+   - **Mantis** (Life Energy Blast / Healing Flower): antes 181.2 dps (de una prueba previa a la
+     sesión de bots, 4 proyectiles en 1.38s contra "un dps de 250 de vida", sin aclarar si eran
+     headshots) y sin hps (solo "One-time Healing Amount: 60" sin tasa). Real contra bot de
+     Galacta (250 de vida): daño disparando al cuerpo (dato de jugador promedio), lo venció en
+     2.11s → 250÷2.11 = **118.5 dps** (reemplaza el 181.2 anterior); curación con 3 usos de
+     Healing Flower (curación a ráfagas, no continua), recuperó los 200 de vida estándar de la
+     prueba en 2.25s → 200÷2.25 = **88.9 hps**.
+   - Confirmado con Xavier: el monto que se recupera en todas estas pruebas de curación es
+     siempre 200 de vida (el bot arranca en 2/10=50/250 y se cura hasta 10/10=250/250).
+   - **Rocket Raccoon** (Repair Mode): antes 50.0 hps oficial. Real: con 3 bolitas de curación
+     disparadas de inmediato, recuperó los 200 de vida estándar en 2.65s → 200÷2.65 = **75.5 hps**.
+   - **Adam Warlock**: cambia la curación principal de "Soul Bond" (SHIFT, 15/s oficial, muy bajo)
+     a **"Avatar Life Stream"** (E, oficial: 95 de curación con 2 rebotes a aliados cercanos, 35
+     de autocuración, 2 cargas con 6s de recarga c/u) por ser la que Xavier realmente usa para
+     sostener vida en pelea. Real contra bot de Galacta: con un solo uso no llegó a los 200
+     estándar de la prueba, quedó unas 2 unidades cortas de 10 (Xavier lo estimó en ~97-98% de
+     los 200, ~195 de vida real) en 0.86s → 195÷0.86 = **226.7 hps aproximado** (única prueba con
+     incertidumbre explícita en el monto exacto sanado, a diferencia del resto que sana exacto
+     200).
+   - **Jeff the Land Shark** (Joyful Splash, ataque híbrido daño=curación): antes 70.0 dps / 130.0
+     hps oficiales. Real contra bot de Galacta (250 de vida): daño, lo venció en 3.74s usando
+     75/100 municiones → 250÷3.74 = **66.8 dps** (muy cerca del oficial); curación, promedio de 2
+     pruebas (175 de vida en 1.45s = 120.7 hps; 225 de vida en 2.24s = 100.4 hps) →
+     (120.7+100.4)/2 = **110.6 hps**. Nota de Xavier: a diferencia de otros híbridos, el
+     proyectil de Jeff traspasa aliados -- puede dañar a un enemigo Y curar a un aliado con el
+     mismo disparo si están en línea.
+   - **Invisible Woman** (Guardian Shield): antes 50.0 hps oficial. Real: recuperó los 200 de
+     vida estándar en 1.51s → 200÷1.51 = **132.5 hps**, mucho más alto que el oficial.
+   - **Ultron** (IMPERATIVE: PATCH): antes 40.0 hps oficial. Real, aunque Xavier aclaró que esta
+     prueba le costó medir con precisión: curó a su robot de 3/10 a 8/10 de un bot de Galacta (5
+     unidades=125 de vida) en 3.17s → 125÷3.17 = 39.4 hps, muy cerca del oficial. Se mantiene el
+     oficial (40.0) por ser más confiable que esta medición imprecisa; sirve como confirmación,
+     no como reemplazo.
+   - **Deadpool (Strategist)** (DUAL DESERT EAGLES): antes 112.5 hps oficial. Real: recuperó los
+     200 de vida estándar en 2.04s → 200÷2.04 = **98.0 hps**.
+   - **Gambit** (Kinetic Cards): antes 66.7 hps oficial. Real: recuperó los 200 de vida estándar
+     en 1.55s → 200÷1.55 = **129.0 hps**.
+   - **White Fox** (FOX FORM AWAKENING): antes 25.0 hps oficial. Real: recuperó los 200 de vida
+     estándar en 1.90s → 200÷1.90 = **105.3 hps**.
+   - **Jubilee** (Energy Plasmoids): antes 120 hps oficial. Real: recuperó los 200 de vida
+     estándar en 1.90s (mismo tiempo que White Fox, casualidad) → 200÷1.90 = **105.3 hps**.
+   - **Cloak & Dagger** (Dagger Storm -- Dagger es la única de las dos personas que cura): antes
+     50.0 hps (verificado en la página oficial ese mismo día). Real: recuperó los 200 de vida
+     estándar en 2.31s → 200÷2.31 = **86.6 hps**.
+   - Con esto los 13 Strategists tienen dato de curación real contra el bot de Galacta (Ultron y
+     Cloak & Dagger partían de un valor oficial ya verificado, pero también se confirmaron/
+     corrigieron con la prueba real). Queda pendiente solo si Xavier quiere repasar alguno de
+     nuevo más adelante.
+   - Probado con Python (json.loads), sintaxis válida.

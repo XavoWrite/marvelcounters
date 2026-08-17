@@ -17,8 +17,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Energy Plasmoids",
       "key": "Left Click",
-      "hps": 120,
-      "raw": "Healing: 15 per hit -- ataque hibrido (el mismo disparo dana O cura segun el objetivo, no las dos cosas a la vez). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: el dato es oficial de la pagina, dividirlo nerfea la curacion sin motivo real)"
+      "hps": 105.3,
+      "raw": "Healing: 15 per hit oficial -- ataque hibrido (el mismo disparo dana O cura segun el objetivo, no las dos cosas a la vez). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: el dato es oficial de la pagina, dividirlo nerfea la curacion sin motivo real). Corregido con dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta con los 200 de vida estandar de la prueba en 1.90s (200/1.90=105.3 hps real)"
     }
   },
   "Cyclops": {
@@ -55,16 +55,16 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "FOX FORM AWAKENING",
       "key": "E",
-      "hps": 25.0,
-      "raw": "Healing Amount: 25/s"
+      "hps": 105.3,
+      "raw": "Healing Amount: 25/s oficial. Corregido con dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta con los 200 de vida estandar de la prueba en 1.90s (200/1.90=105.3 hps real, mucho mas alto que el oficial)"
     }
   },
   "Elsa Bloodstone": {
     "basicAttack": {
       "name": "Double-Barrel Blaster",
-      "dmgRaw": "Damage: 4.5 per round, 10 rounds per cast (45 total)",
-      "rateRaw": "Fire Rate: 0.12s between rounds within a cast, 0.8s between casts",
-      "dps": 23.9
+      "dmgRaw": "Damage: 4.5 per round, 10 rounds per cast (45 total) -- el calculo oficial da un dps muy bajo comparado con el resultado real en partida. Dato real de Xavier en partida (2026-08-16) contra Luna Snow (275 de vida): usando 8 de sus 12 balas (sobraron 4/12), la vencio en 2.06s",
+      "rateRaw": "Fire Rate oficial: 0.12s between rounds within a cast, 0.8s between casts (23.9 dps teorico, muy bajo); se usa el tiempo medido en su lugar",
+      "dps": 133.5
     }
   },
   "Rogue": {
@@ -85,8 +85,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Kinetic Cards",
       "key": "Left Click",
-      "hps": 66.7,
-      "raw": "Card Healing: 30 health per round -- ataque hibrido (el mismo disparo dana O cura segun el objetivo). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: dato oficial, no corresponde nerfearlo)"
+      "hps": 129.0,
+      "raw": "Card Healing: 30 health per round oficial -- ataque hibrido (el mismo disparo dana O cura segun el objetivo). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: dato oficial, no corresponde nerfearlo). Corregido con dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta con los 200 de vida estandar de la prueba en 1.55s (200/1.55=129.0 hps real)"
     }
   },
   "Deadpool (Vanguard)": {
@@ -115,8 +115,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "DUAL DESERT EAGLES - STRATEGIST",
       "key": "Left Click",
-      "hps": 112.5,
-      "raw": "Healing: 45 per round -- ataque hibrido (el mismo disparo dana O cura segun el objetivo). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: dato oficial, no corresponde nerfearlo)"
+      "hps": 98.0,
+      "raw": "Healing: 45 per round oficial -- ataque hibrido (el mismo disparo dana O cura segun el objetivo). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: dato oficial, no corresponde nerfearlo). Corregido con dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta con los 200 de vida estandar de la prueba en 2.04s (200/2.04=98.0 hps real)"
     }
   },
   "Daredevil": {
@@ -162,7 +162,7 @@ const HERO_BASIC_STATS = {
       "name": "IMPERATIVE: PATCH",
       "key": "E",
       "hps": 40.0,
-      "raw": "Healing Amount to the Targeted ally: 40/s"
+      "raw": "Healing Amount to the Targeted ally: 40/s -- confirmado con dato real de Xavier en partida (2026-08-16), aunque el aclaro que esta prueba le costo medir con precision: curo a su robot de 3/10 a 8/10 unidades de un bot de Galacta (5 unidades=125 de vida) en 3.17s (125/3.17=39.4 hps, muy cerca del oficial de 40, se mantiene el oficial por ser mas confiable que esta medicion imprecisa)"
     }
   },
   "Emma Frost": {
@@ -199,8 +199,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Guardian Shield",
       "key": "<icon>",
-      "hps": 50,
-      "raw": "Healing Amount: 50/sec (antes referenciaba una habilidad 'First Family' que no existe en el kit actual)"
+      "hps": 132.5,
+      "raw": "Healing Amount: 50/sec oficial (antes referenciaba una habilidad 'First Family' que no existe en el kit actual). Dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta con los 200 de vida estandar de la prueba en 1.51s (200/1.51=132.5 hps real, mucho mas alto que el oficial de 50)"
     }
   },
   "Mister Fantastic": {
@@ -244,8 +244,8 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Dagger Storm",
       "key": "Right Click",
-      "hps": 50.0,
-      "raw": "Healing Amount: 50/s -- verificado en vivo en la pagina oficial 2026-08-16; una guia comunitaria (mobalytics) decia 45/s pero puede estar desactualizada de parche, se prioriza el dato oficial"
+      "hps": 86.6,
+      "raw": "Healing Amount: 50/s oficial -- verificado en vivo en la pagina oficial 2026-08-16; una guia comunitaria (mobalytics) decia 45/s pero puede estar desactualizada de parche, se prioriza el dato oficial. Corregido con dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta con los 200 de vida estandar de la prueba en 2.31s (200/2.31=86.6 hps real). Dagger es la unica de las dos personas de Cloak & Dagger que cura"
     }
   },
   "Iron Fist": {
@@ -371,15 +371,15 @@ const HERO_BASIC_STATS = {
   "Jeff the Land Shark": {
     "basicAttack": {
       "name": "Joyful Splash",
-      "dmgRaw": "Damage: 70/s",
-      "rateRaw": "Fire Rate: 20 rounds per second",
-      "dps": 70.0
+      "dmgRaw": "Damage: 70/s oficial, muy cerca de lo real. Dato real de Xavier en partida (2026-08-16) contra un bot de Galacta (250 de vida): lo vencio en 3.74s, quedandose con 25 de sus 100 municiones (uso 75/100)",
+      "rateRaw": "Fire Rate: 20 rounds per second (70.0 dps teorico, usado antes)",
+      "dps": 66.8
     },
     "primaryHeal": {
       "name": "Joyful Splash",
       "key": "Left Click",
-      "hps": 130.0,
-      "raw": "Healing Amount: 130/s -- ataque hibrido (el mismo disparo dana O cura segun el objetivo). Se probo dividir a la mitad y se revirtio (pedido de Xavier, 2026-08-16: dato oficial, no corresponde nerfearlo)"
+      "hps": 110.6,
+      "raw": "Healing Amount: 130/s oficial -- ataque hibrido (el mismo disparo dana O cura segun el objetivo), pero a diferencia de otros hibridos, el proyectil de Jeff traspasa aliados: puede danar a un enemigo Y curar a un aliado con el mismo disparo si estan en linea (dato de Xavier, 2026-08-16). Corregido con el promedio de 2 pruebas reales de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta (250 de vida): recupero 175 de vida en 1.45s (175/1.45=120.7 hps) y en otra prueba recupero 225 de vida (el bot tenia 25/250) en 2.24s (225/2.24=100.4 hps). Promedio: (120.7+100.4)/2=110.6 hps"
     }
   },
   "Punisher": {
@@ -393,14 +393,15 @@ const HERO_BASIC_STATS = {
   "Luna Snow": {
     "basicAttack": {
       "name": "Light & Dark Ice",
-      "dmgRaw": "Damage: 24 per round, 3 rounds per cycle (72 total)",
-      "rateRaw": "Fire Rate oficial: 0.5s per 3-shot cycle (144.0 dps, baja confianza original). Confirmado y ajustado con dato real de Xavier en partida (2026-08-16): unos 4 proyectiles matan a un dps de 250 de vida en 1.71s reales",
-      "dps": 146.2
+      "dmgRaw": "Damage: 24 per round, 3 rounds per cycle (72 total). Dato real de Xavier en partida (2026-08-16) contra un bot de Galacta (250 de vida, target estandar): lo vencio en 1.84s usando 12 de sus 30 proyectiles (sobraron 18/30). Reemplaza dos pruebas anteriores menos directas (vs. un dps de 250 de vida generico: 146.2; y una prueba espejo Luna-vs-Luna a 275 de vida: 125.0) por ser el bot de Galacta el target estandar acordado para medir daño/curacion de sanadores",
+      "rateRaw": "Fire Rate oficial: 0.5s per 3-shot cycle (144.0 dps teorico); se usa el tiempo medido en su lugar",
+      "dps": 135.9
     },
     "primaryHeal": {
       "name": "Light & Dark Ice",
       "key": "Left Click",
-      "raw": "Healing Amount: 24 health per round, for a total of 72 health"
+      "hps": 130.7,
+      "raw": "Healing Amount: 24 health per round, for a total of 72 health -- ataque hibrido (el mismo disparo dana O cura segun el objetivo). Dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta (250 de vida): lo bajaron a 50/250 (2/10 de su barra), Luna lo recupero a 250/250 (los 200 de vida restantes, 8/10) en 1.53s"
     }
   },
   "Adam Warlock": {
@@ -411,10 +412,10 @@ const HERO_BASIC_STATS = {
       "dps": 115.5
     },
     "primaryHeal": {
-      "name": "Soul Bond",
-      "key": "SHIFT",
-      "hps": 15.0,
-      "raw": "Healing Amount: 15/s"
+      "name": "Avatar Life Stream",
+      "key": "E",
+      "hps": 226.7,
+      "raw": "Healing Amount: 95 (rebota 2 veces a otros aliados cercanos), Healing Amount (self): 35, 2 cargas con 6s de recarga cada una -- se usa esta en vez de Soul Bond (SHIFT, 15/s) como curacion principal por ser la que realmente sostiene vida en pelea real. Dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta con un solo uso: no llego a los 200 de vida estandar de la prueba, quedo a unas 2 unidades de un total de 10 (aprox 97-98% de los 200, ~195 de vida real) en 0.86s (195/0.86=226.7 hps aproximado, con la incertidumbre del +-1% que aclaro Xavier)"
     }
   },
   "Rocket Raccoon": {
@@ -427,35 +428,36 @@ const HERO_BASIC_STATS = {
     "primaryHeal": {
       "name": "Repair Mode",
       "key": "Right Click",
-      "hps": 50.0,
-      "raw": "Healing Amount (Ally): 50/s"
+      "hps": 75.5,
+      "raw": "Healing Amount (Ally): 50/s oficial. Dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta con 3 bolitas de curacion disparadas de inmediato: recupero los 200 de vida estandar de la prueba en 2.65s (200/2.65=75.5 hps real, mas alto que el teorico de 50)"
     }
   },
   "Loki": {
     "basicAttack": {
       "name": "Mystical Missile",
-      "dmgRaw": "Damage: 25 (spell field only, projectile itself deals 0)",
-      "rateRaw": "Fire Rate: 1.75 rounds per second",
-      "dps": 43.8
+      "dmgRaw": "Damage: 25 (spell field only, projectile itself deals 0) -- calculo teorico sin clones muy bajo. Dato real de Xavier en partida (2026-08-16) contra un bot de Galacta (250 de vida, con sus 3 clones activos disparando junto a el): lo vencio en 2.00s usando 5 de las 10 cargas de su baston (sobraron 5/10)",
+      "rateRaw": "Fire Rate oficial: 1.75 rounds per second (43.8 dps teorico sin clones); se usa el tiempo medido con clones en su lugar",
+      "dps": 125.0
     },
     "primaryHeal": {
       "name": "Mystical Missile",
       "key": "Left Click",
-      "hps": 210.0,
-      "raw": "Area Of Effect Healing: 40 per hit -- ataque hibrido (mismo disparo dana O cura), 40x1.75/s=70/s, x3 por sus clones, que disparan lo mismo (pedido de Xavier, 2026-08-16: antes se usaba Regeneration Domain, que tiene 30s de cooldown para solo 5s activo, no es sostenido; el 08-16 se revirtio la division a la mitad que se le habia aplicado a los hibridos por pedido de Xavier, dato oficial no debe nerfearse)"
+      "hps": 102.6,
+      "raw": "Area Of Effect Healing: 40 per hit -- ataque hibrido (mismo disparo dana O cura), 40x1.75/s=70/s, x3 por sus clones = 210 teorico. Dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta (250 de vida): recupero 200 de vida en 1.95s (200/1.95=102.6 hps real, bastante mas bajo que el teorico de 210 -- probablemente los clones no siempre pegan los 3 al mismo objetivo en pelea real)"
     }
   },
   "Mantis": {
     "basicAttack": {
       "name": "Life Energy Blast",
-      "dmgRaw": "Damage: 55 damage per round",
-      "rateRaw": "Fire Rate oficial: 2.5 rounds per second (137.5 dps). Confirmado con dato real de Xavier en partida (2026-08-16): 4 proyectiles matan a un dps de 250 de vida en 1.38s reales",
-      "dps": 181.2
+      "dmgRaw": "Damage: 55 damage per round. Corregido de nuevo 2026-08-16 con dato real de Xavier disparando al cuerpo (dato de jugador promedio, mismo criterio que Winter Soldier/Human Torch) contra un bot de Galacta (250 de vida): lo vencio en 2.11s. Reemplaza la prueba anterior (4 proyectiles en 1.38s contra un dps de 250 de vida, sin aclarar si eran headshots) por ser esta mas representativa",
+      "rateRaw": "Fire Rate oficial: 2.5 rounds per second (137.5 dps teorico); se usa el tiempo medido en su lugar",
+      "dps": 118.5
     },
     "primaryHeal": {
       "name": "Healing Flower",
       "key": "Right Click",
-      "raw": "One-time Healing Amount: 60"
+      "hps": 88.9,
+      "raw": "One-time Healing Amount: 60 -- curacion a rafagas (no continua), Xavier midio 3 usos consecutivos. Dato real de Xavier en partida (2026-08-16) curando a un bot aliado de Galacta (250 de vida): recupero los 200 de vida estandar de la prueba (2/10 a 10/10) con 3 hierbitas en 2.25s (200/2.25=88.9 hps real)"
     }
   },
   "Peni Parker": {
