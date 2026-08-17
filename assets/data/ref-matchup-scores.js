@@ -1572,7 +1572,7 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Wolverine": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     },
     "Cloak & Dagger": {
@@ -1619,8 +1619,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Punisher": {
-      "score": 2,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Cyclops": {
       "score": 0,
@@ -1635,16 +1635,16 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hulk": {
-      "score": 1,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Groot": {
       "score": 0,
       "label": "even"
     },
     "Rocket Raccoon": {
-      "score": 1,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Hela": {
       "score": 2,
@@ -3067,8 +3067,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCountered"
     },
     "Emma Frost": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": 0,
@@ -5621,8 +5621,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Emma Frost": {
-      "score": -2,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": -4,
@@ -6489,8 +6489,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Emma Frost": {
-      "score": -1,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": 1,
@@ -6923,8 +6923,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Emma Frost": {
-      "score": -1,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": 0,
@@ -7279,8 +7279,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Magik": {
-      "score": -6,
-      "label": "weak"
+      "score": 6,
+      "label": "strong"
     },
     "Black Panther": {
       "score": 5,
@@ -9413,8 +9413,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCountered"
     },
     "Hela": {
-      "score": 6,
-      "label": "strong"
+      "score": -6,
+      "label": "weak"
     },
     "Mister Fantastic": {
       "score": 5,
