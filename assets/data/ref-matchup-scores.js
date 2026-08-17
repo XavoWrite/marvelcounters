@@ -1607,8 +1607,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Scarlet Witch": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     },
     "Phoenix": {
       "score": -1,
@@ -4970,8 +4970,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Emma Frost": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": -1,
