@@ -2088,3 +2088,38 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      pareja (score +2/-2, categoría 2) para los dos pares; ahora Blade y Hela countean a
      Deadpool (Vanguard) (+5 para Deadpool/-5 para ellos, categoría 1/4), mismo mecanismo de
      sincronización de 4 archivos que el resto de esta sección.
+
+56) "3 counters seguros por héroe" — Xavier pidió que cada uno de los 55 tenga al menos 3
+    counters fuertes confirmados en la matriz (2026-08-17, mismo día)
+   - Al revisar la matriz completa, solo 5 héroes tenían menos de 3 counters de categoría 1:
+     Magneto (1: Wolverine), Namor (1: Punisher), Emma Frost (2), Cloak & Dagger (2), Phoenix (2).
+   - **Aclaración importante que resolvió una confusión de Xavier**: Magneto SIEMPRE tuvo a
+     Wolverine como counter real en la matriz (score +6, categoría 1) — la confusión vino de que
+     en el artifact del reporte de counters yo lo había puesto en la lista equivocada ("le gana
+     bien a Wolverine" en vez de "Wolverine lo counterea"), un error mío al copiar del reporte
+     original del fork de Vanguards, no un problema de los datos.
+   - **También se detectaron 2 inconsistencias entre los reportes de los forks y la matriz real**
+     (ninguna de las dos era un bug real de la matriz, solo texto mal escrito en los sub-reportes):
+     Namor vs Black Panther (un fork dijo que Black Panther counterea a Namor, cuando en realidad
+     es al revés — Namor lo counterea, +7, el ancla ya confirmada del proyecto) y Phoenix vs
+     Magik/Psylocke (un fork dijo que Phoenix les gana, cuando la matriz real dice que Magik y
+     Psylocke counterean a Phoenix, consistente en ambas direcciones). Sirvió de recordatorio:
+     verificar siempre el número real, no confiar en la prosa de un sub-reporte.
+   - **Candidatos nuevos confirmados por Xavier** (elevados de "parejo" a counter real):
+     - Magneto: **Iron Fist** y **Venom** (dive melee que atraviesa sus escudos, mismo patrón que
+       Wolverine). Ahora tiene 3: Wolverine, Iron Fist, Venom.
+     - Namor: **Storm** y **Hawkeye**. Xavier: "a los Namor a veces les cuesta apuntarle [a Storm],
+       pero Namor podría usar su ulti para vencer la ulti de Storm, aunque eso es muy difícil" —
+       o sea, Storm sí lo countera en la práctica aunque exista una respuesta teórica difícil de
+       ejecutar. Ahora tiene 3: Punisher, Storm, Hawkeye.
+     - Emma Frost: **Storm** (su movilidad interrumpe el canal de Telepathic Pulse). Ahora tiene 3:
+       The Thing, Human Torch, Storm.
+   - **Candidatos que Xavier NO confirmó, quedan como estaban**:
+     - Cloak & Dagger: Hela propuesta, rechazada — se queda con 2 counters (Magneto, Hawkeye).
+     - Phoenix: se probaron dos candidatos y ninguno prosperó — Thor quedó como "parejo, depende"
+       (no se tocó, se queda en categoría 2) y Jubilee fue rechazada explícitamente ("es parejo o
+       le gana Phoenix"). Se queda con 2 counters (Magik, Psylocke) — no todos los héroes van a
+       tener exactamente 3, mejor dejarlo honesto que forzar un tercero sin base real.
+   - Mecánica de sincronización: mismo patrón de siempre (editar `ref-matchup-scores.json` +
+     `matchup-matrix.json`, re-sincronizar dentro de los const inline de `assets/js/matchups.js` y
+     `assets/data/ref-matchup-scores.js`, verificar que los 4 archivos queden idénticos).

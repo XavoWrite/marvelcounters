@@ -1568,8 +1568,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Storm": {
-      "score": 3,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Wolverine": {
       "score": -2,
@@ -2137,7 +2137,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Magneto": {
-      "score": -1,
+      "score": -5,
       "label": "weak"
     },
     "Invisible Woman": {
@@ -2571,7 +2571,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Magneto": {
-      "score": -1,
+      "score": -5,
       "label": "weak"
     },
     "Invisible Woman": {
@@ -2850,7 +2850,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Emma Frost": {
-      "score": -3,
+      "score": -5,
       "label": "weak"
     },
     "Peni Parker": {
@@ -3017,7 +3017,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Namor": {
-      "score": -3,
+      "score": -5,
       "label": "weak"
     },
     "Psylocke": {
@@ -9260,7 +9260,7 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Namor": {
-      "score": -3,
+      "score": -5,
       "label": "weak"
     },
     "Psylocke": {
@@ -10186,16 +10186,16 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Venom": {
-      "score": 1,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Human Torch": {
       "score": -3,
       "label": "weak"
     },
     "Iron Fist": {
-      "score": 1,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Iron Man": {
       "score": -8,
@@ -10853,8 +10853,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Storm": {
-      "score": 3,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Wolverine": {
       "score": -4,
@@ -10968,8 +10968,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hawkeye": {
-      "score": 3,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Magik": {
       "score": -7,
