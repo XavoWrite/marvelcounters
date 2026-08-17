@@ -61,8 +61,14 @@ function loadAllHeroSignatures(){
 // casi vertical (xShiftPerRow casi 0) -- varia segun el modo/mapa, por eso es ajustable.
 const CAL_DEFAULTS = {
   scoreboard: {
-    ally:  {x:5, y:2, w:9, h:15, rowGap:16.5, xShiftPerRow:0, roleOffsetX:-5, roleW:4.5, roleH:14, nameOffsetX:34, nameW:35, nameH:15},
-    enemy: {x:5, y:2, w:9, h:15, rowGap:16.5, xShiftPerRow:0, roleOffsetX:-5, roleW:4.5, roleH:14, nameOffsetX:25, nameW:43, nameH:15},
+    // x/w del retrato re-medidos a mano en pixeles reales (2026-08-17, ver capturas-pruebas/Capturas
+    // para reconocimiento de heroes (seed)/7.jpg, grid de pixeles exactos sobre la imagen recortada
+    // con COMBINED_SPLIT) -- el valor viejo (x:5,w:9) quedaba a mitad de camino entre el icono de rol
+    // y el retrato, agarrando pedazos de los dos. El orden real de izquierda a derecha es: icono de
+    // rol (~0-3.5%) -> RETRATO (~3.9-10.3% aliado, ~4.5-11.6% enemigo) -> icono de team-up/sinergia
+    // (~13.5%+). x:4,w:7.2 cae bien adentro del retrato en ambos lados con margen de sobra.
+    ally:  {x:4, y:2, w:7.2, h:15, rowGap:16.5, xShiftPerRow:0, roleOffsetX:-4, roleW:3.5, roleH:14, nameOffsetX:34, nameW:35, nameH:15},
+    enemy: {x:4, y:2, w:7.2, h:15, rowGap:16.5, xShiftPerRow:0, roleOffsetX:-4, roleW:3.5, roleH:14, nameOffsetX:25, nameW:43, nameH:15},
   },
   select: {
     ally:  {x:5, y:2, w:9, h:15, rowGap:16.5, xShiftPerRow:0, roleOffsetX:-5, roleW:4.5, roleH:14, nameOffsetX:34, nameW:35, nameH:15},
@@ -76,7 +82,7 @@ const CAL_DEFAULTS = {
 let currentScenario = "scoreboard";
 // sube este numero cada vez que se corrijan los CAL_DEFAULTS: invalida calibraciones viejas
 // guardadas en el navegador (con coordenadas de otra version) para que se use la corregida.
-const CALIBRATION_VERSION = 6;
+const CALIBRATION_VERSION = 8;
 function loadCalibration(side){
   try{
     const savedVersion = parseInt(localStorage.getItem("iconCalibrationVersion")||"0", 10);
