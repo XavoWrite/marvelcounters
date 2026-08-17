@@ -28,7 +28,6 @@ es: {
   "team.title": "Identificación de equipo",
   "team.betaBadge": "🚧 en proceso — la identificación automática del héroe es experimental, revisá siempre lo que reconoce solo",
   "team.hintSeparate": `Con <b>Tab</b> abrís el marcador completo, con los dos equipos juntos. Capturá esa pantalla con <b>Win+Shift+S</b>, pegala abajo con <b>Ctrl+V</b> (o subí el archivo) y la separamos sola en tu equipo y el rival. No depende de internet.`,
-  "team.ocrCheckbox": "Leer nombres de jugador con OCR offline (más lento, ~1-2s por jugador la primera vez que se usa)",
   "team.combinedHint": `📷 Pegá acá la captura del marcador con los dos equipos (Tab)<br><span class="paste-zone-sub">Ctrl+V, arrastrá la imagen, o <u id="combinedFilePick">elegí un archivo</u></span>`,
   "team.yourTeam": "Tu equipo",
   "team.enemyTeam": "Equipo rival",
@@ -357,7 +356,6 @@ es: {
   "scouting.viewTracker": "Ver en Tracker.gg ↗",
   "scouting.searchRivalsMeta": "Buscar en RivalsMeta ↗",
 
-  "confirm.clearBothTeams": "¿Vaciar los dos equipos por completo?",
   "confirm.clearScouting": "¿Borrar los nombres y plataformas de los 12 jugadores?",
   "tip.wip": "🚧 Página en proceso — la seguimos mejorando y puede cambiar de un día a otro.",
   "tip.metaData": "Datos de meta orientativos — el balance cambia con cada parche, usa esto como punto de partida, no como verdad absoluta.",
@@ -391,7 +389,6 @@ en: {
   "team.title": "Team identification",
   "team.betaBadge": "🚧 work in progress — automatic hero identification is experimental, always double-check what it detects",
   "team.hintSeparate": `Press <b>Tab</b> in-game to open the full scoreboard with both teams together. Capture that screen with <b>Win+Shift+S</b>, paste it below with <b>Ctrl+V</b> (or upload the file) and we'll split it into your team and the enemy's automatically. Doesn't need internet.`,
-  "team.ocrCheckbox": "Read player names with offline OCR (slower, ~1-2s per player the first time it's used)",
   "team.combinedHint": `📷 Paste the scoreboard screenshot with both teams here (Tab)<br><span class="paste-zone-sub">Ctrl+V, drag the image, or <u id="combinedFilePick">choose a file</u></span>`,
   "team.yourTeam": "Your team",
   "team.enemyTeam": "Enemy team",
@@ -720,7 +717,6 @@ en: {
   "scouting.viewTracker": "View on Tracker.gg ↗",
   "scouting.searchRivalsMeta": "Search on RivalsMeta ↗",
 
-  "confirm.clearBothTeams": "Clear both teams completely?",
   "confirm.clearScouting": "Delete the names and platforms of all 12 players?",
   "tip.wip": "🚧 Page in progress — we keep improving it and it may change from one day to the next.",
   "tip.metaData": "Meta data is a general guide — the balance shifts with every patch, use this as a starting point, not as absolute truth.",

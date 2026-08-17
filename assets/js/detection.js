@@ -297,9 +297,9 @@ async function runLocalDetectionForSide(side){
     ? t("status.autoDetected", {n: autoCount})
     : t("status.noneDetected");
 
-  // lectura de nombres de jugador con OCR offline (Tesseract.js, sin IA ni internet)
-  const ocrCheckbox = document.getElementById("ocrReadNamesCheck");
-  if(!ocrCheckbox || !ocrCheckbox.checked) return;
+  // lectura de nombres de jugador con OCR offline (Tesseract.js, sin IA ni internet) -- siempre
+  // activa (sin checkbox visible): alimenta el Explorador de Jugadores, que no se expone en la UI
+  // principal (pedido de Xavier, 2026-08-17).
   try{
     statusEl.textContent += t("status.startingOcrSuffix");
     const worker = await getTesseractWorker();

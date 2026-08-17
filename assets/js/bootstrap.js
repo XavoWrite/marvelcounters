@@ -34,7 +34,6 @@ document.getElementById("swapTeamsBtn").onclick = ()=>{
   renderSlots();
 };
 document.getElementById("clearAllTeamsBtn").onclick = ()=>{
-  if(!confirm(t("confirm.clearBothTeams"))) return;
   allyTeam = Array(6).fill(null);
   enemyTeam = Array(6).fill(null);
   myAllyIndex = null;
