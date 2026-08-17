@@ -125,6 +125,47 @@
   .pick-slot.already{opacity:.6;}
   .pick-slot .already-tag{font-size:8px;color:var(--ally);font-family:'JetBrains Mono',monospace;}
   .pick-slot .dive-warn{font-size:8px;color:var(--gold);font-family:'JetBrains Mono',monospace;}
+
+  /* tarjetas de "Mejores picks contra esta composicion" -- fila horizontal con retrato grande en
+     vez del cuadrado 2x2 chico (pedido de Xavier, 2026-08-17: "muy desordenado, nada alineado,
+     quiero ver mas a los personajes en iconos grandes"). Clase separada de .pick-slot a proposito:
+     "Que deberias jugar tu" usa .pick-slot con su propio grid 2x2 y no se toca. */
+  .role-rec-grid .pick-slot-row{flex-direction:column;flex-wrap:nowrap;}
+  .pick-slot-lg{background:var(--panel-alt);border:1.5px solid var(--line);border-radius:10px;
+    padding:8px 10px;display:flex;align-items:center;gap:10px;text-align:left;cursor:default;}
+  .pick-slot-lg.role-Vanguard{border-color:var(--vg);}
+  .pick-slot-lg.role-Duelist{border-color:var(--du);}
+  .pick-slot-lg.role-Strategist{border-color:var(--st);}
+  .pick-slot-lg .hero-icon{width:48px;height:48px;border-radius:9px;flex:none;}
+  .pick-slot-lg-info{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .pick-slot-lg .name{font-weight:700;font-size:13px;line-height:1.2;}
+  .pick-slot-lg .role{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);
+    display:flex;align-items:center;gap:3px;}
+  .pick-slot-lg.already{opacity:.6;}
+  .pick-slot-lg .already-tag{font-size:9px;color:var(--ally);font-family:'JetBrains Mono',monospace;}
+  .pick-slot-lg .dive-warn{font-size:9px;color:var(--gold);font-family:'JetBrains Mono',monospace;}
+  .pick-slot-lg .arch-tags{justify-content:flex-start;margin-top:1px;}
+
+  /* PROPUESTA en revision (2026-08-17) -- tarjetas grandes con icono para "Ventajas y desventajas",
+     en vez de mencionar al heroe metido en una oracion de texto. */
+  .highlight-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;}
+  .highlight-card{flex:1;min-width:100px;background:var(--panel);border:1.5px solid var(--line);
+    border-radius:10px;padding:10px 8px;text-align:center;display:flex;flex-direction:column;
+    align-items:center;gap:3px;}
+  .highlight-card.good{border-color:var(--gold);}
+  .highlight-card.weak{border-color:#2ecc71;}
+  .highlight-card.threat{border-color:var(--enemy);}
+  .highlight-card .hero-icon{width:52px;height:52px;border-radius:10px;}
+  .highlight-card .h-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
+  .highlight-card .h-name{font-weight:700;font-size:13px;}
+  .highlight-card .h-sub{font-size:10.5px;color:var(--muted);}
+  .dual-heroes{display:flex;align-items:center;gap:6px;}
+  .dh-item{display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .dh-item .hero-icon{width:40px;height:40px;border-radius:9px;}
+  .dh-item span{font-weight:700;font-size:10.5px;width:52px;line-height:1.15;text-align:center;}
+  .dh-arrow{color:var(--muted);font-size:14px;}
+  .h-caveat{font-size:10px;color:var(--gold);margin-top:2px;}
+
   .arch-tags{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:3px;}
   .arch-tag{font-size:8px;color:var(--muted);background:var(--panel);border:1px solid var(--line);
     border-radius:6px;padding:1px 4px;white-space:nowrap;}

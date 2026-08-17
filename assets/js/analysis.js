@@ -75,15 +75,35 @@ function weakestLinkHtml(enemyList, banned){
     });
   });
   if(!bestEnemy || !bestCounter) return "";
-  let html = t("analysis.rivalComp.weakestLink", {
-    weak: heroIconHtml(bestEnemy.n,18)+"<b>"+heroLabel(bestEnemy.n)+"</b>",
-    counter: heroIconHtml(bestCounter,18)+"<b>"+heroLabel(bestCounter)+"</b>",
-  });
   const risks = counterRisks(bestCounter, enemyList, bestEnemy.n);
-  if(risks.length){
-    html += " " + t("analysis.rivalComp.counterRisk", {names: risks.map(n=>"<b>"+heroLabel(n)+"</b>").join(", ")});
-  }
-  return html;
+  return dualHeroCardHtml("weak", "🎯", t("analysis.rivalComp.weakestLinkLabel"), bestEnemy.n, bestCounter, risks);
+}
+// tarjeta con 2 iconos grandes (retrato del heroe + el counter sugerido, con una flecha entre
+// medio) para "Punto debil rival" y "Vigila a" -- reemplaza el texto viejo con nombres metidos en
+// una oracion. "risks" (opcional) son rivales que a su vez le hacen counter al counter sugerido.
+function dualHeroCardHtml(cls, emoji, label, primaryName, secondaryName, risks){
+  const risk = (risks && risks.length)
+    ? `<div class="h-caveat">${t("analysis.rivalComp.counterRisk", {names: risks.map(n=>heroLabel(n)).join(", ")})}</div>`
+    : "";
+  return `<div class="highlight-card ${cls}">
+    <div class="dual-heroes">
+      <div class="dh-item">${heroIconHtml(primaryName,40)}<span>${heroLabel(primaryName)}</span></div>
+      <div class="dh-arrow">→</div>
+      <div class="dh-item">${heroIconHtml(secondaryName,40)}<span>${heroLabel(secondaryName)}</span></div>
+    </div>
+    <div class="h-label">${emoji} ${label}</div>
+    ${risk}
+  </div>`;
+}
+// tarjeta con 1-2 iconos grandes lado a lado (sin flecha, son alternativas entre si, no un
+// "objetivo -> counter") -- usada por "Anti-tanque".
+function multiHeroCardHtml(cls, emoji, label, names, caveat){
+  const heroes = names.map(n=>`<div class="dh-item">${heroIconHtml(n,40)}<span>${heroLabel(n)}</span></div>`).join("");
+  return `<div class="highlight-card ${cls}">
+    <div class="dual-heroes">${heroes}</div>
+    <div class="h-label">${emoji} ${label}</div>
+    ${caveat ? `<div class="h-caveat">${caveat}</div>` : ""}
+  </div>`;
 }
 
 // Heroes con herramientas dedicadas a frenar el dive -- bloquean movilidad (The Thing), dan
@@ -191,10 +211,8 @@ function antiTankRowHtml(enemyList, banned){
   }
   if(!picks.length) return "";
   const avoid = vanguards.filter(v=>picks.every(n=>getMatchupCode(n, v.n)===1)).map(v=>heroLabel(v.n));
-  const heroTag = picks.map(n=>heroIconHtml(n,18)+"<b>"+heroLabel(n)+"</b>").join(" / ");
-  return avoid.length
-    ? t("analysis.rivalComp.antiTankAvoid", {hero: heroTag, avoid: avoid.join(", ")})
-    : t("analysis.rivalComp.antiTank", {hero: heroTag});
+  const caveat = avoid.length ? t("analysis.rivalComp.antiTankAvoidCaveat", {avoid: avoid.join(", ")}) : null;
+  return multiHeroCardHtml("weak", "🐺", t("analysis.rivalComp.antiTankLabel"), picks, caveat);
 }
 
 // tanques de escudo, de mas a menos eficaces reduciendo dano de poke/proyectiles, segun el
@@ -347,16 +365,8 @@ function mostDangerousEnemyHtml(enemyGroup, allyNames, fullEnemyList){
     }
   });
   if(!best || !bestCounter) return "";
-  let html = t("analysis.rivalComp.biggestThreat", {
-    hero: heroIconHtml(best.n,18)+"<b>"+heroLabel(best.n)+"</b>",
-    counter: heroIconHtml(bestCounter.c,18)+"<b>"+heroLabel(bestCounter.c)+"</b>",
-  });
-  if(fullEnemyList){
-    const risks = counterRisks(bestCounter.c, fullEnemyList, best.n);
-    if(risks.length){
-      html += " " + t("analysis.rivalComp.counterRisk", {names: risks.map(n=>"<b>"+heroLabel(n)+"</b>").join(", ")});
-    }
-  }
+  const risks = fullEnemyList ? counterRisks(bestCounter.c, fullEnemyList, best.n) : [];
+  const html = dualHeroCardHtml("threat", "⚠️", t("analysis.rivalComp.biggestThreatLabel"), best.n, bestCounter.c, risks);
   return html;
 }
 
@@ -720,18 +730,27 @@ function renderAnalysis(){
     // Xavier (2026-08-16): "no comprendi que hace el personaje ahi, que tiene que ver la
     // composicion equilibrada con el personaje". Ahora es su propio callout con icono, para
     // cualquier arquetipo, no solo el caso "equilibrada".
+    // galeria unica de tarjetas con icono grande (pedido de Xavier, 2026-08-17: "quiero observar
+    // mas a los personajes en iconos grandes" en vez de nombrarlos metidos en una oracion de
+    // texto). Se junta todo en un solo array y se renderiza como una sola fila -- antes cada aviso
+    // era su propio comp-banner apilado, uno debajo del otro.
+    const highlights = [];
     if(enemyFilled===6){
       const topPick = topCounterPick(enemyFilledArr, bannedPool());
       if(topPick){
-        right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--gold);">${t("analysis.rivalComp.topPick", {hero: heroIconHtml(topPick.n,18)+"<b>"+heroLabel(topPick.n)+"</b>", role: t('role.'+topPick.r)})}</div>`;
+        highlights.push(`<div class="highlight-card good">${heroIconHtml(topPick.n,52)}
+          <div class="h-label">🏆 ${t("analysis.rivalComp.topPickLabel")}</div>
+          <div class="h-name">${heroLabel(topPick.n)}</div>
+          <div class="h-sub">${t('role.'+topPick.r)}</div>
+        </div>`);
       }
     }
     // avisos de anti-dive/escudo: antes eran un parrafo generico ("2 herramientas anti-dive, tu
     // dive no va a rematar el combo...") -- pedido de Xavier (2026-08-16): "no es una advertencia
     // porque es obvio, debemos señalar personaje o personajes". Ahora, si hay 2+ del grupo Y se
     // puede nombrar una amenaza concreta contra TU equipo actual (mostDangerousEnemyHtml), se
-    // muestra SOLO esa linea con el heroe -- sin parrafo, sin nada si no hay un heroe concreto que
-    // nombrar (ej. todavia no marcaste tu equipo).
+    // muestra SOLO esa tarjeta -- nada si no hay un heroe concreto que nombrar (ej. todavia no
+    // marcaste tu equipo).
     // bug real corregido (2026-08-16, captura de Xavier: "Vigilá a: Doctor Strange" salía DOS
     // veces seguidas) -- un heroe puede tener tag "shield" Y "anti_dive" a la vez (Doctor Strange
     // es el caso: shield_tank con anti_dive en hero-roster.js), asi que si es la amenaza mas
@@ -744,7 +763,7 @@ function renderAnalysis(){
       const threat = mostDangerousEnemyHtml(antiDiveGroup, allyNamesForThreat, enemyFilledArr);
       if(threat && !shownThreats.has(threat)){
         shownThreats.add(threat);
-        right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;
+        highlights.push(threat);
       }
     }
     const shieldGroup = enemyTeam.filter(h=>h && h.t && h.t.includes("shield"));
@@ -752,22 +771,19 @@ function renderAnalysis(){
       const threat = mostDangerousEnemyHtml(shieldGroup, allyNamesForThreat, enemyFilledArr);
       if(threat && !shownThreats.has(threat)){
         shownThreats.add(threat);
-        right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--enemy);">${threat}</div>`;
+        highlights.push(threat);
       }
     }
     // simetrico al de arriba pero en positivo: el rival mas explotable con dive (ver
     // weakestLinkHtml) -- ocupa el lugar donde antes iba el "perfil de arquetipos" (lista de
     // emojis con conteos).
     const weakLink = weakestLinkHtml(enemyFilledArr, bannedPool());
-    if(weakLink){
-      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--good, #2ecc71);">${weakLink}</div>`;
-    }
+    if(weakLink) highlights.push(weakLink);
     // fila explicita contra 3+ tanques (ver antiTankRowHtml) -- antes esto solo influia el orden
     // de "Mejores picks por rol" en silencio, sin decirlo. Pedido de Xavier (2026-08-16).
     const antiTankRow = antiTankRowHtml(enemyFilledArr, bannedPool());
-    if(antiTankRow){
-      right += `<div class="comp-banner" style="margin-top:8px;border-color:var(--good, #2ecc71);">${antiTankRow}</div>`;
-    }
+    if(antiTankRow) highlights.push(antiTankRow);
+    if(highlights.length) right += `<div class="highlight-row">${highlights.join("")}</div>`;
     // el aviso de "sin sanador principal" se sacó por completo -- pedido de Xavier (2026-08-16):
     // "eso no nos sirve como ventaja". El pick de estratega recomendado ya sale, con mas contexto,
     // en "Mejores picks por rol" (columna Estratega) mas abajo -- no hacia falta un banner aparte.
@@ -824,13 +840,14 @@ function renderAnalysis(){
           const already = allyNamesNow.includes(n);
           const diveWarn = s.dive<1;
           const reason = t("analysis.bestPicks.counters", {hits: s.hits, total: enemyListForRoles.length}) + (diveWarn ? t("analysis.bestPicks.diveWarnSuffix") : "");
-          const thumb = heroIconHtml(n,40);
+          const thumb = heroIconHtml(n,48);
           const archTags = archTagsHtml(byName[n]);
-          left += `<div class="pick-slot role-${role}${already?' already':''}" title="${reason.replace(/"/g,'&quot;')}">
-            ${thumb}<div class="name">${heroLabel(n)}</div><div class="role">${roleIconHtml(role,12)}${s.hits}/${enemyListForRoles.length}</div>
+          left += `<div class="pick-slot-lg role-${role}${already?' already':''}" title="${reason.replace(/"/g,'&quot;')}">
+            ${thumb}<div class="pick-slot-lg-info"><div class="name">${heroLabel(n)}</div><div class="role">${roleIconHtml(role,12)}${s.hits}/${enemyListForRoles.length}</div>
             ${archTags?`<div class="arch-tags">${archTags}</div>`:''}
             ${already?`<div class="already-tag">${t("analysis.bestPicks.alreadyInTeam")}</div>`:''}
             ${diveWarn?`<div class="dive-warn">${t("analysis.bestPicks.diveFrozen")}</div>`:''}
+            </div>
           </div>`;
         });
         left += `</div>`;
