@@ -2011,3 +2011,23 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      corrigieron con la prueba real). Queda pendiente solo si Xavier quiere repasar alguno de
      nuevo más adelante.
    - Probado con Python (json.loads), sintaxis válida.
+
+54) Limpieza de los textos visibles de daño/curación en `hero-basic-stats.js` (2026-08-16)
+   - Xavier notó que los campos `dmgRaw`/`rateRaw`/`raw` (visibles en la app: columna de la
+     infografía y tooltip del stat en Personajes) habían acumulado, sesión tras sesión, todo el
+     relato de cómo se midió cada dato en partida real ("Dato real de Xavier en partida
+     (2026-08-16)...", fechas, cantidad de balas restantes, etc.) — demasiado detalle para el
+     usuario final, que solo quiere ver el daño/cadencia oficial.
+   - Se limpiaron 53 campos en 26 héroes: se dejó solo el texto de la habilidad oficial (o, si no
+     hay cadencia oficial publicada, una frase neutra tipo "Cadencia no publicada oficialmente"),
+     sacando toda mención a Xavier/fechas/pruebas/número de proyectiles usados. Los valores
+     numéricos `dps`/`hps` (el resultado real que sí se quiere mostrar) NO se tocaron — se
+     verificó con `git diff` que 0 líneas de `dps`/`hps` cambiaron, solo texto.
+   - El detalle completo de cada prueba (fecha, vida del objetivo, tiempo medido, munición
+     usada) sigue existiendo íntegro más arriba en este mismo archivo — este es solo el texto que
+     se le muestra al usuario final dentro de la app.
+   - Mecánica: script de Python que parsea `hero-basic-stats.js` con `json.loads` (el archivo es
+     JSON puro con un wrapper `const HERO_BASIC_STATS = ... ;`), reemplaza los campos indicados
+     por hero/ability/field, y vuelve a escribir con `json.dumps(indent=2)` — se confirmó antes
+     que el formato del archivo coincide byte a byte con esa salida, así que el diff queda
+     limpio (solo las líneas tocadas).
