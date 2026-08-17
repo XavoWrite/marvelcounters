@@ -60,15 +60,6 @@
       <button class="mini-btn scenario-btn active" data-scenario="scoreboard" data-i18n="team.scenarioScoreboard">📊 Partida en curso (Tab)</button>
       <button class="mini-btn scenario-btn" data-scenario="select" data-i18n="team.scenarioSelect">🎯 Selección de héroes</button>
     </div>
-    <div class="local-detect-section" id="autoFolderSection" style="padding:12px 14px;margin:0 0 14px;">
-      <div class="sec-title" style="margin:0 0 8px;font-size:14px;" data-i18n="team.autoFolderTitle">📁 Carpeta de capturas automática</div>
-      <span class="badge" id="autoFolderUnsupported" style="display:none;" data-i18n="team.autoFolderUnsupported">⚠️ Esta función solo está disponible en navegadores basados en Chromium (Chrome, Edge, Opera, Brave) — no funciona en Firefox ni Safari.</span>
-      <div id="autoFolderSupported" style="display:none;">
-        <p class="empty-hint" style="margin:0 0 10px;" data-i18n="team.autoFolderHint">Se lo pedimos una sola vez — el permiso y el acceso quedan 100% en tu navegador, no se sube nada a ningún lado. Después, cada vez que volvés a esta pestaña (por ejemplo tras apretar F12 en el juego), buscamos sola la captura más nueva de esa carpeta.</p>
-        <button class="mini-btn" id="pickFolderBtn" data-i18n="team.pickFolderBtn">📁 Elegir carpeta de capturas (ej. la de Steam/F12)</button>
-        <span class="status-line" id="autoFolderStatus"></span>
-      </div>
-    </div>
     <div id="combinedZoneWrap">
       <div class="paste-zone" id="pasteZoneCombined" tabindex="0" data-i18n-html="team.combinedHint">📷 ¿Tenés UNA sola captura con los dos equipos (marcador con Tab)? Pegala acá y la separamos sola<br><span class="paste-zone-sub">Ctrl+V, arrastrá la imagen, o <u id="combinedFilePick">elegí un archivo</u></span></div>
       <input type="file" id="combinedFileInput" accept="image/*" style="display:none">
@@ -352,7 +343,6 @@
 <script src="assets/js/team-state.js"></script>
 <script src="assets/js/analysis.js"></script>
 <script src="assets/js/detection.js"></script>
-<script src="assets/js/screenshot-folder.js"></script>
 <script src="assets/js/scouting.js"></script>
 <script src="assets/js/tabs-editor.js"></script>
 <script src="assets/js/bootstrap.js"></script>
