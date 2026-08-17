@@ -54,6 +54,16 @@ function renderSlots(){
   renderSideSlots("enemySlots", enemyTeam, "enemy");
   renderSideSlots("allySlots", allyTeam, "ally");
   renderAnalysis();
+  syncAllyOverlay();
+}
+// overlay para stream/OBS (overlay-ally.html) -- se lee via localStorage + evento "storage" desde
+// otra pestaña con el mismo origen. Solo guarda nombre+rol (no el objeto hero completo) para no
+// duplicar datos pesados en cada escritura.
+function syncAllyOverlay(){
+  try{
+    const compact = allyTeam.map(h => h ? {n:h.n, r:h.r} : null);
+    localStorage.setItem("overlayAllyTeam", JSON.stringify(compact));
+  }catch(e){}
 }
 function riskCountersFor(allyHeroName, enemyNames){
   const list = effectiveCounters(allyHeroName) || [];
