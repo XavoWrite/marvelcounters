@@ -1498,8 +1498,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Namor": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Psylocke": {
       "score": 3,
@@ -1572,8 +1572,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Wolverine": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Cloak & Dagger": {
       "score": -2,
@@ -1619,8 +1619,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Punisher": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Cyclops": {
       "score": 0,
@@ -1635,16 +1635,16 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hulk": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Groot": {
       "score": 0,
       "label": "even"
     },
     "Rocket Raccoon": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Hela": {
       "score": 2,
@@ -3067,8 +3067,8 @@ const REF_MATCHUP_SCORES = {
       "label": "hardCountered"
     },
     "Emma Frost": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Peni Parker": {
       "score": 0,
@@ -3355,8 +3355,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Punisher": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Cyclops": {
       "score": 0,
@@ -5258,8 +5258,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Punisher": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Cyclops": {
       "score": -4,
@@ -5286,8 +5286,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Mister Fantastic": {
       "score": 1,
@@ -5621,8 +5621,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Emma Frost": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Peni Parker": {
       "score": -4,
@@ -5653,8 +5653,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Cloak & Dagger": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Loki": {
       "score": -4,
@@ -5688,8 +5688,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Phoenix": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Squirrel Girl": {
       "score": 2,
@@ -6489,8 +6489,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Emma Frost": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Peni Parker": {
       "score": 1,
@@ -6923,8 +6923,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Emma Frost": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Peni Parker": {
       "score": 0,
@@ -7090,8 +7090,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Namor": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Psylocke": {
       "score": 7,
@@ -7207,8 +7207,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Phoenix": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Squirrel Girl": {
       "score": -1,
@@ -7307,8 +7307,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Namor": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Psylocke": {
       "score": 6,
@@ -10345,8 +10345,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Namor": {
-      "score": 5,
-      "label": "strong"
+      "score": -5,
+      "label": "weak"
     },
     "Psylocke": {
       "score": 0,
@@ -10825,8 +10825,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Doctor Strange": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Emma Frost": {
       "score": 1,
@@ -10928,12 +10928,12 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Rocket Raccoon": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Hela": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Mister Fantastic": {
       "score": -3,
@@ -10988,8 +10988,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Magneto": {
-      "score": -5,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Invisible Woman": {
       "score": 1,
