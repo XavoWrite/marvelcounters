@@ -1703,7 +1703,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Magneto": {
-      "score": -1,
+      "score": -5,
       "label": "weak"
     },
     "Invisible Woman": {
@@ -6861,8 +6861,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Magneto": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     },
     "Invisible Woman": {
       "score": -1,
@@ -10178,8 +10178,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Emma Frost": {
-      "score": 1,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": 0,
@@ -10273,8 +10273,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Groot": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Rocket Raccoon": {
       "score": -1,
