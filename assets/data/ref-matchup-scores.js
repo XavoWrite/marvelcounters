@@ -3355,8 +3355,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Punisher": {
-      "score": 1,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Cyclops": {
       "score": 0,
@@ -5258,8 +5258,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Punisher": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     },
     "Cyclops": {
       "score": -4,
@@ -5286,8 +5286,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": 1,
-      "label": "favorable"
+      "score": -5,
+      "label": "weak"
     },
     "Mister Fantastic": {
       "score": 1,
@@ -5653,8 +5653,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Cloak & Dagger": {
-      "score": -1,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Loki": {
       "score": -4,
@@ -5688,8 +5688,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Phoenix": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Squirrel Girl": {
       "score": 2,
@@ -7207,8 +7207,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Phoenix": {
-      "score": -1,
-      "label": "weak"
+      "score": 5,
+      "label": "strong"
     },
     "Squirrel Girl": {
       "score": -1,
