@@ -39,15 +39,18 @@
 
   <div id="mainView">
 
-  <!-- capturas/explorador ocultos por el momento (beta pausada) -- se dejan en el DOM, solo
-       escondidos, para reactivarlos facil mas adelante sin perder todo el trabajo de deteccion/i18n -->
+  <!-- explorador de jugadores (pre-partida) sigue oculto por el momento (beta pausada) -- se deja
+       en el DOM, solo escondido, para reactivarlo facil mas adelante sin perder el trabajo de
+       deteccion/i18n. La identificacion de equipo (captura del marcador) se reactivo el 2026-08-17
+       tras arreglar la deteccion de verdad (ver commits del dia: bug de trimDarkBorders + seed
+       reconstruido con 55 heroes, probado en vivo con capturas reales, 9/12 y 11/11 aciertos) -->
   <div class="quick-jump-row">
-    <a class="quick-jump-btn" href="#teamCaptureSection" style="display:none;"><span data-i18n="quickjump.team">📸 Subir captura de la partida</span><span class="qj-sub" data-i18n="quickjump.teamSub">para completar los héroes</span></a>
+    <a class="quick-jump-btn" href="#teamCaptureSection"><span data-i18n="quickjump.team">📸 Subir captura de la partida</span><span class="qj-sub" data-i18n="quickjump.teamSub">para completar los héroes</span></a>
     <a class="quick-jump-btn" href="#playerNamesCaptureZone" style="display:none;"><span data-i18n="quickjump.names">🪧 Captura de jugadores (pre-partida)</span><span class="qj-sub" data-i18n="quickjump.namesSub">para completar el explorador de jugadores</span></a>
     <a class="quick-jump-btn" href="#manualTeamSection"><span data-i18n="quickjump.manual">🛠️ Colocación manual de equipos</span><span class="qj-sub" data-i18n="quickjump.manualSub">elegí cada héroe a mano</span></a>
   </div>
 
-  <div class="local-detect-section" id="teamCaptureSection" style="display:none;">
+  <div class="local-detect-section" id="teamCaptureSection">
     <div class="sec-title" style="margin-top:0;" data-i18n="team.title">Identificación de equipo</div>
     <span class="badge" style="margin-bottom:10px;" data-i18n="team.betaBadge">🚧 en proceso — la identificación automática del héroe es experimental, revisá siempre lo que reconoce solo</span>
     <p class="empty-hint" data-i18n-html="team.hintSeparate">Dos capturas separadas — una de tu equipo y otra del rival — así se ven más grandes los íconos y los nombres. Capturá con <b>Win+Shift+S</b>, hacé clic en el recuadro de abajo y pegá con <b>Ctrl+V</b> (o subí un archivo). No depende de internet.</p>
