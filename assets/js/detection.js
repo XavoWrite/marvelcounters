@@ -68,10 +68,6 @@ const CAL_DEFAULTS = {
     ally:  {x:5.5, y:2, w:6.0, h:15, rowGap:16.5, xShiftPerRow:0, roleOffsetX:-5, roleW:3.5, roleH:14, nameOffsetX:34, nameW:35, nameH:15},
     enemy: {x:5.5, y:2, w:6.0, h:15, rowGap:16.5, xShiftPerRow:0, roleOffsetX:-5, roleW:3.5, roleH:14, nameOffsetX:25, nameW:43, nameH:15},
   },
-  select: {
-    ally:  {x:5, y:2, w:9, h:15, rowGap:16.5, xShiftPerRow:0, roleOffsetX:-5, roleW:4.5, roleH:14, nameOffsetX:34, nameW:35, nameH:15},
-    enemy: {x:5, y:2, w:9, h:15, rowGap:16.5, xShiftPerRow:0, roleOffsetX:-5, roleW:4.5, roleH:14, nameOffsetX:25, nameW:43, nameH:15},
-  },
   loading: {
     ally:  {x:12.5,  y:28.52, w:9.90,  h:4.81, rowGap:11.48, xShiftPerRow:-1.1458, roleOffsetX:0, roleW:0, roleH:0, nameOffsetX:0, nameW:9.90,  nameH:4.81},
     enemy: {x:74.48, y:17.41, w:10.42, h:4.81, rowGap:11.48, xShiftPerRow:-1.5625, roleOffsetX:0, roleW:0, roleH:0, nameOffsetX:0, nameW:10.42, nameH:4.81},
@@ -363,64 +359,10 @@ function trimDarkBorders(img){
   return trimmed;
 }
 
-function loadImageForSide(side, dataUrl){
-  const img = new Image();
-  img.onload = ()=>{
-    detectImages[side] = trimDarkBorders(img);
-    const zone = document.getElementById(side==="ally" ? "pasteZoneAlly" : "pasteZoneEnemy");
-    zone.classList.add("has-image");
-    drawCalibrationPreview(side);
-    runLocalDetectionForSide(side);
-  };
-  img.src = dataUrl;
-}
-
-function setupCaptureZone(side){
-  const zone = document.getElementById(side==="ally" ? "pasteZoneAlly" : "pasteZoneEnemy");
-  const fileInput = document.getElementById(side==="ally" ? "allyFileInput" : "enemyFileInput");
-  // el link "elegi un archivo" (<u>) se reconstruye cada vez que cambia el idioma (data-i18n-html
-  // pisa el innerHTML de la zona) -- por eso el click se delega en "zone" (que nunca se destruye)
-  // en vez de engancharse directo al <u>, que perderia el listener en cada cambio de idioma.
-  zone.addEventListener("click", (e)=>{
-    if(e.target.closest("u")){ e.stopPropagation(); fileInput.click(); return; }
-    zone.focus();
-  });
-  zone.addEventListener("paste", (e)=>{
-    const items = e.clipboardData && e.clipboardData.items;
-    if(!items) return;
-    for(const item of items){
-      if(item.type && item.type.startsWith("image/")){
-        const blob = item.getAsFile();
-        const reader = new FileReader();
-        reader.onload = ()=> loadImageForSide(side, reader.result);
-        reader.readAsDataURL(blob);
-        e.preventDefault();
-        return;
-      }
-    }
-  });
-  fileInput.onchange = (e)=>{
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = ()=> loadImageForSide(side, reader.result);
-    reader.readAsDataURL(file);
-    e.target.value = "";
-  };
-  // tambien se puede arrastrar y soltar la imagen directo sobre el recuadro
-  zone.addEventListener("dragover", (e)=>{ e.preventDefault(); zone.classList.add("drag-over"); });
-  zone.addEventListener("dragleave", ()=> zone.classList.remove("drag-over"));
-  zone.addEventListener("drop", (e)=>{
-    e.preventDefault();
-    zone.classList.remove("drag-over");
-    const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-    if(!file || !file.type.startsWith("image/")) return;
-    const reader = new FileReader();
-    reader.onload = ()=> loadImageForSide(side, reader.result);
-    reader.readAsDataURL(file);
-  });
-  // botones de calibracion manual: solo existen si el panel de calibracion esta presente en el DOM
-  // (queda oculto de la interfaz principal, ver drawCalibrationPreview)
+// las calibraciones manuales (cal_${side}_previewBtn/redetectBtn) solo existen si el panel de
+// calibracion esta presente en el DOM -- queda oculto de la interfaz principal (nadie tiene tiempo
+// de calibrar a mano), pero si algun dia se muestra, sigue funcionando con la calibracion por defecto.
+["ally","enemy"].forEach(side=>{
   const previewBtn = document.getElementById(`cal_${side}_previewBtn`);
   if(previewBtn) previewBtn.onclick = ()=>{
     saveCalibration(side, readCalibrationInputs(side));
@@ -433,27 +375,6 @@ function setupCaptureZone(side){
     runLocalDetectionForSide(side);
   };
   fillCalibrationInputs(side, loadCalibration(side));
-}
-setupCaptureZone("ally");
-setupCaptureZone("enemy");
-
-// cambia entre las dos pantallas del juego (marcador en curso vs seleccion de heroes) -- cada una
-// guarda su propia calibracion, asi que cambiar de escenario no pisa la calibracion de la otra
-function setScenario(scenario){
-  currentScenario = scenario;
-  document.querySelectorAll(".scenario-btn").forEach(b=> b.classList.toggle("active", b.dataset.scenario===scenario));
-  ["ally","enemy"].forEach(side=>{
-    fillCalibrationInputs(side, loadCalibration(side));
-    if(detectImages[side]) drawCalibrationPreview(side);
-  });
-  // la captura "completa" (un solo screenshot con ambos equipos) solo esta calibrada contra el
-  // marcador en curso (Tab) -- en "seleccion de heroes" no hay una referencia real todavia, asi
-  // que ese modo se oculta para no prometer algo que no funciona bien.
-  const combinedWrap = document.getElementById("combinedZoneWrap");
-  if(combinedWrap) combinedWrap.style.display = scenario==="scoreboard" ? "" : "none";
-}
-document.querySelectorAll(".scenario-btn").forEach(btn=>{
-  btn.onclick = ()=> setScenario(btn.dataset.scenario);
 });
 
 /* ---------------- CAPTURA COMBINADA (un solo screenshot con los dos equipos) ---------------- */
@@ -492,8 +413,6 @@ function loadCombinedImage(dataUrl){
     statusEl.textContent = t("status.splitting");
     detectImages.ally = cropPercentToCanvas(fullCanvas, COMBINED_SPLIT.ally);
     detectImages.enemy = cropPercentToCanvas(fullCanvas, COMBINED_SPLIT.enemy);
-    document.getElementById("pasteZoneAlly").classList.add("has-image");
-    document.getElementById("pasteZoneEnemy").classList.add("has-image");
     await runLocalDetectionForSide("ally");
     await runLocalDetectionForSide("enemy");
     statusEl.textContent = t("status.combinedDone");
