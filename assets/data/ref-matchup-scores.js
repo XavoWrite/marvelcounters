@@ -4019,8 +4019,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Blade": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Hulk": {
       "score": 2,
@@ -4035,8 +4035,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Hela": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Mister Fantastic": {
       "score": -2,
@@ -6316,7 +6316,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     },
     "Jubilee": {
@@ -7184,7 +7184,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Deadpool (Vanguard)": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     },
     "Jubilee": {

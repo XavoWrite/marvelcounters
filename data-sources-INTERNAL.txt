@@ -2082,3 +2082,9 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      ligeramente desactualizada en esos 2 pares hasta la próxima sync grande.
    - El artifact del reporte completo (55 héroes, con los 8 casos marcados) sigue publicado y se
      actualizó para reflejar el estado final de cada uno de los 8.
+   - **Cierre del octavo caso, mismo día, un rato después**: Deadpool (Vanguard) vs Blade/Hela
+     era el único de los 8 que había quedado sin revisar. Xavier confirmó que sí, el anti-heal de
+     ambos apaga de verdad el Healing Factor pasivo de Tankpool en partida real. Antes eran
+     pareja (score +2/-2, categoría 2) para los dos pares; ahora Blade y Hela countean a
+     Deadpool (Vanguard) (+5 para Deadpool/-5 para ellos, categoría 1/4), mismo mecanismo de
+     sincronización de 4 archivos que el resto de esta sección.
