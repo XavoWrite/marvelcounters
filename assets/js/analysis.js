@@ -696,112 +696,6 @@ function renderAnalysis(){
   if(allyEffEl) allyEffEl.innerHTML = bothFilled ? healEfficiencyHtml(allyTeam, enemyTeam) : "";
   if(enemyEffEl) enemyEffEl.innerHTML = bothFilled ? healEfficiencyHtml(enemyTeam, allyTeam) : "";
 
-  // probabilidad de victoria (heurística orientativa, no un cálculo real de winrate) -- el detalle
-  // de que te esta jugando en contra ya se explica en "Alineación en riesgo", no se repite aca
-  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.winProb.title")}</div>`;
-  if(allyFilled===0 || enemyFilled===0){
-    left += `<p class="empty-hint">${t("analysis.winProb.needBoth")}</p>`;
-  } else {
-    const {prob} = computeWinProbability(allyTeam, enemyTeam);
-    const barColor = prob>=60 ? "var(--ally)" : prob>=40 ? "var(--gold)" : "var(--enemy)";
-    left += `<div class="comp-banner">
-      <div class="winprob-bar-outer"><div class="winprob-bar-inner" style="width:${prob}%;background:${barColor};"></div><div class="winprob-label">${t("analysis.winProb.estimated", {prob})}</div></div>
-      <div style="font-size:11.5px;color:var(--muted);margin-top:8px;">${t("analysis.winProb.disclaimer")}</div>
-    </div>`;
-  }
-  left += `</div>`;
-
-  // Tu composición + Qué deberías jugar tú, lado a lado para ahorrar espacio vertical
-  left += `<div class="comp-pick-row">`;
-  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.yourComp.title")}</div>`;
-  if(allyFilled===0){
-    left += `<p class="empty-hint">${t("analysis.yourComp.addYours")}</p>`;
-  } else {
-    // maximo UNA linea de texto aparte de los chips -- pedido de Xavier (2026-08-16): esta caja
-    // llegaba a apilar hasta 3 lineas (aviso de vanguard + aviso de strategist + jugadores
-    // faltantes), "muy grande... falta priorizar". Prioridad: primero jugadores faltantes (lo mas
-    // accionable), despues el desbalance de rol mas grave si ya estas 6/6 -- nunca las dos a la vez.
-    // El caso "2-2-2 perfecto" ya no dice nada aparte: los chips ya lo muestran de un vistazo.
-    const myCounts = roleCounts(allyTeam);
-    left += `<div class="comp-banner">${t("analysis.yourComp.summary", {counts: roleCountsIconsHtml(myCounts), n: allyFilled})}`;
-    if(allyFilled<6){
-      const missing = 6-allyFilled;
-      const target = {Vanguard:2, Duelist:2, Strategist:2};
-      const needed = ["Vanguard","Duelist","Strategist"]
-        .map(r=>({r, gap: target[r]-myCounts[r]}))
-        .filter(x=>x.gap>0)
-        .sort((a,b)=>b.gap-a.gap)
-        .map(x=> `${roleIconHtml(x.r,16)}${x.gap>1 ? `${x.gap} ${t('role.'+x.r)}` : t('role.'+x.r)}`);
-      const neededSuffix = needed.length ? t("analysis.yourComp.neededRoles", {roles: needed.join(", ")}) : "";
-      left += `<br>${tp("analysis.yourComp.missingPlayers", missing, {missing})}${neededSuffix}`;
-    } else if(myCounts.Vanguard<=1){
-      left += `<br>${myCounts.Vanguard===0 ? t("analysis.yourComp.vanguardWarnZero") : t("analysis.yourComp.vanguardWarnOne")}`;
-    } else if(myCounts.Vanguard>=4){
-      left += `<br>${t("analysis.yourComp.tooManyVanguard")}`;
-    } else if(myCounts.Strategist<=1){
-      left += `<br>${myCounts.Strategist===0 ? t("analysis.yourComp.strategistWarnZero") : t("analysis.yourComp.strategistWarnOne")}`;
-    } else if(myCounts.Strategist>=3){
-      left += `<br>${t("analysis.yourComp.tooManyStrategist")}`;
-    }
-    left += `</div>`;
-  }
-  left += `</div>`;
-
-  // recomendacion para TU especificamente: asume que tus 5 companeros no van a cambiar de heroe.
-  // Aca adentro (fila angosta) solo va el resumen -- las listas de picks van en su propia fila
-  // mas abajo, a lo ancho completo del bloque, para que entren comodas en 2 columnas reales.
-  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.whatToPlay.title")}</div>`;
-  let rec = null;
-  if(myAllyIndex===null){
-    left += `<p class="empty-hint">${t("analysis.whatToPlay.markYourself")}</p>`;
-  } else if(enemyFilled===0){
-    left += `<p class="empty-hint">${t("analysis.whatToPlay.addEnemy")}</p>`;
-  } else {
-    rec = recommendMyPick();
-    left += `<div class="comp-banner">${t("analysis.whatToPlay.summary", {counts: roleCountsIconsHtml(rec.fixedCounts, 22, rec.roleNeed), role: roleIconHtml(rec.roleNeed,16)+t('role.'+rec.roleNeed)})}</div>`;
-  }
-  left += `</div>`;
-  left += `</div>`;
-
-  // fila aparte (ancho completo del bloque, no anidada) con las listas de picks en 2 columnas reales
-  // -- siempre 2 columnas, nunca 1 sola, para que la fila no se vea rota/asimetrica ni de la impresion
-  // de que "desaparecio" una columna
-  if(rec){
-    // retrato tipo casillero (mismo lenguaje visual que "Mejores picks contra esta composicion" y
-    // que "Tu equipo") en vez de la tarjeta horizontal de texto que tenia antes -- pedido de
-    // Xavier (2026-08-16, eligio la opcion 1 de 3 mockups): el "por que" (good/bad matchups) pasa
-    // al tooltip (title), no ocupa renglon aparte.
-    const renderPickCard = p=>{
-      const badSuffix = p.badAgainst>0 ? t("analysis.pickCard.badSuffix", {bad:p.badAgainst}) : "";
-      const reason = t("analysis.pickCard.reason", {good:p.goodAgainst, total:enemyFilled, badSuffix});
-      return `<div class="pick-slot role-${p.h.r}" title="${reason.replace(/"/g,'&quot;')}">
-        ${heroIconHtml(p.h.n,40)}<div class="name">${heroLabel(p.h.n)}</div><div class="role">${roleIconHtml(p.h.r,12)}${p.goodAgainst}/${enemyFilled}</div>
-      </div>`;
-    };
-    const col2Title = rec.sameRoleAsNeed ? t("analysis.pickCard.col2TitleAlt") : t("analysis.pickCard.col2TitlePreferSame");
-    const col2Sub = rec.sameRoleAsNeed
-      ? t("analysis.pickCard.col2SubAlt")
-      : t("analysis.pickCard.col2SubPreferSame", {role: rec.currentRole ? t('role.'+rec.currentRole) : t("analysis.pickCard.yourCurrentRole")});
-    left += `<div class="two-col-fit">`;
-    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.roleNeed,16)}${t("analysis.pickCard.bestOptionsOf", {role: t('role.'+rec.roleNeed)})}</div>
-      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${rec.sameRoleAsNeed ? t("analysis.pickCard.alreadyPlayingRole", {role: t('role.'+rec.roleNeed)}) : t("analysis.pickCard.roleThatsMissing")}</p>`;
-    if(rec.inRolePicks.length===0){
-      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noCandidates")}</p>`;
-    } else {
-      left += `<div class="pick-slot-row">${rec.inRolePicks.map(renderPickCard).join("")}</div>`;
-    }
-    left += `</div>`;
-    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.currentRole||rec.roleNeed,16)}${col2Title}</div>
-      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${col2Sub}</p>`;
-    if(rec.topOverallPicks.length===0){
-      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noData")}</p>`;
-    } else {
-      left += `<div class="pick-slot-row">${rec.topOverallPicks.map(renderPickCard).join("")}</div>`;
-    }
-    left += `</div>`;
-    left += `</div>`;
-  }
-
   // la matriz de matchups completa (tus 6 vs los 6 rivales) se sacó -- pedido de Xavier,
   // 2026-08-16: "nadie va a bajar tanto y ponerse a entender en media partida". renderMatchupGrid
   // sigue definida arriba por si se reutiliza en otro lado (ej. el editor), solo se dejó de
@@ -948,6 +842,113 @@ function renderAnalysis(){
   }
 
   left += `</div>`;
+
+  // probabilidad de victoria (heurística orientativa, no un cálculo real de winrate) -- el detalle
+  // de que te esta jugando en contra ya se explica en "Alineación en riesgo", no se repite aca
+  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.winProb.title")}</div>`;
+  if(allyFilled===0 || enemyFilled===0){
+    left += `<p class="empty-hint">${t("analysis.winProb.needBoth")}</p>`;
+  } else {
+    const {prob} = computeWinProbability(allyTeam, enemyTeam);
+    const barColor = prob>=60 ? "var(--ally)" : prob>=40 ? "var(--gold)" : "var(--enemy)";
+    left += `<div class="comp-banner">
+      <div class="winprob-bar-outer"><div class="winprob-bar-inner" style="width:${prob}%;background:${barColor};"></div><div class="winprob-label">${t("analysis.winProb.estimated", {prob})}</div></div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:8px;">${t("analysis.winProb.disclaimer")}</div>
+    </div>`;
+  }
+  left += `</div>`;
+
+  // Tu composición + Qué deberías jugar tú, lado a lado para ahorrar espacio vertical
+  left += `<div class="comp-pick-row">`;
+  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.yourComp.title")}</div>`;
+  if(allyFilled===0){
+    left += `<p class="empty-hint">${t("analysis.yourComp.addYours")}</p>`;
+  } else {
+    // maximo UNA linea de texto aparte de los chips -- pedido de Xavier (2026-08-16): esta caja
+    // llegaba a apilar hasta 3 lineas (aviso de vanguard + aviso de strategist + jugadores
+    // faltantes), "muy grande... falta priorizar". Prioridad: primero jugadores faltantes (lo mas
+    // accionable), despues el desbalance de rol mas grave si ya estas 6/6 -- nunca las dos a la vez.
+    // El caso "2-2-2 perfecto" ya no dice nada aparte: los chips ya lo muestran de un vistazo.
+    const myCounts = roleCounts(allyTeam);
+    left += `<div class="comp-banner">${t("analysis.yourComp.summary", {counts: roleCountsIconsHtml(myCounts), n: allyFilled})}`;
+    if(allyFilled<6){
+      const missing = 6-allyFilled;
+      const target = {Vanguard:2, Duelist:2, Strategist:2};
+      const needed = ["Vanguard","Duelist","Strategist"]
+        .map(r=>({r, gap: target[r]-myCounts[r]}))
+        .filter(x=>x.gap>0)
+        .sort((a,b)=>b.gap-a.gap)
+        .map(x=> `${roleIconHtml(x.r,16)}${x.gap>1 ? `${x.gap} ${t('role.'+x.r)}` : t('role.'+x.r)}`);
+      const neededSuffix = needed.length ? t("analysis.yourComp.neededRoles", {roles: needed.join(", ")}) : "";
+      left += `<br>${tp("analysis.yourComp.missingPlayers", missing, {missing})}${neededSuffix}`;
+    } else if(myCounts.Vanguard<=1){
+      left += `<br>${myCounts.Vanguard===0 ? t("analysis.yourComp.vanguardWarnZero") : t("analysis.yourComp.vanguardWarnOne")}`;
+    } else if(myCounts.Vanguard>=4){
+      left += `<br>${t("analysis.yourComp.tooManyVanguard")}`;
+    } else if(myCounts.Strategist<=1){
+      left += `<br>${myCounts.Strategist===0 ? t("analysis.yourComp.strategistWarnZero") : t("analysis.yourComp.strategistWarnOne")}`;
+    } else if(myCounts.Strategist>=3){
+      left += `<br>${t("analysis.yourComp.tooManyStrategist")}`;
+    }
+    left += `</div>`;
+  }
+  left += `</div>`;
+
+  // recomendacion para TU especificamente: asume que tus 5 companeros no van a cambiar de heroe.
+  // Aca adentro (fila angosta) solo va el resumen -- las listas de picks van en su propia fila
+  // mas abajo, a lo ancho completo del bloque, para que entren comodas en 2 columnas reales.
+  left += `<div class="analysis-section"><div class="sec-title">${t("analysis.whatToPlay.title")}</div>`;
+  let rec = null;
+  if(myAllyIndex===null){
+    left += `<p class="empty-hint">${t("analysis.whatToPlay.markYourself")}</p>`;
+  } else if(enemyFilled===0){
+    left += `<p class="empty-hint">${t("analysis.whatToPlay.addEnemy")}</p>`;
+  } else {
+    rec = recommendMyPick();
+    left += `<div class="comp-banner">${t("analysis.whatToPlay.summary", {counts: roleCountsIconsHtml(rec.fixedCounts, 22, rec.roleNeed), role: roleIconHtml(rec.roleNeed,16)+t('role.'+rec.roleNeed)})}</div>`;
+  }
+  left += `</div>`;
+  left += `</div>`;
+
+  // fila aparte (ancho completo del bloque, no anidada) con las listas de picks en 2 columnas reales
+  // -- siempre 2 columnas, nunca 1 sola, para que la fila no se vea rota/asimetrica ni de la impresion
+  // de que "desaparecio" una columna
+  if(rec){
+    // retrato tipo casillero (mismo lenguaje visual que "Mejores picks contra esta composicion" y
+    // que "Tu equipo") en vez de la tarjeta horizontal de texto que tenia antes -- pedido de
+    // Xavier (2026-08-16, eligio la opcion 1 de 3 mockups): el "por que" (good/bad matchups) pasa
+    // al tooltip (title), no ocupa renglon aparte.
+    const renderPickCard = p=>{
+      const badSuffix = p.badAgainst>0 ? t("analysis.pickCard.badSuffix", {bad:p.badAgainst}) : "";
+      const reason = t("analysis.pickCard.reason", {good:p.goodAgainst, total:enemyFilled, badSuffix});
+      return `<div class="pick-slot role-${p.h.r}" title="${reason.replace(/"/g,'&quot;')}">
+        ${heroIconHtml(p.h.n,40)}<div class="name">${heroLabel(p.h.n)}</div><div class="role">${roleIconHtml(p.h.r,12)}${p.goodAgainst}/${enemyFilled}</div>
+      </div>`;
+    };
+    const col2Title = rec.sameRoleAsNeed ? t("analysis.pickCard.col2TitleAlt") : t("analysis.pickCard.col2TitlePreferSame");
+    const col2Sub = rec.sameRoleAsNeed
+      ? t("analysis.pickCard.col2SubAlt")
+      : t("analysis.pickCard.col2SubPreferSame", {role: rec.currentRole ? t('role.'+rec.currentRole) : t("analysis.pickCard.yourCurrentRole")});
+    left += `<div class="two-col-fit">`;
+    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.roleNeed,16)}${t("analysis.pickCard.bestOptionsOf", {role: t('role.'+rec.roleNeed)})}</div>
+      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${rec.sameRoleAsNeed ? t("analysis.pickCard.alreadyPlayingRole", {role: t('role.'+rec.roleNeed)}) : t("analysis.pickCard.roleThatsMissing")}</p>`;
+    if(rec.inRolePicks.length===0){
+      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noCandidates")}</p>`;
+    } else {
+      left += `<div class="pick-slot-row">${rec.inRolePicks.map(renderPickCard).join("")}</div>`;
+    }
+    left += `</div>`;
+    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.currentRole||rec.roleNeed,16)}${col2Title}</div>
+      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${col2Sub}</p>`;
+    if(rec.topOverallPicks.length===0){
+      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noData")}</p>`;
+    } else {
+      left += `<div class="pick-slot-row">${rec.topOverallPicks.map(renderPickCard).join("")}</div>`;
+    }
+    left += `</div>`;
+    left += `</div>`;
+  }
+
   // healer suggestions -- va abajo de "Mejores picks", del mismo lado (izquierda: son acciones tuyas)
   left += `<div class="analysis-section"><div class="sec-title">${t("analysis.healerSupport.title")}</div>`;
   const allyNames = allyTeam.filter(Boolean).map(h=>h.n);
