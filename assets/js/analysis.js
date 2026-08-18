@@ -33,7 +33,8 @@ function topCounterPick(enemyList, banned){
   let best = null, bestScore = -Infinity;
   HEROES.forEach(h=>{
     if(banned.has(h.n)) return;
-    const {score} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
+    const {score, goodAgainst, trouble} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
+    if(trouble>goodAgainst) return; // mas counters/casi-counters en contra que a favor -- no sirve como "mejor pick"
     if(score>bestScore){ bestScore=score; best=h; }
   });
   return best;
@@ -456,14 +457,24 @@ function healEfficiencyHtml(myTeam, enemyTeam){
 // cuando hay dato concreto (goodAgainst/badAgainst). Comparte formula con recommendMyPick y
 // suggestGhostFills para que este afinado se aplique parejo en toda la app.
 function candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow){
-  let goodAgainst = 0, badAgainst = 0, refSum = 0;
+  let goodAgainst = 0, badAgainst = 0, nearBadAgainst = 0, refSum = 0;
   enemyList.forEach(e=>{
     const code = getMatchupCode(h.n, e.n);
     if(code===4) goodAgainst++;
     else if(code===1) badAgainst++;
+    else if(code===2){
+      // "casi-counter" real (parejo con inclinacion, no counter fuerte) -- mismo criterio que
+      // bestPicksByRole. Pedido de Xavier (2026-08-17): "sigue recomendando a Iron Man [en el modo
+      // fantasma]... tiene muchos counters y casi counters" -- esta funcion (usada por el relleno
+      // fantasma y "Que deberias jugar tu") tenia el mismo bug que bestPicksByRole tenia antes de
+      // corregirse, nunca se le aplico el fix porque es un camino de codigo separado.
+      const near = (typeof externalMatchupScore==="function") ? externalMatchupScore(h.n, e.n) : null;
+      if(near && near.score>=1) nearBadAgainst++;
+    }
     const ref = (typeof externalMatchupScore==="function") ? externalMatchupScore(e.n, h.n) : null;
     if(ref) refSum += ref.score;
   });
+  const trouble = badAgainst + nearBadAgainst*0.5;
   // bonus de supervivencia: sanadores que aguantan un dive directo (o 3+ tanques encima) cuando
   // corresponde, y tanques de escudo que aguantan poke cuando el rival tiene 2+ poke -- ver
   // diveSurvivorBonus/pokeResistBonus mas arriba. bonus de anti-tanque: duelistas que revientan
@@ -472,8 +483,8 @@ function candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow){
   const enemyVanguardNow = enemyVanguardCount(enemyList);
   const survivalBonus = diveSurvivorBonus(h, enemyDiveCount(enemyList), enemyVanguardNow) * pokeResistBonus(h, enemyPokeCount(enemyList));
   const tankTypeBonus = meleeVsShieldTankBonus(h,enemyList) + rangedVsBrawlTankBonus(h,enemyList);
-  const base = goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow)*survivalBonus*antiTankBonus(h,enemyVanguardNow) - badAgainst*2;
-  return {score: base + refSum*0.03 + archCycleBonus(h,enemyList) + tankTypeBonus, goodAgainst, badAgainst};
+  const base = goodAgainst*2*counterRelevance(h.n)*diveViability(h,antiDiveNow)*shieldBreakBonus(h,shieldHeavyNow)*survivalBonus*antiTankBonus(h,enemyVanguardNow) - trouble*2;
+  return {score: base + refSum*0.03 + archCycleBonus(h,enemyList) + tankTypeBonus, goodAgainst, badAgainst, nearBadAgainst, trouble};
 }
 
 // el "por que" de cada sanador recomendado esta en el diccionario (analysis.healerWhy.<tag>) para
@@ -580,9 +591,10 @@ function recommendMyPick(){
   // facil" a alguien en la matriz casi siempre es por utilidad/anti-heal, no por pelea directa),
   // por diveViability, por shieldBreakBonus, y afina con el puntaje de referencia externa si hay dato
   const scored = candidates.map(h=>{
-    const {score, goodAgainst, badAgainst} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
-    return {h, goodAgainst, badAgainst, score};
-  }).sort((a,b)=>b.score-a.score);
+    const {score, goodAgainst, badAgainst, trouble} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
+    return {h, goodAgainst, badAgainst, trouble, score};
+  }).filter(p=> p.trouble<=p.goodAgainst) // mas counters/casi-counters en contra que a favor -- no se recomienda
+    .sort((a,b)=>b.score-a.score);
   // primero los mejores DENTRO del rol que hace falta (para que la recomendacion de rol no
   // quede tapada por un pick de otro rol con mejor matchup pero que no soluciona el desbalance)
   const inRolePicks = scored.filter(p=>heroHasRole(p.h, roleNeed)).slice(0,4);
@@ -632,7 +644,11 @@ function suggestGhostFills(){
   emptyIdx.forEach((slotI, k)=>{
     const role = roleQueue[k];
     const candidates = HEROES.filter(h=> !banned.has(h.n) && !used.has(h.n) && heroHasRole(h, role));
-    const scored = candidates.map(h=>({h, score: candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow).score}))
+    const scored = candidates.map(h=>{
+        const {score, goodAgainst, trouble} = candidateScoreAgainst(h, enemyList, antiDiveNow, shieldHeavyNow);
+        return {h, score, goodAgainst, trouble};
+      })
+      .filter(p=> p.trouble<=p.goodAgainst) // mas counters/casi-counters en contra que a favor -- no se sugiere en el modo fantasma
       .sort((a,b)=>b.score-a.score);
     if(scored.length){
       empty[slotI] = scored[0].h;
