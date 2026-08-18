@@ -38,6 +38,49 @@ function topCounterPick(enemyList, banned){
   });
   return best;
 }
+// mismo scoring que "Mejores picks contra esta composicion" (por rol, basado en getCounters real
+// -- SOLO entran heroes que la matriz ya marca como counter de al menos un rival puntual, a
+// diferencia de topCounterPick/candidateScoreAgainst que puntuan a todo el roster con formula
+// generica y pueden colar a alguien con varios counters reales EN SU CONTRA si sus bonus de
+// arquetipo pesan mas que el descuento -- bug real reportado por Xavier, 2026-08-17: Iron Man
+// salia sugerido contra un rival con Winter Soldier/Black Widow/Luna Snow, los 3 lo counterean).
+// Extraida a funcion propia para que "Mejores picks" (el render de abajo) y el overlay de stream
+// (syncOverlayData, "Sugeridos") usen exactamente el mismo criterio -- nunca deberian divergir.
+function bestPicksByRole(enemyList, banned){
+  const antiDiveNow = antiDiveCount(enemyList);
+  const shieldHeavyNow = shieldHeavyCount(enemyList);
+  const enemyDiveNow = enemyDiveCount(enemyList);
+  const enemyPokeNow = enemyPokeCount(enemyList);
+  const enemyVanguardNow = enemyVanguardCount(enemyList);
+  const result = {};
+  ["Vanguard","Duelist","Strategist"].forEach(role=>{
+    const scores = {};
+    enemyList.forEach(e=>{
+      getCounters(e.n, []).forEach(c=>{
+        const ch = byName[c.c];
+        if(!ch || !heroHasRole(ch, role)) return;
+        if(banned.has(c.c)) return;
+        if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow), survival:diveSurvivorBonus(ch, enemyDiveNow, enemyVanguardNow)*pokeResistBonus(ch, enemyPokeNow), tank:antiTankBonus(ch, enemyVanguardNow), tankTypeBonus:meleeVsShieldTankBonus(ch, enemyList)+rangedVsBrawlTankBonus(ch, enemyList), refSum:0, archBonus:archCycleBonus(ch, enemyList)};
+        scores[c.c].hits++;
+        if(c.refScore) scores[c.c].refSum += c.refScore.score;
+      });
+    });
+    // penaliza/excluye a quien el rival TAMBIEN le hace counter en la vuelta -- antes esto solo
+    // miraba "a cuantos rivales cuenta X" sin chequear "a cuantos rivales X les pierde", asi que un
+    // duelista con 1 counter real pero 3 counters reales EN SU CONTRA (ej. Iron Man contra un rival
+    // con Winter Soldier/Black Widow/Luna Snow) podia seguir apareciendo si sus bonus de arquetipo
+    // pesaban lo suficiente. Bug real reportado por Xavier, 2026-08-17.
+    Object.keys(scores).forEach(n=>{
+      let badAgainst = 0;
+      enemyList.forEach(e=>{ if(getMatchupCode(n, e.n)===1) badAgainst++; });
+      scores[n].badAgainst = badAgainst;
+    });
+    result[role] = Object.entries(scores)
+      .filter(([,s])=> s.badAgainst<=s.hits) // mas rivales le ganan a este pick que rivales que le gana el = no sirve como sugerencia
+      .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield*b[1].survival*b[1].tank + b[1].refSum*0.03 + b[1].archBonus + b[1].tankTypeBonus - b[1].badAgainst*2) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield*a[1].survival*a[1].tank + a[1].refSum*0.03 + a[1].archBonus + a[1].tankTypeBonus - a[1].badAgainst*2));
+  });
+  return result;
+}
 
 // simetrico a mostDangerousEnemyHtml (que nombra la amenaza real del rival): busca el heroe rival
 // mas "explotable" -- el que tiene el counter de dive disponible mas fuerte, ej. Jeff o Mantis -- y
@@ -799,36 +842,12 @@ function renderAnalysis(){
     const enemyListForRoles = enemyTeam.filter(Boolean);
     const banned = bannedPool();
     const allyNamesNow = allyTeam.filter(Boolean).map(h=>h.n);
-    const antiDiveNow = antiDiveCount(enemyListForRoles);
-    const shieldHeavyNow = shieldHeavyCount(enemyListForRoles);
-    const enemyDiveNow = enemyDiveCount(enemyListForRoles);
-    const enemyPokeNow = enemyPokeCount(enemyListForRoles);
-    const enemyVanguardNow = enemyVanguardCount(enemyListForRoles);
+    // 4 en vez de 3 -- con retrato en vez de tarjeta de texto, 3 quedaba como una "L" (2 arriba +
+    // 1 abajo suelto); 4 completa un cuadrado 2x2 parejo dentro de la columna angosta
+    const byRole = bestPicksByRole(enemyListForRoles, banned);
     left += `<div class="role-rec-grid">`;
     ["Vanguard","Duelist","Strategist"].forEach(role=>{
-      const scores = {};
-      enemyListForRoles.forEach(e=>{
-        getCounters(e.n, []).forEach(c=>{
-          const ch = byName[c.c];
-          if(!ch || !heroHasRole(ch, role)) return;
-          if(banned.has(c.c)) return; // no tiene sentido recomendar algo baneado
-          if(!scores[c.c]) scores[c.c] = {hits:0, relevance:c.relevance, dive:diveViability(ch, antiDiveNow), shield:shieldBreakBonus(ch, shieldHeavyNow), survival:diveSurvivorBonus(ch, enemyDiveNow, enemyVanguardNow)*pokeResistBonus(ch, enemyPokeNow), tank:antiTankBonus(ch, enemyVanguardNow), tankTypeBonus:meleeVsShieldTankBonus(ch, enemyListForRoles)+rangedVsBrawlTankBonus(ch, enemyListForRoles), refSum:0, archBonus:archCycleBonus(ch, enemyListForRoles)};
-          scores[c.c].hits++;
-          if(c.refScore) scores[c.c].refSum += c.refScore.score;
-        });
-      });
-      // se ordena por hits*relevancia*viabilidad de dive*bonus de shield-break*bonus de anti-tanque
-      // (no solo hits) para que un sanador que "contrarresta" por utilidad indirecta, o un dive que
-      // el rival tiene bien frenado, no le gane el lugar a algo que de verdad rinde contra esta
-      // composición puntual -- el puntaje de referencia externa (refSum) se suma como afinador
-      // chico; el ciclo de arquetipos (archBonus, ver archCycleBonus) se suma a peso completo,
-      // igual que en candidateScoreAgainst, para que desempate con el mismo peso que un matchup 1v1
-      // real entre candidatos que quedan parejos en lo anterior.
-      // 4 en vez de 3 -- con retrato en vez de tarjeta de texto, 3 quedaba como una "L" (2 arriba +
-      // 1 abajo suelto); 4 completa un cuadrado 2x2 parejo dentro de la columna angosta
-      const ranked = Object.entries(scores)
-        .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield*b[1].survival*b[1].tank + b[1].refSum*0.03 + b[1].archBonus + b[1].tankTypeBonus) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield*a[1].survival*a[1].tank + a[1].refSum*0.03 + a[1].archBonus + a[1].tankTypeBonus))
-        .slice(0,4);
+      const ranked = byRole[role].slice(0,4);
       left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(role,16)}${t('role.'+role)}</div>`;
       if(ranked.length===0){
         left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.bestPicks.noDataForRole")}</p>`;

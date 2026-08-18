@@ -54,15 +54,37 @@ function renderSlots(){
   renderSideSlots("enemySlots", enemyTeam, "enemy");
   renderSideSlots("allySlots", allyTeam, "ally");
   renderAnalysis();
-  syncAllyOverlay();
+  syncOverlayData();
 }
 // overlay para stream/OBS (overlay-ally.html) -- se lee via localStorage + evento "storage" desde
-// otra pestaña con el mismo origen. Solo guarda nombre+rol (no el objeto hero completo) para no
-// duplicar datos pesados en cada escritura.
-function syncAllyOverlay(){
+// otra pestaña con el mismo origen (o desde el Browser Source de OBS/TikTok LIVE Studio, si
+// comparte perfil). Guarda solo lo minimo para dibujar las 4 grillas del overlay (tu equipo con
+// aviso de riesgo, sugeridos, rival, counter principal por rival) -- nunca el objeto hero completo.
+function syncOverlayData(){
   try{
-    const compact = allyTeam.map(h => h ? {n:h.n, r:h.r} : null);
-    localStorage.setItem("overlayAllyTeam", JSON.stringify(compact));
+    const enemyNames = enemyTeam.filter(Boolean).map(h=>h.n);
+    const allyNamesNow = allyTeam.filter(Boolean).map(h=>h.n);
+    const ally = allyTeam.map(h => h ? {n:h.n, warn: riskCountersFor(h.n, enemyNames).length>0} : null);
+    const enemy = enemyTeam.map(h => h ? h.n : null);
+    const counters = enemyTeam.map(h=>{
+      if(!h) return null;
+      const list = getCounters(h.n, allyNamesNow) || [];
+      return list.length ? list[0].c : null;
+    });
+    const enemyFilledArr = enemyTeam.filter(Boolean);
+    const suggestBanned = new Set([...bannedPool(), ...allyNamesNow]);
+    // 2 por rol (Vanguardia/Duelista/Estratega) = 6 total, balanceado -- mismo criterio que
+    // "Mejores picks contra esta composicion" (bestPicksByRole en analysis.js), asi nunca sugiere
+    // algo que esa seccion no respaldaria (ej. un duelista sin ningun counter real solo por bonus
+    // de arquetipo, o dejar afuera a los 3 estrategas por completo).
+    let suggested = [];
+    if(enemyFilledArr.length && typeof bestPicksByRole==="function"){
+      const byRole = bestPicksByRole(enemyFilledArr, suggestBanned);
+      ["Vanguard","Duelist","Strategist"].forEach(role=>{
+        byRole[role].slice(0,2).forEach(([n])=> suggested.push(n));
+      });
+    }
+    localStorage.setItem("overlayData", JSON.stringify({ally, enemy, counters, suggested}));
   }catch(e){}
 }
 function riskCountersFor(allyHeroName, enemyNames){

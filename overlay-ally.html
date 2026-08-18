@@ -3,84 +3,87 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MarvelCounters — Overlay equipo aliado</title>
+<title>MarvelCounters — Overlay de partida</title>
 <!--
-  Overlay de solo lectura para stream (OBS Browser Source / celular en vivo).
-  No tiene UI propia de seleccion -- lee el equipo aliado que armaste en
-  MarvelCountersPrime.html via localStorage (clave "overlayAllyTeam", ver
-  syncAllyOverlay() en assets/js/team-state.js) y se actualiza solo.
+  Overlay de solo lectura para stream (OBS Browser Source / TikTok LIVE Studio / celular en vivo).
+  No tiene UI propia de seleccion -- lee lo que ya calculaste en MarvelCountersPrime.html via
+  localStorage (clave "overlayData", ver syncOverlayData() en assets/js/team-state.js) y se
+  actualiza solo. 4 grillas: Tu equipo (con aviso dorado si algun rival lo counterea de verdad),
+  Sugeridos (mejores picks contra el rival que todavia no tenes en tu equipo), Rival, y Counter
+  principal (uno por cada rival, alineado en la misma columna).
 
-  Requisito: esta pagina y MarvelCountersPrime.html tienen que estar
-  serviadas desde el MISMO origen (mismo dominio/puerto) para compartir
-  localStorage -- por eso no funciona abriendo el archivo suelto con
-  doble clic si la otra pagina esta en un origen distinto.
+  Requisito: esta pagina y MarvelCountersPrime.html tienen que estar serviadas desde el MISMO
+  origen (mismo dominio/puerto) para compartir localStorage. Ojo con los Browser Source de
+  OBS/TikTok LIVE Studio: corren en un navegador embebido aparte con su propio almacenamiento --
+  puede que NO compartan localStorage con tu navegador normal aunque sea la misma URL.
 -->
 <style>
   :root{
-    --panel:#191b22cc; --panel-empty:#191b2255; --line:#2c2f3a;
+    --panel:#191b22cc; --line:#2c2f3a;
     --gold:#ffc145; --text:#f2f3f6; --muted:#9195a3;
-    --vg:#ff8a3d; --du:#ff3b4e; --st:#3ecf8e;
+    --ally:#3e8eff; --enemy:#ff3b4e;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:transparent;}
   body{
     font-family:'Inter',ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--text); -webkit-font-smoothing:antialiased;
+    color:var(--text); -webkit-font-smoothing:antialiased; padding:14px;
   }
-  .panel{
-    width:min(340px,92vw); margin:14px; display:flex; flex-direction:column; gap:8px;
+  .cols{ display:flex; gap:14px; align-items:flex-start; width:fit-content; }
+  .col{ display:flex; flex-direction:column; }
+  .grid-title{
+    font-size:9px; letter-spacing:.08em; text-transform:uppercase; font-weight:800; margin-bottom:6px;
   }
-  .panel-label{
-    font-size:11px; letter-spacing:.14em; text-transform:uppercase; font-weight:800;
-    color:var(--gold); padding:0 2px;
-  }
-  .row{
-    display:flex; align-items:center; gap:10px;
-    background:var(--panel); border:1px solid var(--line); border-radius:10px;
-    padding:7px 12px 7px 7px; min-height:52px;
+  .grid-title.ally{ color:var(--ally); }
+  .grid-title.enemy-t{ color:var(--enemy); }
+  .grid-title.gold-t{ color:var(--gold); }
+  .grid3x2{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:6px;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:8px;
     backdrop-filter:blur(2px);
-    transition:opacity .15s;
   }
-  .row.empty{ background:var(--panel-empty); border-style:dashed; }
-  .row .icon{
-    width:38px; height:38px; border-radius:8px; object-fit:cover; flex:none;
-    background:#0007;
+  .iconslot{
+    position:relative; width:40px; height:40px; border-radius:9px; overflow:hidden;
+    border:2px solid var(--ally); background:#0007; flex:none;
   }
-  .row .icon.placeholder{ background:#0004; }
-  .row .name{ font-weight:700; font-size:15px; flex:1 1 auto; min-width:0;
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .row.empty .name{ color:var(--muted); font-weight:500; font-style:italic; }
-  .row .role-badge{
-    display:flex; align-items:center; gap:5px; font-size:11px; font-weight:700;
-    padding:3px 8px; border-radius:100px; flex:none;
+  .iconslot.empty{ border-style:dashed; border-color:var(--muted); background:#0004; opacity:.5; }
+  .iconslot.enemy{ border-color:var(--enemy); }
+  .iconslot.gold{ border-color:var(--gold); }
+  .iconslot.warn{ box-shadow:0 0 0 3px rgba(255,193,69,.35); }
+  .warn-badge{
+    position:absolute; top:-5px; right:-5px; width:15px; height:15px; border-radius:50%;
+    background:var(--gold); color:#1a1400; font-size:9px; font-weight:900;
+    display:flex; align-items:center; justify-content:center;
   }
-  .role-badge.Vanguard{ color:var(--vg); background:#ff8a3d22; }
-  .role-badge.Duelist{ color:var(--du); background:#ff3b4e22; }
-  .role-badge.Strategist{ color:var(--st); background:#3ecf8e22; }
-  .role-badge img{ width:13px; height:13px; }
+  .icon-img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .section{ margin-top:10px; }
+  .section:first-child{ margin-top:0; }
+  .hidden{ display:none !important; }
 </style>
 </head>
 <body>
 
-<div class="panel">
-  <div class="panel-label">Tu equipo</div>
-  <div id="rows"></div>
+<div class="cols">
+  <div class="col">
+    <div class="grid-title ally">Tu equipo</div>
+    <div class="grid3x2" id="allyGrid"></div>
+    <div class="section" id="suggestedSection">
+      <div class="grid-title gold-t">Sugeridos</div>
+      <div class="grid3x2" id="suggestedGrid"></div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="grid-title enemy-t">Rival</div>
+    <div class="grid3x2" id="enemyGrid"></div>
+    <div class="section" id="countersSection">
+      <div class="grid-title gold-t">Counter principal</div>
+      <div class="grid3x2" id="countersGrid"></div>
+    </div>
+  </div>
 </div>
 
 <script src="assets/data/hero-images.js"></script>
-<script src="assets/data/role-icons.js"></script>
 <script>
-const DEADPOOL_DISPLAY_NAMES = {
-  "Deadpool (Vanguard)": "Tankpool",
-  "Deadpool (Duelist)": "Deadpool",
-  "Deadpool (Strategist)": "Healpool",
-};
-const ROLE_LABEL_ES = { Vanguard:"Vanguardia", Duelist:"Duelista", Strategist:"Estratega" };
-
-function heroLabel(name){
-  if(DEADPOOL_DISPLAY_NAMES[name]) return DEADPOOL_DISPLAY_NAMES[name];
-  return name.replace(/ \((Vanguard|Duelist|Strategist)\)$/, "");
-}
 function getHeroImage(name){
   const pre = window.PRELOADED_IMAGES && window.PRELOADED_IMAGES[name];
   if(!pre) return null;
@@ -88,36 +91,56 @@ function getHeroImage(name){
   const firstKey = Object.keys(pre)[0];
   return firstKey ? pre[firstKey].img : null;
 }
-function getRoleIconImage(role){
-  const pre = window.PRELOADED_ROLE_ICONS && window.PRELOADED_ROLE_ICONS[role];
-  return pre ? pre.img : null;
+
+function slotHtml(name, opts){
+  opts = opts || {};
+  if(!name) return `<div class="iconslot empty"></div>`;
+  const img = getHeroImage(name);
+  const cls = ["iconslot", opts.cls, opts.warn ? "warn" : ""].filter(Boolean).join(" ");
+  const badge = opts.warn ? `<span class="warn-badge">!</span>` : "";
+  return `<div class="${cls}" title="${name}">${img ? `<img class="icon-img" src="${img}" alt="${name}">` : ""}${badge}</div>`;
 }
 
-function renderTeam(team){
-  const rowsEl = document.getElementById("rows");
-  const slots = Array.isArray(team) ? team.slice(0,6) : [];
-  while(slots.length < 6) slots.push(null);
-  rowsEl.innerHTML = slots.map(h=>{
-    if(!h) return `<div class="row empty"><img class="icon placeholder" alt=""><div class="name">—</div></div>`;
-    const img = getHeroImage(h.n);
-    const roleImg = getRoleIconImage(h.r);
-    const roleLabel = ROLE_LABEL_ES[h.r] || h.r || "";
-    return `<div class="row">
-      ${img ? `<img class="icon" src="${img}" alt="${heroLabel(h.n)}">` : `<img class="icon placeholder" alt="">`}
-      <div class="name">${heroLabel(h.n)}</div>
-      <div class="role-badge ${h.r||''}">${roleImg?`<img src="${roleImg}" alt="">`:""}${roleLabel}</div>
-    </div>`;
-  }).join("");
+function renderOverlay(data){
+  const ally = (data && Array.isArray(data.ally)) ? data.ally.slice(0,6) : [];
+  const enemy = (data && Array.isArray(data.enemy)) ? data.enemy.slice(0,6) : [];
+  const counters = (data && Array.isArray(data.counters)) ? data.counters.slice(0,6) : [];
+  const suggested = (data && Array.isArray(data.suggested)) ? data.suggested.slice(0,6) : [];
+  while(ally.length<6) ally.push(null);
+  while(enemy.length<6) enemy.push(null);
+
+  document.getElementById("allyGrid").innerHTML = ally.map(h =>
+    slotHtml(h ? h.n : null, {warn: h && h.warn})
+  ).join("");
+
+  document.getElementById("enemyGrid").innerHTML = enemy.map(n =>
+    slotHtml(n, {cls:"enemy"})
+  ).join("");
+
+  const anyEnemy = enemy.some(Boolean);
+  document.getElementById("countersSection").classList.toggle("hidden", !anyEnemy);
+  if(anyEnemy){
+    document.getElementById("countersGrid").innerHTML = enemy.map((n,i) =>
+      n ? slotHtml(counters[i] || null, {cls:"gold"}) : slotHtml(null)
+    ).join("");
+  }
+
+  document.getElementById("suggestedSection").classList.toggle("hidden", suggested.length===0);
+  if(suggested.length){
+    document.getElementById("suggestedGrid").innerHTML = suggested.map(n =>
+      slotHtml(n, {cls:"gold"})
+    ).join("");
+  }
 }
 
 function loadAndRender(){
-  let team = [];
-  try{ team = JSON.parse(localStorage.getItem("overlayAllyTeam") || "[]"); }catch(e){ team = []; }
-  renderTeam(team);
+  let data = null;
+  try{ data = JSON.parse(localStorage.getItem("overlayData") || "null"); }catch(e){ data = null; }
+  renderOverlay(data || {});
 }
 
 loadAndRender();
-window.addEventListener("storage", (e)=>{ if(e.key==="overlayAllyTeam") loadAndRender(); });
+window.addEventListener("storage", (e)=>{ if(e.key==="overlayData") loadAndRender(); });
 // respaldo por si el evento "storage" no llega (algunas versiones de CEF/OBS) -- barato, solo lee localStorage
 setInterval(loadAndRender, 1200);
 </script>
