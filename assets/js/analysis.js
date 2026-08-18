@@ -907,6 +907,50 @@ function renderAnalysis(){
 
   left += `</div>`;
 
+  // recomendacion para TU especificamente: asume que tus 5 companeros no van a cambiar de heroe.
+  // Se calcula aca (antes de "Probabilidad de victoria") porque el pedido de Xavier (2026-08-17)
+  // es que las tarjetas de "Mejores opciones de tu rol" / "Si prefieres no cambiar tu rol" suban
+  // justo debajo de "Mejores picks contra esta composicion" -- el resumen en texto de "Que deberias
+  // jugar tu" (banner corto) sigue mas abajo, junto a "Tu composicion", reutilizando este mismo "rec".
+  let rec = null;
+  if(myAllyIndex!==null && enemyFilled>0) rec = recommendMyPick();
+
+  if(rec){
+    // retrato tipo casillero (mismo lenguaje visual que "Mejores picks contra esta composicion" y
+    // que "Tu equipo") en vez de la tarjeta horizontal de texto que tenia antes -- pedido de
+    // Xavier (2026-08-16, eligio la opcion 1 de 3 mockups): el "por que" (good/bad matchups) pasa
+    // al tooltip (title), no ocupa renglon aparte.
+    const renderPickCard = p=>{
+      const badSuffix = p.badAgainst>0 ? t("analysis.pickCard.badSuffix", {bad:p.badAgainst}) : "";
+      const reason = t("analysis.pickCard.reason", {good:p.goodAgainst, total:enemyFilled, badSuffix});
+      return `<div class="pick-slot role-${p.h.r}" title="${reason.replace(/"/g,'&quot;')}">
+        ${heroIconHtml(p.h.n,40)}<div class="name">${heroLabel(p.h.n)}</div><div class="role">${roleIconHtml(p.h.r,12)}${p.goodAgainst}/${enemyFilled}</div>
+      </div>`;
+    };
+    const col2Title = rec.sameRoleAsNeed ? t("analysis.pickCard.col2TitleAlt") : t("analysis.pickCard.col2TitlePreferSame");
+    const col2Sub = rec.sameRoleAsNeed
+      ? t("analysis.pickCard.col2SubAlt")
+      : t("analysis.pickCard.col2SubPreferSame", {role: rec.currentRole ? t('role.'+rec.currentRole) : t("analysis.pickCard.yourCurrentRole")});
+    left += `<div class="two-col-fit">`;
+    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.roleNeed,16)}${t("analysis.pickCard.bestOptionsOf", {role: t('role.'+rec.roleNeed)})}</div>
+      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${rec.sameRoleAsNeed ? t("analysis.pickCard.alreadyPlayingRole", {role: t('role.'+rec.roleNeed)}) : t("analysis.pickCard.roleThatsMissing")}</p>`;
+    if(rec.inRolePicks.length===0){
+      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noCandidates")}</p>`;
+    } else {
+      left += `<div class="pick-slot-row">${rec.inRolePicks.map(renderPickCard).join("")}</div>`;
+    }
+    left += `</div>`;
+    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.currentRole||rec.roleNeed,16)}${col2Title}</div>
+      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${col2Sub}</p>`;
+    if(rec.topOverallPicks.length===0){
+      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noData")}</p>`;
+    } else {
+      left += `<div class="pick-slot-row">${rec.topOverallPicks.map(renderPickCard).join("")}</div>`;
+    }
+    left += `</div>`;
+    left += `</div>`;
+  }
+
   // probabilidad de victoria (heurística orientativa, no un cálculo real de winrate) -- el detalle
   // de que te esta jugando en contra ya se explica en "Alineación en riesgo", no se repite aca
   left += `<div class="analysis-section"><div class="sec-title">${t("analysis.winProb.title")}</div>`;
@@ -959,59 +1003,18 @@ function renderAnalysis(){
   left += `</div>`;
 
   // recomendacion para TU especificamente: asume que tus 5 companeros no van a cambiar de heroe.
-  // Aca adentro (fila angosta) solo va el resumen -- las listas de picks van en su propia fila
-  // mas abajo, a lo ancho completo del bloque, para que entren comodas en 2 columnas reales.
+  // "rec" ya se calculo mas arriba (justo debajo de "Mejores picks") para poder mostrar las
+  // tarjetas de picks ahi -- aca solo va el resumen corto en texto.
   left += `<div class="analysis-section"><div class="sec-title">${t("analysis.whatToPlay.title")}</div>`;
-  let rec = null;
   if(myAllyIndex===null){
     left += `<p class="empty-hint">${t("analysis.whatToPlay.markYourself")}</p>`;
   } else if(enemyFilled===0){
     left += `<p class="empty-hint">${t("analysis.whatToPlay.addEnemy")}</p>`;
-  } else {
-    rec = recommendMyPick();
+  } else if(rec){
     left += `<div class="comp-banner">${t("analysis.whatToPlay.summary", {counts: roleCountsIconsHtml(rec.fixedCounts, 22, rec.roleNeed), role: roleIconHtml(rec.roleNeed,16)+t('role.'+rec.roleNeed)})}</div>`;
   }
   left += `</div>`;
   left += `</div>`;
-
-  // fila aparte (ancho completo del bloque, no anidada) con las listas de picks en 2 columnas reales
-  // -- siempre 2 columnas, nunca 1 sola, para que la fila no se vea rota/asimetrica ni de la impresion
-  // de que "desaparecio" una columna
-  if(rec){
-    // retrato tipo casillero (mismo lenguaje visual que "Mejores picks contra esta composicion" y
-    // que "Tu equipo") en vez de la tarjeta horizontal de texto que tenia antes -- pedido de
-    // Xavier (2026-08-16, eligio la opcion 1 de 3 mockups): el "por que" (good/bad matchups) pasa
-    // al tooltip (title), no ocupa renglon aparte.
-    const renderPickCard = p=>{
-      const badSuffix = p.badAgainst>0 ? t("analysis.pickCard.badSuffix", {bad:p.badAgainst}) : "";
-      const reason = t("analysis.pickCard.reason", {good:p.goodAgainst, total:enemyFilled, badSuffix});
-      return `<div class="pick-slot role-${p.h.r}" title="${reason.replace(/"/g,'&quot;')}">
-        ${heroIconHtml(p.h.n,40)}<div class="name">${heroLabel(p.h.n)}</div><div class="role">${roleIconHtml(p.h.r,12)}${p.goodAgainst}/${enemyFilled}</div>
-      </div>`;
-    };
-    const col2Title = rec.sameRoleAsNeed ? t("analysis.pickCard.col2TitleAlt") : t("analysis.pickCard.col2TitlePreferSame");
-    const col2Sub = rec.sameRoleAsNeed
-      ? t("analysis.pickCard.col2SubAlt")
-      : t("analysis.pickCard.col2SubPreferSame", {role: rec.currentRole ? t('role.'+rec.currentRole) : t("analysis.pickCard.yourCurrentRole")});
-    left += `<div class="two-col-fit">`;
-    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.roleNeed,16)}${t("analysis.pickCard.bestOptionsOf", {role: t('role.'+rec.roleNeed)})}</div>
-      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${rec.sameRoleAsNeed ? t("analysis.pickCard.alreadyPlayingRole", {role: t('role.'+rec.roleNeed)}) : t("analysis.pickCard.roleThatsMissing")}</p>`;
-    if(rec.inRolePicks.length===0){
-      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noCandidates")}</p>`;
-    } else {
-      left += `<div class="pick-slot-row">${rec.inRolePicks.map(renderPickCard).join("")}</div>`;
-    }
-    left += `</div>`;
-    left += `<div class="role-rec-col"><div class="role-rec-title">${roleIconHtml(rec.currentRole||rec.roleNeed,16)}${col2Title}</div>
-      <p class="empty-hint" style="font-size:11px;margin:-4px 0 2px;">${col2Sub}</p>`;
-    if(rec.topOverallPicks.length===0){
-      left += `<p class="empty-hint" style="font-size:12px;">${t("analysis.pickCard.noData")}</p>`;
-    } else {
-      left += `<div class="pick-slot-row">${rec.topOverallPicks.map(renderPickCard).join("")}</div>`;
-    }
-    left += `</div>`;
-    left += `</div>`;
-  }
 
   // healer suggestions -- va abajo de "Mejores picks", del mismo lado (izquierda: son acciones tuyas)
   left += `<div class="analysis-section"><div class="sec-title">${t("analysis.healerSupport.title")}</div>`;
