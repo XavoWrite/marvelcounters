@@ -65,19 +65,31 @@ function bestPicksByRole(enemyList, banned){
         if(c.refScore) scores[c.c].refSum += c.refScore.score;
       });
     });
-    // penaliza/excluye a quien el rival TAMBIEN le hace counter en la vuelta -- antes esto solo
-    // miraba "a cuantos rivales cuenta X" sin chequear "a cuantos rivales X les pierde", asi que un
-    // duelista con 1 counter real pero 3 counters reales EN SU CONTRA (ej. Iron Man contra un rival
-    // con Winter Soldier/Black Widow/Luna Snow) podia seguir apareciendo si sus bonus de arquetipo
-    // pesaban lo suficiente. Bug real reportado por Xavier, 2026-08-17.
+    // penaliza/excluye a quien el rival TAMBIEN le hace counter (o casi-counter) en la vuelta --
+    // antes esto solo miraba "a cuantos rivales cuenta X" sin chequear "a cuantos rivales X les
+    // pierde", asi que un duelista con 1 counter real pero varios counters/casi-counters reales EN
+    // SU CONTRA podia seguir apareciendo si sus bonus de arquetipo pesaban lo suficiente. Version 1
+    // de este fix (2026-08-17) solo miraba counters fuertes (categoria 1) -- Xavier: "me sigue
+    // preocupando este equipo... tiene muchos counters y casi counters", asi que ahora tambien
+    // cuenta los "casi-counter"/"con ventaja" (parejo con inclinacion real, ref-matchup-scores) a
+    // mitad de peso -- un counter fuerte pesa el doble que un casi-counter, pero varios casi-counters
+    // juntos siguen pudiendo descartar un pick.
     Object.keys(scores).forEach(n=>{
-      let badAgainst = 0;
-      enemyList.forEach(e=>{ if(getMatchupCode(n, e.n)===1) badAgainst++; });
+      let badAgainst = 0, nearBadAgainst = 0;
+      enemyList.forEach(e=>{
+        const code = getMatchupCode(n, e.n);
+        if(code===1){ badAgainst++; return; }
+        if(code!==2) return; // solo dentro de "parejo" puede haber casi-counter por score
+        const ref = externalMatchupScore(n, e.n); // que tan bien le va a e.n CONTRA n -- positivo es malo para n
+        if(ref && ref.score>=1) nearBadAgainst++;
+      });
       scores[n].badAgainst = badAgainst;
+      scores[n].nearBadAgainst = nearBadAgainst;
+      scores[n].trouble = badAgainst + nearBadAgainst*0.5;
     });
     result[role] = Object.entries(scores)
-      .filter(([,s])=> s.badAgainst<=s.hits) // mas rivales le ganan a este pick que rivales que le gana el = no sirve como sugerencia
-      .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield*b[1].survival*b[1].tank + b[1].refSum*0.03 + b[1].archBonus + b[1].tankTypeBonus - b[1].badAgainst*2) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield*a[1].survival*a[1].tank + a[1].refSum*0.03 + a[1].archBonus + a[1].tankTypeBonus - a[1].badAgainst*2));
+      .filter(([,s])=> s.trouble<=s.hits) // mas problemas reales en contra que counters a favor = no sirve como sugerencia
+      .sort((a,b)=> (b[1].hits*b[1].relevance*b[1].dive*b[1].shield*b[1].survival*b[1].tank + b[1].refSum*0.03 + b[1].archBonus + b[1].tankTypeBonus - b[1].trouble*2) - (a[1].hits*a[1].relevance*a[1].dive*a[1].shield*a[1].survival*a[1].tank + a[1].refSum*0.03 + a[1].archBonus + a[1].tankTypeBonus - a[1].trouble*2));
   });
   return result;
 }
