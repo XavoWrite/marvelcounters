@@ -2123,3 +2123,65 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
    - Mecánica de sincronización: mismo patrón de siempre (editar `ref-matchup-scores.json` +
      `matchup-matrix.json`, re-sincronizar dentro de los const inline de `assets/js/matchups.js` y
      `assets/data/ref-matchup-scores.js`, verificar que los 4 archivos queden idénticos).
+
+57) Gorr (héroe #56) agregado 2026-09-12, salió 2026-09-11 (temporada 10) — Duelist melee
+    dive/brawl. Roster ahora 56 héroes.
+   - **Habilidades**: sacadas directamente de la página oficial marvelrivals.com (navegador,
+     click por ability, no del fetch de texto plano que devuelve 404/JS-navegación) — Ataque
+     normal All-Black (combo 4 golpes, 40/60/40/60, cuerpo a cuerpo, 7m), Necro-Power (fuego 2,
+     cd 6s, 30 dmg, ralentiza 15%/2s, teletransporta/invoca Black Berserkers), Black Berserker (E,
+     2 cargas/10s, pet de 150HP), Shadow Harvest (F, cd solo 3s — se teletransporta a un
+     berserker, se cura hasta 50 HP bonus, explota 5+5% vida máx., pega con guadaña 55+2% vida
+     máx.), Living Abyss (Shift, cd 15s, dash invencible de solo 1.5s), pasiva Berserker Swarm
+     (vida bonus al pegar con berserkers), Ultimate Twilight of the Gods (dura 12s(!), radio 30m,
+     65+10% vida máx. por golpe). 175 HP + 175 escudo regenerativo, 600 velocidad de movimiento.
+   - **Counters confirmados por Xavier** (score +5, categoría 1) tras cruzar counterwatch.gg +
+     rivalsmeta.com (2 fuentes independientes coincidentes, mismo criterio de siempre): **Devil
+     Dinosaur, Peni Parker, Scarlet Witch**. (Ultron también coincidía en ambas fuentes pero
+     Xavier no lo confirmó explícitamente — quedó en 0/parejo, revisar si lo menciona después).
+   - **Contradicción real entre fuentes, dejada sin resolver** (mismo patrón que Peni
+     Parker/Emma Frost/Doctor Strange con The Hood): counterwatch.gg dice que Gorr le gana a
+     Mantis; rivalsmeta.com dice que Mantis le gana a Gorr. Además las listas de "a quién le gana
+     Gorr fácil" no se solapan NADA entre ambos sitios — señal de puro ruido en esa dirección con
+     un héroe de 1 día de salida. No se tocó nada en esa dirección (Mantis y el resto quedaron en
+     0/parejo).
+   - **Pedido explícito de Xavier**: en vez de solo scrapear webs, armar el análisis por
+     razonamiento de kit — analizar el moveset/ulti de Gorr contra el roster ya existente y
+     determinar counters "a mi criterio" (Claude), ANTES de que Xavier aporte lo que vio en
+     videos y su propio criterio, para comparar 3 listas independientes. Aplicado 2026-09-12,
+     Xavier dijo "aplicalo, luego lo corregiremos si es necesario":
+     - **Anti-dive/peel de siempre** (mismo tag `anti_dive`/`peel` que ya usa `antiDiveCount` en
+       analysis.js contra cualquier dive): The Thing, Namor, Mister Fantastic, Cloak & Dagger.
+     - **AoE que limpia berserkers y lo mantiene a raya**: Scarlet Witch (ya confirmada por
+       fuentes), Storm, Human Torch.
+     - **CC duro justo cuando se ve obligado a comprometerse** (su movilidad depende de USAR una
+       habilidad — Shadow Harvest cd 3s, Living Abyss solo 1.5s de invencibilidad — no es pasiva):
+       Emma Frost (ya sabíamos que corta ultimates, ver ultimates-counters-DRAFT.txt), Luna Snow,
+       Jubilee.
+     - **Daño sostenido a distancia que lo baja antes de que cierre distancia**: Hela, Winter
+       Soldier, Punisher.
+     - Todos estos (12 héroes, sin contar a Scarlet Witch que ya estaba) se cargaron como score
+       ±2 (categoría 2, "casi counter"/"con ventaja" — visible solo en el sub-bucket fino del
+       editor, no cambia la categoría principal) ya que es razonamiento propio, no dato duro
+       todavía. **Pendiente explícito**: Xavier va a traer (1) lo que vio en videos de gameplay y
+       (2) su propio criterio de juego — comparar las 3 listas y ajustar/promover a counter real
+       (score ±5+) lo que se confirme, bajar lo que se descarte.
+     - Nota clave para el razonamiento: casi todo el daño fuerte de Gorr (Shadow Harvest, Ulti) es
+       **% de vida máxima**, así que un tanque de mucha vida plana no lo frena solo — esto es
+       relevante si en algún momento se evalúa si Devil Dinosaur/Peni Parker "deberían" contarlo
+       por vida alta (no es por eso, es por control de espacio/CC/melee trade, no por HP bruto).
+   - **Etiquetas funcionales** en `hero-roster.js`: `t:["dive","melee","sustain"]` (mismo patrón
+     que Wolverine — se autosostiene, cuerpo a cuerpo, se mete a la retaguardia), `arch:
+     ["brawl_dps","flank_dps"]`. Al tener el tag `dive`, ya queda enganchado automáticamente al
+     sistema existente `antiDiveCount`/`diveViability` (analysis.js) sin código nuevo — equipos
+     rivales con 2+ anti_dive ya le restan efectividad en las recomendaciones.
+   - **Pendiente, dado por Xavier explícitamente**: todavía no tiene ícono/portrait para
+     `hero-images.js` ni captura real para `hero-icon-seed.js` — está buscando el ícono animado
+     "Lord" (Deluxe) en un repo de GitHub que ya usó antes para otros héroes, todavía no lo
+     encuentra. Mismo missing-data pattern que el resto de los "pendientes de imagen".
+   - Mecánica de sincronización: agregado a `matchup-matrix.json` + `ref-matchup-scores.json` +
+     los const inline de `assets/js/matchups.js` / `assets/data/ref-matchup-scores.js` +
+     `hero-roster.js` + las copias hardcodeadas `HEROES`/`SEED_SCORES` de
+     `matchup-editor-stream.html` (recordatorio de siempre: ese archivo NO importa los datos
+     compartidos, hay que tocarlo a mano). Verificado con script: 56 héroes en los 4 lugares,
+     0 inconsistencias de espejo (categoría y score) en toda la matriz.

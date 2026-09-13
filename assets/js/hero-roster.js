@@ -14,6 +14,10 @@
 // escudo para aliados via su Cloak, y Void Walk le da movilidad para meterse a la retaguardia
 // enemiga -- de ahi el doble arquetipo shield_tank + dive_tank. Detalle completo en
 // data-sources-INTERNAL.txt.
+// Gorr agregado 2026-09-12 (salio 2026-09-11, temporada 10) -- Duelist melee dive/brawl con
+// autososten via bonus HP (parecido a Wolverine en tags), berserkers invocables y una ulti de
+// dano por % de vida maxima. Matriz de counters todavia sin datos comunitarios maduros (1 dia de
+// salida) -- ver data-sources-INTERNAL.txt.
 const HEROES = [
   // Vanguards
   {n:"Angela",r:"Vanguard",t:["dive","aerial","mobility"],arch:["dive_tank"]},
@@ -40,6 +44,7 @@ const HEROES = [
   {n:"Daredevil",r:"Duelist",t:["dive","melee","mobility"],arch:["brawl_dps","flank_dps"]},
   {n:"Deadpool (Duelist)",r:"Duelist",dpGroup:true,t:["melee","mobility","sustain"],arch:["sustain_dps"]},
   {n:"Elsa Bloodstone",r:"Duelist",t:["ranged","sustained","poke"],arch:["sustain_dps","brawl_dps"]},
+  {n:"Gorr",r:"Duelist",t:["dive","melee","sustain"],arch:["brawl_dps","flank_dps"]},
   {n:"Hawkeye",r:"Duelist",t:["sniper","long_range","poke"],arch:["poke_dps"]},
   {n:"Hela",r:"Duelist",t:["ranged","burst","anti_heal","shield_breaker"],arch:["poke_dps","sustain_dps"]},
   {n:"Human Torch",r:"Duelist",t:["aerial","mobility","burst"],arch:["sustain_dps","flank_dps"]},
