@@ -93,6 +93,7 @@ es: {
 
   "footer.disclaimer": "Datos de meta orientativos — el balance cambia con cada parche, usa esto como punto de partida, no como verdad absoluta. Pensado para jugadores casuals y de nivel promedio, no para la escena competitiva/pro.",
   "footer.ultimatesComingSoon": `🔮 Próximamente: avisos sobre las ultimates de cada héroe rival (cuáles la counterean y cómo cuidarse de ella). Si conocés bien las mecánicas, ayudanos a completarla en <a href="https://forms.gle/JciAp9p19B3aYrXJ6" target="_blank" rel="noopener">Sugerencias / correcciones</a>.`,
+  "footer.adsPrivacy": `Este sitio muestra anuncios de Google AdSense, que puede usar cookies para personalizarlos según tu actividad. Podés ajustar tus preferencias en la <a href="https://adssettings.google.com/" target="_blank" rel="noopener">configuración de anuncios de Google</a>.`,
 
   "modal.close": "cerrar ✕",
   "modal.searchPlaceholder": "Buscar héroe...",
@@ -454,6 +455,7 @@ en: {
 
   "footer.disclaimer": "Meta data is a general guide — the balance shifts with every patch, use this as a starting point, not as absolute truth. Built for casual and average-skill players, not the competitive/pro scene.",
   "footer.ultimatesComingSoon": `🔮 Coming soon: warnings about each enemy hero's ultimate (what counters it and how to play around it). If you know the mechanics well, help us finish it via <a href="https://forms.gle/JciAp9p19B3aYrXJ6" target="_blank" rel="noopener">Suggestions / corrections</a>.`,
+  "footer.adsPrivacy": `This site shows Google AdSense ads, which may use cookies to personalize them based on your activity. You can adjust your preferences in <a href="https://adssettings.google.com/" target="_blank" rel="noopener">Google's ad settings</a>.`,
 
   "modal.close": "close ✕",
   "modal.searchPlaceholder": "Search hero...",
