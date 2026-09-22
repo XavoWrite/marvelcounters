@@ -1542,8 +1542,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Emma Frost": {
@@ -4807,8 +4807,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Luna Snow": {
@@ -6133,8 +6133,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Moon Knight": {
@@ -7238,8 +7238,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Hela": {
@@ -8564,8 +8564,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Deadpool (Strategist)": {
@@ -9448,8 +9448,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Magik": {
@@ -10111,8 +10111,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Daredevil": {
@@ -10553,8 +10553,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Invisible Woman": {
@@ -10774,8 +10774,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     }
   },
   "Black Cat": {
@@ -12131,8 +12131,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Doctor Strange": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Emma Frost": {
       "score": 5,
@@ -12191,8 +12191,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "White Fox": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Luna Snow": {
       "score": 5,
@@ -12215,8 +12215,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Cyclops": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Moon Knight": {
       "score": 0,
@@ -12235,8 +12235,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Rocket Raccoon": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Hela": {
       "score": 5,
@@ -12259,8 +12259,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Adam Warlock": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Deadpool (Strategist)": {
       "score": 0,
@@ -12275,8 +12275,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Hawkeye": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Magik": {
       "score": 0,
@@ -12287,20 +12287,20 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Black Widow": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Daredevil": {
       "score": 0,
       "label": "even"
     },
     "Magneto": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Invisible Woman": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     },
     "Black Cat": {
       "score": 0,

@@ -2232,3 +2232,32 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      el const inline de `assets/js/matchups.js` + las copias hardcodeadas `SEED_SCORES` de
      `matchup-editor-stream.html`. Verificado con script: los 9 pares (score, categoría, ambas
      direcciones) idénticos en los 5 lugares, 0 inconsistencias.
+
+59) Gorr — primera pasada de "a quién le gana fácil" (dirección que la entrada 57 había dejado
+    en blanco por puro ruido entre fuentes), 2026-09-21, pedido explícito de Xavier: razonar por
+    kit y comparar contra el patrón de otros DPS/Duelist melee-dive ya cargados (Wolverine, Black
+    Panther, Iron Fist, Venom, Magik, Psylocke, Black Cat, Spider-Man), en vez de scrapear webs de
+    nuevo.
+   - **Método**: de las 8 filas de esos divers ya cargadas, se contó cuántos ya tienen a cada
+     héroe como "le gana fácil" (score <= -4) — un héroe que se repite en varias filas de divers
+     distintos es una señal fuerte de que es presa típica del arquetipo (bajo escape/CC propio
+     contra dive melee), no solo ruido de una fuente. Se descartó cualquier candidato que ya
+     tuviera un valor cargado en la dirección contraria para Gorr específicamente (Punisher,
+     Hela, Ultron, Scarlet Witch, Jubilee aparecen en listas de otros divers pero YA cuentan a
+     Gorr en la matriz actual — se dejaron como están, no se pisan).
+   - Cargado como **score -2/tentativo** (mismo patrón que el razonamiento de kit de la entrada
+     57: no cambia la categoría visible en la app, categoría sigue en 2/parejo, solo queda en el
+     sub-bucket fino del editor) — **9 héroes**, en dos niveles de confianza según cuántos divers
+     ya lo marcaban:
+     - **Confianza alta (5-7/8 divers)**: Hawkeye, Rocket Raccoon, Adam Warlock, White Fox.
+     - **Confianza media (3-4/8 divers)**: Cyclops, Doctor Strange, Black Widow, Magneto,
+       Invisible Woman.
+   - Xavier confirmó la lista completa tal cual se propuso (respuesta "Si" sin ajustes) —
+     **pendiente explícito**: igual que con los counters de la entrada 58, falta que Xavier la
+     compare con lo que vio en gameplay real antes de promoverla a confirmado (score ±5,
+     categoría 1/4).
+   - Mecánica de sincronización: solo se tocó `ref-matchup-scores.json` +
+     `assets/data/ref-matchup-scores.js` + las copias hardcodeadas `SEED_SCORES` de
+     `matchup-editor-stream.html` — `matchup-matrix.json` y el const inline de
+     `assets/js/matchups.js` NO se tocaron a propósito, porque score -2 no cruza el umbral ±4 y ya
+     estaban en categoría 2 (quedaban en "parejo" antes de esto). Verificado con script.
