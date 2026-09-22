@@ -2,10 +2,334 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=MarvelCountersPrime.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marvel Counters</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5918687783087129" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-<p>Cargando... si no avanza, <a href="MarvelCountersPrime.html">hacé clic acá</a>.</p>
+<button id="backToTopBtn" title="Volver arriba" data-i18n-title="backToTop">⬆</button>
+<div id="tipToast"><button class="tip-close" id="tipToastClose" title="Cerrar" data-i18n-title="close">✕</button><span id="tipToastText"></span></div>
+<div class="wrap">
+
+  <header>
+    <div class="halftone-strip"></div>
+    <img class="game-logo" src="assets/img/marvel-rivals-logo.webp" alt="Marvel Rivals">
+    <div class="badge-row">
+      <span class="badge" data-i18n="header.badge">HERRAMIENTA NO OFICIAL · FAN-MADE</span>
+      <a class="xavoapps-badge" href="https://www.tiktok.com/@xavovideo" target="_blank" rel="noopener" title="Una de las primeras XavoApps" data-i18n-title="header.xavoappsTitle">
+        <img src="assets/img/xavoapps-logo.png" alt="XavoApps">
+      </a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="langEs" data-lang="es" title="Español"><svg viewBox="0 0 3 2" width="20" height="14" aria-hidden="true"><rect width="1" height="2" fill="#006341"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#CE1126"/><circle cx="1.5" cy="1" r="0.32" fill="#8B5A2B"/><circle cx="1.5" cy="1" r="0.16" fill="#006341"/></svg></button>
+        <button class="lang-btn" id="langEn" data-lang="en" title="English"><svg viewBox="0 0 20 14" width="20" height="14" aria-hidden="true"><rect width="20" height="14" fill="#fff"/><rect width="20" height="2" y="0" fill="#B22234"/><rect width="20" height="2" y="4" fill="#B22234"/><rect width="20" height="2" y="8" fill="#B22234"/><rect width="20" height="2" y="12" fill="#B22234"/><rect width="8" height="8" fill="#3C3B6E"/></svg></button>
+      </div>
+    </div>
+    <h1>MARVEL<span>COUNTERS</span></h1>
+    <p class="credit" data-i18n-html="header.credit">creado por <img class="xavodraw-logo" src="assets/img/xavodraw-logo.png" alt="XavoDraw"></p>
+    <p class="sub" data-i18n="header.sub">Carga una captura del equipo rival o selecciona manualmente. Te digo qué counters usar y cómo ajustar tu alineación en tiempo real.</p>
+  </header>
+
+  <div class="tabbar">
+    <button class="tab-btn active" id="tabMain" data-i18n="tab.main">Partida en vivo</button>
+    <button class="tab-btn" id="tabEditor" data-i18n="tab.editor">Counters</button>
+    <button class="tab-btn" id="tabGlossary" data-i18n="tab.glossary">Glosario</button>
+  </div>
+
+  <div id="mainView">
+
+  <!-- explorador de jugadores (pre-partida) sigue oculto por el momento (beta pausada) -- se deja
+       en el DOM, solo escondido, para reactivarlo facil mas adelante sin perder el trabajo de
+       deteccion/i18n. La identificacion de equipo (captura del marcador) se reactivo el 2026-08-17
+       tras arreglar la deteccion de verdad (ver commits del dia: bug de trimDarkBorders + seed
+       reconstruido con 55 heroes, probado en vivo con capturas reales, 9/12 y 11/11 aciertos) -->
+  <div class="quick-jump-row">
+    <a class="quick-jump-btn" href="#teamCaptureSection"><span data-i18n="quickjump.team">📸 Subir captura de la partida</span><span class="qj-sub" data-i18n="quickjump.teamSub">para completar los héroes</span></a>
+    <a class="quick-jump-btn" href="#playerNamesCaptureZone" style="display:none;"><span data-i18n="quickjump.names">🪧 Captura de jugadores (pre-partida)</span><span class="qj-sub" data-i18n="quickjump.namesSub">para completar el explorador de jugadores</span></a>
+    <a class="quick-jump-btn" href="#manualTeamSection"><span data-i18n="quickjump.manual">🛠️ Colocación manual de equipos</span><span class="qj-sub" data-i18n="quickjump.manualSub">elegí cada héroe a mano</span></a>
+  </div>
+
+  <div class="local-detect-section" id="teamCaptureSection">
+    <div class="sec-title" style="margin-top:0;" data-i18n="team.title">Identificación de equipo</div>
+    <span class="badge" style="margin-bottom:10px;" data-i18n="team.betaBadge">🚧 en proceso — la identificación automática del héroe es experimental, revisá siempre lo que reconoce solo</span>
+    <p class="empty-hint" data-i18n-html="team.hintSeparate">Con <b>Tab</b> abrís el marcador completo, con los dos equipos juntos. Capturá esa pantalla con <b>Win+Shift+S</b>, pegala abajo con <b>Ctrl+V</b> (o subí el archivo) y la separamos sola en tu equipo y el rival. No depende de internet.</p>
+    <div id="combinedZoneWrap">
+      <div class="paste-zone" id="pasteZoneCombined" tabindex="0" data-i18n-html="team.combinedHint">📷 Pegá acá la captura del marcador con los dos equipos (Tab)<br><span class="paste-zone-sub">Ctrl+V, arrastrá la imagen, o <u id="combinedFilePick">elegí un archivo</u></span></div>
+      <input type="file" id="combinedFileInput" accept="image/*" style="display:none">
+      <span class="status-line" id="combinedDetectStatus"></span>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:6px;">
+        <span class="status-line" id="allyDetectStatus" style="color:var(--ally);"></span>
+        <span class="status-line" id="enemyDetectStatus" style="color:var(--enemy);"></span>
+      </div>
+    </div>
+    <p class="empty-hint" style="margin-top:8px;" data-i18n-html="team.footerHint">La identificación del héroe intenta ser automática (comparando contra capturas reales) pero es experimental — los casilleros marcados "auto" siempre hay que revisarlos, y si corregís uno la app aprende de esa corrección para la próxima vez. La posición calibrada además sirve de guía visual si preferís elegir a mano. La zona de "nombre" se lee sola con OCR offline y rellena el Explorador de Jugadores.</p>
+  </div>
+
+  <details class="ban-collapse">
+    <summary data-i18n="bans.title">🚫 Baneos (desde Oro II) — opcional, tocá para abrir</summary>
+    <div class="teams">
+      <div class="vs-divider"><span>VS</span></div>
+      <div class="panel ally ban-panel">
+        <div class="panel-head">
+          <div class="panel-title" data-i18n="bans.allyTitle">Baneos · Tu equipo</div>
+        </div>
+        <p class="empty-hint" style="margin:0 0 10px;" data-i18n="bans.allyHint">Los 3 héroes que baneó tu equipo (desde Oro II).</p>
+        <div class="slots" id="banAllySlots"></div>
+      </div>
+      <div class="panel enemy ban-panel">
+        <div class="panel-head">
+          <div class="panel-title" data-i18n="bans.enemyTitle">Baneos · Equipo enemigo</div>
+        </div>
+        <p class="empty-hint" style="margin:0 0 10px;" data-i18n="bans.enemyHint">Los del rival — si no sabes cuáles fueron, déjalos vacíos. Pueden repetirse con los tuyos (doble baneo).</p>
+        <div class="slots" id="banEnemySlots"></div>
+      </div>
+    </div>
+    <p class="empty-hint" style="text-align:center;margin:6px 0 18px;"><span data-i18n="bans.footerHint">Un héroe baneado (de cualquiera de los dos lados) se quita automáticamente de los equipos de abajo y no se puede seleccionar mientras siga baneado.</span> <button class="ban-clear-btn" id="clearBansBtn" style="margin:0 0 0 6px;" data-i18n="bans.clearBtn">Limpiar todos los baneos</button></p>
+  </details>
+
+  <div class="team-tools">
+    <button class="ban-clear-btn" id="swapTeamsBtn" data-i18n="teamtools.swap">🔄 Voltear equipos (izq ↔ der)</button>
+    <button class="ban-clear-btn" id="clearAllTeamsBtn" data-i18n="teamtools.clearAll">🗑️ Limpiar ambos equipos</button>
+  </div>
+
+  <div class="teams" id="manualTeamSection">
+    <div class="vs-divider"><span>VS</span></div>
+
+    <div class="panel ally">
+      <div class="panel-head">
+        <div class="panel-title" data-i18n="panel.yourTeam">Tu Equipo</div>
+        <div style="display:flex;gap:6px;">
+          <button class="mini-btn" id="autoPickMeBtn" title="Marca tu casillero (clic derecho) y añade al menos 1 rival para usar esto" data-i18n="panel.bestPick" data-i18n-title="panel.bestPickTitle">🎯 Tu mejor pick</button>
+          <button class="mini-btn" id="ghostToggleBtn" title="Muestra sugerencias fantasma en los casilleros vacíos" data-i18n-title="panel.ghostTitle">👻 fantasma: on</button>
+          <button class="mini-btn" id="clearAllyBtn" data-i18n="panel.clear">limpiar</button>
+        </div>
+      </div>
+      <div class="slots" id="allySlots"></div>
+      <div id="allyDmgHealBar"></div>
+      <div id="allyHealEff"></div>
+    </div>
+
+    <div class="panel enemy">
+      <div class="panel-head">
+        <div class="panel-title" data-i18n="panel.enemyTeam">Equipo Enemigo</div>
+        <button class="mini-btn" id="clearEnemyBtn" data-i18n="panel.clear">limpiar</button>
+      </div>
+      <div class="slots" id="enemySlots"></div>
+      <div id="enemyDmgHealBar"></div>
+      <div id="enemyHealEff"></div>
+    </div>
+  </div>
+
+  <section class="analysis" id="analysis"></section>
+
+  <section class="scouting" style="margin-top:16px;display:none;">
+    <div class="sec-title" data-i18n="scouting.title">Explorador de jugadores (opcional)</div>
+    <p class="empty-hint" style="margin-bottom:12px;" data-i18n="scouting.hint">Escribe (o deja que la foto llene) los nombres de jugadores de ambos equipos y elige plataforma. Cada jugador tiene enlaces directos a Tracker.gg y RivalsMeta para que revises el perfil vos mismo.</p>
+
+    <div id="playerNamesCaptureZone">
+      <p class="empty-hint" style="margin:0 0 6px;" data-i18n="scouting.loadingHint">🪧 ¿Tenés la captura de carga (antes de elegir héroe)? Subila acá y completamos los nombres que hayan quedado vacíos abajo — no hace falta si ya los tenés.</p>
+      <div class="paste-zone" id="pasteZoneLoading" tabindex="0" data-i18n-html="scouting.pasteLoading">📋 Pegá (Ctrl+V) o arrastrá la captura de carga acá<br><span class="paste-zone-sub">o <u id="loadingFilePick">elegí un archivo</u></span></div>
+      <input type="file" id="loadingFileInput" accept="image/*" style="display:none">
+      <span class="status-line" id="loadingDetectStatus" style="display:block;margin:4px 0 12px;"></span>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <button class="mini-btn" id="clearAllScoutBtn" data-i18n="scouting.clearAll">🗑 Limpiar todo el explorador (ambos equipos)</button>
+    </div>
+
+    <div class="scout-cols">
+      <div class="scout-group">
+        <div class="scout-group-title" data-i18n="scouting.yourTeam">Tu equipo</div>
+        <div id="scoutRowsAlly" class="scout-rows"></div>
+      </div>
+
+      <div class="scout-group">
+        <div class="scout-group-title" data-i18n="scouting.enemyTeam">Equipo enemigo</div>
+        <div id="scoutRowsEnemy" class="scout-rows"></div>
+      </div>
+    </div>
+  </section>
+
+  </div>
+
+  <div id="editorView" style="display:none;">
+    <div class="sec-title" data-i18n="editor.title">Counters</div>
+    <p class="empty-hint" style="margin-bottom:12px;" data-i18n="editor.hint">Elige un héroe para ver su matriz de matchups completa: quién le gana, con quién empareja parejo (a favor, parejo, o le cuesta), y a quién le gana fácil.</p>
+
+    <input type="text" id="editorHeroSearch" placeholder="Buscar héroe a editar..." data-i18n-placeholder="editor.searchPlaceholder">
+    <div class="role-filter-bar" id="editorRoleFilter">
+      <button class="role-filter-btn active" data-role="" data-i18n="role.all">Todos</button>
+      <button class="role-filter-btn" data-role="Vanguard" data-i18n="role.Vanguard">Vanguardia</button>
+      <button class="role-filter-btn" data-role="Duelist" data-i18n="role.Duelist">Duelista</button>
+      <button class="role-filter-btn" data-role="Strategist" data-i18n="role.Strategist">Estratega</button>
+    </div>
+    <div id="editorHeroList" class="hero-grid"></div>
+    <div id="editorDetail"></div>
+  </div>
+
+  <div id="glossaryView" style="display:none;">
+    <div class="sec-title" style="margin-top:0;" data-i18n="comp.summary">📖 Composiciones recomendadas (guía general, no oficial)</div>
+    <p class="empty-hint" data-i18n="comp.hint">Basado en datos de la comunidad — el balance cambia con cada parche, usalo como punto de partida.</p>
+    <div class="comp-guide-grid">
+      <div class="comp-guide-card good">
+        <div class="comp-guide-title" data-i18n="comp.222title">✅ 2-2-2 balanceada</div>
+        <div class="comp-guide-body" data-i18n="comp.222body">2 vanguardias · 2 duelistas · 2 estrategas. La composición más confiable — ronda ~52-54% de winrate. Es la base por defecto salvo que tengas una razón concreta para desviarte.</div>
+      </div>
+      <div class="comp-guide-card">
+        <div class="comp-guide-title" data-i18n="comp.divetitle">🤿 Dive (buceo)</div>
+        <div class="comp-guide-body" data-i18n="comp.divebody">Hulk, Venom, Black Panther o Spider-Man iniciando directo al backline rival, con Mantis o Cloak & Dagger sosteniendo la movilidad del dive.</div>
+      </div>
+      <div class="comp-guide-card">
+        <div class="comp-guide-title" data-i18n="comp.brawltitle">🧱 Brawl (línea reforzada)</div>
+        <div class="comp-guide-body" data-i18n="comp.brawlbody">Groot, Thor, The Thing, Captain America y Hulk apilados adelante peleando cuerpo a cuerpo — presiona el espacio en vez de rotar.</div>
+      </div>
+      <div class="comp-guide-card">
+        <div class="comp-guide-title" data-i18n="comp.airtitle">🕊️ Aérea</div>
+        <div class="comp-guide-body" data-i18n="comp.airbody">Iron Man o Storm junto a Human Torch controlando el espacio aéreo — fuerte cuando el rival no tiene buena respuesta antiaérea.</div>
+      </div>
+      <div class="comp-guide-card risky">
+        <div class="comp-guide-title" data-i18n="comp.triple3title">⚠ Triple estratega (alto riesgo)</div>
+        <div class="comp-guide-body" data-i18n="comp.triple3body">3 estrategas. Ronda ~45% de winrate en la comunidad — exige muy buena rotación de ultimates y coordinación de equipo. Solo recomendable en grupos muy coordinados.</div>
+      </div>
+      <div class="comp-guide-card bad">
+        <div class="comp-guide-title" data-i18n="comp.avoidtitle">🚫 Evitar: 1 solo estratega</div>
+        <div class="comp-guide-body" data-i18n="comp.avoidbody">Cae a ~42-46% de winrate — se pierde la mayoría de las veces. Solo unas pocas comps muy específicas y coordinadas lo compensan (ej. Doctor Strange sosteniendo solo, o con el team-up de Iron Man). Si puedes, suma un segundo estratega.</div>
+      </div>
+    </div>
+
+    <div class="sec-title" data-i18n="glossary.title">📚 Glosario de arquetipos (qué es un brawl, un dive, y así)</div>
+    <p class="empty-hint" data-i18n="glossary.hint">Categorías de estilo de juego, no de rol — dos héroes del mismo rol pueden jugarse muy distinto. Investigado de guías de la comunidad (2026-08-01), no todos los héroes están clasificados todavía.</p>
+
+    <div class="glossary-role-title" style="color:var(--vg);" data-i18n="glossary.vanguardTitle">Vanguardia (tanques)</div>
+    <div class="comp-guide-grid">
+      <div class="comp-guide-card" style="border-left-color:var(--vg);">
+        <div class="comp-guide-title" data-i18n="arch.dive_tank">🦅 Dive</div>
+        <div class="comp-guide-body" data-i18n="glossary.dive_tank.desc">Va directo a la backline enemiga en vez de sostener el frente — prioriza matar al soporte antes que aguantar espacio.</div>
+      </div>
+      <div class="comp-guide-card" style="border-left-color:var(--vg);">
+        <div class="comp-guide-title" data-i18n="arch.shield_tank">🛡️ Escudo</div>
+        <div class="comp-guide-body" data-i18n="glossary.shield_tank.desc">Sostiene un escudo o barrera para proteger al equipo. Más lento, pero da control de espacio confiable.</div>
+      </div>
+      <div class="comp-guide-card" style="border-left-color:var(--vg);">
+        <div class="comp-guide-title" data-i18n="arch.brawl_tank">🥊 Brawl</div>
+        <div class="comp-guide-body" data-i18n="glossary.brawl_tank.desc">Protege tu propia backline y castiga a los divers rivales — pelea cuerpo a cuerpo cerca de tus aliados, no lejos de ellos.</div>
+      </div>
+      <div class="comp-guide-card" style="border-left-color:var(--vg);">
+        <div class="comp-guide-title" data-i18n="arch.bunker_tank">🏰 Bunker</div>
+        <div class="comp-guide-body" data-i18n="glossary.bunker_tank.desc">Controla una zona con trampas, torretas o área de negación en vez de moverse con el equipo.</div>
+      </div>
+    </div>
+
+    <div class="glossary-role-title" style="color:var(--du);" data-i18n="glossary.duelistTitle">Duelista (daño)</div>
+    <div class="comp-guide-grid">
+      <div class="comp-guide-card" style="border-left-color:var(--du);">
+        <div class="comp-guide-title" data-i18n="arch.sustain_dps">🎯 Todoterreno</div>
+        <div class="comp-guide-body" data-i18n="glossary.sustain_dps.desc">Daño constante a media distancia, con buen desempeño contra tanques. El "todoterreno" de los duelistas.</div>
+      </div>
+      <div class="comp-guide-card" style="border-left-color:var(--du);">
+        <div class="comp-guide-title" data-i18n="arch.brawl_dps">🥊 Cuerpo a cuerpo</div>
+        <div class="comp-guide-body" data-i18n="glossary.brawl_dps.desc">Pelea de corto alcance, buen desempeño contra divers/flanqueadores — cambia alcance por sobrevida y daño explosivo.</div>
+      </div>
+      <div class="comp-guide-card" style="border-left-color:var(--du);">
+        <div class="comp-guide-title" data-i18n="arch.flank_dps">🗡️ Flanker</div>
+        <div class="comp-guide-body" data-i18n="glossary.flank_dps.desc">El asesino: se cuela detrás de las líneas enemigas para eliminar soportes. Rápido pero frágil.</div>
+      </div>
+      <div class="comp-guide-card" style="border-left-color:var(--du);">
+        <div class="comp-guide-title" data-i18n="arch.poke_dps">🏹 Poke</div>
+        <div class="comp-guide-body" data-i18n="glossary.poke_dps.desc">El francotirador: mucho daño a larga distancia a cambio de movilidad. Exige buena puntería y posición.</div>
+      </div>
+    </div>
+    <p class="empty-hint" style="margin-top:8px;" data-i18n-html="glossary.cycle">Entre duelistas hay un ciclo tipo piedra-papel-tijera: <b>Todoterreno</b> le gana a <b>Cuerpo a cuerpo</b>, que le gana a <b>Flanker</b>, que le gana a <b>Poke</b>, que le gana de vuelta a <b>Todoterreno</b>. La app ya usa esto como un afinador chico al recomendar picks — no reemplaza tu matriz de counters, solo desempata.</p>
+
+    <div class="glossary-role-title" style="color:var(--st);" data-i18n="glossary.strategistTitle">Estratega (soporte)</div>
+    <div class="comp-guide-grid">
+      <div class="comp-guide-card" style="border-left-color:var(--st);">
+        <div class="comp-guide-title" data-i18n="arch.lifeline">❤️ Sanador principal</div>
+        <div class="comp-guide-body" data-i18n="glossary.lifeline.desc">El sanador clásico — mucha curación por segundo, mayormente a un solo objetivo. El "healer puro".</div>
+      </div>
+      <div class="comp-guide-card" style="border-left-color:var(--st);">
+        <div class="comp-guide-title" data-i18n="arch.playmaker">✨ Impulsor</div>
+        <div class="comp-guide-body" data-i18n="glossary.playmaker.desc">Menos curación, más movilidad y utilidad para habilitar jugadas del equipo (empujes, escapes, buffs de daño).</div>
+      </div>
+      <div class="comp-guide-card" style="border-left-color:var(--st);">
+        <div class="comp-guide-title" data-i18n="arch.guardian">🔰 Guardián</div>
+        <div class="comp-guide-body" data-i18n="glossary.guardian.desc">Utilidad pesada — poca curación pero mucho control de daño, escudos o CC. Brilla en composiciones con varios soportes.</div>
+      </div>
+    </div>
+
+    <div class="sec-title" data-i18n="glossary.basicStats.title">💥 Daño y curación de ataques básicos</div>
+    <p class="empty-hint" data-i18n="glossary.basicStats.hint">Números oficiales sacados directo de marvelrivals.com (no estimados). Cuando el ataque es un combo o tiene cadencia compuesta, se muestra el texto oficial tal cual en vez de inventar un promedio.</p>
+    <div id="basicStatsInfographic"></div>
+
+    <div class="sec-title" data-i18n="glossary.dataSources.title">🗂️ Fuentes de datos</div>
+    <p class="empty-hint" data-i18n-html="glossary.dataSources.body">La matriz de matchups se arma con el aporte de mi comunidad de TikTok (¡gracias por cada sugerencia y corrección!).</p>
+  </div>
+
+  <div class="credits-box">
+    <div class="credits-title" data-i18n="credits.title">Créditos</div>
+    <p class="credits-text" data-i18n-html="credits.body">Creado por <b>XavoDraw</b>. Agradecimiento especial a <b>CrisSharp</b> por su apoyo e impulso para hacer este proyecto realidad.</p>
+    <p class="credits-text credits-support" data-i18n="credits.support">¿Te sirvió la herramienta? Cualquier apoyo ayuda a seguir mejorando esto.</p>
+    <div class="support-links">
+      <a class="support-btn kofi" href="https://ko-fi.com/xavodraw" target="_blank" rel="noopener">☕ Invitame un café en Ko-fi</a>
+      <a class="support-btn paypal" href="https://www.paypal.com/paypalme/xavodraw" target="_blank" rel="noopener">💙 PayPal</a>
+    </div>
+    <p class="credits-text credits-support" style="margin-top:14px;" data-i18n="credits.feedbackQ">¿Encontraste un error, tenés una idea o datos que puedan ayudar a mejorar la página? Escribime, cualquier ayuda de la comunidad suma.</p>
+    <div class="support-links">
+      <a class="support-btn feedback" href="https://forms.gle/JciAp9p19B3aYrXJ6" target="_blank" rel="noopener" data-i18n="credits.feedbackBtn">💡 Sugerencias / correcciones</a>
+    </div>
+    <p class="credits-text credits-support" style="margin-top:14px;" data-i18n="credits.followUs">Seguime en redes:</p>
+    <div class="support-links">
+      <a class="support-btn tiktok" href="https://www.tiktok.com/@xavovideo" target="_blank" rel="noopener">🎵 TikTok</a>
+      <a class="support-btn instagram" href="https://www.instagram.com/xavodraw/" target="_blank" rel="noopener">📸 Instagram</a>
+      <a class="support-btn twitch" href="https://www.twitch.tv/xavodraw" target="_blank" rel="noopener">🎮 Twitch</a>
+    </div>
+    <a class="xavoapps-footer" href="https://www.tiktok.com/@xavovideo" target="_blank" rel="noopener">
+      <span data-i18n="credits.xavoappsFooter">🚀 Una de las primeras</span>
+      <img src="assets/img/xavoapps-logo.png" alt="XavoApps">
+    </a>
+  </div>
+
+  <p class="ultimates-notice" data-i18n-html="footer.ultimatesComingSoon">🔮 Próximamente: avisos sobre las ultimates de cada héroe rival (cuáles la counterean y cómo cuidarse de ella). Si conocés bien las mecánicas, ayudanos a completarla en <a href="https://forms.gle/JciAp9p19B3aYrXJ6" target="_blank" rel="noopener">Sugerencias / correcciones</a>.</p>
+  <footer data-i18n="footer.disclaimer">Datos de meta orientativos — el balance cambia con cada parche, usa esto como punto de partida, no como verdad absoluta. Pensado para jugadores casuals y de nivel promedio, no para la escena competitiva/pro.</footer>
+  <footer data-i18n-html="footer.adsPrivacy">Este sitio muestra anuncios de Google AdSense, que puede usar cookies para personalizarlos según tu actividad. Podés ajustar tus preferencias en la <a href="https://adssettings.google.com/" target="_blank" rel="noopener">configuración de anuncios de Google</a>.</footer>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" data-i18n="modal.close">cerrar ✕</button>
+    <input type="text" id="modalSearch" placeholder="Buscar héroe..." data-i18n-placeholder="modal.searchPlaceholder">
+    <div class="role-filter-bar" id="modalRoleFilter">
+      <button class="role-filter-btn active" data-role="" data-i18n="role.all">Todos</button>
+      <button class="role-filter-btn" data-role="Vanguard" data-i18n="role.Vanguard">Vanguardia</button>
+      <button class="role-filter-btn" data-role="Duelist" data-i18n="role.Duelist">Duelista</button>
+      <button class="role-filter-btn" data-role="Strategist" data-i18n="role.Strategist">Estratega</button>
+    </div>
+    <div class="modal-count" id="modalCount"></div>
+    <div class="modal-list" id="modalList"></div>
+  </div>
+</div>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/data/hero-images.js"></script>
+<script src="assets/data/role-icons.js"></script>
+<script src="assets/vendor/tesseract.min.js"></script>
+<script src="assets/data/tesseract-worker-src.js"></script>
+<script src="assets/data/tesseract-core-src.js"></script>
+<script src="assets/data/tesseract-traineddata-b64.js"></script>
+<script src="assets/data/hero-icon-seed.js"></script>
+<script src="assets/data/ref-matchup-scores.js"></script>
+<script src="assets/data/ref-hero-meta-stats.js"></script>
+<script src="assets/data/hero-basic-stats.js"></script>
+<script src="assets/js/hero-roster.js"></script>
+<script src="assets/js/matchups.js"></script>
+<script src="assets/js/hero-detect.js"></script>
+<script src="assets/js/team-state.js"></script>
+<script src="assets/js/analysis.js"></script>
+<script src="assets/js/detection.js"></script>
+<script src="assets/js/scouting.js"></script>
+<script src="assets/js/tabs-editor.js"></script>
+<script src="assets/js/bootstrap.js"></script>
 </body>
 </html>
