@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marvelcounters.com/sitemap.xml
