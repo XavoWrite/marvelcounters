@@ -2185,3 +2185,50 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      `matchup-editor-stream.html` (recordatorio de siempre: ese archivo NO importa los datos
      compartidos, hay que tocarlo a mano). Verificado con script: 56 héroes en los 4 lugares,
      0 inconsistencias de espejo (categoría y score) en toda la matriz.
+
+58) Gorr — ícono "dynamic" (splash animado) agregado 2026-09-21, y promoción de counters
+    tentativos a confirmados el mismo día, con datos nuevos aportados por Xavier.
+   - **Ícono dynamic**: el pendiente de la entrada 57 ("Lord (Deluxe)") ya se había resuelto el
+     2026-09-13 (`Hero_Icon_Gorr.webp` -> `default`, `Lord_Icon_Gorr.webp` -> `deluxe`, ver commit
+     f4d2a78). Lo que faltaba era la variante `dynamic` (splash art animado que se muestra al
+     pasar el mouse, ver `dynamicVariantFor`/`heroIconHtml` en `team-state.js`) — Xavier subió
+     `Champion_Icon_Gorr_Animated.webp` (WebP animado real, 310x310, con alpha) a la raíz del
+     repo, se codificó a base64 y se agregó como `PRELOADED_IMAGES.Gorr.dynamic.img` en
+     `assets/data/hero-images.js`. Sin `sig` (igual que `default`/`deluxe` de Gorr, que tampoco lo
+     tienen) — no rompe nada porque `sig` es opcional y solo alimenta la detección automática por
+     screenshot, no el render del picker.
+   - **Promoción de counters tentativos -> confirmados (score ±2 "favorable" -> ±5 "strong",
+     categoría 2 -> 1/4)**: exactamente el escenario que la entrada 57 dejaba pendiente ("Xavier
+     va a traer lo que vio en videos y su propio criterio, comparar las 3 listas y
+     ajustar/promover a counter real lo que se confirme"). Xavier pegó una lista de counters de
+     Gorr de otra fuente (guía de estrategia con "Mejores Counters" + "Consejos de Estrategia"),
+     que confirma **Emma Frost, Hela, Storm, Luna Snow, Namor y Scarlet Witch** (ya estaban en
+     score ±2 desde el razonamiento de kit de la entrada 57, salvo Scarlet Witch que ya era ±5) y
+     agrega **tres nuevos que antes estaban en 0/parejo: Rogue, Iron Man y Ultron** (a Ultron ya se
+     lo había visto coincidir en las 2 fuentes originales pero sin confirmación explícita de
+     Xavier — esta guía nueva es esa confirmación). Mantis pasa de 0/parejo a ±5 pese a la
+     contradicción de fuentes que se había detectado (counterwatch.gg vs rivalsmeta.com no
+     coincidían) — se resuelve a favor de "Mantis SÍ cuenta a Gorr" porque es lo que dice esta
+     guía nueva Y coincide con el razonamiento de kit ya cargado (CC/parálisis de Estratega corta
+     el impulso de Gorr al saltar a la retaguardia).
+     Los 9 héroes promovidos a score ±5 (categoría 1/4): **Emma Frost, Rogue, Hela, Storm, Iron
+     Man, Ultron, Luna Snow, Mantis, Namor**.
+   - Justificación por kit que trae la guía (coincide con la de la entrada 57, la complementa):
+     Emma Frost/Rogue = CC/agarre que corta el buceo (dive) de Gorr; Hela = poke a distancia que
+     lo baja antes de que cierre distancia; Storm/Iron Man/Ultron = movilidad aérea que le
+     dificulta conectar (mismo principio "anti-dive" que ya usa el roster, solo que por aire en
+     vez de por peel terrestre); Luna Snow/Mantis = control (congelamiento/sueño) + curación que
+     le impide recuperar impulso al saltar a la retaguardia; Namor = sus torretas destruyen los
+     Black Berserkers (esbirros) de Gorr con facilidad; Scarlet Witch = aturdimiento/burbuja que
+     rompe su ritmo (ya confirmado).
+   - **Consejos de estrategia aportados por Xavier (no son un par de matchup, quedan como nota
+     de referencia — no hay campo de texto por-matchup en la UI, solo la matriz numérica)**:
+     (1) Controlar/matar los Black Berserkers de Gorr reduce la vida bonus de su pasiva
+     (Berserker Swarm) y lo fuerza a saltar a objetivos con poca vida, reduciendo la curación
+     que le da Shadow Harvest. (2) Igual que con Loki, eliminar/neutralizar el clon/marca donde
+     Gorr se teletransporta (Shadow Harvest) le quita gran parte de su utilidad en la partida.
+   - Mecánica de sincronización: mismo patrón que la entrada 57 — actualizado
+     `ref-matchup-scores.json` + `assets/data/ref-matchup-scores.js` + `matchup-matrix.json` +
+     el const inline de `assets/js/matchups.js` + las copias hardcodeadas `SEED_SCORES` de
+     `matchup-editor-stream.html`. Verificado con script: los 9 pares (score, categoría, ambas
+     direcciones) idénticos en los 5 lugares, 0 inconsistencias.

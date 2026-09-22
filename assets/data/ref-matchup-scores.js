@@ -879,8 +879,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     }
   },
   "The Thing": {
@@ -1763,7 +1763,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     }
   },
@@ -2868,8 +2868,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     }
   },
   "Storm": {
@@ -3089,7 +3089,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     }
   },
@@ -3974,8 +3974,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     }
   },
   "Deadpool (Vanguard)": {
@@ -5028,7 +5028,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     }
   },
@@ -7459,7 +7459,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     }
   },
@@ -9227,8 +9227,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": -5,
+      "label": "weak"
     }
   },
   "Hawkeye": {
@@ -11216,7 +11216,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     }
   },
@@ -12119,8 +12119,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Rogue": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "The Thing": {
       "score": 2,
@@ -12135,8 +12135,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Emma Frost": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Peni Parker": {
       "score": 5,
@@ -12155,12 +12155,12 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Iron Man": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Storm": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Wolverine": {
       "score": 0,
@@ -12175,8 +12175,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Mantis": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Deadpool (Vanguard)": {
       "score": 0,
@@ -12195,8 +12195,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Luna Snow": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Scarlet Witch": {
       "score": 5,
@@ -12239,8 +12239,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Hela": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Mister Fantastic": {
       "score": 2,
@@ -12271,8 +12271,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Ultron": {
-      "score": 0,
-      "label": "even"
+      "score": 5,
+      "label": "strong"
     },
     "Hawkeye": {
       "score": 0,
@@ -12307,8 +12307,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Namor": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Psylocke": {
       "score": 0,
