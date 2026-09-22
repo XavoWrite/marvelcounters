@@ -437,8 +437,8 @@ const REF_MATCHUP_SCORES = {
       "label": "favorable"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     }
   },
   "Devil Dinosaur": {
@@ -1100,7 +1100,7 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Gorr": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     }
   },
@@ -4807,8 +4807,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     }
   },
   "Luna Snow": {
@@ -7017,8 +7017,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 0,
-      "label": "even"
+      "score": -2,
+      "label": "weak"
     }
   },
   "Rocket Raccoon": {
@@ -7680,7 +7680,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     }
   },
@@ -8343,7 +8343,7 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": -2,
+      "score": -5,
       "label": "weak"
     }
   },
@@ -10774,8 +10774,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Gorr": {
-      "score": 2,
-      "label": "favorable"
+      "score": 0,
+      "label": "even"
     }
   },
   "Black Cat": {
@@ -12111,8 +12111,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Captain America": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Devil Dinosaur": {
       "score": 5,
@@ -12123,8 +12123,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "The Thing": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Thor": {
       "score": 0,
@@ -12191,8 +12191,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "White Fox": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Luna Snow": {
       "score": 5,
@@ -12231,8 +12231,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Groot": {
-      "score": 0,
-      "label": "even"
+      "score": 2,
+      "label": "favorable"
     },
     "Rocket Raccoon": {
       "score": -2,
@@ -12243,8 +12243,8 @@ const REF_MATCHUP_SCORES = {
       "label": "strong"
     },
     "Mister Fantastic": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Star-Lord": {
       "score": 0,
@@ -12255,8 +12255,8 @@ const REF_MATCHUP_SCORES = {
       "label": "even"
     },
     "Winter Soldier": {
-      "score": 2,
-      "label": "favorable"
+      "score": 5,
+      "label": "strong"
     },
     "Adam Warlock": {
       "score": -2,
@@ -12299,8 +12299,8 @@ const REF_MATCHUP_SCORES = {
       "label": "weak"
     },
     "Invisible Woman": {
-      "score": -2,
-      "label": "weak"
+      "score": 0,
+      "label": "even"
     },
     "Black Cat": {
       "score": 0,

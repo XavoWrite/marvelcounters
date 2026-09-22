@@ -2261,3 +2261,35 @@ ESTADO ACTUAL (2026-08-02, versión final de la noche) — leer esto primero
      `matchup-editor-stream.html` — `matchup-matrix.json` y el const inline de
      `assets/js/matchups.js` NO se tocaron a propósito, porque score -2 no cruza el umbral ±4 y ya
      estaban en categoría 2 (quedaban en "parejo" antes de esto). Verificado con script.
+
+60) Gorr — analisis cruzado de counters (dirección "quién cuenta a Gorr"), mismo día
+    (2026-09-21), pedido explícito de Xavier: aplicar el mismo método comparativo de la entrada
+    59 (frecuencia entre las 8 filas de divers ya cargadas) pero para validar/expandir los
+    counters en vez de las presas fáciles, como contraste independiente de la guía externa que
+    se usó en la entrada 58.
+   - **Validado sin cambios** (ya confirmados para Gorr y también aparecen como counters de
+     varios de los 8 divers — buena señal cruzada): Emma Frost (6/8), Peni Parker (4/8), Namor
+     (6/8), Devil Dinosaur (2/8), Scarlet Witch (1/8), Luna Snow (1/8).
+   - **Promovidos de tentativo (±2) a confirmado (±5, categoría 1/4)** — ya estaban cargados
+     desde el razonamiento de kit de la entrada 57 y ahora tienen respaldo cruzado fuerte:
+     **Mister Fantastic** (6/8 — elasticidad = zoning/escape constante), **The Thing** (5/8 —
+     tanque que aguanta el trade cuerpo a cuerpo), **Winter Soldier** (4/8 — gancho + daño
+     sostenido interrumpe el dive).
+   - **Agregados nuevos como tentativo (±2)**, no estaban ni siquiera en la lista de la entrada
+     57: **Groot** (3/8 — raíces = CC de área que corta el gap-close), **Captain America** (2/8 —
+     escudo/aturdimiento interrumpe combos melee).
+   - **Corrección a la entrada 59**: **White Fox** e **Invisible Woman** volvieron de presa fácil
+     (score -2) a **parejo (0)** — el cruce mostró que ambas aparecen como counters fuertes de
+     OTROS divers (White Fox 6/8 contra Wolverine, Invisible Woman 5/8 contra Venom/Black Cat),
+     lo cual contradice haberlas puesto como presa fácil de Gorr. Se revierten a neutral en vez de
+     directamente voltearlas a counter de Gorr, porque ese salto necesita su propia confirmación
+     (mismo criterio de siempre: no promover solo por señal cruzada sin que Xavier lo vea en
+     partidas reales).
+   - **Sin respaldo cruzado en absoluto (0/8), dependen 100% de la guía externa de la entrada
+     58** — quedan como están (confirmados) pero es el dato menos verificado de todos: Hela,
+     Storm, Iron Man, Ultron, Mantis, Rogue.
+   - Mecánica de sincronización: mismo patrón — actualizado `ref-matchup-scores.json` +
+     `assets/data/ref-matchup-scores.js` + `matchup-matrix.json` + el const inline de
+     `assets/js/matchups.js` (solo para los 3 promovidos, cruzan el umbral ±4) + las copias
+     hardcodeadas `SEED_SCORES` de `matchup-editor-stream.html`. Verificado con script: 0
+     inconsistencias en los 7 pares tocados.
