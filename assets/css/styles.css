@@ -292,6 +292,19 @@
   .ultimates-notice{margin-top:20px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6;max-width:640px;
     margin-left:auto;margin-right:auto;padding:10px 16px;border:1px dashed var(--line);border-radius:10px;}
   .ultimates-notice a{color:var(--gold);}
+  .about-box{margin:16px 0 22px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:var(--panel);}
+  .about-box p{color:var(--text);font-size:13.5px;line-height:1.65;margin:0 0 10px;}
+  .about-box p:last-child{margin-bottom:0;}
+
+  .faq-list{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+  .faq-item{background:var(--panel-alt);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .faq-q{font-weight:700;font-size:13px;color:var(--gold);margin-bottom:5px;}
+  .faq-a{font-size:12.5px;color:var(--muted);line-height:1.55;margin:0;}
+
+  .changelog-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;}
+  .changelog-list li{font-size:12.5px;color:var(--muted);line-height:1.5;padding-left:14px;border-left:2px solid var(--line);}
+  .changelog-date{color:var(--text);font-weight:700;margin-right:6px;}
+
   .credits-box{margin-top:36px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-align:center;}
   .credits-title{font-family:'Anton',sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
   .credits-text{color:var(--muted);font-size:12px;line-height:1.6;max-width:640px;margin:0 auto 6px;}

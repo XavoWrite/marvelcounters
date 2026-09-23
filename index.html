@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marvel Counters</title>
 <meta name="description" content="Carga una captura del equipo rival o selecciona manualmente. Te decimos que counters usar y como ajustar tu alineacion en tiempo real para Marvel Rivals.">
+<link rel="canonical" href="https://marvelcounters.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://marvelcounters.com/">
 <meta property="og:title" content="Marvel Counters">
@@ -24,6 +25,44 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Es una app oficial de Marvel Rivals?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Marvel Counters es un proyecto fan-made e independiente hecho por XavoDraw. No está afiliado, respaldado ni patrocinado por NetEase Games ni por Marvel." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿De dónde sale la matriz de counters?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Se arma cruzando testeo propio en partidas reales, guías de la comunidad y correcciones que llegan por el formulario de sugerencias. Cada matchup se revisa a mano, no es un promedio generado automáticamente." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Mis capturas de pantalla se suben a algún servidor?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. La detección de héroes corre completamente en tu navegador con reconocimiento de imagen offline (Tesseract.js) — ninguna imagen sale de tu computadora." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Con qué frecuencia se actualiza?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Cada vez que sale un héroe nuevo o un parche de balance relevante." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué diferencia hay entre \"counter fuerte\" y \"casi-counter\"?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Un counter fuerte es un enfrentamiento donde un héroe gana claramente por su kit. Un casi-counter tiene una ventaja más chica, situacional, o que depende más de la habilidad del jugador." }
+    },
+    {
+      "@type": "Question",
+      "name": "Encontré un error o tengo una idea, ¿cómo lo reporto?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Con el botón \"Sugerencias / correcciones\" al pie de la página, o escribiéndome por TikTok o Instagram." }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <button id="backToTopBtn" title="Volver arriba" data-i18n-title="backToTop">⬆</button>
@@ -47,6 +86,11 @@
     <p class="credit" data-i18n-html="header.credit">creado por <img class="xavodraw-logo" src="assets/img/xavodraw-logo.png" alt="XavoDraw"></p>
     <p class="sub" data-i18n="header.sub">Carga una captura del equipo rival o selecciona manualmente. Te digo qué counters usar y cómo ajustar tu alineación en tiempo real.</p>
   </header>
+
+  <div class="about-box">
+    <p data-i18n="about.p1">Marvel Counters es una herramienta gratuita y no oficial para Marvel Rivals que te ayuda a decidir qué héroe conviene jugar contra el equipo rival, justo en el momento en que estás armando tu pick. Subí una captura del marcador de la partida (o elegí los héroes a mano) y la app cruza esa información con una matriz de miles de enfrentamientos entre los más de 55 héroes del juego, construida y corregida a mano con aportes de la comunidad de TikTok de XavoDraw.</p>
+    <p data-i18n="about.p2">A diferencia de una tier list genérica, Marvel Counters mira el enfrentamiento específico: quién le gana fácil a quién, qué personajes son casi-counters, y cómo ajustar tu composición en vivo según lo que ya eligió el rival. La identificación de héroes por captura corre enteramente en tu navegador (OCR offline) — ninguna imagen que subís sale de tu computadora ni se guarda en un servidor.</p>
+  </div>
 
   <div class="tabbar">
     <button class="tab-btn active" id="tabMain" data-i18n="tab.main">Partida en vivo</button>
@@ -281,6 +325,47 @@
 
     <div class="sec-title" data-i18n="glossary.dataSources.title">🗂️ Fuentes de datos</div>
     <p class="empty-hint" data-i18n-html="glossary.dataSources.body">La matriz de matchups se arma con el aporte de mi comunidad de TikTok (¡gracias por cada sugerencia y corrección!).</p>
+  </div>
+
+  <div class="about-box">
+    <div class="sec-title" style="margin-top:0;" data-i18n="faq.title">❓ Preguntas frecuentes</div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq.q1">¿Es una app oficial de Marvel Rivals?</div>
+        <p class="faq-a" data-i18n="faq.a1">No. Marvel Counters es un proyecto fan-made e independiente hecho por XavoDraw. No está afiliado, respaldado ni patrocinado por NetEase Games ni por Marvel.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq.q2">¿De dónde sale la matriz de counters?</div>
+        <p class="faq-a" data-i18n="faq.a2">Se arma cruzando testeo propio en partidas reales, guías de la comunidad y correcciones que llegan por el formulario de sugerencias. Cada matchup se revisa a mano, no es un promedio generado automáticamente.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq.q3">¿Mis capturas de pantalla se suben a algún servidor?</div>
+        <p class="faq-a" data-i18n="faq.a3">No. La detección de héroes corre completamente en tu navegador con reconocimiento de imagen offline (Tesseract.js) — ninguna imagen sale de tu computadora.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq.q4">¿Con qué frecuencia se actualiza?</div>
+        <p class="faq-a" data-i18n="faq.a4">Cada vez que sale un héroe nuevo o un parche de balance relevante. Podés ver las últimas actualizaciones en "Novedades", más abajo.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq.q5">¿Qué diferencia hay entre "counter fuerte" y "casi-counter"?</div>
+        <p class="faq-a" data-i18n="faq.a5">Un counter fuerte es un enfrentamiento donde un héroe gana claramente por su kit (rango, movilidad, daño efectivo contra ese objetivo). Un casi-counter tiene una ventaja más chica, situacional, o que depende más de la habilidad del jugador.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq.q6">Encontré un error o tengo una idea, ¿cómo lo reporto?</div>
+        <p class="faq-a" data-i18n="faq.a6">Con el botón "Sugerencias / correcciones" al pie de la página, o escribiéndome por TikTok o Instagram.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-box">
+    <div class="sec-title" style="margin-top:0;" data-i18n="changelog.title">🛠️ Novedades</div>
+    <p class="empty-hint" data-i18n="changelog.hint">Este es un proyecto en desarrollo activo — así se ve el ritmo real de actualizaciones.</p>
+    <ul class="changelog-list">
+      <li><span class="changelog-date">21 sept 2026</span><span data-i18n="changelog.i1">Se sumaron counters nuevos de Gorr y se corrigieron varias "presas falsas" en su matriz de enfrentamientos.</span></li>
+      <li><span class="changelog-date">13 sept 2026</span><span data-i18n="changelog.i2">Se agregó a Gorr, el héroe #56 (Temporada 10), con sus counters iniciales e íconos oficiales.</span></li>
+      <li><span class="changelog-date">17 ago 2026</span><span data-i18n="changelog.i3">El filtro de counters/casi-counters se extendió también al modo fantasma y a "Qué deberías jugar tú".</span></li>
+      <li><span class="changelog-date">17 ago 2026</span><span data-i18n="changelog.i4">Rediseño del overlay para stream/OBS, con cuadrículas de íconos organizadas por rol.</span></li>
+    </ul>
   </div>
 
   <div class="credits-box">
