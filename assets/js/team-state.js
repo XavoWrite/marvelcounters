@@ -43,15 +43,17 @@ function getCounters(enemyName, allyRoster){
 }
 
 /* ---------------- STATE ---------------- */
-// El equipo rival arranca precargado con una composicion 2-2-2 de ejemplo (no es una partida
-// real) para que quien entra por primera vez vea de entrada como funciona la herramienta: el
-// modo fantasma (activo por defecto) ya sugiere que jugar tu vos con "Tu equipo" vacio, en vez de
-// mostrar 12 casilleros en blanco sin explicacion. "Limpiar ambos equipos" (boton rojo, arriba de
-// los paneles) borra este ejemplo para arrancar con la partida real.
+// Los dos equipos arrancan con un ejemplo precargado (no es una partida real) para que quien
+// entra por primera vez vea de entrada TODO lo que la pagina representa sin tocar nada: los 3
+// roles de cada lado (incluidos los healers/estrategas, antes solo estaban del lado rival),
+// el casillero marcado como "vos" (myAllyIndex, normalmente se marca con clic derecho), y el modo
+// fantasma (activo por defecto) sugiriendo los picks que faltan en los casilleros que se dejan
+// vacios a proposito. "Limpiar equipo de ejemplo" (boton rojo, arriba de los paneles) borra todo
+// esto para arrancar con la partida real.
 let enemyTeam = ["Doctor Strange","Magneto","Hela","Black Panther","Luna Snow","Adam Warlock"].map(n=>({...byName[n]}));
-let allyTeam = Array(6).fill(null);
+let allyTeam = ["Captain America",null,null,null,"Mantis",null].map(n=>n?{...byName[n]}:null);
 let modalTarget = null; // {side, idx}
-let myAllyIndex = null; // que casillero de tu equipo eres tú (clic derecho para marcar/desmarcar)
+let myAllyIndex = 0; // en el ejemplo, "vos" sos el Captain America del casillero 0 -- clic derecho para cambiarlo
 let jokeModeActive = false; // easter egg oculto -- ver bootstrap.js (triggerMijinEasterEgg)
 
 /* ---------------- RENDER SLOTS ---------------- */

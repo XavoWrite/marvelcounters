@@ -90,8 +90,10 @@ es: {
   "role.Duelist": "Duelista",
   "role.Strategist": "Estratega",
 
-  "about.p1": "Marvel Counters es una herramienta gratuita y no oficial para Marvel Rivals que te ayuda a decidir qué héroe conviene jugar contra el equipo rival, justo en el momento en que estás armando tu pick. Subí una captura del marcador de la partida (o elegí los héroes a mano) y la app cruza esa información con una matriz de miles de enfrentamientos entre los más de 55 héroes del juego, construida y corregida a mano con aportes de la comunidad de TikTok de XavoDraw.",
-  "about.p2": "A diferencia de una tier list genérica, Marvel Counters mira el enfrentamiento específico: quién le gana fácil a quién, qué personajes son casi-counters, y cómo ajustar tu composición en vivo según lo que ya eligió el rival. La identificación de héroes por captura corre enteramente en tu navegador (OCR offline) — ninguna imagen que subís sale de tu computadora ni se guarda en un servidor.",
+  "about.lead": "Le decís qué equipo rival tenés enfrente y te decimos qué héroe te conviene jugar, en vivo.",
+  "about.bullet1": "🎯 Mira el enfrentamiento puntual, no una tier list genérica",
+  "about.bullet2": "🔒 Todo corre en tu navegador — ninguna captura se sube a un servidor",
+  "about.bullet3": "🤝 Matriz de +55 héroes armada y corregida a mano con la comunidad",
 
   "howto.title": "▶️ Cómo se usa",
   "howto.step1": `Completá el "Equipo rival" — subiendo una captura de la partida o eligiendo cada héroe a mano. Abajo ya hay un equipo de ejemplo cargado para que veas cómo se ve.`,
@@ -488,8 +490,10 @@ en: {
   "role.Duelist": "Duelist",
   "role.Strategist": "Strategist",
 
-  "about.p1": "Marvel Counters is a free, unofficial tool for Marvel Rivals that helps you decide which hero to play against the enemy team, right when you're making your pick. Upload a screenshot of the match scoreboard (or pick heroes manually) and the app cross-references it against a matrix of thousands of matchups between the game's 55+ heroes, built and hand-corrected with input from XavoDraw's TikTok community.",
-  "about.p2": "Unlike a generic tier list, Marvel Counters looks at the specific matchup: who beats whom easily, which characters are near-counters, and how to adjust your composition live based on what the enemy has already picked. Hero detection from screenshots runs entirely in your browser (offline OCR) — no image you upload ever leaves your computer or gets stored on a server.",
+  "about.lead": "Tell it who you're up against and it tells you which hero to play, live.",
+  "about.bullet1": "🎯 Looks at the specific matchup, not a generic tier list",
+  "about.bullet2": "🔒 Runs entirely in your browser — no screenshot ever gets uploaded",
+  "about.bullet3": "🤝 A 55+ hero matrix built and hand-corrected with the community",
 
   "howto.title": "▶️ How to use it",
   "howto.step1": `Fill in the "Enemy team" — upload a match screenshot or pick each hero by hand. There's already an example team loaded below so you can see how it looks.`,
