@@ -3,6 +3,10 @@
 # /personajes (o recargar F5 estando ahi) tira 404 porque ese archivo no existe de verdad.
 # Solo se listan las rutas conocidas -- nada de wildcard -- para no pisar los assets, robots.txt,
 # sitemap.xml ni las otras paginas sueltas del repo (overlay-ally.html, etc.).
-/personajes    /index.html   200
-/counters-ia   /index.html   200
-/glosario      /index.html   200
+/personajes    /index.html       200
+/counters-ia   /index.html       200
+/glosario      /index.html       200
+
+# /privacidad SI es un archivo real (privacidad.html) -- esto solo pela la extension .html de la
+# URL para que quede prolijo, no hace falta que ambos lados apunten al mismo index.html.
+/privacidad    /privacidad.html  200
