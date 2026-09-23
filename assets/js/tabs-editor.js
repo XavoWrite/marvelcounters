@@ -1,9 +1,28 @@
 /* ---------------- TABS ---------------- */
+// Cada pestana tiene su propia URL (pushState) para que se pueda compartir/recargar un link
+// directo a, por ejemplo, marvelcounters.com/personajes -- Cloudflare Pages necesita el archivo
+// _redirects en la raiz sirviendo esas rutas con index.html (ver ese archivo). Si el pathname no
+// matchea ninguna ruta conocida (por ejemplo un deploy sin el _redirects todavia, o un 404),
+// se cae de vuelta a la pestana principal sin romper nada.
+const TAB_ROUTES = {main:"/", editor:"/personajes", aicounters:"/counters-ia", glossary:"/glosario"};
+const TAB_TITLES = {
+  main:"Marvel Counters — Contra qué héroe juego (counters en vivo)",
+  editor:"Personajes y matriz de counters — Marvel Counters",
+  aicounters:"Counters IA — Marvel Counters",
+  glossary:"Glosario y composiciones — Marvel Counters",
+};
+function routeToTab(pathname){
+  const clean = pathname.replace(/\/+$/,"") || "/";
+  const found = Object.entries(TAB_ROUTES).find(([,route])=>route.replace(/\/+$/,"")===clean || (route==="/" && clean===""));
+  return found ? found[0] : "main";
+}
 document.getElementById("tabMain").onclick = ()=>switchTab("main");
 document.getElementById("tabEditor").onclick = ()=>switchTab("editor");
 document.getElementById("tabAiCounters").onclick = ()=>switchTab("aicounters");
 document.getElementById("tabGlossary").onclick = ()=>switchTab("glossary");
-function switchTab(t){
+window.addEventListener("popstate", ()=>switchTab(routeToTab(location.pathname), {pushState:false}));
+function switchTab(t, opts){
+  const pushState = !opts || opts.pushState!==false;
   document.getElementById("mainView").style.display = t==="main" ? "" : "none";
   document.getElementById("editorView").style.display = t==="editor" ? "" : "none";
   document.getElementById("aiCountersView").style.display = t==="aicounters" ? "" : "none";
@@ -12,9 +31,18 @@ function switchTab(t){
   document.getElementById("tabEditor").classList.toggle("active", t==="editor");
   document.getElementById("tabAiCounters").classList.toggle("active", t==="aicounters");
   document.getElementById("tabGlossary").classList.toggle("active", t==="glossary");
+  if(pushState && TAB_ROUTES[t] && location.pathname.replace(/\/+$/,"")!==TAB_ROUTES[t].replace(/\/+$/,"")){
+    history.pushState(null, "", TAB_ROUTES[t]);
+  }
+  const canonicalLink = document.getElementById("canonicalLink");
+  if(canonicalLink && TAB_ROUTES[t]) canonicalLink.href = "https://marvelcounters.com" + TAB_ROUTES[t];
+  if(TAB_TITLES[t]) document.title = TAB_TITLES[t];
   if(t==="editor") renderEditorHeroList("");
   if(t==="aicounters") renderAiCounterHeroList("");
 }
+// al cargar, si la URL ya apunta a una de estas rutas (link directo o F5), abre esa pestana en vez
+// de arrancar siempre en "Partida en vivo"
+switchTab(routeToTab(location.pathname), {pushState:false});
 
 /* ---------------- EDITOR DE COUNTERS ---------------- */
 let editorRoleFilter = "";

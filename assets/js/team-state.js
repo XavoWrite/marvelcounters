@@ -43,7 +43,12 @@ function getCounters(enemyName, allyRoster){
 }
 
 /* ---------------- STATE ---------------- */
-let enemyTeam = Array(6).fill(null);
+// El equipo rival arranca precargado con una composicion 2-2-2 de ejemplo (no es una partida
+// real) para que quien entra por primera vez vea de entrada como funciona la herramienta: el
+// modo fantasma (activo por defecto) ya sugiere que jugar tu vos con "Tu equipo" vacio, en vez de
+// mostrar 12 casilleros en blanco sin explicacion. "Limpiar ambos equipos" (boton rojo, arriba de
+// los paneles) borra este ejemplo para arrancar con la partida real.
+let enemyTeam = ["Doctor Strange","Magneto","Hela","Black Panther","Luna Snow","Adam Warlock"].map(n=>({...byName[n]}));
 let allyTeam = Array(6).fill(null);
 let modalTarget = null; // {side, idx}
 let myAllyIndex = null; // que casillero de tu equipo eres tú (clic derecho para marcar/desmarcar)

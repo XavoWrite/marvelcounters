@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marvel Counters</title>
 <meta name="description" content="Carga una captura del equipo rival o selecciona manualmente. Te decimos que counters usar y como ajustar tu alineacion en tiempo real para Marvel Rivals.">
-<link rel="canonical" href="https://marvelcounters.com/">
+<link rel="canonical" id="canonicalLink" href="https://marvelcounters.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://marvelcounters.com/">
 <meta property="og:title" content="Marvel Counters">
@@ -101,6 +101,15 @@
 
   <div id="mainView">
 
+  <div class="about-box">
+    <div class="sec-title" style="margin-top:0;" data-i18n="howto.title">▶️ Cómo se usa</div>
+    <ol class="howto-list">
+      <li data-i18n="howto.step1">Completá el "Equipo rival" — subiendo una captura de la partida o eligiendo cada héroe a mano. Abajo ya hay un equipo de ejemplo cargado para que veas cómo se ve.</li>
+      <li data-i18n="howto.step2">Marcá tu casillero en "Tu equipo" con clic derecho (o completalo vos también) para activar "🎯 Tu mejor pick".</li>
+      <li data-i18n="howto.step3">Mirá las sugerencias fantasma 👻 en los casilleros vacíos y la sección de abajo con el análisis completo: quién te counterea, qué deberías jugar vos, y probabilidad de victoria.</li>
+    </ol>
+  </div>
+
   <!-- explorador de jugadores (pre-partida) sigue oculto por el momento (beta pausada) -- se deja
        en el DOM, solo escondido, para reactivarlo facil mas adelante sin perder el trabajo de
        deteccion/i18n. La identificacion de equipo (captura del marcador) se reactivo el 2026-08-17
@@ -152,7 +161,7 @@
 
   <div class="team-tools">
     <button class="ban-clear-btn" id="swapTeamsBtn" data-i18n="teamtools.swap">🔄 Voltear equipos (izq ↔ der)</button>
-    <button class="ban-clear-btn" id="clearAllTeamsBtn" data-i18n="teamtools.clearAll">🗑️ Limpiar ambos equipos</button>
+    <button class="ban-clear-btn danger" id="clearAllTeamsBtn" data-i18n="teamtools.clearAll">🗑️ Limpiar equipo de ejemplo</button>
   </div>
 
   <div class="teams" id="manualTeamSection">

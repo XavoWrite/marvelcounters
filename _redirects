@@ -1,0 +1,8 @@
+# Cloudflare Pages: la app es una sola pagina (index.html) que cambia de vista con JS y
+# history.pushState (ver TAB_ROUTES en assets/js/tabs-editor.js). Sin esto, entrar directo a
+# /personajes (o recargar F5 estando ahi) tira 404 porque ese archivo no existe de verdad.
+# Solo se listan las rutas conocidas -- nada de wildcard -- para no pisar los assets, robots.txt,
+# sitemap.xml ni las otras paginas sueltas del repo (overlay-ally.html, etc.).
+/personajes    /index.html   200
+/counters-ia   /index.html   200
+/glosario      /index.html   200

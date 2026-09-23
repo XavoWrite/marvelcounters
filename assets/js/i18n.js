@@ -58,7 +58,7 @@ es: {
   "bans.clearBtn": "Limpiar todos los baneos",
 
   "teamtools.swap": "🔄 Voltear equipos (izq ↔ der)",
-  "teamtools.clearAll": "🗑️ Limpiar ambos equipos",
+  "teamtools.clearAll": "🗑️ Limpiar equipo de ejemplo",
 
   "panel.yourTeam": "Tu Equipo",
   "panel.bestPick": "🎯 Tu mejor pick",
@@ -92,6 +92,11 @@ es: {
 
   "about.p1": "Marvel Counters es una herramienta gratuita y no oficial para Marvel Rivals que te ayuda a decidir qué héroe conviene jugar contra el equipo rival, justo en el momento en que estás armando tu pick. Subí una captura del marcador de la partida (o elegí los héroes a mano) y la app cruza esa información con una matriz de miles de enfrentamientos entre los más de 55 héroes del juego, construida y corregida a mano con aportes de la comunidad de TikTok de XavoDraw.",
   "about.p2": "A diferencia de una tier list genérica, Marvel Counters mira el enfrentamiento específico: quién le gana fácil a quién, qué personajes son casi-counters, y cómo ajustar tu composición en vivo según lo que ya eligió el rival. La identificación de héroes por captura corre enteramente en tu navegador (OCR offline) — ninguna imagen que subís sale de tu computadora ni se guarda en un servidor.",
+
+  "howto.title": "▶️ Cómo se usa",
+  "howto.step1": `Completá el "Equipo rival" — subiendo una captura de la partida o eligiendo cada héroe a mano. Abajo ya hay un equipo de ejemplo cargado para que veas cómo se ve.`,
+  "howto.step2": `Marcá tu casillero en "Tu equipo" con clic derecho (o completalo vos también) para activar "🎯 Tu mejor pick".`,
+  "howto.step3": "Mirá las sugerencias fantasma 👻 en los casilleros vacíos y la sección de abajo con el análisis completo: quién te counterea, qué deberías jugar vos, y probabilidad de victoria.",
 
   "faq.title": "❓ Preguntas frecuentes",
   "faq.q1": "¿Es una app oficial de Marvel Rivals?",
@@ -451,7 +456,7 @@ en: {
   "bans.clearBtn": "Clear all bans",
 
   "teamtools.swap": "🔄 Swap teams (left ↔ right)",
-  "teamtools.clearAll": "🗑️ Clear both teams",
+  "teamtools.clearAll": "🗑️ Clear example team",
 
   "panel.yourTeam": "Your Team",
   "panel.bestPick": "🎯 Your best pick",
@@ -485,6 +490,11 @@ en: {
 
   "about.p1": "Marvel Counters is a free, unofficial tool for Marvel Rivals that helps you decide which hero to play against the enemy team, right when you're making your pick. Upload a screenshot of the match scoreboard (or pick heroes manually) and the app cross-references it against a matrix of thousands of matchups between the game's 55+ heroes, built and hand-corrected with input from XavoDraw's TikTok community.",
   "about.p2": "Unlike a generic tier list, Marvel Counters looks at the specific matchup: who beats whom easily, which characters are near-counters, and how to adjust your composition live based on what the enemy has already picked. Hero detection from screenshots runs entirely in your browser (offline OCR) — no image you upload ever leaves your computer or gets stored on a server.",
+
+  "howto.title": "▶️ How to use it",
+  "howto.step1": `Fill in the "Enemy team" — upload a match screenshot or pick each hero by hand. There's already an example team loaded below so you can see how it looks.`,
+  "howto.step2": `Right-click your slot in "Your team" (or fill it in too) to turn on "🎯 Your best pick".`,
+  "howto.step3": "Check the ghost 👻 suggestions in the empty slots and the full analysis below: who counters you, what you should play, and win probability.",
 
   "faq.title": "❓ FAQ",
   "faq.q1": "Is this an official Marvel Rivals app?",
