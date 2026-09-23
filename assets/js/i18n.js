@@ -16,6 +16,7 @@ es: {
 
   "tab.main": "Partida en vivo",
   "tab.editor": "Personajes",
+  "tab.aiCounters": "🤖 Counters IA",
   "tab.glossary": "📚 Glosario",
 
   "quickjump.team": "📸 Subir captura de la partida",
@@ -77,6 +78,12 @@ es: {
   "editor.title": "Personajes",
   "editor.hint": "Elige un héroe para ver su matriz de matchups completa: quién le gana, con quién empareja parejo (casi counters, parejo, o con ventaja), y a quién le gana fácil.",
   "editor.searchPlaceholder": "Buscar héroe a editar...",
+
+  "aiCounters.title": "🤖 Counters IA",
+  "aiCounters.hint": `Sección aparte, escrita por una IA a partir del kit de cada héroe: a quién le gana fácil y quién lo counterea fácil, con el razonamiento detrás de cada elección. No es la matriz de la pestaña "Counters" de arriba (esa es curada a mano con la comunidad) — puede no coincidir con ella.`,
+  "aiCounters.beatsTitle": "🟢 Le gana fácil a",
+  "aiCounters.losesToTitle": "🔴 Le cuesta contra",
+  "aiCounters.esOnlyNote": "Este contenido todavía sólo está escrito en español.",
 
   "role.all": "Todos",
   "role.Vanguard": "Vanguardia",
@@ -402,6 +409,7 @@ en: {
 
   "tab.main": "Live match",
   "tab.editor": "Characters",
+  "tab.aiCounters": "🤖 AI Counters",
   "tab.glossary": "📚 Glossary",
 
   "quickjump.team": "📸 Upload a match screenshot",
@@ -463,6 +471,12 @@ en: {
   "editor.title": "Characters",
   "editor.hint": "Pick a hero to see their full matchup matrix: who beats them, who's an even fight (near-counters, even, or with an edge), and who they beat easily.",
   "editor.searchPlaceholder": "Search a hero to edit...",
+
+  "aiCounters.title": "🤖 AI Counters",
+  "aiCounters.hint": `A separate section, written by an AI from each hero's kit: who they beat easily and who counters them easily, with the reasoning behind each pick. This isn't the "Counters" matrix above (that one is hand-curated with the community) — it may not match it.`,
+  "aiCounters.beatsTitle": "🟢 Beats easily",
+  "aiCounters.losesToTitle": "🔴 Struggles against",
+  "aiCounters.esOnlyNote": "This content is currently only written in Spanish.",
 
   "role.all": "All",
   "role.Vanguard": "Vanguard",

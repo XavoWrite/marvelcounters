@@ -560,6 +560,16 @@
   .tier-red .matchup-pill{border-color:var(--enemy-dim);}
   .tier-blue .matchup-pill{border-color:var(--ally-dim);}
 
+  .ai-counter-section{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:10px;}
+  .ai-counter-col{border-radius:10px;padding:12px 14px;border:1px solid var(--line);background:var(--panel-alt);}
+  .ai-counter-col.tier-blue{border-color:var(--ally);}
+  .ai-counter-col.tier-red{border-color:var(--enemy);}
+  .ai-counter-col-title{font-size:12.5px;font-weight:700;margin-bottom:10px;color:var(--text);}
+  .ai-counter-card{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-bottom:8px;}
+  .ai-counter-card:last-child{margin-bottom:0;}
+  .ai-counter-card .n{display:flex;align-items:center;gap:6px;font-weight:700;font-size:12.5px;margin-bottom:4px;}
+  .ai-counter-card .why{font-size:11.5px;color:var(--muted);line-height:1.5;margin:0;}
+
   .matchup-grid-wrap{overflow-x:auto;margin-top:8px;}
   .matchup-grid{border-collapse:collapse;font-size:11px;white-space:nowrap;}
   .matchup-grid th, .matchup-grid td{border:1px solid var(--line);padding:5px 8px;text-align:center;}

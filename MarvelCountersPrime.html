@@ -95,6 +95,7 @@
   <div class="tabbar">
     <button class="tab-btn active" id="tabMain" data-i18n="tab.main">Partida en vivo</button>
     <button class="tab-btn" id="tabEditor" data-i18n="tab.editor">Counters</button>
+    <button class="tab-btn" id="tabAiCounters" data-i18n="tab.aiCounters">🤖 Counters IA</button>
     <button class="tab-btn" id="tabGlossary" data-i18n="tab.glossary">Glosario</button>
   </div>
 
@@ -227,6 +228,21 @@
     </div>
     <div id="editorHeroList" class="hero-grid"></div>
     <div id="editorDetail"></div>
+  </div>
+
+  <div id="aiCountersView" style="display:none;">
+    <div class="sec-title" style="margin-top:0;" data-i18n="aiCounters.title">🤖 Counters IA</div>
+    <p class="empty-hint" style="margin-bottom:12px;" data-i18n="aiCounters.hint">Sección aparte, escrita por una IA a partir del kit de cada héroe: a quién le gana fácil y quién lo counterea fácil, con el razonamiento detrás de cada elección. No es la matriz de la pestaña "Counters" de arriba (esa es curada a mano con la comunidad) — puede no coincidir con ella.</p>
+
+    <input type="text" id="aiCounterHeroSearch" placeholder="Buscar héroe..." data-i18n-placeholder="editor.searchPlaceholder">
+    <div class="role-filter-bar" id="aiCounterRoleFilter">
+      <button class="role-filter-btn active" data-role="" data-i18n="role.all">Todos</button>
+      <button class="role-filter-btn" data-role="Vanguard" data-i18n="role.Vanguard">Vanguardia</button>
+      <button class="role-filter-btn" data-role="Duelist" data-i18n="role.Duelist">Duelista</button>
+      <button class="role-filter-btn" data-role="Strategist" data-i18n="role.Strategist">Estratega</button>
+    </div>
+    <div id="aiCounterHeroList" class="hero-grid"></div>
+    <div id="aiCounterDetail"></div>
   </div>
 
   <div id="glossaryView" style="display:none;">
@@ -423,6 +439,7 @@
 <script src="assets/data/ref-matchup-scores.js"></script>
 <script src="assets/data/ref-hero-meta-stats.js"></script>
 <script src="assets/data/hero-basic-stats.js"></script>
+<script src="assets/data/ai-counters.js"></script>
 <script src="assets/js/hero-roster.js"></script>
 <script src="assets/js/matchups.js"></script>
 <script src="assets/js/hero-detect.js"></script>

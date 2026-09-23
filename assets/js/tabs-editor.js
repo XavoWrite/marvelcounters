@@ -1,15 +1,19 @@
 /* ---------------- TABS ---------------- */
 document.getElementById("tabMain").onclick = ()=>switchTab("main");
 document.getElementById("tabEditor").onclick = ()=>switchTab("editor");
+document.getElementById("tabAiCounters").onclick = ()=>switchTab("aicounters");
 document.getElementById("tabGlossary").onclick = ()=>switchTab("glossary");
 function switchTab(t){
   document.getElementById("mainView").style.display = t==="main" ? "" : "none";
   document.getElementById("editorView").style.display = t==="editor" ? "" : "none";
+  document.getElementById("aiCountersView").style.display = t==="aicounters" ? "" : "none";
   document.getElementById("glossaryView").style.display = t==="glossary" ? "" : "none";
   document.getElementById("tabMain").classList.toggle("active", t==="main");
   document.getElementById("tabEditor").classList.toggle("active", t==="editor");
+  document.getElementById("tabAiCounters").classList.toggle("active", t==="aicounters");
   document.getElementById("tabGlossary").classList.toggle("active", t==="glossary");
   if(t==="editor") renderEditorHeroList("");
+  if(t==="aicounters") renderAiCounterHeroList("");
 }
 
 /* ---------------- EDITOR DE COUNTERS ---------------- */
@@ -58,6 +62,84 @@ function renderEditorHeroList(query){
   if(list.children.length===0){
     list.innerHTML = `<p class="empty-hint" style="grid-column:1/-1;">${t("editor.noResults")}</p>`;
   }
+}
+
+/* ---------------- COUNTERS IA ---------------- */
+// Mismo patron de grilla que el editor de arriba, pero el panel de detalle sale de AI_COUNTERS
+// (assets/data/ai-counters.js) en vez de la matriz comunitaria -- ver el comentario de ese archivo
+// para la metodologia. Contenido solo en espanol por ahora (ver aiCounters.esOnlyNote).
+let aiCounterRoleFilter = "";
+document.getElementById("aiCounterHeroSearch").oninput = (e)=>renderAiCounterHeroList(e.target.value);
+document.querySelectorAll("#aiCounterRoleFilter .role-filter-btn").forEach(btn=>{
+  btn.onclick = ()=>{
+    aiCounterRoleFilter = btn.dataset.role;
+    document.querySelectorAll("#aiCounterRoleFilter .role-filter-btn").forEach(b=>b.classList.toggle("active", b===btn));
+    renderAiCounterHeroList(document.getElementById("aiCounterHeroSearch").value);
+  };
+});
+
+function renderAiCounterHeroList(query){
+  const list = document.getElementById("aiCounterHeroList");
+  const q = query.trim().toLowerCase();
+  list.innerHTML = "";
+  const filtered = HEROES.filter(h=>h.n.toLowerCase().includes(q) && (!aiCounterRoleFilter || heroHasRole(h,aiCounterRoleFilter)));
+  const rolesWithHeroes = ["Vanguard","Duelist","Strategist"].filter(role=>filtered.some(h=>heroHasRole(h,role)));
+  list.style.gridTemplateColumns = window.matchMedia("(min-width:761px)").matches
+    ? `repeat(${Math.max(1, rolesWithHeroes.length)}, 1fr)` : "";
+  rolesWithHeroes.forEach(role=>{
+    const heroesInRole = filtered.filter(h=>heroHasRole(h,role));
+    const col = document.createElement("div");
+    col.className = "hero-role-col";
+    col.innerHTML = `<div class="hero-role-col-title">${roleIconHtml(role,15)}${t('role.'+role)} <span class="hero-role-count">${heroesInRole.length}</span></div><div class="hero-role-col-grid"></div>`;
+    const grid = col.querySelector(".hero-role-col-grid");
+    heroesInRole.forEach(h=>{
+      const item = document.createElement("div");
+      item.className = "hero-grid-item";
+      const img = getHeroImage(h.n);
+      const thumb = img ? `<img src="${img}" class="grid-thumb" alt="${h.n}">` : "";
+      item.innerHTML = `${thumb}<span class="n">${heroLabel(h.n)}</span>${roleTagsHtml(h)}`;
+      item.onclick = ()=>{
+        renderAiCounterDetail(h.n);
+        document.getElementById("aiCounterDetail").scrollIntoView({behavior:"smooth", block:"start"});
+      };
+      grid.appendChild(item);
+    });
+    list.appendChild(col);
+  });
+  if(list.children.length===0){
+    list.innerHTML = `<p class="empty-hint" style="grid-column:1/-1;">${t("editor.noResults")}</p>`;
+  }
+}
+
+function renderAiCounterDetail(name){
+  const hero = byName[name];
+  const data = (typeof AI_COUNTERS!=="undefined") ? AI_COUNTERS[name] : null;
+  const el = document.getElementById("aiCounterDetail");
+  if(!data){
+    el.innerHTML = `<p class="empty-hint">${t("editor.noDataCataloged")}</p>`;
+    return;
+  }
+  const cardsHtml = (arr)=>arr.map(c=>`<div class="ai-counter-card">
+      <div class="n">${heroIconHtml(c.n,20)}${heroLabel(c.n)}</div>
+      <p class="why">${c.why}</p>
+    </div>`).join("");
+  el.innerHTML = `<div class="counter-card">
+    <div class="editor-image-row">
+      <div class="editor-image-actions">
+        <span class="enemy-name">${heroLabel(name)}</span>${hero ? roleIconHtml(hero.r,16) : ''}
+      </div>
+    </div>
+    <div class="ai-counter-section">
+      <div class="ai-counter-col tier-blue">
+        <div class="ai-counter-col-title">${t("aiCounters.beatsTitle")}</div>
+        ${cardsHtml(data.beats)}
+      </div>
+      <div class="ai-counter-col tier-red">
+        <div class="ai-counter-col-title">${t("aiCounters.losesToTitle")}</div>
+        ${cardsHtml(data.losesTo)}
+      </div>
+    </div>
+  </div>`;
 }
 
 let editorPreviewTimer = null;
